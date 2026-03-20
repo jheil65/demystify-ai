@@ -64,6 +64,7 @@ body { font-family: 'Nunito Sans', sans-serif; background: var(--light); color: 
 .cat-btn.active[data-cat="creative"]  { color:var(--orange);border-bottom-color:var(--orange); }
 .cat-btn.active[data-cat="framework"]  { color:var(--blue);   border-bottom-color:var(--blue); }
 .cat-btn.active[data-cat="ailiteracy"] { color:var(--green);  border-bottom-color:var(--green); }
+.cat-btn.active[data-cat="glossary"]   { color:var(--yellow); border-bottom-color:var(--yellow); filter: brightness(0.8); }
 
 /* AI LITERACY SECTION */
 .ailiteracy-wrap { margin-top: 0; }
@@ -292,6 +293,131 @@ body { font-family: 'Nunito Sans', sans-serif; background: var(--light); color: 
 .ailiteracy-badge { background: rgba(6,214,160,0.12); color: #059669; }
 .si-ailiteracy    { background: rgba(6,214,160,0.15); }
 
+/* GLOSSARY */
+.glossary-controls {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  margin-bottom: 28px; align-items: center;
+}
+.glossary-search-wrap { position: relative; flex: 1; min-width: 200px; max-width: 360px; }
+.glossary-search-wrap svg { position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#aab;pointer-events:none; }
+#glossary-search {
+  width: 100%; padding: 10px 12px 10px 38px;
+  border: 2px solid var(--border); border-radius: 40px;
+  font-family: 'Nunito Sans', sans-serif; font-size: 14px;
+  outline: none; transition: all 0.2s; background: var(--light);
+}
+#glossary-search:focus { border-color: var(--purple); background: #fff; }
+.tier-btns { display: flex; gap: 8px; }
+.tier-btn {
+  padding: 8px 16px; border-radius: 20px; border: 2px solid var(--border);
+  background: transparent; font-family: 'Nunito', sans-serif; font-weight: 700;
+  font-size: 12px; cursor: pointer; transition: all 0.18s; color: #888;
+}
+.tier-btn:hover { border-color: var(--purple); color: var(--purple); }
+.tier-btn.active { background: var(--navy); border-color: var(--navy); color: white; }
+
+.glossary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+.g-card {
+  background: var(--white); border: 2px solid var(--border);
+  border-radius: 16px; padding: 20px;
+  transition: all 0.2s; position: relative; overflow: hidden;
+  opacity: 0; transform: translateY(16px);
+  animation: cardIn 0.35s ease forwards;
+}
+.g-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.09); border-color: #ccd; }
+.g-card-top { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+.g-icon { font-size: 26px; flex-shrink: 0; }
+.g-term-wrap { flex: 1; }
+.g-term {
+  font-family: 'Nunito', sans-serif; font-weight: 900;
+  font-size: 1rem; color: var(--navy); line-height: 1.2;
+}
+.g-tier {
+  font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 10px;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  padding: 2px 8px; border-radius: 8px; display: inline-block; margin-top: 3px;
+}
+.tier-foundation { background: rgba(6,214,160,0.12); color: #059669; }
+.tier-practical   { background: rgba(46,117,182,0.12); color: var(--blue); }
+.tier-critical    { background: rgba(239,63,169,0.12); color: var(--pink); }
+
+.g-def { font-size: 13px; color: #444; line-height: 1.65; margin-bottom: 10px; }
+.g-context {
+  background: var(--light); border-left: 3px solid var(--teal);
+  border-radius: 0 8px 8px 0; padding: 10px 12px;
+  font-size: 12px; color: #555; line-height: 1.6; font-style: italic;
+  margin-bottom: 10px;
+}
+.g-context strong { font-style: normal; color: var(--navy); font-weight: 700; }
+.g-prompt-tip {
+  background: rgba(120,60,189,0.06); border: 1px solid rgba(120,60,189,0.2);
+  border-radius: 8px; padding: 9px 12px;
+  font-size: 11.5px; color: var(--purple); line-height: 1.55;
+}
+.g-prompt-tip strong { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 3px; color: var(--purple); }
+
+.provenance-hero {
+  background: linear-gradient(135deg, #1a0a3a 0%, #3a1a6e 50%, #1B3A6B 100%);
+  border-radius: 20px; padding: 36px; margin-bottom: 32px;
+  color: white; position: relative; overflow: hidden;
+}
+.provenance-hero::before { content:'🔍'; position:absolute; font-size:120px; right:-5px; top:-10px; opacity:0.08; }
+.provenance-hero .ph-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(239,63,169,0.2); border: 1px solid rgba(239,63,169,0.4);
+  border-radius: 20px; padding: 4px 14px; margin-bottom: 14px;
+  font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 11px;
+  color: var(--pink); text-transform: uppercase; letter-spacing: 0.08em;
+}
+.provenance-hero h2 { font-family:'Nunito',sans-serif; font-weight:900; font-size:clamp(1.4rem,3vw,2rem); color:white; margin-bottom:10px; }
+.provenance-hero p { color:rgba(255,255,255,0.7); font-size:14px; line-height:1.7; max-width:620px; margin-bottom:24px; }
+.provenance-cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px; }
+.prov-card {
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 12px; padding: 16px;
+}
+.prov-card .pc-icon { font-size:22px; margin-bottom:8px; }
+.prov-card .pc-label { font-family:'Nunito',sans-serif; font-weight:800; font-size:13px; color:white; margin-bottom:5px; }
+.prov-card .pc-desc { font-size:12px; color:rgba(255,255,255,0.65); line-height:1.55; }
+
+.provenance-prompts {
+  background: var(--white); border: 2px solid var(--border);
+  border-radius: 20px; padding: 28px; margin-top: 24px;
+}
+.provenance-prompts h3 { font-family:'Nunito',sans-serif; font-weight:900; font-size:1.1rem; color:var(--navy); margin-bottom:6px; }
+.provenance-prompts p { font-size:13px; color:var(--gray); margin-bottom:20px; }
+.prov-prompt-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:14px; }
+.prov-prompt-card {
+  background: var(--light); border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 16px;
+}
+.prov-prompt-card .pp-scenario { font-family:'Nunito',sans-serif; font-weight:800; font-size:12px; color:var(--purple); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; }
+.prov-prompt-card .pp-prompt { font-family:'Nunito Sans',monospace; font-size:12px; color:#333; line-height:1.65; margin-bottom:10px; }
+.prov-copy-btn {
+  display:inline-flex; align-items:center; gap:5px;
+  padding:5px 12px; border-radius:8px; border:none;
+  font-family:'Nunito',sans-serif; font-weight:700; font-size:11px;
+  cursor:pointer; transition:all 0.18s; background:var(--white);
+  color:#666; box-shadow:0 1px 4px rgba(0,0,0,0.1);
+}
+.prov-copy-btn:hover { background:var(--purple); color:white; }
+.prov-copy-btn.copied { background:var(--green); color:white; }
+
+.glossary-letter-jump { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:20px; }
+.letter-chip {
+  width:32px; height:32px; border-radius:8px; border:2px solid var(--border);
+  background:transparent; font-family:'Nunito',sans-serif; font-weight:800;
+  font-size:13px; color:#888; cursor:pointer; transition:all 0.15s;
+  display:flex; align-items:center; justify-content:center;
+}
+.letter-chip:hover { background:var(--navy); color:white; border-color:var(--navy); }
+.letter-chip.has-terms { color:var(--navy); border-color:var(--navy); }
+.glossary-count { font-size:13px; color:var(--gray); margin-bottom:12px; font-weight:600; }
+
 /* MAIN */
 main { max-width:1100px;margin:0 auto;padding:40px 24px 80px; }
 .section-header { display:flex;align-items:center;gap:14px;margin:44px 0 20px; }
@@ -433,6 +559,7 @@ footer a { color:var(--teal);text-decoration:none; }
     <button class="cat-btn" data-cat="creative"><span class="icon">🎨</span> Creative</button>
     <button class="cat-btn" data-cat="framework"><span class="icon">🏗️</span> Frameworks</button>
     <button class="cat-btn" data-cat="ailiteracy"><span class="icon">🧠</span> AI Literacy</button>
+    <button class="cat-btn" data-cat="glossary"><span class="icon">📖</span> Glossary</button>
   </div>
 </div>
 
@@ -806,6 +933,210 @@ function copyMaster(){
   });
 }
 
+// ── GLOSSARY DATA ────────────────────────────────────────────────────────────
+const GLOSSARY = [
+  // FOUNDATION TIER
+  {term:"Artificial Intelligence (AI)",icon:"🤖",tier:"foundation",cat:"core",def:"The science and engineering of making computers perform tasks that normally require human intelligence — like understanding language, recognizing patterns, making decisions, and learning from experience.",context:"<strong>Why it matters:</strong> AI isn't one thing — it's an umbrella term for dozens of technologies. When someone says 'AI did this,' it's worth asking: which kind? How was it trained? By whom?",prompt:"When I ask for your help, briefly note which AI capability you're primarily using (language generation, pattern recognition, reasoning, etc.) so I understand what's happening."},
+  {term:"Generative AI",icon:"✨",tier:"foundation",cat:"core",def:"AI that creates new content — text, images, audio, video, code — based on patterns learned from vast amounts of existing content. ChatGPT, Claude, Midjourney, and DALL-E are all generative AI tools.",context:"<strong>Why it matters:</strong> Generative AI is different from earlier AI. It doesn't just classify or predict — it produces. That makes it powerful for learning and work, and also easier to misuse.",prompt:"You are a generative AI. When you produce a response, briefly flag if the content is drawn from well-established knowledge vs. synthesized/generated — so I can evaluate it accordingly."},
+  {term:"Large Language Model (LLM)",icon:"📚",tier:"foundation",cat:"core",def:"A type of AI trained on enormous amounts of text — books, websites, articles — to understand and generate human language. GPT-4, Claude, Gemini, and Llama are all LLMs.",context:"<strong>Why it matters:</strong> LLMs don't 'know' things the way humans do — they predict what words should come next based on patterns. Understanding this helps you interpret their outputs critically.",prompt:"As an LLM, you generate responses based on patterns in training data. When answering, flag any areas where your response is a likely pattern rather than verified fact."},
+  {term:"Algorithm",icon:"⚙️",tier:"foundation",cat:"core",def:"A set of step-by-step instructions a computer follows to solve a problem or complete a task. Every AI system runs on algorithms — they're the rules that govern how the system behaves.",context:"<strong>Why it matters:</strong> Algorithms aren't neutral. They reflect the priorities and assumptions of whoever designed them. The algorithm deciding what you see on social media is also an algorithm.",prompt:"Walk me through the key steps in your reasoning process for this task, so I understand the logic behind your output."},
+  {term:"Machine Learning (ML)",icon:"🧩",tier:"foundation",cat:"core",def:"A way of building AI where the system learns from data rather than being explicitly programmed with rules. The more data it sees, the better it gets — like a student learning from examples rather than a textbook.",context:"<strong>Why it matters:</strong> ML systems are only as good as their training data. If the data is biased or incomplete, the system learns those flaws too.",prompt:"What patterns in your training data most likely influence your response to this topic?"},
+  {term:"Training Data",icon:"🗄️",tier:"foundation",cat:"core",def:"The massive collection of text, images, or other content an AI learns from. For LLMs, this is typically billions of words scraped from the internet, books, and other sources.",context:"<strong>Why it matters:</strong> Training data shapes everything an AI knows and believes. If it was mostly written in English by Western sources, it may not represent Filipino, African, or other cultural contexts well.",prompt:"What languages, regions, or cultural contexts is your training data most likely underrepresented in? How might that affect your answer here?"},
+  {term:"Prompt",icon:"💬",tier:"foundation",cat:"prompting",def:"The instruction or question you give to an AI. The quality of your prompt directly determines the quality of the response — more context, clearer intent, and specific format requests all lead to better outputs.",context:"<strong>Why it matters:</strong> Prompting is a skill that can be learned. A well-crafted prompt is like a clear assignment brief — it removes ambiguity and gives the AI what it needs to help you effectively.",prompt:"Before answering, rate the clarity of my prompt on a scale of 1–10 and suggest one way I could improve it."},
+  {term:"Hallucination",icon:"🌀",tier:"foundation",cat:"ethics",def:"When an AI confidently produces information that is factually wrong or completely made up — while sounding entirely convincing. A known limitation of all current LLMs.",context:"<strong>Why it matters:</strong> AI hallucinations can spread misinformation fast. For educators, students, and healthcare workers especially, verifying AI outputs against trusted sources is essential.",prompt:"After your response, flag any claims that you are less than 90% confident about, and suggest how I could verify them."},
+  {term:"Bias (AI)",icon:"⚠️",tier:"foundation",cat:"ethics",def:"When an AI system produces systematically skewed results — often reflecting inequalities in the training data or the values of those who built it. Can affect hiring tools, medical diagnoses, facial recognition, and much more.",context:"<strong>Why it matters:</strong> AI bias often harms those who are already marginalized. Learners should know to ask: who was represented in the training data? Whose perspective does this reflect?",prompt:"What biases might be present in your response to this topic? Whose perspective might be underrepresented?"},
+  {term:"Chatbot",icon:"🗣️",tier:"foundation",cat:"core",def:"A software program that uses AI to simulate conversation with users — answering questions, completing tasks, or providing support. ChatGPT, Claude, and Gemini are sophisticated examples; basic customer service bots are simpler versions.",context:"<strong>Why it matters:</strong> Not all chatbots are equal. Some are basic rule-based systems; others are powered by advanced LLMs. Knowing the difference helps you understand what to expect.",prompt:""},
+  {term:"Natural Language Processing (NLP)",icon:"🔤",tier:"foundation",cat:"core",def:"The field of AI focused on enabling computers to understand, interpret, and generate human language. It's what makes LLMs possible — and what powers translation, summarization, and sentiment analysis.",context:"<strong>Why it matters:</strong> NLP is why you can talk to AI in everyday language rather than code. But it also means AI can be used to generate persuasive content at scale — a media literacy concern.",prompt:""},
+
+  // PRACTICAL TIER
+  {term:"Prompt Engineering",icon:"🔧",tier:"practical",cat:"prompting",def:"The practice of designing, structuring, and refining prompts to get better, more reliable outputs from AI. A growing professional skill — part craft, part science.",context:"<strong>Why it matters:</strong> The difference between a useful AI response and a useless one is often entirely in how you asked. Prompt engineering is one of the most accessible and immediately practical AI skills.",prompt:"Evaluate my prompt and suggest a rewritten version using the CO-STAR or CRAFT framework to improve the output."},
+  {term:"Context Window",icon:"🪟",tier:"practical",cat:"technical",def:"The amount of text an AI can 'see' and remember in a single conversation. Once you exceed the context window, earlier parts of the conversation are forgotten — like working memory with a limit.",context:"<strong>Why it matters:</strong> In long conversations, AI can 'forget' important things you said earlier. For complex tasks, it helps to re-state key context periodically.",prompt:"Summarize the key context from our conversation so far that you're using to inform your current response."},
+  {term:"Token",icon:"🔢",tier:"practical",cat:"technical",def:"The basic unit AI models process — roughly equivalent to a word or part of a word. Models have token limits for both input and output, which affects how much you can send and receive.",context:"<strong>Why it matters:</strong> Understanding tokens explains why AI sometimes cuts off long responses and why very long documents need to be chunked before being processed.",prompt:""},
+  {term:"Fine-tuning",icon:"🎛️",tier:"practical",cat:"technical",def:"The process of taking a pre-trained AI model and training it further on a specific dataset to make it better at a particular task — like medical terminology or customer service.",context:"<strong>Why it matters:</strong> Fine-tuned models can be highly specialized — a medical AI, a legal AI, a Filipino language AI. Knowing this helps you understand why different AI tools behave differently.",prompt:""},
+  {term:"Retrieval-Augmented Generation (RAG)",icon:"🔎",tier:"practical",cat:"technical",def:"A technique where an AI retrieves relevant information from an external knowledge base before generating a response — helping ground outputs in specific, up-to-date facts rather than just training data.",context:"<strong>Why it matters:</strong> RAG is how some AI tools can answer questions about recent events or company-specific documents. It reduces hallucinations by anchoring responses in verified sources.",prompt:"What specific sources did you draw on for this response? Are they from your training data or retrieved in real time?"},
+  {term:"System Prompt",icon:"📋",tier:"practical",cat:"prompting",def:"Hidden instructions given to an AI before a conversation begins — setting its role, tone, constraints, and behavior. Users often can't see these, but they shape every response.",context:"<strong>Why it matters:</strong> If you're using an AI embedded in a product (like a customer service bot or a learning app), a system prompt is shaping its behavior. That's a transparency issue worth knowing about.",prompt:"What instructions, if any, are you operating under that might shape your response to this topic?"},
+  {term:"Temperature",icon:"🌡️",tier:"practical",cat:"technical",def:"A setting that controls how creative or unpredictable an AI's outputs are. High temperature = more creative and varied responses. Low temperature = more focused and deterministic.",context:"<strong>Why it matters:</strong> When you need reliable, consistent answers (like for learning materials), a lower temperature is better. For creative brainstorming, higher temperature produces more surprising ideas.",prompt:"For this task, should I use more creative/varied responses or more focused/consistent ones? Tell me which approach serves your goal better."},
+  {term:"Multimodal AI",icon:"📸",tier:"practical",cat:"core",def:"AI that can work with multiple types of input and output — text, images, audio, video, and code — rather than just one format.",context:"<strong>Why it matters:</strong> Tools like GPT-4o and Gemini can analyze images, transcribe audio, and generate across formats. This opens new possibilities for educators and vocational trainers.",prompt:"I'm sending you [image/audio/document]. Describe what you can and can't do with this type of input, and how that shapes your response."},
+  {term:"AI Agent",icon:"🤝",tier:"practical",cat:"core",def:"An AI that can take multi-step actions autonomously — browsing the web, writing and running code, sending emails — to complete a goal, not just answer a single question.",context:"<strong>Why it matters:</strong> Agents are the next frontier. They can automate complex workflows, but also make mistakes with real-world consequences. Human oversight is critical.",prompt:"For this task, describe the steps you would take if you were operating as an autonomous agent — and flag where human review should happen."},
+  {term:"Zero-shot / Few-shot Learning",icon:"🎯",tier:"practical",cat:"technical",def:"Zero-shot: asking an AI to do something with no examples. Few-shot: giving it a few examples before asking. Few-shot typically produces much better, more consistent results.",context:"<strong>Why it matters:</strong> When AI outputs aren't meeting your needs, try giving it 1–3 examples of what you want. This is one of the most powerful and underused prompting techniques.",prompt:"Here are two examples of the kind of output I want: [Example 1] / [Example 2]. Now apply the same style/format to: [your task]."},
+  {term:"Chain-of-Thought Prompting",icon:"🔗",tier:"practical",cat:"prompting",def:"A technique where you ask the AI to reason step-by-step before giving an answer — improving accuracy on complex or multi-step problems.",context:"<strong>Why it matters:</strong> For math, logic, or strategic decisions, asking AI to 'show its work' produces far better results than asking for a direct answer.",prompt:"Before giving me your final answer, walk through your reasoning step by step. Show every assumption you're making."},
+  {term:"Output Format",icon:"📐",tier:"practical",cat:"prompting",def:"Instructions telling the AI how to structure its response — as a list, table, paragraph, JSON, slide outline, etc. Specifying format dramatically improves usability of outputs.",context:"<strong>Why it matters:</strong> AI defaults to whichever format it thinks is most common. Telling it what you actually need — a table, a script, a lesson plan — saves significant editing time.",prompt:"Format your response as [a table / bullet list / numbered steps / a short paragraph]. Do not include any additional commentary."},
+
+  // CRITICAL TIER
+  {term:"AI Provenance",icon:"🔍",tier:"critical",cat:"ethics",def:"The documented history of where an AI's knowledge comes from — including what data it was trained on, who created that data, how it was collected, and whether appropriate consent and attribution were given. Provenance also refers to tracking AI-generated outputs back to their source.",context:"<strong>Why it matters:</strong> When AI gives you an answer, it's drawing on knowledge from millions of human sources — many of whom may not have consented. Provenance is about accountability, transparency, and fairness to those original creators. It's also how we detect misinformation and deepfakes.",prompt:"For this response, describe: (1) what kinds of sources likely inform your answer, (2) any significant perspectives that may be underrepresented, and (3) anything a reader should verify independently."},
+  {term:"Algorithmic Bias",icon:"⚖️",tier:"critical",cat:"ethics",def:"Systematic unfairness in AI outputs caused by biased training data, flawed design choices, or the values embedded in a model. It can disadvantage people based on race, gender, language, nationality, disability, and more.",context:"<strong>Why it matters:</strong> Algorithmic bias isn't always obvious — it often hides in outputs that seem neutral. Facial recognition that misidentifies darker-skinned faces, or hiring tools that downrank women's resumes, are real documented examples.",prompt:"Critically evaluate your response for potential algorithmic bias. What groups or perspectives might be underserved, misrepresented, or disadvantaged by the framing you're using?"},
+  {term:"Transparency (AI)",icon:"🪟",tier:"critical",cat:"ethics",def:"The degree to which an AI system's inner workings, training data, decision-making process, and limitations are visible and understandable to the people using and affected by it.",context:"<strong>Why it matters:</strong> Many AI systems are 'black boxes' — even their creators can't fully explain their decisions. The EU AI Act and other regulations are increasingly requiring transparency as a basic right.",prompt:"What aspects of your reasoning are you most uncertain about in this response? What would I need to know about how you work to fully evaluate what you've told me?"},
+  {term:"Explainability (XAI)",icon:"💡",tier:"critical",cat:"ethics",def:"The ability to explain how an AI system arrived at a specific output or decision in terms that humans can understand. A major challenge for deep learning models, which are inherently complex.",context:"<strong>Why it matters:</strong> If an AI denies your loan application or gives a student a low score, you have a right to know why. Explainability connects directly to accountability and due process.",prompt:"Explain your reasoning for this recommendation/decision in plain language, as if justifying it to someone who will be affected by it."},
+  {term:"Deepfake",icon:"🎭",tier:"critical",cat:"ethics",def:"Synthetic media — video, audio, or images — in which a person's likeness or voice has been replaced or fabricated using AI. Increasingly indistinguishable from real content.",context:"<strong>Why it matters:</strong> Deepfakes are now being used for political manipulation, fraud, and harassment. AI provenance and watermarking technologies are emerging to detect them — but it's a fast-moving arms race.",prompt:"If this content were AI-generated, what signs might I look for to identify it as synthetic? What verification steps would you recommend?"},
+  {term:"AI Alignment",icon:"🎯",tier:"critical",cat:"ethics",def:"The challenge of ensuring AI systems actually do what humans intend — including avoiding harmful side effects — as they become more capable and autonomous.",context:"<strong>Why it matters:</strong> A misaligned AI optimizes for the wrong thing. A content recommendation algorithm 'aligned' to maximize engagement may amplify outrage and division. Alignment is about whose values get built in.",prompt:"How might the goals you've been designed to optimize for create any unintended consequences in this context?"},
+  {term:"Digital Consent",icon:"🤝",tier:"critical",cat:"ethics",def:"The principle that people should have meaningful control over how their personal data — including creative work, images, and writing — is collected and used, including for AI training.",context:"<strong>Why it matters:</strong> Most AI training data was collected without explicit consent from the people who created it. This raises profound questions about intellectual property, privacy, and fairness to creators.",prompt:""},
+  {term:"Human-Centered AI (HCAI)",icon:"🌱",tier:"critical",cat:"ethics",def:"An approach to AI design and deployment that keeps human values, needs, wellbeing, and agency at the center — ensuring humans remain in control and that AI augments rather than replaces human judgment.",context:"<strong>Why it matters:</strong> HCAI is the antidote to AI that optimizes for metrics at the expense of people. It's the philosophy behind asking not just 'can AI do this?' but 'should it? For whom? Controlled by whom?'",prompt:"How does this use of AI keep humans in control and centered in the process? What safeguards would a human-centered approach require here?"},
+  {term:"AI Literacy",icon:"📖",tier:"critical",cat:"ethics",def:"The set of competencies enabling individuals to critically evaluate AI technologies, communicate and collaborate effectively with AI, and use AI as a tool in daily and professional life. (Long & Magerko, 2020)",context:"<strong>Why it matters:</strong> AI literacy isn't just for tech workers. It's for everyone — teachers, nurses, call center agents, farmers — who will increasingly encounter AI-shaped decisions in their lives.",prompt:""},
+  {term:"Equity in AI",icon:"🌍",tier:"critical",cat:"ethics",def:"The principle that AI systems should be designed and deployed so they don't worsen existing inequalities — and ideally help reduce them. Includes access equity, representation equity, and outcome equity.",context:"<strong>Why it matters:</strong> AI tools trained mostly on English-language Western data will perform worse for Filipino, Tagalog, or Cebuano speakers. Equity requires intentional design choices throughout the AI lifecycle.",prompt:"How might learners in low-resource contexts — limited internet, shared devices, working in a second language — be disadvantaged by this AI application? What adaptations would serve them better?"},
+  {term:"Black Box (AI)",icon:"📦",tier:"critical",cat:"technical",def:"An AI system whose internal decision-making process is opaque — even to its creators. You can see the input and the output, but not the reasoning in between.",context:"<strong>Why it matters:</strong> Black box AI is particularly concerning in high-stakes contexts — healthcare, criminal justice, education — where unexplainable decisions have real human consequences.",prompt:""},
+  {term:"Foundation Model",icon:"🏗️",tier:"critical",cat:"technical",def:"A very large AI model trained on broad data that can be adapted for many different tasks. GPT-4, Claude, and Gemini are foundation models. They're 'foundational' because other, more specialized tools are often built on top of them.",context:"<strong>Why it matters:</strong> A handful of companies control the foundation models that power much of the AI world. Understanding this concentration of power is important for thinking about AI governance.",prompt:""},
+  {term:"Reinforcement Learning from Human Feedback (RLHF)",icon:"🔄",tier:"critical",cat:"technical",def:"A technique used to train AI models by having humans rate outputs as better or worse — teaching the model to align with human preferences over time.",context:"<strong>Why it matters:</strong> RLHF is why modern LLMs feel more helpful and less dangerous than earlier models. But whose preferences get used for training, and who does the rating, shapes the model's values.",prompt:"How might the values or preferences of the people who rated your training outputs have shaped your response here?"},
+  {term:"Watermarking (AI)",icon:"💧",tier:"critical",cat:"ethics",def:"Embedding invisible signals into AI-generated content so it can be identified as AI-produced even after editing or distribution. An emerging tool for provenance verification.",context:"<strong>Why it matters:</strong> Watermarking is one of the key technologies being developed to combat deepfakes and AI-generated misinformation — connecting directly to AI provenance.",prompt:""},
+  {term:"The EU AI Act",icon:"🏛️",tier:"critical",cat:"ethics",def:"The world's first comprehensive AI regulation, which came into force in 2025. It classifies AI systems by risk level and requires transparency, documentation, and human oversight — especially for high-risk uses in education, healthcare, and employment.",context:"<strong>Why it matters:</strong> The EU AI Act sets global precedent. Even outside Europe, organizations using AI face growing pressure to document their systems, demonstrate fairness, and provide human oversight — especially in schools and workplaces.",prompt:""},
+  {term:"Deepseek / Open-Source Models",icon:"🔓",tier:"critical",cat:"core",def:"AI models whose architecture, weights, or training process are publicly available — allowing anyone to inspect, modify, and run them. DeepSeek, Llama, and Mistral are leading examples.",context:"<strong>Why it matters:</strong> Open-source models can be run locally, without sending data to a company's servers — a significant advantage for privacy and data sovereignty in underresourced or regulated contexts.",prompt:""},
+  {term:"Agentic AI",icon:"🤖",tier:"critical",cat:"core",def:"AI systems that can plan and execute multi-step tasks autonomously — browsing, coding, emailing, booking — with minimal human direction. A rapidly expanding capability in 2025.",context:"<strong>Why it matters:</strong> Agentic AI dramatically amplifies what AI can do — and the risks when it goes wrong. Understanding where to place human checkpoints is one of the most important design questions of the moment.",prompt:"For this multi-step task, where in the process do you recommend I stay in the loop rather than letting you proceed autonomously?"},
+
+  // ADDITIONAL FOUNDATION
+  {term:"Artificial General Intelligence (AGI)",icon:"🧠",tier:"foundation",cat:"core",def:"A hypothetical AI that can perform any intellectual task a human can do — reasoning, creativity, learning — across any domain. Does not yet exist. Current AI is narrow; AGI would be general.",context:"<strong>Why it matters:</strong> AGI is the subject of intense debate and significant investment. Some researchers believe it's imminent; others think it's decades away. It shapes how we think about AI risk and governance.",prompt:""},
+  {term:"Narrow AI",icon:"📍",tier:"foundation",cat:"core",def:"AI designed to perform a specific, limited task very well — like facial recognition, spam filtering, or language translation. All current AI is narrow AI. Also called Weak AI.",context:"<strong>Why it matters:</strong> Narrow AI excels at its specific task but can't generalize. A chess AI can't write a lesson plan. A translation AI can't diagnose a disease. Context matters.",prompt:""},
+  {term:"Neural Network",icon:"🕸️",tier:"foundation",cat:"technical",def:"A computing architecture loosely inspired by the human brain — made up of layers of interconnected nodes that process information. The foundation of deep learning and most modern AI.",context:"<strong>Why it matters:</strong> Neural networks learn by adjusting the strength of connections between nodes — millions or billions of them. This is how they 'learn' from data without explicit rules.",prompt:""},
+  {term:"Deep Learning",icon:"🌊",tier:"foundation",cat:"technical",def:"A type of machine learning using neural networks with many layers ('deep' refers to the number of layers). Powers image recognition, language models, and most cutting-edge AI applications.",context:"<strong>Why it matters:</strong> Deep learning is responsible for most recent AI breakthroughs — but its inner workings are notoriously hard to interpret, contributing to the 'black box' problem.",prompt:""},
+  {term:"API (Application Programming Interface)",icon:"🔌",tier:"practical",cat:"technical",def:"A set of protocols that lets different software programs talk to each other. AI APIs allow developers to integrate AI capabilities into their own apps, websites, and tools.",context:"<strong>Why it matters:</strong> APIs are how most AI tools you encounter are built. When you use an AI-powered feature in an app, it's almost certainly calling an AI company's API behind the scenes.",prompt:""},
+  {term:"Model",icon:"🏷️",tier:"foundation",cat:"technical",def:"In AI, a model is the trained system — the result of running a machine learning algorithm on training data. GPT-4, Claude 3, and Gemini 1.5 are all models.",context:"<strong>Why it matters:</strong> Different models have different strengths, knowledge cutoffs, biases, and capabilities. Knowing which model you're using matters for evaluating outputs.",prompt:"Which model version are you, and what are the most significant limitations or knowledge gaps I should be aware of when using your outputs?"},
+  {term:"Knowledge Cutoff",icon:"📅",tier:"practical",cat:"technical",def:"The date after which an AI model has no knowledge of world events — because its training data stops at that point. Events after the cutoff are unknown to the model unless it has real-time search.",context:"<strong>Why it matters:</strong> AI can confidently give you outdated information about regulations, research findings, or current events. Always check the knowledge cutoff for time-sensitive topics.",prompt:"What is your knowledge cutoff? Is this a topic where recent developments since your cutoff might significantly affect your answer?"},
+  {term:"Inference",icon:"⚡",tier:"practical",cat:"technical",def:"The process of running a trained AI model to produce outputs — the moment the model 'thinks' in response to your input. Distinct from training, which is the learning phase.",context:"<strong>Why it matters:</strong> Every time you send a message to an AI, inference is happening. The speed, cost, and energy consumption of inference are major factors in AI's environmental and economic footprint.",prompt:""},
+  {term:"Supervised vs. Unsupervised Learning",icon:"📊",tier:"practical",cat:"technical",def:"Supervised learning trains on labeled data (e.g., 'this is a cat'). Unsupervised learning finds patterns in unlabeled data on its own. Most LLMs use a mix of both.",context:"<strong>Why it matters:</strong> The distinction matters for understanding where AI errors come from. Supervised learning inherits the biases in human labels. Unsupervised learning can surface unexpected — sometimes unwanted — patterns.",prompt:""},
+  {term:"Responsible AI",icon:"🛡️",tier:"critical",cat:"ethics",def:"A framework for developing and deploying AI in ways that are fair, transparent, accountable, and aligned with human rights and societal wellbeing. Increasingly required by law and institutional policy.",context:"<strong>Why it matters:</strong> Responsible AI isn't just an ethical aspiration — it's becoming a compliance requirement. Schools, hospitals, and governments using AI face growing expectations to demonstrate responsible practices.",prompt:"Evaluate this use case against responsible AI principles: Is it fair? Transparent? Accountable? What risks should we be aware of?"},
+  {term:"Synthetic Media",icon:"🎬",tier:"critical",cat:"ethics",def:"Content — text, images, audio, video — that has been generated or significantly altered by AI. Includes deepfakes, AI-written articles, and AI-generated voice clones.",context:"<strong>Why it matters:</strong> Synthetic media is increasingly indistinguishable from human-created content. Media literacy now requires knowing how to identify AI-generated content — a core AI literacy skill.",prompt:"Could this content be AI-generated? What signals would distinguish it from human-created content?"},
+  {term:"Data Privacy",icon:"🔐",tier:"critical",cat:"ethics",def:"The right of individuals to control how their personal data is collected, stored, used, and shared — including when that data is used to train AI models.",context:"<strong>Why it matters:</strong> When students and educators use AI tools, their inputs may become training data. In school contexts especially, understanding data privacy rights is essential.",prompt:"What data from this conversation might be retained or used for training? What should users know about privacy in this context?"},
+  {term:"Automation Bias",icon:"🎰",tier:"critical",cat:"ethics",def:"The tendency to over-trust automated systems — to favor their outputs over human judgment, even when the system is wrong. A documented phenomenon in healthcare, aviation, and education.",context:"<strong>Why it matters:</strong> When AI grades an essay or recommends a diagnosis, humans often defer to it even when it's wrong. The antidote is critical AI literacy — knowing when to override the machine.",prompt:"What would it look like to over-rely on your response here? What human judgment should I apply before acting on what you've told me?"},
+  {term:"Digital Divide",icon:"📶",tier:"critical",cat:"ethics",def:"The gap between those who have access to digital technology — including AI tools — and those who don't, often divided along lines of income, geography, age, and disability.",context:"<strong>Why it matters:</strong> As AI becomes more central to work and learning, those without reliable internet, devices, or AI literacy fall further behind. Equity-focused AI work must address the digital divide explicitly.",prompt:"How could this AI tool or approach be adapted for users with limited internet connectivity, shared devices, or low-bandwidth conditions?"},
+];
+
+function renderGlossary() {
+  const main = document.getElementById('main-content');
+  main.querySelectorAll('.dyn-section').forEach(el => el.remove());
+  document.getElementById('master-box').style.display = 'none';
+  document.getElementById('resources-wrap').style.display = 'none';
+
+  const wrap = document.createElement('div');
+  wrap.className = 'dyn-section';
+  wrap.style.marginTop = '8px';
+
+  // Build provenance section
+  const provenanceHTML = `
+    <div class="provenance-hero">
+      <div class="ph-badge">🔍 Featured Concept</div>
+      <h2>AI Provenance: Where Does This Knowledge Come From?</h2>
+      <p>Provenance is the documented history of where AI knowledge comes from — what data it was trained on, who created it, whether they consented, and how it was used. In an era of deepfakes, AI-generated misinformation, and opaque training pipelines, understanding provenance is one of the most important critical thinking tools we have.</p>
+      <div class="provenance-cards">
+        <div class="prov-card"><div class="pc-icon">🗄️</div><div class="pc-label">Data Provenance</div><div class="pc-desc">Where did the training data come from? Who wrote it? Were they compensated or credited?</div></div>
+        <div class="prov-card"><div class="pc-icon">🏗️</div><div class="pc-label">Model Provenance</div><div class="pc-desc">Who built this AI? What were their design choices? What values were embedded during training?</div></div>
+        <div class="prov-card"><div class="pc-icon">📄</div><div class="pc-label">Output Provenance</div><div class="pc-desc">Is this content AI-generated? Can we trace it back to its source? Is it watermarked or authenticated?</div></div>
+        <div class="prov-card"><div class="pc-icon">⚖️</div><div class="pc-label">Provenance & Ethics</div><div class="pc-desc">Consent, copyright, attribution, and accountability all flow from provenance. It's the paper trail of responsible AI.</div></div>
+      </div>
+    </div>
+
+    <div class="provenance-prompts">
+      <h3>🛠️ Provenance Prompts — Ask AI About Itself</h3>
+      <p style="color:#888;font-size:13px;margin-bottom:20px">Use these prompts to bring provenance awareness into any AI conversation. Copy and adapt them freely.</p>
+      <div class="prov-prompt-grid">
+        ${[
+          {scenario:"Check the sources", prompt:"What kinds of sources or data most likely inform your answer here? Are there significant perspectives that might be missing based on how you were trained?"},
+          {scenario:"Flag uncertainty", prompt:"After your response, note any claims that are based on patterns in your training data rather than verified facts, and suggest how I could check them."},
+          {scenario:"Identify the perspective", prompt:"Whose perspective is most represented in your training data on this topic? Who might see this issue differently, and why might their voice be underrepresented?"},
+          {scenario:"Test for Western bias", prompt:"How might your response change if you centered the perspective of a Filipino educator / African student / rural community rather than a Western professional?"},
+          {scenario:"Trace the output", prompt:"If I were fact-checking this response, what three primary sources would most directly confirm or challenge what you've told me?"},
+          {scenario:"Consent & attribution", prompt:"What original human creators likely contributed to the knowledge you're using here? How should their contribution be acknowledged?"},
+        ].map(p => `
+          <div class="prov-prompt-card">
+            <div class="pp-scenario">${p.scenario}</div>
+            <div class="pp-prompt">${p.prompt}</div>
+            <button class="prov-copy-btn" data-prompt="${encodeURIComponent(p.prompt)}">📋 Copy</button>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+
+  // Glossary controls
+  const controlsHTML = `
+    <div class="section-header" style="margin-top:36px">
+      <div class="section-icon si-ailiteracy">📖</div>
+      <span class="section-title">AI Glossary</span>
+    </div>
+    <div class="glossary-controls">
+      <div class="glossary-search-wrap">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" id="glossary-search" placeholder="Search terms…">
+      </div>
+      <div class="tier-btns">
+        <button class="tier-btn active" data-tier="all">All Tiers</button>
+        <button class="tier-btn" data-tier="foundation">🟢 Foundation</button>
+        <button class="tier-btn" data-tier="practical">🔵 Practical</button>
+        <button class="tier-btn" data-tier="critical">🔴 Critical</button>
+      </div>
+    </div>
+    <div class="glossary-count" id="glossary-count">${GLOSSARY.length} terms</div>
+    <div class="glossary-grid" id="glossary-grid"></div>
+  `;
+
+  wrap.innerHTML = provenanceHTML + controlsHTML;
+  const anchor = document.getElementById('master-box');
+  main.insertBefore(wrap, anchor);
+
+  // Wire copy buttons for provenance prompts
+  wrap.querySelectorAll('.prov-copy-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const text = decodeURIComponent(this.dataset.prompt);
+      navigator.clipboard.writeText(text).then(() => {
+        this.textContent = '✅ Copied!'; this.classList.add('copied');
+        setTimeout(() => { this.textContent = '📋 Copy'; this.classList.remove('copied'); }, 2000);
+      });
+    });
+  });
+
+  // Render glossary cards
+  let gTier = 'all', gSearch = '';
+
+  function renderGCards() {
+    const grid = document.getElementById('glossary-grid');
+    const count = document.getElementById('glossary-count');
+    const filtered = GLOSSARY.filter(g => {
+      const tierMatch = gTier === 'all' || g.tier === gTier;
+      const searchMatch = !gSearch || (g.term + ' ' + g.def + ' ' + g.context).toLowerCase().includes(gSearch);
+      return tierMatch && searchMatch;
+    }).sort((a,b) => a.term.localeCompare(b.term));
+
+    count.textContent = `${filtered.length} term${filtered.length !== 1 ? 's' : ''}`;
+    grid.innerHTML = '';
+
+    if (!filtered.length) {
+      grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="e-icon">🔍</div><p>No terms match. Try a broader search.</p></div>';
+      return;
+    }
+
+    filtered.forEach((g, i) => {
+      const card = document.createElement('div');
+      card.className = 'g-card';
+      card.style.animationDelay = `${i * 30}ms`;
+      const tierLabel = g.tier === 'foundation' ? '🟢 Foundation' : g.tier === 'practical' ? '🔵 Practical' : '🔴 Critical';
+      const tierClass = `tier-${g.tier}`;
+      card.innerHTML = `
+        <div class="g-card-top">
+          <div class="g-icon">${g.icon}</div>
+          <div class="g-term-wrap">
+            <div class="g-term">${g.term}</div>
+            <span class="g-tier ${tierClass}">${tierLabel}</span>
+          </div>
+        </div>
+        <div class="g-def">${g.def}</div>
+        ${g.context ? `<div class="g-context">${g.context}</div>` : ''}
+        ${g.prompt ? `<div class="g-prompt-tip"><strong>💬 Try this prompt</strong>${g.prompt}</div>` : ''}
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  renderGCards();
+
+  wrap.querySelectorAll('.tier-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      wrap.querySelectorAll('.tier-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active'); gTier = this.dataset.tier; renderGCards();
+    });
+  });
+
+  document.getElementById('glossary-search').addEventListener('input', function() {
+    gSearch = this.value.toLowerCase().trim(); renderGCards();
+  });
+}
+
 document.querySelectorAll('.cat-btn').forEach(btn=>{
   btn.addEventListener('click',function(){
     document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
@@ -816,6 +1147,7 @@ document.querySelectorAll('.cat-btn').forEach(btn=>{
       document.getElementById('resources-wrap').style.display='none';
       renderAILiteracy(); return;
     }
+    if(activeFilter==='glossary'){ renderGlossary(); return; }
     render();
   });
 });
