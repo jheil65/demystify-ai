@@ -64,6 +64,75 @@ body { font-family: 'Nunito Sans', sans-serif; background: var(--light); color: 
 .cat-btn.active[data-cat="framework"]  { color:var(--blue);   border-bottom-color:var(--blue); }
 .cat-btn.active[data-cat="ailiteracy"] { color:var(--green);  border-bottom-color:var(--green); }
 .cat-btn.active[data-cat="glossary"]   { color:var(--yellow); border-bottom-color:var(--yellow); filter: brightness(0.8); }
+.cat-btn.active[data-cat="podcasts"]   { color:var(--orange); border-bottom-color:var(--orange); }
+
+/* PODCASTS */
+.podcasts-wrap { margin-top: 8px; }
+.podcasts-intro {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+  border-radius: 20px; padding: 36px; margin-bottom: 32px;
+  color: white; position: relative; overflow: hidden;
+}
+.podcasts-intro::before { content:'🎙️'; position:absolute; font-size:140px; right:-10px; top:-20px; opacity:0.07; }
+.podcasts-intro .pi-badge {
+  display:inline-flex; align-items:center; gap:6px;
+  background:rgba(255,107,53,0.2); border:1px solid rgba(255,107,53,0.4);
+  border-radius:20px; padding:4px 14px; margin-bottom:14px;
+  font-family:'Nunito',sans-serif; font-weight:700; font-size:11px;
+  color:var(--orange); text-transform:uppercase; letter-spacing:0.08em;
+}
+.podcasts-intro h2 { font-family:'Nunito',sans-serif; font-weight:900; font-size:clamp(1.4rem,3vw,2rem); color:white; margin-bottom:10px; }
+.podcasts-intro p { color:rgba(255,255,255,0.7); font-size:14px; line-height:1.7; max-width:600px; }
+
+.podcast-filter-bar { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:28px; }
+.pod-filter-btn {
+  padding:7px 16px; border-radius:20px; border:2px solid var(--border);
+  background:transparent; font-family:'Nunito',sans-serif; font-weight:700;
+  font-size:12px; cursor:pointer; transition:all 0.18s; color:#888;
+}
+.pod-filter-btn:hover { border-color:var(--orange); color:var(--orange); }
+.pod-filter-btn.active { background:var(--navy); border-color:var(--navy); color:white; }
+
+.podcasts-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:20px; }
+
+.pod-card {
+  background:var(--white); border:2px solid var(--border); border-radius:20px;
+  overflow:hidden; transition:all 0.22s; display:flex; flex-direction:column;
+  opacity:0; transform:translateY(18px); animation:cardIn 0.4s ease forwards;
+}
+.pod-card:hover { transform:translateY(-4px); box-shadow:0 12px 32px rgba(0,0,0,0.12); border-color:#ccd; }
+
+.pod-card-banner {
+  height: 6px;
+}
+.pod-card-body { padding:22px; flex:1; display:flex; flex-direction:column; gap:12px; }
+.pod-card-top { display:flex; align-items:flex-start; gap:14px; }
+.pod-emoji { font-size:36px; flex-shrink:0; line-height:1; }
+.pod-info { flex:1; }
+.pod-title { font-family:'Nunito',sans-serif; font-weight:900; font-size:1rem; color:var(--navy); line-height:1.25; margin-bottom:4px; }
+.pod-host { font-size:12px; color:var(--gray); font-weight:600; margin-bottom:4px; }
+.pod-tags { display:flex; flex-wrap:wrap; gap:5px; }
+.pod-tag {
+  font-family:'Nunito',sans-serif; font-weight:700; font-size:10px;
+  padding:2px 8px; border-radius:10px; text-transform:uppercase; letter-spacing:0.08em;
+}
+.pod-desc { font-size:13px; color:#444; line-height:1.65; flex:1; }
+.pod-why {
+  background:var(--light); border-left:3px solid var(--orange);
+  border-radius:0 8px 8px 0; padding:9px 12px;
+  font-size:12px; color:#555; line-height:1.6;
+}
+.pod-why strong { color:var(--navy); font-family:'Nunito',sans-serif; font-weight:800; font-size:11px; text-transform:uppercase; letter-spacing:0.08em; display:block; margin-bottom:2px; }
+.pod-links { display:flex; gap:8px; flex-wrap:wrap; padding-top:4px; margin-top:auto; border-top:1px solid var(--border); padding:12px 22px 16px; }
+.pod-link-btn {
+  display:inline-flex; align-items:center; gap:5px;
+  padding:6px 14px; border-radius:10px; border:1.5px solid var(--border);
+  font-family:'Nunito',sans-serif; font-weight:700; font-size:11.5px;
+  text-decoration:none; transition:all 0.18s; color:var(--navy); background:var(--light);
+}
+.pod-link-btn:hover { background:var(--navy); color:white; border-color:var(--navy); }
+.pod-link-btn.featured { background:var(--orange); border-color:var(--orange); color:white; }
+.pod-link-btn.featured:hover { background:#e55a25; }
 
 /* AI LITERACY SECTION */
 .ailiteracy-wrap { margin-top: 0; }
@@ -540,6 +609,7 @@ footer a { color:var(--teal);text-decoration:none; }
       <div class="stat-chip"><div class="num">20+</div><div class="lbl">Techniques</div></div>
       <div class="stat-chip"><div class="num">6</div><div class="lbl">Frameworks</div></div>
       <div class="stat-chip"><div class="num">50+</div><div class="lbl">Glossary Terms</div></div>
+      <div class="stat-chip"><div class="num">8</div><div class="lbl">Podcasts</div></div>
       <div class="stat-chip"><div class="num">9</div><div class="lbl">Resources</div></div>
       <div class="stat-chip"><div class="num">6</div><div class="lbl">Newsletters</div></div>
     </div>
@@ -560,6 +630,7 @@ footer a { color:var(--teal);text-decoration:none; }
     <button class="cat-btn" data-cat="framework"><span class="icon">🏗️</span> Frameworks</button>
     <button class="cat-btn" data-cat="ailiteracy"><span class="icon">🧠</span> AI Literacy</button>
     <button class="cat-btn" data-cat="glossary"><span class="icon">📖</span> Glossary</button>
+    <button class="cat-btn" data-cat="podcasts"><span class="icon">🎙️</span> Podcasts</button>
   </div>
 </div>
 
@@ -1137,6 +1208,219 @@ function renderGlossary() {
   });
 }
 
+// ── PODCASTS ─────────────────────────────────────────────────────────────────
+const PODCASTS = [
+  {
+    emoji:"🌟", title:"I've Got Questions with Sinead Bovell",
+    host:"Sinead Bovell · WAYE", freq:"Weekly",
+    tags:["Futurism","Ethics","Equity","Society"],
+    tagColor:"#EF3FA9",
+    banner:"linear-gradient(90deg,#EF3FA9,#783CBD)",
+    audience:["new-to-ai","educators","futurism"],
+    featured:true,
+    desc:"Your front-row seat to understanding how AI and emerging technologies are reshaping the world and your life. Sinead cuts through the noise to explore what's happening beneath the surface of today's biggest tech shifts — and what they signal about tomorrow.",
+    why:"Perfect for this site's audience: Sinead is an 11-time UN speaker dubbed 'the AI educator for the non-nerds' by Vogue. She centers equity, ethics, and the people most affected by AI — not just the tech itself. Guests include Kate Crawford, Mustafa Suleyman, and top policy thinkers.",
+    apple:"https://podcasts.apple.com/us/podcast/ive-got-questions-with-sinead-bovell/id1841491246",
+    spotify:"https://open.spotify.com/show/0PBDy9jiLEikDvF6JCWejE",
+    web:"https://www.sineadbovell.com"
+  },
+  {
+    emoji:"📰", title:"Hard Fork",
+    host:"Kevin Roose & Casey Newton · The New York Times", freq:"Weekly",
+    tags:["News","Tech Policy","Society","Accessible"],
+    tagColor:"#2E75B6",
+    banner:"linear-gradient(90deg,#1B3A6B,#2E75B6)",
+    audience:["new-to-ai","educators","futurism"],
+    featured:true,
+    desc:"A show about the future that's already here. Two of tech journalism's sharpest voices make sense of the rapidly changing world of AI and technology — smart, funny, and never condescending.",
+    why:"The gold standard for accessible, trustworthy AI news. Great for educators who want to stay current without drowning in jargon. Covers policy, ethics, and real-world impact alongside the latest developments.",
+    apple:"https://podcasts.apple.com/us/podcast/hard-fork/id1528594034",
+    spotify:"https://open.spotify.com/show/44fllCS2FTFr2x2kjP9xeT",
+    web:"https://www.nytimes.com/column/hard-fork"
+  },
+  {
+    emoji:"🏫", title:"ChatEDU — The AI & Education Podcast",
+    host:"Matt Mervis & Dr. Elizabeth Radday · EdAdvance", freq:"Weekly",
+    tags:["Education","K-12","Practical","Policy"],
+    tagColor:"#22D3C5",
+    banner:"linear-gradient(90deg,#22D3C5,#2E75B6)",
+    audience:["educators","new-to-ai"],
+    featured:false,
+    desc:"Your go-to podcast for AI and education — from helping teachers streamline tasks to guiding administrators in shaping thoughtful policy. Timely, practical, and educator-first in everything it covers.",
+    why:"Directly relevant for your SDCOE colleagues and Filipino educator audience. Covers AI literacy in schools, student AI use, policy developments, and classroom tools — all with a grounded, no-hype perspective.",
+    apple:"https://podcasts.apple.com/us/podcast/chatedu-the-ai-education-podcast/id1728870840",
+    spotify:"https://open.spotify.com/show/2F2srBvTeYu9Xcg6K910ol",
+    web:"https://www.edadvance.org"
+  },
+  {
+    emoji:"🛠️", title:"How I AI",
+    host:"Claire Vo", freq:"~Weekly",
+    tags:["Practical","Workflows","Skill-Building","Accessible"],
+    tagColor:"#06D6A0",
+    banner:"linear-gradient(90deg,#06D6A0,#22D3C5)",
+    audience:["new-to-ai","educators","professionals"],
+    featured:false,
+    desc:"Each 30-minute episode features a guest sharing one practical, high-impact way they've woven AI into their work or life. No hand-waving futurism — just tips and ready-to-use workflows you can copy, adapt, and make your own.",
+    why:"Ideal for TESDA vocational learners and busy professionals. Short, skill-focused, immediately actionable. Every episode is a single concrete use case — exactly the format that works for people new to AI.",
+    apple:"https://podcasts.apple.com/us/podcast/how-i-ai/id1750936522",
+    spotify:"https://open.spotify.com/show/3AlMFEQaHRXRnFHFHNoiVM",
+    web:"https://www.howiai.fm"
+  },
+  {
+    emoji:"🔒", title:"Into AI Safety",
+    host:"Jacob Haimes", freq:"Biweekly",
+    tags:["Ethics","Policy","Safety","Governance"],
+    tagColor:"#783CBD",
+    banner:"linear-gradient(90deg,#783CBD,#EF3FA9)",
+    audience:["futurism","educators","professionals"],
+    featured:false,
+    desc:"Makes conversations around AI safety, governance, and development accessible to everyone — regardless of technical background. Bridges the gap between complex policy discussions and practical understanding.",
+    why:"Strong alignment with your human-centered AI and equity mission. Covers copyright battles, accountability, and existential risks without jargon or elitism. Good for advanced learners who want to think critically about AI's societal impact.",
+    apple:"https://podcasts.apple.com/us/podcast/into-ai-safety/id1691620589",
+    spotify:"https://open.spotify.com/show/4ZYVuHqQQkLzKME73yJXNG",
+    web:"https://www.intoaisafety.com"
+  },
+  {
+    emoji:"🧠", title:"The Cognitive Revolution",
+    host:"Nathan Labenz & Erik Torenberg", freq:"Biweekly",
+    tags:["Deep Thinking","Policy","Futurism","Advanced"],
+    tagColor:"#FF6B35",
+    banner:"linear-gradient(90deg,#FF6B35,#FFD93D)",
+    audience:["futurism","professionals"],
+    featured:false,
+    desc:"AI through the lens of philosophy, ethics, regulation, and disruption — but somehow still practical. Interviews with the builders on the edge of AI exploring the dramatic shift it will unlock. Goes deep without losing the bigger picture.",
+    why:"Best for your keynote research and advanced training audiences. Covers the philosophical and societal dimensions of AI that most podcasts skip. Good background listening for your 'Won't Get Fooled AgAIn' material.",
+    apple:"https://podcasts.apple.com/us/podcast/the-cognitive-revolution-ai-builders-researchers-and/id1669813431",
+    spotify:"https://open.spotify.com/show/6yHyok3M3BjqzR0VB5MSyk",
+    web:"https://www.cognitiverevolution.ai"
+  },
+  {
+    emoji:"🌐", title:"Eye on AI",
+    host:"Craig S. Smith · Former NYT Correspondent", freq:"Biweekly",
+    tags:["Context","Society","Implications","Balanced"],
+    tagColor:"#2E75B6",
+    banner:"linear-gradient(90deg,#2E75B6,#22D3C5)",
+    audience:["educators","professionals","futurism"],
+    featured:false,
+    desc:"Puts the latest AI developments into broader context — covering both the technology and its societal implications. Episodes range from AI-powered code generation to ethics, always grounding technical advances in the bigger picture.",
+    why:"Great for educators who want to understand AI's real-world impact without getting lost in engineering details. The host's journalism background means every episode explains why something matters, not just what it is.",
+    apple:"https://podcasts.apple.com/us/podcast/eye-on-ai/id1438378439",
+    spotify:"https://open.spotify.com/show/7f8WFbcnBBUXzZpfj3rBQO",
+    web:"https://www.eye-on.ai"
+  },
+  {
+    emoji:"⚡", title:"The AI Daily Brief",
+    host:"Nathaniel Whittemore (NLW)", freq:"Daily",
+    tags:["Daily News","Current Events","Quick","Accessible"],
+    tagColor:"#FFD93D",
+    banner:"linear-gradient(90deg,#FFD93D,#FF6B35)",
+    audience:["new-to-ai","professionals","educators"],
+    featured:false,
+    desc:"A tight daily news analysis show that helps you track the most important AI developments — model releases, research breakthroughs, and policy debates. Always puts the latest news in context, not just headlines.",
+    why:"Perfect for staying current in just a few minutes a day. Great for commuting, low-bandwidth listening, or a quick morning update. Ideal for educators who want to answer 'what happened in AI this week' without spending hours reading.",
+    apple:"https://podcasts.apple.com/us/podcast/the-ai-daily-brief-artificial-intelligence-news/id1680633614",
+    spotify:"https://open.spotify.com/show/5WeXjuoZFrqDrNUlKMEDjD",
+    web:"https://www.aidailybrief.com"
+  },
+];
+
+const POD_AUDIENCES = {
+  "new-to-ai":    { label:"New to AI",     color:"#06D6A0" },
+  "educators":    { label:"Educators",     color:"#2E75B6" },
+  "futurism":     { label:"Futurism",      color:"#EF3FA9" },
+  "professionals":{ label:"Professionals", color:"#783CBD" },
+};
+
+function renderPodcasts() {
+  const main = document.getElementById('main-content');
+  main.querySelectorAll('.dyn-section').forEach(el => el.remove());
+  document.getElementById('master-box').style.display = 'none';
+  document.getElementById('resources-wrap').style.display = 'none';
+
+  const wrap = document.createElement('div');
+  wrap.className = 'dyn-section podcasts-wrap';
+
+  let podFilter = 'all';
+
+  const audienceCounts = {};
+  PODCASTS.forEach(p => p.audience.forEach(a => { audienceCounts[a] = (audienceCounts[a]||0)+1; }));
+
+  wrap.innerHTML = `
+    <div class="podcasts-intro">
+      <div class="pi-badge">🎙️ Curated Listening</div>
+      <h2>AI & Futurism Podcasts</h2>
+      <p>The best shows for staying informed, thinking critically, and going deeper on AI — curated for educators, trainers, and anyone on a learning journey. Works on any device, any commute, any bandwidth.</p>
+    </div>
+    <div class="podcast-filter-bar">
+      <button class="pod-filter-btn active" data-audience="all">🎧 All Podcasts (${PODCASTS.length})</button>
+      <button class="pod-filter-btn" data-audience="new-to-ai">🟢 New to AI (${audienceCounts['new-to-ai']||0})</button>
+      <button class="pod-filter-btn" data-audience="educators">🏫 Educators (${audienceCounts['educators']||0})</button>
+      <button class="pod-filter-btn" data-audience="futurism">🔮 Futurism (${audienceCounts['futurism']||0})</button>
+      <button class="pod-filter-btn" data-audience="professionals">💼 Professionals (${audienceCounts['professionals']||0})</button>
+    </div>
+    <div class="podcasts-grid" id="podcasts-grid"></div>
+  `;
+
+  const anchor = document.getElementById('master-box');
+  main.insertBefore(wrap, anchor);
+
+  function renderPodCards() {
+    const grid = document.getElementById('podcasts-grid');
+    grid.innerHTML = '';
+    const filtered = podFilter === 'all'
+      ? PODCASTS
+      : PODCASTS.filter(p => p.audience.includes(podFilter));
+
+    filtered.forEach((p, i) => {
+      const card = document.createElement('div');
+      card.className = 'pod-card';
+      card.style.animationDelay = `${i * 60}ms`;
+
+      const tagsHTML = p.tags.map(t =>
+        `<span class="pod-tag" style="background:${p.tagColor}22;color:${p.tagColor}">${t}</span>`
+      ).join('');
+
+      const audienceHTML = p.audience.map(a =>
+        `<span class="pod-tag" style="background:${POD_AUDIENCES[a].color}15;color:${POD_AUDIENCES[a].color}">${POD_AUDIENCES[a].label}</span>`
+      ).join('');
+
+      card.innerHTML = `
+        <div class="pod-card-banner" style="background:${p.banner}"></div>
+        <div class="pod-card-body">
+          <div class="pod-card-top">
+            <div class="pod-emoji">${p.emoji}</div>
+            <div class="pod-info">
+              <div class="pod-title">${p.title}${p.featured ? ' ⭐' : ''}</div>
+              <div class="pod-host">${p.host} · ${p.freq}</div>
+              <div class="pod-tags">${tagsHTML}</div>
+            </div>
+          </div>
+          <div class="pod-desc">${p.desc}</div>
+          <div class="pod-why"><strong>🎯 Why it's here</strong>${p.why}</div>
+          <div class="pod-tags" style="margin-top:4px">${audienceHTML}</div>
+        </div>
+        <div class="pod-links">
+          ${p.featured ? `<a class="pod-link-btn featured" href="${p.spotify}" target="_blank">🎵 Spotify</a>` : `<a class="pod-link-btn" href="${p.spotify}" target="_blank">🎵 Spotify</a>`}
+          <a class="pod-link-btn" href="${p.apple}" target="_blank">🎵 Apple</a>
+          <a class="pod-link-btn" href="${p.web}" target="_blank">🌐 Website</a>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  renderPodCards();
+
+  wrap.querySelectorAll('.pod-filter-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      wrap.querySelectorAll('.pod-filter-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      podFilter = this.dataset.audience;
+      renderPodCards();
+    });
+  });
+}
+
 document.querySelectorAll('.cat-btn').forEach(btn=>{
   btn.addEventListener('click',function(){
     document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
@@ -1148,6 +1432,7 @@ document.querySelectorAll('.cat-btn').forEach(btn=>{
       renderAILiteracy(); return;
     }
     if(activeFilter==='glossary'){ renderGlossary(); return; }
+    if(activeFilter==='podcasts'){ renderPodcasts(); return; }
     render();
   });
 });
