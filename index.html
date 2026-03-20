@@ -4,938 +4,824 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Prompting Library — Global Learning Access</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Nunito+Sans:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --pink:    #EF3FA9;
-    --purple:  #783CBD;
-    --teal:    #22D3C5;
-    --gray:    #77777A;
-    --navy:    #1B3A6B;
-    --blue:    #2E75B6;
-    --light:   #F4F6FA;
-    --white:   #FFFFFF;
-    --ink:     #1A1A2E;
-    --card-bg: #FFFFFF;
-    --border:  #E2E8F0;
-    --shadow:  0 2px 16px rgba(27,58,107,0.08);
-    --shadow-hover: 0 8px 32px rgba(27,58,107,0.16);
-  }
+:root {
+  --pink:   #EF3FA9;
+  --purple: #783CBD;
+  --teal:   #22D3C5;
+  --navy:   #1B3A6B;
+  --blue:   #2E75B6;
+  --yellow: #FFD93D;
+  --orange: #FF6B35;
+  --green:  #06D6A0;
+  --ink:    #1A1A2E;
+  --light:  #F7F8FC;
+  --white:  #FFFFFF;
+  --border: #E4E9F2;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Nunito Sans', sans-serif; background: var(--light); color: var(--ink); overflow-x: hidden; }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+/* HERO */
+.hero { background: var(--navy); position: relative; overflow: hidden; padding: 56px 32px 64px; }
+.hero-bubbles span { position: absolute; border-radius: 50%; opacity: 0.12; animation: float 6s ease-in-out infinite; }
+.hero-bubbles span:nth-child(1) { width:180px;height:180px;background:var(--pink);   top:-40px;  right:8%;  animation-delay:0s; }
+.hero-bubbles span:nth-child(2) { width:120px;height:120px;background:var(--teal);   bottom:-20px;left:5%; animation-delay:1.5s; }
+.hero-bubbles span:nth-child(3) { width:80px; height:80px; background:var(--yellow); top:30%;   right:20%; animation-delay:3s; }
+.hero-bubbles span:nth-child(4) { width:60px; height:60px; background:var(--purple); top:20%;   left:30%;  animation-delay:2s; }
+@keyframes float { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-18px) scale(1.05)} }
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--light);
-    color: var(--ink);
-    min-height: 100vh;
-  }
+.hero-inner { max-width:1100px; margin:0 auto; position:relative; z-index:1; }
+.hero-pill { display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); border-radius:40px; padding:6px 16px 6px 10px; margin-bottom:20px; }
+.hero-pill .dot { width:8px;height:8px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
+.hero-pill span { color:rgba(255,255,255,0.8);font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;font-family:'Nunito',sans-serif; }
+.hero h1 { font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(2.2rem,6vw,3.8rem);color:var(--white);line-height:1.1;margin-bottom:16px; }
+.hero h1 .accent { color:var(--yellow); }
+.hero h1 .accent2 { color:var(--teal); }
+.hero-sub { color:rgba(255,255,255,0.65);font-size:1.05rem;font-weight:300;max-width:540px;line-height:1.7;margin-bottom:32px; }
+.hero-stats { display:flex;gap:20px;flex-wrap:wrap; }
+.stat-chip { background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:12px;padding:10px 18px;text-align:center; }
+.stat-chip .num { font-family:'Nunito',sans-serif;font-weight:900;font-size:1.6rem;color:var(--yellow);line-height:1; }
+.stat-chip .lbl { font-size:11px;color:rgba(255,255,255,0.55);font-weight:600;text-transform:uppercase;letter-spacing:0.08em;margin-top:2px; }
 
-  /* ── HEADER ── */
-  header {
-    background: var(--navy);
-    padding: 0;
-    position: relative;
-    overflow: hidden;
-  }
-  header::before {
-    content: '';
-    position: absolute;
-    top: -60px; right: -80px;
-    width: 360px; height: 360px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(239,63,169,0.18) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  header::after {
-    content: '';
-    position: absolute;
-    bottom: -40px; left: 10%;
-    width: 280px; height: 280px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(34,211,197,0.12) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .header-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 52px 32px 48px;
-    position: relative;
-    z-index: 1;
-  }
-  .header-badge {
-    display: inline-block;
-    background: rgba(239,63,169,0.15);
-    border: 1px solid rgba(239,63,169,0.4);
-    color: var(--pink);
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 4px 12px;
-    border-radius: 20px;
-    margin-bottom: 18px;
-  }
-  header h1 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(2rem, 5vw, 3.2rem);
-    color: var(--white);
-    line-height: 1.15;
-    margin-bottom: 12px;
-    max-width: 700px;
-  }
-  header h1 em {
-    color: var(--teal);
-    font-style: italic;
-  }
-  header p.subtitle {
-    color: rgba(255,255,255,0.65);
-    font-size: 1rem;
-    font-weight: 300;
-    max-width: 560px;
-    line-height: 1.6;
-    margin-bottom: 28px;
-  }
-  .header-meta {
-    display: flex;
-    gap: 24px;
-    flex-wrap: wrap;
-  }
-  .meta-item {
-    color: rgba(255,255,255,0.5);
-    font-size: 12px;
-    font-weight: 400;
-    letter-spacing: 0.04em;
-  }
-  .meta-item strong {
-    color: rgba(255,255,255,0.8);
-    font-weight: 500;
-  }
+/* NAV */
+.cat-strip { background:var(--white);border-bottom:2px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(0,0,0,0.07); }
+.cat-strip-inner { max-width:1100px;margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:6px;overflow-x:auto;scrollbar-width:none; }
+.cat-strip-inner::-webkit-scrollbar { display:none; }
+.search-wrap { position:relative;margin-right:8px;flex-shrink:0; }
+.search-wrap svg { position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#aab;pointer-events:none; }
+#search { padding:10px 12px 10px 38px;border:2px solid var(--border);border-radius:40px;font-family:'Nunito Sans',sans-serif;font-size:13.5px;width:200px;outline:none;transition:all 0.2s;background:var(--light); }
+#search:focus { border-color:var(--pink);width:240px;background:#fff; }
+.cat-btn { display:flex;align-items:center;gap:7px;padding:10px 18px;border:none;background:transparent;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;color:#888;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:all 0.18s;margin-bottom:-2px; }
+.cat-btn:hover { color:var(--ink); }
+.cat-btn .icon { font-size:16px; }
+.cat-btn.active[data-cat="all"]       { color:var(--navy);  border-bottom-color:var(--navy); }
+.cat-btn.active[data-cat="tone"]      { color:var(--pink);  border-bottom-color:var(--pink); }
+.cat-btn.active[data-cat="decision"]  { color:var(--purple);border-bottom-color:var(--purple); }
+.cat-btn.active[data-cat="clarity"]   { color:#0ab8b0;      border-bottom-color:var(--teal); }
+.cat-btn.active[data-cat="creative"]  { color:var(--orange);border-bottom-color:var(--orange); }
+.cat-btn.active[data-cat="framework"]  { color:var(--blue);   border-bottom-color:var(--blue); }
+.cat-btn.active[data-cat="ailiteracy"] { color:var(--green);  border-bottom-color:var(--green); }
 
-  /* ── CONTROLS ── */
-  .controls-bar {
-    background: var(--white);
-    border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  }
-  .controls-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 14px 32px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-  .search-wrap {
-    position: relative;
-    flex: 1;
-    min-width: 200px;
-    max-width: 340px;
-  }
-  .search-wrap svg {
-    position: absolute;
-    left: 12px; top: 50%;
-    transform: translateY(-50%);
-    color: var(--gray);
-    pointer-events: none;
-  }
-  #search {
-    width: 100%;
-    padding: 9px 12px 9px 38px;
-    border: 1.5px solid var(--border);
-    border-radius: 8px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    color: var(--ink);
-    background: var(--light);
-    transition: border-color 0.2s;
-    outline: none;
-  }
-  #search:focus { border-color: var(--blue); background: #fff; }
+/* AI LITERACY SECTION */
+.ailiteracy-wrap { margin-top: 0; }
+.definition-card {
+  background: linear-gradient(135deg, #0f2a52 0%, #1B3A6B 60%, #1a4a6b 100%);
+  border-radius: 20px;
+  padding: 36px;
+  margin-bottom: 28px;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+.definition-card::before {
+  content: '📖';
+  position: absolute;
+  font-size: 130px;
+  right: -10px; top: -20px;
+  opacity: 0.07;
+}
+.definition-card .def-label {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--teal);
+  margin-bottom: 10px;
+}
+.definition-card .def-quote {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  color: white;
+  line-height: 1.45;
+  margin-bottom: 14px;
+  border-left: 4px solid var(--teal);
+  padding-left: 18px;
+}
+.definition-card .def-source {
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+  font-style: italic;
+}
+.definition-card .def-source a { color: var(--teal); text-decoration: none; }
 
-  .filter-group {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-  .filter-btn {
-    padding: 7px 16px;
-    border-radius: 20px;
-    border: 1.5px solid var(--border);
-    background: transparent;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--gray);
-    cursor: pointer;
-    transition: all 0.18s;
-    white-space: nowrap;
-  }
-  .filter-btn:hover { border-color: var(--blue); color: var(--blue); }
-  .filter-btn.active {
-    background: var(--navy);
-    border-color: var(--navy);
-    color: var(--white);
-  }
-  .filter-btn[data-cat="tone"].active    { background: var(--pink);   border-color: var(--pink); }
-  .filter-btn[data-cat="decision"].active { background: var(--purple); border-color: var(--purple); }
-  .filter-btn[data-cat="clarity"].active  { background: var(--teal);   border-color: var(--teal); color: var(--navy); }
-  .filter-btn[data-cat="creative"].active { background: var(--blue);   border-color: var(--blue); }
-  .filter-btn[data-cat="framework"].active { background: var(--navy);  border-color: var(--navy); }
+.competencies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 36px;
+}
+.competency-card {
+  background: var(--white);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  padding: 22px;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.competency-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--green);
+}
+.competency-card:nth-child(2)::before { background: var(--teal); }
+.competency-card:nth-child(3)::before { background: var(--blue); }
+.competency-card:nth-child(4)::before { background: var(--purple); }
+.competency-card:nth-child(5)::before { background: var(--pink); }
+.competency-card:nth-child(6)::before { background: var(--orange); }
+.competency-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+.competency-card .c-icon { font-size: 28px; margin-bottom: 10px; }
+.competency-card .c-question {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: 14px;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+.competency-card .c-desc {
+  font-size: 12.5px;
+  color: #666;
+  line-height: 1.6;
+}
+.competency-card .c-skills {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.skill-chip {
+  font-family: 'Nunito', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 10px;
+  background: var(--light);
+  color: var(--navy);
+  border: 1px solid var(--border);
+}
 
-  /* ── MAIN GRID ── */
-  main {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 40px 32px 80px;
-  }
+.frameworks-compare {
+  background: var(--white);
+  border: 2px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 28px;
+}
+.frameworks-compare-header {
+  background: var(--navy);
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.frameworks-compare-header h3 {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: 1.1rem;
+  color: white;
+}
+.frameworks-compare-header p {
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  margin-top: 2px;
+}
+.framework-row {
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
+}
+.framework-row:last-child { border-bottom: none; }
+.framework-row:hover { background: var(--light); }
+.fw-org {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--navy);
+}
+.fw-org span {
+  display: block;
+  font-weight: 400;
+  font-size: 11px;
+  color: var(--gray);
+  margin-top: 2px;
+}
+.fw-domains {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.fw-domain {
+  font-family: 'Nunito', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 10px;
+  background: var(--light);
+  color: var(--ink);
+  border: 1px solid var(--border);
+}
+.fw-link a {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--blue);
+  text-decoration: none;
+  padding: 6px 14px;
+  background: var(--light);
+  border-radius: 8px;
+  white-space: nowrap;
+  transition: all 0.18s;
+  display: inline-block;
+}
+.fw-link a:hover { background: var(--navy); color: white; }
 
-  .section-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--gray);
-    margin: 40px 0 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-  .section-label .dot {
-    display: inline-block;
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
+.why-box {
+  background: linear-gradient(135deg, rgba(239,63,169,0.08) 0%, rgba(34,211,197,0.08) 100%);
+  border: 2px solid rgba(239,63,169,0.2);
+  border-radius: 20px;
+  padding: 32px;
+  margin-bottom: 28px;
+}
+.why-box h3 {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: 1.2rem;
+  color: var(--navy);
+  margin-bottom: 16px;
+}
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+}
+.why-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.why-item .wi-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.why-item .wi-text {
+  font-size: 13px;
+  color: #444;
+  line-height: 1.6;
+}
+.why-item .wi-text strong {
+  display: block;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 2px;
+}
 
-  .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 20px;
-  }
+.ailiteracy-bg    { background: rgba(6,214,160,0.12); }
+.ailiteracy-badge { background: rgba(6,214,160,0.12); color: #059669; }
+.si-ailiteracy    { background: rgba(6,214,160,0.15); }
 
-  /* ── CARD ── */
-  .card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 24px;
-    box-shadow: var(--shadow);
-    transition: box-shadow 0.22s, transform 0.22s;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    position: relative;
-    overflow: hidden;
-  }
-  .card:hover {
-    box-shadow: var(--shadow-hover);
-    transform: translateY(-2px);
-  }
-  .card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    border-radius: 14px 14px 0 0;
-  }
-  .card[data-cat="tone"]::before      { background: var(--pink); }
-  .card[data-cat="decision"]::before  { background: var(--purple); }
-  .card[data-cat="clarity"]::before   { background: var(--teal); }
-  .card[data-cat="creative"]::before  { background: var(--blue); }
-  .card[data-cat="framework"]::before { background: var(--navy); }
+/* MAIN */
+main { max-width:1100px;margin:0 auto;padding:40px 24px 80px; }
+.section-header { display:flex;align-items:center;gap:14px;margin:44px 0 20px; }
+.section-icon { width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0; }
+.section-title { font-family:'Nunito',sans-serif;font-weight:900;font-size:1.35rem;color:var(--ink); }
+.section-count { font-family:'Nunito',sans-serif;font-weight:700;font-size:12px;padding:3px 10px;border-radius:20px;margin-left:4px; }
 
-  .card-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 10px;
-  }
-  .card-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.1rem;
-    color: var(--navy);
-    line-height: 1.3;
-  }
-  .card-tag {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 3px 10px;
-    border-radius: 12px;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-  .card[data-cat="tone"]      .card-tag { background: rgba(239,63,169,0.1);  color: var(--pink); }
-  .card[data-cat="decision"]  .card-tag { background: rgba(120,60,189,0.1);  color: var(--purple); }
-  .card[data-cat="clarity"]   .card-tag { background: rgba(34,211,197,0.12); color: #0e9e96; }
-  .card[data-cat="creative"]  .card-tag { background: rgba(46,117,182,0.1);  color: var(--blue); }
-  .card[data-cat="framework"] .card-tag { background: rgba(27,58,107,0.1);   color: var(--navy); }
+/* CARDS */
+.cards-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:20px; }
+.card { background:var(--white);border-radius:20px;box-shadow:0 2px 12px rgba(0,0,0,0.07);border:2px solid transparent;transition:transform 0.22s,box-shadow 0.22s,border-color 0.22s;overflow:hidden;display:flex;flex-direction:column;opacity:0;transform:translateY(20px);animation:cardIn 0.4s ease forwards; }
+@keyframes cardIn { to{opacity:1;transform:translateY(0)} }
+.card:hover { transform:translateY(-4px) rotate(0.3deg);box-shadow:0 12px 32px rgba(0,0,0,0.13); }
+.card[data-cat="tone"]:hover      { border-color:var(--pink); }
+.card[data-cat="decision"]:hover  { border-color:var(--purple); }
+.card[data-cat="clarity"]:hover   { border-color:var(--teal); }
+.card[data-cat="creative"]:hover  { border-color:var(--orange); }
+.card[data-cat="framework"]:hover { border-color:var(--blue); }
 
-  .card-desc {
-    font-size: 13.5px;
-    color: #4a5568;
-    line-height: 1.6;
-    font-weight: 300;
-  }
+.card-top { padding:20px 20px 16px;display:flex;align-items:flex-start;gap:14px; }
+.card-emoji { width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0; }
+.card-meta { flex:1; }
+.card-title { font-family:'Nunito',sans-serif;font-weight:800;font-size:1rem;color:var(--ink);line-height:1.3;margin-bottom:4px; }
+.card-badge { font-family:'Nunito',sans-serif;font-weight:700;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;padding:2px 9px;border-radius:10px;display:inline-block; }
+.card-desc { padding:0 20px 14px;font-size:13.5px;color:#5a6170;line-height:1.65; }
+.prompt-section { margin:0 20px 16px;background:var(--light);border-radius:12px;overflow:hidden;border:1.5px solid var(--border); }
+.prompt-header { display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-bottom:1px solid var(--border); }
+.prompt-label { font-family:'Nunito',sans-serif;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:#999; }
+.copy-btn { display:flex;align-items:center;gap:5px;padding:4px 12px;border-radius:8px;border:none;font-family:'Nunito',sans-serif;font-weight:700;font-size:11px;cursor:pointer;transition:all 0.18s;background:var(--white);color:#666;box-shadow:0 1px 4px rgba(0,0,0,0.1); }
+.copy-btn:hover { background:var(--ink);color:var(--white);transform:scale(1.05); }
+.copy-btn.copied { background:var(--green);color:white; }
+.prompt-text { padding:12px;font-family:'Nunito Sans',monospace;font-size:12px;line-height:1.7;color:#3a4050;max-height:120px;overflow-y:auto; }
+.card-footer { padding:12px 20px 16px;display:flex;align-items:center;justify-content:space-between;margin-top:auto;border-top:1px solid var(--border); }
+.source-tag { font-size:11.5px;color:#aaa;font-weight:600; }
+.source-tag a { color:var(--blue);text-decoration:none; }
+.source-tag a:hover { text-decoration:underline; }
 
-  .prompt-box {
-    background: var(--light);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 12px 14px;
-    font-family: 'DM Mono', monospace;
-    font-size: 12.5px;
-    line-height: 1.65;
-    color: #2d3748;
-    position: relative;
-    flex: 1;
-  }
-  .prompt-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--gray);
-    margin-bottom: 6px;
-  }
+/* CAT COLORS */
+.tone-bg      { background:rgba(239,63,169,0.12); }
+.tone-badge   { background:rgba(239,63,169,0.12);color:var(--pink); }
+.decision-bg    { background:rgba(120,60,189,0.12); }
+.decision-badge { background:rgba(120,60,189,0.12);color:var(--purple); }
+.clarity-bg    { background:rgba(34,211,197,0.12); }
+.clarity-badge { background:rgba(34,211,197,0.12);color:#0ab8b0; }
+.creative-bg    { background:rgba(255,107,53,0.12); }
+.creative-badge { background:rgba(255,107,53,0.12);color:var(--orange); }
+.framework-bg    { background:rgba(46,117,182,0.12); }
+.framework-badge { background:rgba(46,117,182,0.12);color:var(--blue); }
+.si-tone      { background:rgba(239,63,169,0.12); }
+.si-decision  { background:rgba(120,60,189,0.12); }
+.si-clarity   { background:rgba(34,211,197,0.15); }
+.si-creative  { background:rgba(255,107,53,0.12); }
+.si-framework { background:rgba(46,117,182,0.12); }
 
-  .card-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    margin-top: auto;
-  }
-  .card-source {
-    font-size: 11.5px;
-    color: var(--gray);
-    font-weight: 300;
-  }
-  .card-source a {
-    color: var(--blue);
-    text-decoration: none;
-    font-weight: 400;
-  }
-  .card-source a:hover { text-decoration: underline; }
+/* MASTER BOX */
+.master-box { background:linear-gradient(135deg,var(--navy) 0%,#2a4a8a 100%);border-radius:20px;padding:32px;margin:40px 0;color:white;position:relative;overflow:hidden; }
+.master-box::before { content:'✨';position:absolute;font-size:120px;right:-10px;top:-20px;opacity:0.08; }
+.master-box h3 { font-family:'Nunito',sans-serif;font-weight:900;font-size:1.3rem;margin-bottom:8px;color:var(--yellow); }
+.master-box p { color:rgba(255,255,255,0.7);font-size:13.5px;margin-bottom:20px;line-height:1.6;font-weight:300;max-width:560px; }
+.master-template { background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:12px;padding:18px 18px 18px 18px;font-family:'Nunito Sans',monospace;font-size:13px;line-height:1.8;color:rgba(255,255,255,0.85);position:relative; }
+.master-copy { position:absolute;top:10px;right:10px;background:rgba(255,255,255,0.15);border:none;color:white;border-radius:8px;padding:5px 12px;font-family:'Nunito',sans-serif;font-weight:700;font-size:11px;cursor:pointer;transition:all 0.18s; }
+.master-copy:hover { background:var(--yellow);color:var(--navy); }
+.master-copy.copied { background:var(--green); }
 
-  .copy-btn {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 14px;
-    border-radius: 6px;
-    border: 1.5px solid var(--border);
-    background: transparent;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--gray);
-    cursor: pointer;
-    transition: all 0.18s;
-    white-space: nowrap;
-  }
-  .copy-btn:hover { background: var(--navy); color: var(--white); border-color: var(--navy); }
-  .copy-btn.copied { background: #22c55e; border-color: #22c55e; color: white; }
+/* RESOURCES */
+.resources-wrap { margin-top:60px; }
+.big-title { font-family:'Nunito',sans-serif;font-weight:900;font-size:1.8rem;color:var(--ink);margin-bottom:6px; }
+.big-sub { color:#888;font-size:14px;margin-bottom:28px; }
+.resources-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px; }
+.resource-card { background:var(--white);border:2px solid var(--border);border-radius:16px;padding:20px;transition:all 0.2s;position:relative;overflow:hidden; }
+.resource-card::before { content:'';position:absolute;top:0;left:0;right:0;height:4px; }
+.resource-card:nth-child(1)::before{background:var(--pink)}
+.resource-card:nth-child(2)::before{background:var(--navy)}
+.resource-card:nth-child(3)::before{background:var(--purple)}
+.resource-card:nth-child(4)::before{background:var(--teal)}
+.resource-card:nth-child(5)::before{background:var(--green)}
+.resource-card:nth-child(6)::before{background:var(--orange)}
+.resource-card:nth-child(7)::before{background:var(--yellow)}
+.resource-card:nth-child(8)::before{background:var(--blue)}
+.resource-card:nth-child(9)::before{background:var(--pink)}
+.resource-card:hover { transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.1);border-color:#ccd; }
+.resource-card .r-icon { font-size:28px;margin-bottom:10px; }
+.resource-card .r-type { font-family:'Nunito',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#aaa;margin-bottom:6px; }
+.resource-card .r-name { font-family:'Nunito',sans-serif;font-weight:800;font-size:14.5px;color:var(--ink);margin-bottom:8px;line-height:1.3; }
+.resource-card .r-desc { font-size:12.5px;color:#666;line-height:1.6;margin-bottom:12px; }
+.resource-card a { display:inline-flex;align-items:center;gap:5px;font-family:'Nunito',sans-serif;font-weight:700;font-size:12px;color:var(--blue);text-decoration:none;padding:5px 12px;background:var(--light);border-radius:8px;transition:all 0.18s; }
+.resource-card a:hover { background:var(--navy);color:white; }
 
-  /* ── RESOURCES SECTION ── */
-  .resources-section {
-    margin-top: 60px;
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 36px;
-    box-shadow: var(--shadow);
-  }
-  .resources-section h2 {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.6rem;
-    color: var(--navy);
-    margin-bottom: 6px;
-  }
-  .resources-section .intro {
-    color: var(--gray);
-    font-size: 14px;
-    font-weight: 300;
-    margin-bottom: 32px;
-  }
-  .resources-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 16px;
-  }
-  .resource-card {
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 18px;
-    transition: box-shadow 0.18s;
-  }
-  .resource-card:hover { box-shadow: var(--shadow-hover); }
-  .resource-card .r-type {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--gray);
-    margin-bottom: 8px;
-  }
-  .resource-card .r-name {
-    font-weight: 600;
-    font-size: 14px;
-    color: var(--navy);
-    margin-bottom: 6px;
-    line-height: 1.3;
-  }
-  .resource-card .r-desc {
-    font-size: 12.5px;
-    color: #4a5568;
-    font-weight: 300;
-    line-height: 1.55;
-    margin-bottom: 10px;
-  }
-  .resource-card a {
-    font-size: 12px;
-    color: var(--blue);
-    text-decoration: none;
-    font-weight: 500;
-  }
-  .resource-card a:hover { text-decoration: underline; }
+.nl-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-top:20px; }
+.nl-card { background:var(--white);border:2px solid var(--border);border-radius:14px;padding:16px;transition:all 0.18s; }
+.nl-card:hover { transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,0.08); }
+.nl-card .nl-icon { font-size:22px;margin-bottom:8px; }
+.nl-card .nl-name { font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;color:var(--ink);margin-bottom:4px; }
+.nl-card .nl-desc { font-size:12px;color:#888;line-height:1.5; }
 
-  /* ── NEWSLETTERS ── */
-  .newsletters-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 12px;
-    margin-top: 28px;
-  }
-  .newsletter-chip {
-    background: var(--light);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 14px 16px;
-  }
-  .newsletter-chip .n-name {
-    font-weight: 600;
-    font-size: 13px;
-    color: var(--navy);
-    margin-bottom: 4px;
-  }
-  .newsletter-chip .n-desc {
-    font-size: 12px;
-    color: var(--gray);
-    font-weight: 300;
-    line-height: 1.5;
-  }
+.empty-state { grid-column:1/-1;text-align:center;padding:60px 20px; }
+.empty-state .e-icon { font-size:3rem;margin-bottom:12px; }
+.empty-state p { color:#aaa;font-size:15px; }
 
-  /* ── FOOTER ── */
-  footer {
-    background: var(--navy);
-    color: rgba(255,255,255,0.5);
-    text-align: center;
-    padding: 28px 32px;
-    font-size: 13px;
-    font-weight: 300;
-  }
-  footer strong { color: rgba(255,255,255,0.8); font-weight: 500; }
-  footer a { color: var(--teal); text-decoration: none; }
+footer { background:var(--navy);color:rgba(255,255,255,0.5);text-align:center;padding:32px;font-size:13px; }
+footer strong { color:rgba(255,255,255,0.85);font-weight:700;font-family:'Nunito',sans-serif; }
+footer a { color:var(--teal);text-decoration:none; }
 
-  /* ── EMPTY STATE ── */
-  .empty-state {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 60px 20px;
-    color: var(--gray);
-  }
-  .empty-state .emoji { font-size: 2.5rem; margin-bottom: 12px; }
-  .empty-state p { font-size: 15px; font-weight: 300; }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 640px) {
-    .header-inner { padding: 36px 20px 32px; }
-    main { padding: 24px 16px 60px; }
-    .controls-inner { padding: 12px 16px; gap: 10px; }
-    .cards-grid { grid-template-columns: 1fr; }
-    .resources-section { padding: 24px 20px; }
-  }
+@media(max-width:600px){
+  .hero{padding:40px 20px 48px}
+  main{padding:24px 16px 60px}
+  .cards-grid{grid-template-columns:1fr}
+  .resources-grid{grid-template-columns:1fr}
+  .master-box{padding:24px 20px}
+}
 </style>
 </head>
 <body>
 
-<header>
-  <div class="header-inner">
-    <div class="header-badge">Global Learning Access · AI Literacy Resources</div>
-    <h1>The <em>Prompting</em> Library</h1>
-    <p class="subtitle">Practical techniques, named frameworks, and master prompt resources for educators, trainers, and professionals working with AI.</p>
-    <div class="header-meta">
-      <span class="meta-item"><strong>Jeffery Heil</strong> · Global Learning Access</span>
-      <span class="meta-item">Updated <strong>2026</strong></span>
-      <span class="meta-item"><strong>20+</strong> techniques &amp; frameworks</span>
+<header class="hero">
+  <div class="hero-bubbles"><span></span><span></span><span></span><span></span></div>
+  <div class="hero-inner">
+    <div class="hero-pill"><span class="dot"></span><span>Global Learning Access · AI Literacy</span></div>
+    <h1>The <span class="accent">Prompting</span><br>Library <span class="accent2">✨</span></h1>
+    <p class="hero-sub">Copy-ready techniques, named frameworks, and resources for educators and professionals working with AI — curated by Jeffery Heil.</p>
+    <div class="hero-stats">
+      <div class="stat-chip"><div class="num">20+</div><div class="lbl">Techniques</div></div>
+      <div class="stat-chip"><div class="num">6</div><div class="lbl">Frameworks</div></div>
+      <div class="stat-chip"><div class="num">9</div><div class="lbl">Resources</div></div>
+      <div class="stat-chip"><div class="num">6</div><div class="lbl">Newsletters</div></div>
     </div>
   </div>
 </header>
 
-<div class="controls-bar">
-  <div class="controls-inner">
+<div class="cat-strip">
+  <div class="cat-strip-inner">
     <div class="search-wrap">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <input type="text" id="search" placeholder="Search techniques…" autocomplete="off">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="search" placeholder="Search prompts…">
     </div>
-    <div class="filter-group">
-      <button class="filter-btn active" data-cat="all">All</button>
-      <button class="filter-btn" data-cat="tone">Tone &amp; Critique</button>
-      <button class="filter-btn" data-cat="decision">Decisions</button>
-      <button class="filter-btn" data-cat="clarity">Clarity</button>
-      <button class="filter-btn" data-cat="creative">Creative</button>
-      <button class="filter-btn" data-cat="framework">Frameworks</button>
-    </div>
+    <button class="cat-btn active" data-cat="all"><span class="icon">🗂️</span> All</button>
+    <button class="cat-btn" data-cat="tone"><span class="icon">🎭</span> Tone</button>
+    <button class="cat-btn" data-cat="decision"><span class="icon">🧭</span> Decisions</button>
+    <button class="cat-btn" data-cat="clarity"><span class="icon">💡</span> Clarity</button>
+    <button class="cat-btn" data-cat="creative"><span class="icon">🎨</span> Creative</button>
+    <button class="cat-btn" data-cat="framework"><span class="icon">🏗️</span> Frameworks</button>
+    <button class="cat-btn" data-cat="ailiteracy"><span class="icon">🧠</span> AI Literacy</button>
   </div>
 </div>
 
-<main>
-  <div id="cards-container"></div>
+<main id="main-content">
+  <div class="master-box" id="master-box">
+    <h3>🧠 Master Prompt Starter Template</h3>
+    <p>Copy this and customize it at the start of any new AI conversation to set your context for the whole session.</p>
+    <div class="master-template" id="master-tpl">You are [role] working with [audience].
+Your goal is [purpose].
 
-  <!-- Resources -->
-  <div class="resources-section">
-    <h2>Go Deeper</h2>
-    <p class="intro">The best sites, guides, and newsletters for ongoing learning — curated for educators and trainers.</p>
+Always: [2–3 standing behaviors, e.g. "use plain language", "ask before assuming"]
+Never: [2–3 things to avoid, e.g. "use jargon", "give more than 3 options at once"]
 
-    <div class="resources-grid">
-      <div class="resource-card">
-        <div class="r-type">Framework Library</div>
-        <div class="r-name">Juuzt AI Prompt Frameworks</div>
-        <div class="r-desc">57 different frameworks, each with a full guide and examples. The most comprehensive single collection available.</div>
-        <a href="https://juuzt.ai/knowledge-base/prompt-frameworks/" target="_blank">juuzt.ai →</a>
-      </div>
-      <div class="resource-card">
-        <div class="r-type">Official Documentation</div>
-        <div class="r-name">Anthropic Prompting Guide</div>
-        <div class="r-desc">Authoritative guidance from the creators of Claude. Covers fundamentals through advanced techniques.</div>
-        <a href="https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/overview" target="_blank">docs.claude.com →</a>
-      </div>
-      <div class="resource-card">
-        <div class="r-type">Academic / Educator</div>
-        <div class="r-name">MIT Sloan — Effective Prompts</div>
-        <div class="r-desc">Reframes prompting as problem formulation — defining scope and boundaries — not just word-level tweaks.</div>
-        <a href="https://mitsloanedtech.mit.edu/ai/basics/effective-prompts/" target="_blank">mitsloanedtech.mit.edu →</a>
-      </div>
-      <div class="resource-card">
-        <div class="r-type">Educator Community</div>
-        <div class="r-name">ISTE AI in Education</div>
-        <div class="r-desc">Classroom-ready AI guides from one of the most trusted names in education technology.</div>
-        <a href="https://www.iste.org" target="_blank">iste.org →</a>
-      </div>
-      <div class="resource-card">
-        <div class="r-type">Equity-Focused</div>
-        <div class="r-name">Common Sense Media AI Literacy</div>
-        <div class="r-desc">Free, vetted resources with strong equity alignment. Excellent for underresourced student contexts.</div>
-        <a href="https://www.commonsense.org/education/digital-citizenship/topic/ai-literacy" target="_blank">commonsense.org →</a>
-      </div>
-      <div class="resource-card">
-        <div class="r-type">International</div>
-        <div class="r-name">UNESCO AI Competency Framework</div>
-        <div class="r-desc">Authoritative global frameworks. Directly relevant for Filipino educators and TESDA vocational training.</div>
-        <a href="https://www.unesco.org/en/digital-education/artificial-intelligence" target="_blank">unesco.org →</a>
-      </div>
-      <div class="resource-card">
-        <div class="r-type">Master Prompts</div>
-        <div class="r-name">Dan Martell — Master Prompt Guide</div>
-        <div class="r-desc">Focus on Hack 2 (Role Master Prompt) and Hack 3 (Turn Your Best Outputs into System Prompts).</div>
-        <a href="https://www.danmartell.com/master-prompts-system-prompts-and-custom-gpts/" target="_blank">danmartell.com →</a>
-      </div>
-      <div class="resource-card">
-        <div class="r-type">Video Series</div>
-        <div class="r-name">Tiago Forte — The Master Prompt Method</div>
-        <div class="r-desc">3-part YouTube series with practical demonstrations for building and implementing master prompts.</div>
-        <a href="https://www.youtube.com/watch?v=_K_F_icxtrI&list=PLVNXAaej57W4d8Sig7khR_XJkcJghYhdk" target="_blank">YouTube (Pt 1) →</a>
-      </div>
-      <div class="resource-card">
-        <div class="r-type">Teaching Coalition</div>
-        <div class="r-name">TeachAI</div>
-        <div class="r-desc">Coalition including Khan Academy &amp; ISTE. Focused on teaching students about AI, not just with it.</div>
-        <a href="https://www.teachai.org" target="_blank">teachai.org →</a>
-      </div>
+When I say [trigger word], do [specific behavior].
+Format responses as: [preferred structure]
+      <button class="master-copy" id="mcopy" onclick="copyMaster()">📋 Copy</button>
     </div>
+  </div>
 
-    <div style="margin-top:36px;">
-      <div style="font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray);margin-bottom:14px;">Newsletters Worth Subscribing To</div>
-      <div class="newsletters-grid">
-        <div class="newsletter-chip">
-          <div class="n-name">The Batch</div>
-          <div class="n-desc">Andrew Ng. Weekly expert AI analysis. Trustworthy and educational.</div>
-        </div>
-        <div class="newsletter-chip">
-          <div class="n-name">One Useful Thing</div>
-          <div class="n-desc">Ethan Mollick (Wharton). Most-cited AI source in education circles.</div>
-        </div>
-        <div class="newsletter-chip">
-          <div class="n-name">Prompt Engineering Daily</div>
-          <div class="n-desc">Practical prompts, tools, and tutorials. Beginner-friendly. Daily.</div>
-        </div>
-        <div class="newsletter-chip">
-          <div class="n-name">The Rundown AI</div>
-          <div class="n-desc">Why AI matters + how to apply it. 1.75M subscribers. 5 min daily.</div>
-        </div>
-        <div class="newsletter-chip">
-          <div class="n-name">Superhuman AI</div>
-          <div class="n-desc">Tools, tutorials, news in 3 min. High-quality daily curation.</div>
-        </div>
-        <div class="newsletter-chip">
-          <div class="n-name">TLDR AI</div>
-          <div class="n-desc">ML research, launches, industry news. Concise daily briefing.</div>
-        </div>
+  <div class="resources-wrap" id="resources-wrap">
+    <div class="big-title">📚 Go Deeper</div>
+    <div class="big-sub">The best sites, guides, and newsletters — curated for educators and trainers.</div>
+    <div class="resources-grid">
+      <div class="resource-card"><div class="r-icon">🔧</div><div class="r-type">Framework Library</div><div class="r-name">Juuzt AI Prompt Frameworks</div><div class="r-desc">57 frameworks, each with a full guide and copy-ready examples.</div><a href="https://juuzt.ai/knowledge-base/prompt-frameworks/" target="_blank">Visit →</a></div>
+      <div class="resource-card"><div class="r-icon">🤖</div><div class="r-type">Official Docs</div><div class="r-name">Anthropic Prompting Guide</div><div class="r-desc">Authoritative guidance from the creators of Claude.</div><a href="https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/overview" target="_blank">Visit →</a></div>
+      <div class="resource-card"><div class="r-icon">🎓</div><div class="r-type">Academic</div><div class="r-name">MIT Sloan — Effective Prompts</div><div class="r-desc">Reframes prompting as problem formulation, not just word tweaks.</div><a href="https://mitsloanedtech.mit.edu/ai/basics/effective-prompts/" target="_blank">Visit →</a></div>
+      <div class="resource-card"><div class="r-icon">🏫</div><div class="r-type">Educator Community</div><div class="r-name">ISTE AI in Education</div><div class="r-desc">Classroom-ready AI guides from the most trusted name in ed tech.</div><a href="https://www.iste.org" target="_blank">Visit →</a></div>
+      <div class="resource-card"><div class="r-icon">⚖️</div><div class="r-type">Equity-Focused</div><div class="r-name">Common Sense Media AI Literacy</div><div class="r-desc">Free, vetted resources with strong equity alignment.</div><a href="https://www.commonsense.org/education/digital-citizenship/topic/ai-literacy" target="_blank">Visit →</a></div>
+      <div class="resource-card"><div class="r-icon">🌏</div><div class="r-type">International</div><div class="r-name">UNESCO AI Competency Framework</div><div class="r-desc">Global frameworks relevant for Filipino educators and TESDA.</div><a href="https://www.unesco.org/en/digital-education/artificial-intelligence" target="_blank">Visit →</a></div>
+      <div class="resource-card"><div class="r-icon">📋</div><div class="r-type">Master Prompts</div><div class="r-name">Dan Martell — Master Prompt Guide</div><div class="r-desc">Hack 2 (Role Master Prompt) and Hack 3 (Outputs into System Prompts).</div><a href="https://www.danmartell.com/master-prompts-system-prompts-and-custom-gpts/" target="_blank">Visit →</a></div>
+      <div class="resource-card"><div class="r-icon">▶️</div><div class="r-type">Video Series</div><div class="r-name">Tiago Forte — The Master Prompt Method</div><div class="r-desc">3-part YouTube series for building and implementing master prompts.</div><a href="https://www.youtube.com/watch?v=_K_F_icxtrI" target="_blank">Watch →</a></div>
+      <div class="resource-card"><div class="r-icon">🤝</div><div class="r-type">Teaching Coalition</div><div class="r-name">TeachAI</div><div class="r-desc">Khan Academy, ISTE & others. Teaching students about AI, not just with it.</div><a href="https://www.teachai.org" target="_blank">Visit →</a></div>
+    </div>
+    <div style="margin-top:36px">
+      <div class="big-title" style="font-size:1.3rem">📬 Newsletters Worth Subscribing To</div>
+      <div class="nl-grid">
+        <div class="nl-card"><div class="nl-icon">📊</div><div class="nl-name">The Batch</div><div class="nl-desc">Andrew Ng. Weekly expert AI analysis. Trustworthy and educational.</div></div>
+        <div class="nl-card"><div class="nl-icon">💼</div><div class="nl-name">One Useful Thing</div><div class="nl-desc">Ethan Mollick (Wharton). Most-cited AI source in education.</div></div>
+        <div class="nl-card"><div class="nl-icon">⚡</div><div class="nl-name">Prompt Engineering Daily</div><div class="nl-desc">Practical prompts and tools. Beginner-friendly. Daily.</div></div>
+        <div class="nl-card"><div class="nl-icon">🗞️</div><div class="nl-name">The Rundown AI</div><div class="nl-desc">Why AI matters + how to apply it. 1.75M subscribers. 5 min.</div></div>
+        <div class="nl-card"><div class="nl-icon">🚀</div><div class="nl-name">Superhuman AI</div><div class="nl-desc">Tools, tutorials, news in 3 min. High-quality daily curation.</div></div>
+        <div class="nl-card"><div class="nl-icon">📡</div><div class="nl-name">TLDR AI</div><div class="nl-desc">ML research, launches, industry news. Concise daily briefing.</div></div>
       </div>
     </div>
   </div>
 </main>
 
-<footer>
-  Built by <strong>Jeffery Heil</strong> · <a href="https://gla-edu.org" target="_blank">Global Learning Access</a> · Advancing AI literacy for educators worldwide · 2026
-</footer>
+<footer>Built by <strong>Jeffery Heil</strong> · <a href="https://gla-edu.org" target="_blank">Global Learning Access</a> · Advancing AI literacy for educators worldwide · 2026</footer>
 
 <script>
 const CARDS = [
-  // ── TONE & CRITIQUE
-  {
-    cat: "tone", catLabel: "Tone & Critique",
-    title: "Frenemy Prompt",
-    desc: "Forces direct, critical feedback over polite agreement. Activate by starting any message with the word \"Frenemy.\"",
-    prompt: "If I begin a prompt with 'Frenemy,' respond with direct, critical analysis. Prioritize clarity over kindness. Do not compliment me. Identify my logical blind spots and point out flaws in my assumptions.",
-    source: "TechRadar",
-    sourceUrl: "https://www.techradar.com/ai-platforms-assistants/chatgpt/i-use-the-frenemy-prompt-in-chatgpt-every-day"
-  },
-  {
-    cat: "tone", catLabel: "Tone & Critique",
-    title: "The Gravity Prompt",
-    desc: "Stress-tests your idea. Write your idea in 1–2 clear paragraphs first, then apply this prompt for structured critique.",
-    prompt: "Act like gravity for my idea. Pull it back to reality. Attack the weakest points in my reasoning, challenge my assumptions, and expose what I might be missing. Be tough, specific, and do not sugarcoat. [Insert your idea]",
-    source: "Tom's Guide",
-    sourceUrl: "https://www.tomsguide.com/ai/i-use-the-gravity-prompt-with-chatgpt-every-day-heres-how-it-finds-and-fixes-weak-ideas"
-  },
-  {
-    cat: "tone", catLabel: "Tone & Critique",
-    title: "Perspective Flip",
-    desc: "Breaks out of single-viewpoint responses. Ask the AI to inhabit radically different perspectives on the same topic.",
-    prompt: "Explain [concept] three times: first as someone encountering it for the very first time, second as a subject matter expert, and third as someone deeply skeptical of the whole idea.",
-    source: "TechRadar",
-    sourceUrl: "https://www.techradar.com/ai-platforms-assistants/chatgpt-has-a-hidden-set-of-creativity-switches-heres-how-to-use-them"
-  },
-  {
-    cat: "tone", catLabel: "Tone & Critique",
-    title: "Self-Awareness / Style Injection",
-    desc: "Acknowledge the AI's default mode, then explicitly ask it to deviate. Unlocks more distinctive and creative responses.",
-    prompt: "Most of your answers are calm and neutral. I want something that sounds like [unexpected persona or style]. Don't explain — just write it that way.",
-    source: "TechRadar",
-    sourceUrl: "https://www.techradar.com/ai-platforms-assistants/chatgpt-has-a-hidden-set-of-creativity-switches-heres-how-to-use-them"
-  },
-
-  // ── DECISIONS
-  {
-    cat: "decision", catLabel: "Decisions",
-    title: "1-3-1 Framework",
-    desc: "Jeff Heil's proprietary GLA decision framework. Structures any complex problem into one core issue, three paths, and one clear recommendation.",
-    prompt: "Use the 1-3-1 framework: Identify the ONE core problem. Present THREE potential solution paths, each with pros and cons. Recommend ONE best course of action and explain your reasoning. Ask me five clarifying questions first, one at a time.",
-    source: "Global Learning Access",
-    sourceUrl: "https://gla-edu.org"
-  },
-  {
-    cat: "decision", catLabel: "Decisions",
-    title: "Strategic Advisor",
-    desc: "Converts AI from an idea-generator into a decision-engine. Forces prioritization instead of a list of equal options.",
-    prompt: "Act as a strategic advisor. Based on my goal below, recommend ONE best option and explain why it is superior to alternatives. Then list two backup options and specify exactly when I should choose them instead. My goal is: [X]",
-    source: "Tom's Guide",
-    sourceUrl: "https://www.tomsguide.com/ai/i-stopped-asking-ai-to-brainstorm-this-is-the-only-prompt-i-use-to-turn-ideas-into-action"
-  },
-  {
-    cat: "decision", catLabel: "Decisions",
-    title: "This or That",
-    desc: "Structured comparison that goes beyond pros/cons. Makes the stakes and likely outcomes explicit.",
-    prompt: "Help me decide between [Option A] vs. [Option B]. Evaluate both on: their best-case scenario, their worst-case scenario, and their most likely outcome. Then tell me: if this decision went badly, what's the most likely reason it failed?",
-    source: "Tom's Guide",
-    sourceUrl: "https://www.tomsguide.com/ai/i-built-a-library-of-claude-thinking-prompts-these-are-the-ones-i-keep-coming-back-to"
-  },
-  {
-    cat: "decision", catLabel: "Decisions",
-    title: "Expert Panel Simulation",
-    desc: "Gets multiple strategic perspectives in one response. Great for decisions where you need to surface blind spots.",
-    prompt: "Simulate a panel of four experts reviewing my decision: a strategist, a risk analyst, an optimist, and a skeptic. Have each one give their perspective. Then give me a final synthesis and recommendation. My decision: [X]",
-    source: "Tom's Guide",
-    sourceUrl: "https://www.tomsguide.com/ai/i-built-a-library-of-claude-thinking-prompts-these-are-the-ones-i-keep-coming-back-to"
-  },
-  {
-    cat: "decision", catLabel: "Decisions",
-    title: "Reverse Brief",
-    desc: "Give the AI a long document and get back only what matters. Cuts through complexity to surface your action items.",
-    prompt: "Create a reverse brief of this document. Explain the purpose in plain language, list the most important points, identify any risks, deadlines, or obligations, and summarize what actions I need to take.",
-    source: "Tom's Guide",
-    sourceUrl: "https://www.tomsguide.com/ai/i-use-the-reverse-brief-prompt-to-instantly-understand-any-document-heres-how-it-works"
-  },
-
-  // ── CLARITY
-  {
-    cat: "clarity", catLabel: "Clarity & Output",
-    title: "Brevity Response",
-    desc: "Lead with your format constraint before your question — not after. This is the key difference from asking politely for brevity.",
-    prompt: "In one sentence, answer this directly with no elaboration or explanation: [Your question here]",
-    source: "TechRadar",
-    sourceUrl: "https://www.techradar.com/ai-platforms-assistants/this-gemini-and-chatgpt-trick-will-stop-them-from-over-explaining-everything"
-  },
-  {
-    cat: "clarity", catLabel: "Clarity & Output",
-    title: "Ask Then Recommend",
-    desc: "Prevents generic suggestions by making the AI calibrate to your specific context before giving advice.",
-    prompt: "Before recommending anything, ask me five short questions — one at a time — to understand my priorities around [topic]. Then use my answers to make one specific recommendation and explain exactly why it fits my situation.",
-    source: "TechRadar",
-    sourceUrl: "https://www.techradar.com/ai-platforms-assistants/chatgpt/5-prompts-to-really-get-the-most-out-of-the-new-chatgpt-5-2"
-  },
-  {
-    cat: "clarity", catLabel: "Clarity & Output",
-    title: "The Follow-Up Prompt",
-    desc: "Use after any first response to surface hidden assumptions. One of the highest-leverage single prompts available.",
-    prompt: "That's helpful, but what assumptions are you making here — and what would change if one of them is wrong?",
-    source: "Tom's Guide",
-    sourceUrl: "https://www.tomsguide.com/ai/this-single-follow-up-prompt-made-every-ai-answer-better-heres-how"
-  },
-  {
-    cat: "clarity", catLabel: "Clarity & Output",
-    title: "The Unicorn Prompt",
-    desc: "An all-purpose starter for when you're not sure what to ask. Works on any topic, any AI tool.",
-    prompt: "Pretend you're my assistant and you actually want me to succeed. Ask up to 3 questions if anything's unclear. Then give me: the answer, the plan, and the pitfalls. Keep it short and tailored to: [goal]. If you have to make assumptions, list them first.",
-    source: "Tom's Guide",
-    sourceUrl: "http://tomsguide.com/ai/i-use-the-unicorn-prompt-with-every-chatbot-it-instantly-fixes-the-worst-ai-problem"
-  },
-  {
-    cat: "clarity", catLabel: "Clarity & Output",
-    title: "Repeat Response",
-    desc: "Academic research confirms: repeating a prompt improves accuracy and reasoning quality without affecting length. Simple but effective.",
-    prompt: "[Paste your original prompt again, unchanged. No modification needed — the repetition itself improves output quality.]",
-    source: "TechRadar",
-    sourceUrl: "https://www.techradar.com/ai-platforms-assistants/chatgpt/i-use-this-simple-repetition-trick-with-chatgpt-when-it-misses-the-point-and-it-works-every-time"
-  },
-
-  // ── CREATIVE
-  {
-    cat: "creative", catLabel: "Creative & Learning",
-    title: "Deep Dive — Beginner vs. Expert",
-    desc: "Forces the AI to surface genuine conceptual tension. The places where the beginner and expert versions disagree are usually where the real insight lives.",
-    prompt: "Explain [topic] like I'm a complete beginner. Then explain it like I'm an expert. Finally, identify where the two versions actually disagree — what does the beginner version get wrong, or oversimplify?",
-    source: "Tom's Guide",
-    sourceUrl: "https://www.tomsguide.com/ai/i-built-a-library-of-claude-thinking-prompts-these-are-the-ones-i-keep-coming-back-to"
-  },
-  {
-    cat: "creative", catLabel: "Creative & Learning",
-    title: "Work Inside the Box",
-    desc: "Arbitrary constraints spark creative thinking. Give ridiculous rules and see what the AI does. Reveals new angles on familiar problems.",
-    prompt: "Explain [concept] under these constraints: exactly 5 sentences, no words longer than two syllables, written for a curious 10-year-old who has never heard of it.",
-    source: "TechRadar",
-    sourceUrl: "https://www.techradar.com/ai-platforms-assistants/chatgpt/5-prompts-to-really-get-the-most-out-of-the-new-chatgpt-5-2"
-  },
-  {
-    cat: "creative", catLabel: "Creative & Learning",
-    title: "Contingency Plans",
-    desc: "Add a risk lens to any planning prompt. Surfaces what could go wrong before you're committed.",
-    prompt: "[Your original planning prompt] — and focus specifically on what is most likely to go wrong. Name the top 3 risks and suggest one practical mitigation for each.",
-    source: "TechRadar",
-    sourceUrl: "https://www.techradar.com/ai-platforms-assistants/chatgpt/5-prompts-to-really-get-the-most-out-of-the-new-chatgpt-5-2"
-  },
-  {
-    cat: "creative", catLabel: "Creative & Learning",
-    title: "Solidify a Hunch",
-    desc: "Turn a vague intuition into insight. Let the AI ask questions that help you identify the pattern you're sensing.",
-    prompt: "I've been noticing [something feels different about X], but I can't pinpoint why. Ask me questions — one at a time — to help me identify what's actually changed and what I value about it.",
-    source: "TechRadar",
-    sourceUrl: "https://www.techradar.com/ai-platforms-assistants/chatgpt/5-prompts-to-really-get-the-most-out-of-the-new-chatgpt-5-2"
-  },
-  {
-    cat: "creative", catLabel: "Creative & Learning",
-    title: "Tough Editor",
-    desc: "For writers and content creators. Gets past the AI's tendency to validate everything you write.",
-    prompt: "Act as a tough but fair editor. Critique this text — focus on clarity, structure, tone, and originality. What should be cut? What should be rewritten? What's the single weakest sentence, and how would you fix it? [Paste text]",
-    source: "Tom's Guide",
-    sourceUrl: "https://www.tomsguide.com/ai/i-built-a-library-of-claude-thinking-prompts-these-are-the-ones-i-keep-coming-back-to"
-  },
-
-  // ── FRAMEWORKS
-  {
-    cat: "framework", catLabel: "Framework",
-    title: "CO-STAR",
-    desc: "Treats prompting as full-stack design: what the model should know, say, and sound like. Excellent for audience-specific communication.",
-    prompt: "Context: [situational background]\nObjective: [what you want to achieve]\nStyle: [e.g. conversational, academic]\nTone: [e.g. encouraging, direct]\nAudience: [who will read/use this]\nResponse: [format — bullet list, paragraph, table, etc.]",
-    source: "parloa.com",
-    sourceUrl: "https://www.parloa.com/knowledge-hub/prompt-engineering-frameworks/"
-  },
-  {
-    cat: "framework", catLabel: "Framework",
-    title: "RACE",
-    desc: "Go-to when you need expertise-anchored responses. Defines who the AI is, what it does, the context, and what good looks like.",
-    prompt: "Role: [who the AI is — e.g. a curriculum designer for underserved schools]\nAction: [what it should do]\nContext: [relevant background]\nExpectation: [what a strong response looks like]",
-    source: "juuzt.ai",
-    sourceUrl: "https://juuzt.ai/knowledge-base/prompt-frameworks/"
-  },
-  {
-    cat: "framework", catLabel: "Framework",
-    title: "TAG",
-    desc: "Ideal for educational content creation. Directs the AI to keep the subject, audience, and goal in focus throughout.",
-    prompt: "Topic: [what this is about]\nAudience: [who will receive it — grade level, background, language context]\nGoal: [what the content should accomplish for them]",
-    source: "juuzt.ai",
-    sourceUrl: "https://juuzt.ai/knowledge-base/prompt-frameworks/"
-  },
-  {
-    cat: "framework", catLabel: "Framework",
-    title: "TQA",
-    desc: "Designed for learning. Builds from a broad theme through engaging questions to informative answers — effective for e-learning modules.",
-    prompt: "Thematic: [broad concept or theme]\nQuestion: [the engaging question learners should wrestle with]\nAnswer: [the informative response that resolves the question and builds understanding]",
-    source: "juuzt.ai",
-    sourceUrl: "https://juuzt.ai/knowledge-base/prompt-frameworks/"
-  },
-  {
-    cat: "framework", catLabel: "Framework",
-    title: "CRAFT (GLA)",
-    desc: "Jeff Heil's framework used in Global Learning Access training. Especially effective for Filipino educators working asynchronously.",
-    prompt: "Context: [who you are and what you're working on]\nRole: [the AI's role in this task]\nAction: [exactly what you want it to do]\nFormat: [how to structure the output]\nTone: [voice — e.g. encouraging, culturally respectful, plain language]",
-    source: "Global Learning Access",
-    sourceUrl: "https://gla-edu.org"
-  },
-  {
-    cat: "framework", catLabel: "Framework",
-    title: "QUEST Framework (GLA)",
-    desc: "Jeff Heil's 5-phase Socratic problem-solving framework. Moves from identifying the real problem to building accountability checkpoints — 9–11 questions max.",
-    prompt: "Use the QUEST Framework:\nQ — Question the core (1 question: what's the real problem?)\nU — Understand the context (2-3 questions: constraints, stakeholders, success)\nE — Explore possibilities (3-4 questions: solutions, trade-offs, resources)\nS — Select your path (2 questions: best fit, concrete next steps)\nT — Track progress (1 question: how will you know you're on track?)",
-    source: "Global Learning Access",
-    sourceUrl: "https://gla-edu.org"
-  },
+  {cat:"tone",icon:"😤",label:"Tone & Critique",title:"Frenemy Prompt",desc:"Forces direct, critical feedback over polite agreement. Activate by starting any message with the word \"Frenemy.\"",prompt:"If I begin a prompt with 'Frenemy,' respond with direct, critical analysis. Prioritize clarity over kindness. Do not compliment me. Identify my logical blind spots and point out the flaws in my assumptions. Fact-check my claims.",source:"TechRadar",url:"https://www.techradar.com/ai-platforms-assistants/chatgpt/i-use-the-frenemy-prompt-in-chatgpt-every-day"},
+  {cat:"tone",icon:"🪨",label:"Tone & Critique",title:"The Gravity Prompt",desc:"Stress-tests your idea. Write your idea in 1–2 clear paragraphs first, then apply this for structured critique.",prompt:"Act like gravity for my idea. Pull it back to reality. Attack the weakest points in my reasoning, challenge my assumptions, and expose what I might be missing. Be tough, specific, and do not sugarcoat. [Insert your idea]",source:"Tom's Guide",url:"https://www.tomsguide.com/ai/i-use-the-gravity-prompt-with-chatgpt-every-day-heres-how-it-finds-and-fixes-weak-ideas"},
+  {cat:"tone",icon:"🪞",label:"Tone & Critique",title:"Perspective Flip",desc:"Breaks single-viewpoint responses. Ask the AI to inhabit radically different perspectives on the same topic.",prompt:"Explain [concept] three times: first as someone encountering it for the very first time, second as a subject matter expert, and third as someone deeply skeptical of the whole idea.",source:"TechRadar",url:"https://www.techradar.com/ai-platforms-assistants/chatgpt-has-a-hidden-set-of-creativity-switches-heres-how-to-use-them"},
+  {cat:"tone",icon:"🎭",label:"Tone & Critique",title:"Style Injection",desc:"Acknowledge the AI's default mode, then ask it to deviate. Unlocks distinctive, memorable responses.",prompt:"Most of your answers are calm and neutral. I want something that sounds like [unexpected persona or style]. Don't explain — just write it that way.",source:"TechRadar",url:"https://www.techradar.com/ai-platforms-assistants/chatgpt-has-a-hidden-set-of-creativity-switches-heres-how-to-use-them"},
+  {cat:"decision",icon:"⚖️",label:"Decisions",title:"1-3-1 Framework",desc:"A structured decision-making approach: one core problem, three solution paths with pros/cons, one clear recommendation.",prompt:"Use the 1-3-1 framework: Identify the ONE core problem. Present THREE potential solution paths with pros and cons for each. Recommend ONE best course of action with your reasoning. Ask me five clarifying questions first, one at a time.",source:"Dan Martell & Hayden Miyamoto",url:"https://www.danmartell.com/master-prompts-system-prompts-and-custom-gpts/"},
+  {cat:"decision",icon:"🧭",label:"Decisions",title:"Strategic Advisor",desc:"Converts AI from idea-generator to decision-engine. Forces prioritization instead of a long list of equal options.",prompt:"Act as a strategic advisor. Based on my goal below, recommend ONE best option and explain why it is superior to alternatives. Then list two backup options and specify exactly when I should choose them instead. My goal is: [X]",source:"Tom's Guide",url:"https://www.tomsguide.com/ai/i-stopped-asking-ai-to-brainstorm-this-is-the-only-prompt-i-use-to-turn-ideas-into-action"},
+  {cat:"decision",icon:"🔮",label:"Decisions",title:"Expert Panel Simulation",desc:"Gets multiple strategic perspectives in one response. Great for surfacing blind spots before committing to a path.",prompt:"Simulate a panel of four experts reviewing my decision: a strategist, a risk analyst, an optimist, and a skeptic. Have each give their perspective. Then give a final synthesis and recommendation. My decision: [X]",source:"Tom's Guide",url:"https://www.tomsguide.com/ai/i-built-a-library-of-claude-thinking-prompts-these-are-the-ones-i-keep-coming-back-to"},
+  {cat:"decision",icon:"📄",label:"Decisions",title:"Reverse Brief",desc:"Give the AI a long document and get back only what matters. Surfaces your action items fast.",prompt:"Create a reverse brief of this document. Explain the purpose in plain language, list the most important points, identify any risks, deadlines, or obligations, and summarize what actions I need to take.",source:"Tom's Guide",url:"https://www.tomsguide.com/ai/i-use-the-reverse-brief-prompt-to-instantly-understand-any-document-heres-how-it-works"},
+  {cat:"clarity",icon:"✂️",label:"Clarity & Output",title:"Brevity Response",desc:"Lead with your format constraint BEFORE your question — not after. The order is the whole trick.",prompt:"In one sentence, answer this directly with no elaboration or explanation: [Your question here]",source:"TechRadar",url:"https://www.techradar.com/ai-platforms-assistants/this-gemini-and-chatgpt-trick-will-stop-them-from-over-explaining-everything"},
+  {cat:"clarity",icon:"🎯",label:"Clarity & Output",title:"Ask Then Recommend",desc:"Prevents generic suggestions by making the AI calibrate to your specific context before giving advice.",prompt:"Before recommending anything, ask me five short questions — one at a time — to understand my priorities around [topic]. Then use my answers to make one specific recommendation and explain exactly why it fits my situation.",source:"TechRadar",url:"https://www.techradar.com/ai-platforms-assistants/chatgpt/5-prompts-to-really-get-the-most-out-of-the-new-chatgpt-5-2"},
+  {cat:"clarity",icon:"🔍",label:"Clarity & Output",title:"The Follow-Up Prompt",desc:"Use after any first response to surface hidden assumptions. One of the highest-leverage single prompts available.",prompt:"That's helpful, but what assumptions are you making here — and what would change if one of them is wrong?",source:"Tom's Guide",url:"https://www.tomsguide.com/ai/this-single-follow-up-prompt-made-every-ai-answer-better-heres-how"},
+  {cat:"clarity",icon:"🦄",label:"Clarity & Output",title:"The Unicorn Prompt",desc:"An all-purpose starter for when you don't know what to ask. Works on any topic, any AI tool.",prompt:"Pretend you're my assistant and you actually want me to succeed. Ask up to 3 questions if anything's unclear. Then give me: the answer, the plan, and the pitfalls. Keep it short and tailored to: [goal]. If you have to make assumptions, list them first.",source:"Tom's Guide",url:"http://tomsguide.com/ai/i-use-the-unicorn-prompt-with-every-chatbot-it-instantly-fixes-the-worst-ai-problem"},
+  {cat:"clarity",icon:"🔁",label:"Clarity & Output",title:"Repeat Response",desc:"Research shows repeating a prompt improves accuracy and reasoning quality. Simple but surprisingly effective.",prompt:"[Paste your original prompt again, unchanged. The repetition itself improves output quality — no modification needed.]",source:"TechRadar",url:"https://www.techradar.com/ai-platforms-assistants/chatgpt/i-use-this-simple-repetition-trick-with-chatgpt-when-it-misses-the-point-and-it-works-every-time"},
+  {cat:"creative",icon:"🔬",label:"Creative & Learning",title:"Deep Dive — Beginner vs. Expert",desc:"The places where the beginner and expert versions disagree are usually where the real insight lives.",prompt:"Explain [topic] like I'm a complete beginner. Then explain it like I'm an expert. Finally, identify where the two versions actually disagree — what does the beginner version oversimplify or get wrong?",source:"Tom's Guide",url:"https://www.tomsguide.com/ai/i-built-a-library-of-claude-thinking-prompts-these-are-the-ones-i-keep-coming-back-to"},
+  {cat:"creative",icon:"📦",label:"Creative & Learning",title:"Work Inside the Box",desc:"Give absurd constraints and see what the AI does. Forces creative thinking and reveals new angles on familiar problems.",prompt:"Explain [concept] under these constraints: exactly 5 sentences, no words longer than two syllables, written for a curious 10-year-old who has never heard of it.",source:"TechRadar",url:"https://www.techradar.com/ai-platforms-assistants/chatgpt/5-prompts-to-really-get-the-most-out-of-the-new-chatgpt-5-2"},
+  {cat:"creative",icon:"⚠️",label:"Creative & Learning",title:"Contingency Plans",desc:"Add a risk lens to any planning prompt. Surfaces what could go wrong before you're committed.",prompt:"[Your original planning prompt here] — and focus specifically on what is most likely to go wrong. Name the top 3 risks and suggest one practical mitigation for each.",source:"TechRadar",url:"https://www.techradar.com/ai-platforms-assistants/chatgpt/5-prompts-to-really-get-the-most-out-of-the-new-chatgpt-5-2"},
+  {cat:"creative",icon:"💡",label:"Creative & Learning",title:"Solidify a Hunch",desc:"Turn a vague intuition into insight. Let the AI ask questions that help you identify the pattern you're sensing.",prompt:"I've been noticing [something feels different about X], but I can't pinpoint why. Ask me questions — one at a time — to help me identify what's actually changed and what I value about it.",source:"TechRadar",url:"https://www.techradar.com/ai-platforms-assistants/chatgpt/5-prompts-to-really-get-the-most-out-of-the-new-chatgpt-5-2"},
+  {cat:"creative",icon:"✍️",label:"Creative & Learning",title:"Tough Editor",desc:"Gets past the AI's tendency to validate everything. For writers and content creators who want real feedback.",prompt:"Act as a tough but fair editor. Critique this text — focus on clarity, structure, tone, and originality. What should be cut? What should be rewritten? What's the single weakest sentence, and how would you fix it? [Paste text]",source:"Tom's Guide",url:"https://www.tomsguide.com/ai/i-built-a-library-of-claude-thinking-prompts-these-are-the-ones-i-keep-coming-back-to"},
+  {cat:"framework",icon:"⭐",label:"Framework",title:"CO-STAR",desc:"Treats prompting as full design: what the model should know, say, and sound like. Great for audience-specific content.",prompt:"Context: [situational background]\nObjective: [what you want to achieve]\nStyle: [e.g. conversational, academic]\nTone: [e.g. encouraging, direct]\nAudience: [who will read/use this]\nResponse: [format — bullets, paragraph, table, etc.]",source:"parloa.com",url:"https://www.parloa.com/knowledge-hub/prompt-engineering-frameworks/"},
+  {cat:"framework",icon:"🏁",label:"Framework",title:"RACE",desc:"Go-to when you need expertise-anchored responses. Defines who the AI is, what it does, context, and success criteria.",prompt:"Role: [who the AI is — e.g. a curriculum designer for underserved schools]\nAction: [what it should do]\nContext: [relevant background]\nExpectation: [what a strong response looks like]",source:"juuzt.ai",url:"https://juuzt.ai/knowledge-base/prompt-frameworks/"},
+  {cat:"framework",icon:"🏷️",label:"Framework",title:"TAG",desc:"Ideal for educational content creation. Keeps subject, audience, and goal in focus throughout.",prompt:"Topic: [what this is about]\nAudience: [who will receive it — grade level, background, language context]\nGoal: [what the content should accomplish for them]",source:"juuzt.ai",url:"https://juuzt.ai/knowledge-base/prompt-frameworks/"},
+  {cat:"framework",icon:"🎨",label:"Framework",title:"CRAFT (GLA)",desc:"Used in Global Learning Access training. Especially effective for asynchronous learning with diverse audiences.",prompt:"Context: [who you are and what you're working on]\nRole: [the AI's role in this task]\nAction: [exactly what you want it to do]\nFormat: [how to structure the output]\nTone: [voice — e.g. encouraging, culturally respectful, plain language]",source:"Global Learning Access",url:"https://gla-edu.org"},
+  {cat:"framework",icon:"🗺️",label:"Framework",title:"QUEST Framework (GLA)",desc:"A 5-phase Socratic problem-solving approach. Moves from the real problem to accountability checkpoints — 9–11 questions max, one at a time.",prompt:"Use the QUEST Framework:\nQ — Question the core (1 Q: what's the real problem?)\nU — Understand the context (2-3 Qs: constraints, stakeholders, success)\nE — Explore possibilities (3-4 Qs: solutions, trade-offs, resources)\nS — Select your path (2 Qs: best fit, next steps with deadlines)\nT — Track progress (1 Q: how will you know you're on track?)",source:"Global Learning Access",url:"https://gla-edu.org"},
 ];
 
-// ── Render ──────────────────────────────────────────────────────────────────
-const container = document.getElementById('cards-container');
-let activeFilter = 'all';
-let searchTerm = '';
-
-const CAT_COLORS = {
-  tone: '#EF3FA9',
-  decision: '#783CBD',
-  clarity: '#22D3C5',
-  creative: '#2E75B6',
-  framework: '#1B3A6B',
-};
-
-const SECTIONS = [
-  { id: 'tone',      label: 'Tone & Critique' },
-  { id: 'decision',  label: 'Decisions & Analysis' },
-  { id: 'clarity',   label: 'Clarity & Output Shaping' },
-  { id: 'creative',  label: 'Creative & Deep Learning' },
-  { id: 'framework', label: 'Named Frameworks' },
+const SECTIONS=[
+  {id:"tone",      label:"Tone & Critique",     icon:"🎭",iconBg:"si-tone"},
+  {id:"decision",  label:"Decisions & Analysis", icon:"🧭",iconBg:"si-decision"},
+  {id:"clarity",   label:"Clarity & Output",     icon:"💡",iconBg:"si-clarity"},
+  {id:"creative",  label:"Creative & Learning",  icon:"🎨",iconBg:"si-creative"},
+  {id:"framework", label:"Named Frameworks",     icon:"🏗️",iconBg:"si-framework"},
+  {id:"ailiteracy",label:"AI Literacy",           icon:"🧠",iconBg:"si-ailiteracy"},
 ];
 
-function makeCard(card) {
-  const div = document.createElement('div');
-  div.className = 'card';
-  div.dataset.cat = card.cat;
-  div.dataset.search = (card.title + ' ' + card.desc + ' ' + card.prompt).toLowerCase();
+let activeFilter='all', searchTerm='';
 
-  div.innerHTML = `
-    <div class="card-header">
-      <div class="card-title">${card.title}</div>
-      <div class="card-tag">${card.catLabel}</div>
+function makeCard(card,delay){
+  const div=document.createElement('div');
+  div.className='card';div.dataset.cat=card.cat;
+  div.style.animationDelay=`${delay*60}ms`;
+  div.innerHTML=`
+    <div class="card-top">
+      <div class="card-emoji ${card.cat}-bg">${card.icon}</div>
+      <div class="card-meta">
+        <div class="card-title">${card.title}</div>
+        <span class="card-badge ${card.cat}-badge">${card.label}</span>
+      </div>
     </div>
     <div class="card-desc">${card.desc}</div>
-    <div>
-      <div class="prompt-label">Prompt Template</div>
-      <div class="prompt-box">${card.prompt.replace(/\n/g, '<br>')}</div>
+    <div class="prompt-section">
+      <div class="prompt-header">
+        <span class="prompt-label">📋 Prompt Template</span>
+        <button class="copy-btn" data-prompt="${encodeURIComponent(card.prompt)}">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+      </div>
+      <div class="prompt-text">${card.prompt.replace(/\n/g,'<br>')}</div>
     </div>
     <div class="card-footer">
-      <div class="card-source">via <a href="${card.sourceUrl}" target="_blank">${card.source}</a></div>
-      <button class="copy-btn" data-prompt="${encodeURIComponent(card.prompt)}">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        Copy
-      </button>
-    </div>
-  `;
-
-  div.querySelector('.copy-btn').addEventListener('click', function() {
-    const text = decodeURIComponent(this.dataset.prompt);
-    navigator.clipboard.writeText(text).then(() => {
-      this.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 12 4 16"/></svg> Copied!`;
-      this.classList.add('copied');
-      setTimeout(() => {
-        this.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy`;
-        this.classList.remove('copied');
-      }, 2000);
+      <span class="source-tag">via <a href="${card.url}" target="_blank">${card.source}</a></span>
+    </div>`;
+  div.querySelector('.copy-btn').addEventListener('click',function(){
+    const text=decodeURIComponent(this.dataset.prompt);
+    navigator.clipboard.writeText(text).then(()=>{
+      this.innerHTML='✅ Copied!';this.classList.add('copied');
+      setTimeout(()=>{this.innerHTML='<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy';this.classList.remove('copied');},2000);
     });
   });
-
   return div;
 }
 
-function render() {
-  container.innerHTML = '';
+function renderAILiteracy() {
+  const main = document.getElementById('main-content');
+  main.querySelectorAll('.dyn-section').forEach(el => el.remove());
+  const anchor = document.getElementById('master-box');
 
-  const filtered = CARDS.filter(c => {
-    const catMatch = activeFilter === 'all' || c.cat === activeFilter;
-    const searchMatch = !searchTerm || c.dataset?.search?.includes(searchTerm) ||
-      (c.title + ' ' + c.desc + ' ' + c.prompt).toLowerCase().includes(searchTerm);
-    return catMatch && searchMatch;
+  const wrap = document.createElement('div');
+  wrap.className = 'dyn-section ailiteracy-wrap';
+
+  wrap.innerHTML = `
+    <!-- WHY IT MATTERS -->
+    <div class="why-box" style="margin-top:8px">
+      <h3>🌍 Why AI Literacy Matters</h3>
+      <div class="why-grid">
+        <div class="why-item"><div class="wi-icon">⚖️</div><div class="wi-text"><strong>Equity</strong>Without AI literacy, existing inequalities deepen. Those who understand AI gain advantages; those who don't fall further behind.</div></div>
+        <div class="why-item"><div class="wi-icon">🛡️</div><div class="wi-text"><strong>Safety & Ethics</strong>AI-literate individuals can recognize bias, misinformation, and misuse — and push back against harmful applications.</div></div>
+        <div class="why-item"><div class="wi-icon">💼</div><div class="wi-text"><strong>Workforce Readiness</strong>AI literacy is becoming a baseline professional skill across every industry — from healthcare to hospitality.</div></div>
+        <div class="why-item"><div class="wi-icon">🎓</div><div class="wi-text"><strong>Educator Responsibility</strong>Teachers who understand AI make better decisions about when and how to use it — and model critical thinking for students.</div></div>
+        <div class="why-item"><div class="wi-icon">🌏</div><div class="wi-text"><strong>Global Inclusion</strong>For Filipino educators, TESDA learners, and underresourced communities, AI literacy is a pathway to leveling the playing field.</div></div>
+        <div class="why-item"><div class="wi-icon">🤝</div><div class="wi-text"><strong>Human-Centered AI</strong>AI literacy grounds technology in human values — ensuring AI serves people, not the other way around.</div></div>
+      </div>
+    </div>
+
+    <!-- FOUNDATIONAL DEFINITION -->
+    <div class="definition-card">
+      <div class="def-label">📚 Most-Cited Academic Definition</div>
+      <div class="def-quote">"A set of competencies that enables individuals to critically evaluate AI technologies; communicate and collaborate effectively with AI; and use AI as a tool online, at home, and in the workplace."</div>
+      <div class="def-source">— Long &amp; Magerko, 2020 · Georgia Institute of Technology · <a href="https://dl.acm.org/doi/10.1145/3313831.3376727" target="_blank">Read the paper →</a></div>
+    </div>
+
+    <!-- LONG & MAGERKO 5 QUESTIONS -->
+    <div class="section-header" style="margin-top:36px">
+      <div class="section-icon si-ailiteracy">🔬</div>
+      <span class="section-title">Long & Magerko's 5 Core Questions (17 Competencies)</span>
+    </div>
+    <div class="competencies-grid">
+      <div class="competency-card">
+        <div class="c-icon">🤔</div>
+        <div class="c-question">What IS AI?</div>
+        <div class="c-desc">Understanding what AI actually is — not science fiction, not magic. The foundation for everything else.</div>
+        <div class="c-skills"><span class="skill-chip">Recognizing AI</span><span class="skill-chip">Understanding intelligence</span><span class="skill-chip">General vs. narrow AI</span></div>
+      </div>
+      <div class="competency-card">
+        <div class="c-icon">⚡</div>
+        <div class="c-question">What CAN AI do?</div>
+        <div class="c-desc">Knowing AI's real strengths and limitations — so you can use it well and not over-trust it.</div>
+        <div class="c-skills"><span class="skill-chip">Strengths & weaknesses</span><span class="skill-chip">Imagining future AI</span></div>
+      </div>
+      <div class="competency-card">
+        <div class="c-icon">⚙️</div>
+        <div class="c-question">HOW does AI work?</div>
+        <div class="c-desc">A working understanding of data, training, and how AI systems generate outputs — without needing to code.</div>
+        <div class="c-skills"><span class="skill-chip">Data literacy</span><span class="skill-chip">How models learn</span><span class="skill-chip">Outputs & errors</span></div>
+      </div>
+      <div class="competency-card">
+        <div class="c-icon">🧭</div>
+        <div class="c-question">How SHOULD AI be used?</div>
+        <div class="c-desc">The ethical dimension — bias, privacy, accountability, and responsible decision-making with AI.</div>
+        <div class="c-skills"><span class="skill-chip">Ethics</span><span class="skill-chip">Bias awareness</span><span class="skill-chip">Responsible use</span></div>
+      </div>
+      <div class="competency-card">
+        <div class="c-icon">🪞</div>
+        <div class="c-question">How do PEOPLE perceive AI?</div>
+        <div class="c-desc">Understanding how context, culture, and experience shape attitudes toward AI — including your own.</div>
+        <div class="c-skills"><span class="skill-chip">Cultural context</span><span class="skill-chip">Self-awareness</span><span class="skill-chip">Trust & skepticism</span></div>
+      </div>
+    </div>
+
+    <!-- FRAMEWORKS COMPARISON -->
+    <div class="section-header" style="margin-top:8px">
+      <div class="section-icon si-ailiteracy">🗺️</div>
+      <span class="section-title">Key AI Literacy Frameworks Compared</span>
+    </div>
+    <div class="frameworks-compare">
+      <div class="frameworks-compare-header">
+        <div>
+          <h3>Who defines AI literacy — and how?</h3>
+          <p>Each organization brings a different lens. Together they map the full picture.</p>
+        </div>
+      </div>
+      <div class="framework-row">
+        <div class="fw-org">Long & Magerko<span>Georgia Tech · 2020</span></div>
+        <div class="fw-domains"><span class="fw-domain">What is AI?</span><span class="fw-domain">What can AI do?</span><span class="fw-domain">How does it work?</span><span class="fw-domain">How should it be used?</span><span class="fw-domain">How do people perceive it?</span></div>
+        <div class="fw-link"><a href="https://dl.acm.org/doi/10.1145/3313831.3376727" target="_blank">Read →</a></div>
+      </div>
+      <div class="framework-row">
+        <div class="fw-org">Digital Promise<span>PK-12 Equity Focus · 2024</span></div>
+        <div class="fw-domains"><span class="fw-domain">Understand</span><span class="fw-domain">Evaluate</span><span class="fw-domain">Use</span></div>
+        <div class="fw-link"><a href="https://digitalpromise.org/2024/06/18/ai-literacy-a-framework-to-understand-evaluate-and-use-emerging-technology/" target="_blank">Read →</a></div>
+      </div>
+      <div class="framework-row">
+        <div class="fw-org">Stanford Teaching Commons<span>Higher Ed · 2024</span></div>
+        <div class="fw-domains"><span class="fw-domain">Functional</span><span class="fw-domain">Ethical</span><span class="fw-domain">Rhetorical</span><span class="fw-domain">Pedagogical</span></div>
+        <div class="fw-link"><a href="https://teachingcommons.stanford.edu/teaching-guides/artificial-intelligence-teaching-guide/understanding-ai-literacy" target="_blank">Read →</a></div>
+      </div>
+      <div class="framework-row">
+        <div class="fw-org">EDUCAUSE / Barnard College<span>Higher Ed · 2024</span></div>
+        <div class="fw-domains"><span class="fw-domain">Technical Understanding</span><span class="fw-domain">Evaluative Skills</span><span class="fw-domain">Practical Application</span><span class="fw-domain">Ethical Considerations</span></div>
+        <div class="fw-link"><a href="https://er.educause.edu/articles/2024/6/a-framework-for-ai-literacy" target="_blank">Read →</a></div>
+      </div>
+      <div class="framework-row">
+        <div class="fw-org">OECD / European Commission<span>Global K-12 · 2025</span></div>
+        <div class="fw-domains"><span class="fw-domain">Engage with AI</span><span class="fw-domain">Create with AI</span><span class="fw-domain">Manage AI</span><span class="fw-domain">Design AI</span></div>
+        <div class="fw-link"><a href="https://ailiteracyframework.org" target="_blank">Read →</a></div>
+      </div>
+      <div class="framework-row">
+        <div class="fw-org">UNESCO<span>Teachers · 2025</span></div>
+        <div class="fw-domains"><span class="fw-domain">Human-centered values</span><span class="fw-domain">AI competency for teachers</span><span class="fw-domain">Pedagogical integration</span></div>
+        <div class="fw-link"><a href="https://www.unesco.org/en/digital-education/artificial-intelligence" target="_blank">Read →</a></div>
+      </div>
+      <div class="framework-row">
+        <div class="fw-org">USC Research Guide<span>Comprehensive · 2024</span></div>
+        <div class="fw-domains"><span class="fw-domain">Technical</span><span class="fw-domain">Ethical</span><span class="fw-domain">Critical</span><span class="fw-domain">Societal</span></div>
+        <div class="fw-link"><a href="https://libguides.usc.edu/c.php?g=1457247&p=10905199" target="_blank">Read →</a></div>
+      </div>
+    </div>
+
+    <!-- JEFFERY'S OWN LENS -->
+    <div class="definition-card" style="background: linear-gradient(135deg, #4a1a6b 0%, #783CBD 100%)">
+      <div class="def-label">🌟 The GLA Perspective</div>
+      <div class="def-quote">"AI literacy isn't just knowing how to use the tools — it's understanding enough to ask whether you should, for whom, and toward what end."</div>
+      <div class="def-source">— Jeffery Heil · Global Learning Access · Connecting AI literacy to human-centered AI and educational equity</div>
+    </div>
+
+    <!-- AI LITERACY RESOURCES -->
+    <div class="section-header" style="margin-top:8px">
+      <div class="section-icon si-ailiteracy">📚</div>
+      <span class="section-title">AI Literacy Resources & Research</span>
+    </div>
+    <div class="resources-grid">
+      <div class="resource-card">
+        <div class="r-icon">🔬</div>
+        <div class="r-type">Foundational Research</div>
+        <div class="r-name">Long & Magerko (2020) — What is AI Literacy?</div>
+        <div class="r-desc">The most-cited academic definition of AI literacy. 17 competencies across 5 themes. Required reading for anyone building AI training.</div>
+        <a href="https://dl.acm.org/doi/10.1145/3313831.3376727" target="_blank">Read Paper →</a>
+      </div>
+      <div class="resource-card">
+        <div class="r-icon">🌏</div>
+        <div class="r-type">Global Framework · 2025</div>
+        <div class="r-name">OECD/EU AI Literacy Framework</div>
+        <div class="r-desc">The most internationally authoritative framework for K-12. Defines global standards across four domains. Directly relevant for Filipino educators.</div>
+        <a href="https://ailiteracyframework.org" target="_blank">Visit →</a>
+      </div>
+      <div class="resource-card">
+        <div class="r-icon">🎓</div>
+        <div class="r-type">Educator Framework</div>
+        <div class="r-name">Stanford Teaching Commons</div>
+        <div class="r-desc">Four-domain framework centered on human values: Functional, Ethical, Rhetorical, and Pedagogical AI literacy. Strong HCAI alignment.</div>
+        <a href="https://teachingcommons.stanford.edu/teaching-guides/artificial-intelligence-teaching-guide/understanding-ai-literacy" target="_blank">Visit →</a>
+      </div>
+      <div class="resource-card">
+        <div class="r-icon">⚖️</div>
+        <div class="r-type">Equity-Focused · PK-12</div>
+        <div class="r-name">Digital Promise AI Literacy</div>
+        <div class="r-desc">Understand, Evaluate, Use. Equity-centered with strategies for educational leaders. Strong alignment with underresourced student contexts.</div>
+        <a href="https://digitalpromise.org/2024/06/18/ai-literacy-a-framework-to-understand-evaluate-and-use-emerging-technology/" target="_blank">Visit →</a>
+      </div>
+      <div class="resource-card">
+        <div class="r-icon">🏛️</div>
+        <div class="r-type">Higher Ed Framework</div>
+        <div class="r-name">EDUCAUSE AI Literacy Framework</div>
+        <div class="r-desc">Developed at Barnard/Columbia. Practical programming model organized across literacy levels from awareness through critical engagement.</div>
+        <a href="https://er.educause.edu/articles/2024/6/a-framework-for-ai-literacy" target="_blank">Visit →</a>
+      </div>
+      <div class="resource-card">
+        <div class="r-icon">🌐</div>
+        <div class="r-type">Teachers · UNESCO 2025</div>
+        <div class="r-name">UNESCO AI Competency Framework for Teachers</div>
+        <div class="r-desc">New 2025 version specifically for educators. Internationally authoritative. Directly relevant for TESDA and Philippine DepEd partners.</div>
+        <a href="https://www.unesco.org/en/digital-education/artificial-intelligence" target="_blank">Visit →</a>
+      </div>
+      <div class="resource-card">
+        <div class="r-icon">📋</div>
+        <div class="r-type">Comprehensive Guide</div>
+        <div class="r-name">USC Research Guide — AI Literacy Frameworks</div>
+        <div class="r-desc">An outstanding curated overview of all major AI literacy frameworks with direct links to sources. Great for building training curriculum.</div>
+        <a href="https://libguides.usc.edu/c.php?g=1457247&p=10905199" target="_blank">Visit →</a>
+      </div>
+      <div class="resource-card">
+        <div class="r-icon">🤝</div>
+        <div class="r-type">Coalition · K-12</div>
+        <div class="r-name">TeachAI</div>
+        <div class="r-desc">Khan Academy, ISTE, Code.org and others. Focused on teaching students about AI — not just with it. Classroom-ready guidance.</div>
+        <a href="https://www.teachai.org" target="_blank">Visit →</a>
+      </div>
+      <div class="resource-card">
+        <div class="r-icon">🧑‍💻</div>
+        <div class="r-type">Free Curriculum</div>
+        <div class="r-name">AI4K12 Initiative</div>
+        <div class="r-desc">Free K-12 AI curriculum developed by CSTA and AAAI. Five Big Ideas in AI. No coding experience required for teachers or students.</div>
+        <a href="https://ai4k12.org" target="_blank">Visit →</a>
+      </div>
+    </div>
+  `;
+
+  main.insertBefore(wrap, anchor);
+}
+
+function renderAILiteracySection() {
+  const main = document.getElementById('main-content');
+  main.querySelectorAll('.dyn-section').forEach(el => el.remove());
+  const anchor = document.getElementById('master-box');
+  const wrap = document.createElement('div');
+  wrap.className = 'dyn-section';
+  const hdr = document.createElement('div');
+  hdr.className = 'section-header';
+  hdr.innerHTML = `<div class="section-icon si-ailiteracy">🧠</div><span class="section-title">AI Literacy</span>`;
+  wrap.appendChild(hdr);
+  main.insertBefore(wrap, anchor);
+  renderAILiteracy();
+}
+function render(){
+  const masterBox=document.getElementById('master-box');
+  const resWrap=document.getElementById('resources-wrap');
+  masterBox.style.display='';resWrap.style.display='';
+  const main=document.getElementById('main-content');
+  main.querySelectorAll('.dyn-section').forEach(el=>el.remove());
+  const anchor=document.getElementById('master-box');
+  const filtered=CARDS.filter(c=>{
+    const cm=activeFilter==='all'||c.cat===activeFilter;
+    const sm=!searchTerm||(c.title+' '+c.desc+' '+c.prompt).toLowerCase().includes(searchTerm);
+    return cm&&sm;
   });
-
-  if (filtered.length === 0) {
-    const grid = document.createElement('div');
-    grid.className = 'cards-grid';
-    grid.innerHTML = `<div class="empty-state"><div class="emoji">🔍</div><p>No techniques match your search. Try a different term or clear the filter.</p></div>`;
-    container.appendChild(grid);
-    return;
+  if(!filtered.length){
+    const e=document.createElement('div');e.className='dyn-section cards-grid';
+    e.innerHTML='<div class="empty-state"><div class="e-icon">🔍</div><p>No techniques match. Try a different search term.</p></div>';
+    main.insertBefore(e,anchor);return;
   }
-
-  const sectionsToShow = activeFilter === 'all'
-    ? SECTIONS
-    : SECTIONS.filter(s => s.id === activeFilter);
-
-  sectionsToShow.forEach(section => {
-    const cards = filtered.filter(c => c.cat === section.id);
-    if (cards.length === 0) return;
-
-    const label = document.createElement('div');
-    label.className = 'section-label';
-    label.innerHTML = `<span class="dot" style="background:${CAT_COLORS[section.id]}"></span>${section.label}`;
-    container.appendChild(label);
-
-    const grid = document.createElement('div');
-    grid.className = 'cards-grid';
-    cards.forEach(c => grid.appendChild(makeCard(c)));
-    container.appendChild(grid);
+  const secs=activeFilter==='all'?SECTIONS:SECTIONS.filter(s=>s.id===activeFilter);
+  let d=0;
+  secs.forEach(s=>{
+    const cards=filtered.filter(c=>c.cat===s.id);if(!cards.length)return;
+    const wrap=document.createElement('div');wrap.className='dyn-section';
+    const hdr=document.createElement('div');hdr.className='section-header';
+    hdr.innerHTML=`<div class="section-icon ${s.iconBg}">${s.icon}</div><span class="section-title">${s.label}</span><span class="section-count ${s.id}-badge">${cards.length} technique${cards.length>1?'s':''}</span>`;
+    wrap.appendChild(hdr);
+    const grid=document.createElement('div');grid.className='cards-grid';
+    cards.forEach(c=>grid.appendChild(makeCard(c,d++)));
+    wrap.appendChild(grid);main.insertBefore(wrap,anchor);
   });
 }
 
-// Filter buttons
-document.querySelectorAll('.filter-btn').forEach(btn => {
-  btn.addEventListener('click', function() {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+function copyMaster(){
+  const text=document.getElementById('master-tpl').innerText.replace('📋 Copy','').trim();
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn=document.getElementById('mcopy');btn.textContent='✅ Copied!';btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='📋 Copy';btn.classList.remove('copied');},2000);
+  });
+}
+
+document.querySelectorAll('.cat-btn').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
     this.classList.add('active');
-    activeFilter = this.dataset.cat;
+    activeFilter=this.dataset.cat;
+    if(activeFilter==='ailiteracy'){
+      document.getElementById('master-box').style.display='none';
+      document.getElementById('resources-wrap').style.display='none';
+      renderAILiteracy(); return;
+    }
     render();
   });
 });
-
-// Search
-document.getElementById('search').addEventListener('input', function() {
-  searchTerm = this.value.toLowerCase().trim();
-  render();
+document.getElementById('search').addEventListener('input',function(){
+  searchTerm=this.value.toLowerCase().trim();render();
 });
-
 render();
 </script>
 </body>
