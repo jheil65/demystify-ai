@@ -10,6 +10,7 @@ The Playground lives in its own folder, `playground`, so it never touches the re
 | :---- | :---- | :---- |
 | `index.html` | The Playground home page (6 game tiles) | https://jheil65.github.io/demystify-ai/playground/ |
 | `finish-the-sentence.html` | Game 1: Finish the Sentence | https://jheil65.github.io/demystify-ai/playground/finish-the-sentence.html |
+| `ai-or-human.html` | Game 2: AI or Human? | https://jheil65.github.io/demystify-ai/playground/ai-or-human.html |
 | `README.md` | This guide | (not shown on the site) |
 
 Your homepage has one button that links here ("🎮 Try the AI Playground"). Nothing else on the homepage changed.
@@ -27,7 +28,7 @@ Your homepage has one button that links here ("🎮 Try the AI Playground"). Not
 1. Go to https://github.com/jheil65/demystify-ai and click the `playground` folder.
 2. Click the file you want to change (for example, `finish-the-sentence.html`).
 3. Click the **pencil icon** (Edit) at the top right of the file.
-4. Use **Ctrl+F** (or Cmd+F) to find the words you want to change. In Finish the Sentence, all the game text is near the top of the `<script>` section, under the word `ROUNDS`. Change only the words inside the quotation marks.
+4. Use **Ctrl+F** (or Cmd+F) to find the words you want to change. All the game text is near the top of the `<script>` section: under the word `ROUNDS` in Finish the Sentence, and under `MESSAGES` and `FIX` in AI or Human?. Change only the words inside the quotation marks. In AI or Human?, words inside `[[double brackets]]` are the clues that get highlighted.
 5. Click **Commit changes**, then **Commit changes** again.
 6. Wait 1–2 minutes, then refresh the live page.
 
