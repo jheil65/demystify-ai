@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Idea Mixer · AI Playground · Demystifying AI for All</title>
+<meta name="description" content="A free, 5-minute game: spin a problem and an unexpected point of view, and watch new ideas appear. No login, no grades, nothing saved.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎡</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#EF3FA9;--purple:#783CBD;--teal:#22D3C5;--navy:#1B3A6B;--blue:#2E75B6;
+  --yellow:#FFD93D;--orange:#FF6B35;--green:#06D6A0;--ink:#1A1A2E;--light:#F7F8FC;
+  --white:#FFFFFF;--border:#E4E9F2;--muted:#5B6478;
+  --acc:#D9531E;--accbg:#FFF1EA;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito Sans',sans-serif;background:var(--light);color:var(--ink);line-height:1.55;min-height:100vh}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+.topbar{background:var(--navy);color:#fff;padding:14px 0}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.topbar a{color:rgba(255,255,255,.85);text-decoration:none;font-family:'Nunito',sans-serif;font-weight:700;font-size:14px}
+.topbar a:hover{color:var(--yellow)}
+.tag{font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--teal)}
+
+.intro{background:var(--navy);color:#fff;padding:8px 0 40px;position:relative;overflow:hidden}
+.intro::after{content:'';position:absolute;z-index:0;width:220px;height:220px;border-radius:50%;background:var(--orange);opacity:.18;right:-60px;top:-40px}
+.intro h1{font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(2rem,7vw,3rem);line-height:1.1;margin:14px 0 10px;position:relative;z-index:1}
+.intro h1 span{color:var(--yellow)}
+.intro p{color:rgba(255,255,255,.75);max-width:560px;position:relative;z-index:1}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;position:relative;z-index:1}
+.chip{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:40px;padding:5px 14px;font-size:13px;font-weight:600}
+
+.card{background:var(--white);border:1px solid var(--border);border-radius:20px;box-shadow:0 8px 30px rgba(27,58,107,.08);padding:24px;margin:-24px 0 20px;position:relative;z-index:1}
+.progress{display:flex;gap:6px;margin-bottom:18px}
+.progress span{flex:1;height:6px;border-radius:6px;background:var(--border);transition:background .3s}
+.progress span.done{background:var(--teal)}
+.progress span.now{background:var(--orange)}
+.round-label{font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--acc)}
+.round-title{font-family:'Nunito',sans-serif;font-weight:800;font-size:1.25rem;margin:4px 0 12px}
+p+p{margin-top:8px}
+
+/* reels */
+.reel-label{font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.reel{display:flex;align-items:center;gap:12px;min-height:84px;border-radius:16px;padding:14px 16px;background:linear-gradient(135deg,var(--navy),#2A4F8C);color:#fff;font-family:'Nunito',sans-serif;font-weight:800;font-size:1.1rem;line-height:1.3;box-shadow:inset 0 0 0 3px rgba(255,217,61,.35)}
+.reel.lens{background:linear-gradient(135deg,var(--orange),#E8457A)}
+.reel .ico{font-size:34px;line-height:1;flex:none}
+.reel.spinning .txt{opacity:.7;filter:blur(.4px)}
+.reel.landed{animation:land .4s ease}
+@keyframes land{0%{transform:scale(.97)}60%{transform:scale(1.03)}100%{transform:none}}
+
+/* inputs and choices */
+textarea{width:100%;min-height:96px;border:2px solid var(--border);border-radius:14px;padding:12px 14px;font-family:'Nunito Sans',sans-serif;font-size:16px;color:var(--ink);resize:vertical}
+textarea:focus{outline:none;border-color:var(--orange)}
+.hint{font-size:14px;color:var(--muted);margin:6px 0 0}
+.ask{font-weight:700;margin:14px 0 10px}
+.choices{display:grid;gap:10px}
+.choices.three{grid-template-columns:repeat(3,1fr)}
+.choice{font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;padding:14px 12px;border-radius:14px;border:2px solid var(--border);background:#fff;color:var(--ink);cursor:pointer;transition:transform .12s,border-color .12s,background .12s;text-align:left;line-height:1.3}
+.choices.three .choice{text-align:center}
+.choice small{display:block;font-family:'Nunito Sans',sans-serif;font-weight:600;font-size:13px;color:var(--muted);margin-top:3px}
+.choice:hover{border-color:var(--orange);transform:translateY(-2px)}
+.choice:focus-visible,.btn:focus-visible,textarea:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+.choice[disabled]{cursor:default;transform:none}
+.choice.picked{border-color:var(--orange);background:var(--accbg)}
+.choice.right{border-color:var(--green);background:#E8FBF6}
+.choice.wrong{border-color:var(--pink);background:#FDF0F6}
+
+.box{display:none;margin-top:14px;border-radius:14px;padding:14px 16px;border-left:5px solid var(--c,var(--orange));background:var(--bg,var(--accbg))}
+.box.show{display:block;animation:pop .35s ease}
+.box h3{font-family:'Nunito',sans-serif;font-weight:900;font-size:1.05rem;margin-bottom:4px}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.mine{background:var(--light);border-radius:14px;padding:12px 14px;margin-bottom:12px;font-size:15px}
+.mine b{font-family:'Nunito',sans-serif;display:block;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.prompt{background:#EEF3FB;border:2px dashed var(--blue);border-radius:14px;padding:12px 14px;font-size:15px}
+.prompt b{font-family:'Nunito',sans-serif}
+.ai-list{list-style:none;margin-top:10px;display:grid;gap:8px}
+.ai-list li{background:#fff;border:1px solid var(--border);border-radius:10px;padding:9px 12px;font-weight:600}
+.ai-list li::before{content:'🤖 '}
+
+.idea-card{border:2px solid var(--orange);border-radius:16px;padding:14px 16px;margin-top:12px;background:#fff}
+.idea-card .lens-name{font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--acc)}
+.idea-card p{font-size:16px;font-weight:600;margin-top:4px}
+.rate{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.rate button{font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;border:2px solid var(--border);background:#fff;border-radius:40px;padding:7px 14px;cursor:pointer;color:var(--ink)}
+.rate button.on{border-color:var(--orange);background:var(--accbg)}
+.basket{margin-top:16px}
+.basket h3{font-family:'Nunito',sans-serif;font-weight:900;font-size:1rem;margin-bottom:6px}
+.basket ul{list-style:none;display:grid;gap:6px}
+.basket li{font-size:14px;background:var(--light);border-radius:10px;padding:8px 12px}
+.basket li b{font-family:'Nunito',sans-serif}
+
+.btn{font-family:'Nunito',sans-serif;font-weight:800;font-size:16px;border:none;border-radius:40px;padding:13px 26px;cursor:pointer;transition:transform .12s,filter .12s;text-decoration:none;display:inline-block}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+.btn[disabled]{opacity:.45;cursor:default;transform:none}
+.btn-main{background:var(--acc);color:#fff}
+.btn-spin{background:var(--yellow);color:var(--ink)}
+.btn-pink{background:var(--pink);color:#fff}
+.btn-alt{background:var(--navy);color:#fff}
+.btn-soft{background:var(--light);color:var(--ink);border:2px solid var(--border)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+
+.big-ideas{display:grid;gap:10px;margin:14px 0}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--light);border-radius:14px;padding:14px}
+.idea .ico{font-size:24px;line-height:1}
+.idea b{font-family:'Nunito',sans-serif;display:block}
+.talk{background:#F1EAFB;border-radius:14px;padding:16px;margin-top:6px}
+.talk h3,.cta h3{font-family:'Nunito',sans-serif;font-weight:900;font-size:1.05rem;margin-bottom:6px}
+.cta{background:var(--navy);color:#fff;border-radius:16px;padding:18px;margin-top:16px}
+.cta p{color:rgba(255,255,255,.8);margin-bottom:12px}
+
+.note{font-size:13px;color:var(--muted);margin:6px 0 30px;text-align:center}
+footer{background:var(--navy);color:rgba(255,255,255,.55);text-align:center;padding:24px 16px;font-size:13px}
+footer a{color:var(--teal);text-decoration:none}
+footer strong{color:rgba(255,255,255,.85);font-family:'Nunito',sans-serif}
+@media (max-width:420px){.card{padding:18px}.choices.three{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap">
+  <a href="./">← AI Playground</a>
+  <span class="tag">Game 5 of 6</span>
+</div></div>
+
+<header class="intro"><div class="wrap">
+  <h1>Idea <span>Mixer</span> 🎡</h1>
+  <p>Spin a real problem, write your own idea first, then mix in an unexpected point of view and see what new ideas appear.</p>
+  <div class="chips">
+    <span class="chip">⏱ About 5 minutes</span>
+    <span class="chip">🙈 No login</span>
+    <span class="chip">💾 Nothing is saved</span>
+    <span class="chip">✅ No wrong answers</span>
+  </div>
+</div></header>
+
+<main class="wrap">
+  <section class="card" id="game" aria-live="polite">
+    <div class="progress" id="progress" aria-hidden="true"></div>
+    <div id="stage"></div>
+  </section>
+  <p class="note">The ideas in this game were written ahead of time to show what mixing looks like. A real AI tool gives different ideas every time, and some of them will not be good.</p>
+</main>
+
+<footer>Part of <a href="../">Demystifying AI for All</a> · Built by <strong>Jeffery Heil</strong> · <a href="https://globallearningaccess.com/home" target="_blank" rel="noopener">Global Learning Access</a></footer>
+
+<script>
+(function(){
+  /* ------------------------------------------------------------
+     GAME DATA. To edit the game, change the words inside the quotes.
+     PROBLEMS: each has a title, a "goal" (used inside the prompt),
+     3 "plain" AI ideas, and one mixed idea for each LENS key.
+     ------------------------------------------------------------ */
+  var LENSES = [
+    { key:"jeepney", ico:"🚐", name:"a jeepney driver" },
+    { key:"lola",    ico:"👵", name:"a lola" },
+    { key:"kid",     ico:"🧒", name:"a 10-year-old" },
+    { key:"coach",   ico:"🏀", name:"a basketball coach" },
+    { key:"videoke", ico:"🎤", name:"a videoke host" }
+  ];
+
+  var PROBLEMS = [
+    { ico:"🧹", title:"Few young people join our barangay clean-up drives",
+      goal:"get more young people to join our barangay clean-up drives",
+      plain:["Post an announcement on social media","Give certificates of participation","Hold an awareness seminar"],
+      mix:{
+        jeepney:"Turn the clean-up into a route. Teams \"pick up passengers\" (trash) at each stop, with a signboard, and finish with a party at the \"terminal.\"",
+        lola:"Ask each young person to bring a lolo or lola. While everyone cleans, the elders tell stories of how the river looked when they were young.",
+        kid:"Make it a treasure hunt. Hide 20 painted \"gold\" bottle caps along the route. Whoever finds the most picks the merienda.",
+        coach:"Form teams by purok, with a scoreboard. Kilos of trash = points, and the winning team gets the court first on Saturday.",
+        videoke:"End with a free videoke session. Every full sack of trash earns one song."
+      }},
+    { ico:"🍲", title:"Our small carinderia is empty on weekday afternoons",
+      goal:"bring more customers to our small carinderia on weekday afternoons",
+      plain:["Offer discounts","Promote on social media","Improve the menu"],
+      mix:{
+        jeepney:"Sell a \"pasada pack\": a merienda bundle that drivers and riders can grab in 2 minutes between trips.",
+        lola:"Host a 3 PM kwentuhan with coffee and kakanin for seniors, who often have free afternoons and love good company.",
+        kid:"Sell small, cheap merienda portions at school dismissal time, with a stamp card: 5 stamps = 1 free turon.",
+        coach:"Partner with the nearby court. Teams that show their game schedule get a post-game meal deal.",
+        videoke:"Try \"Videoke Wednesday\" afternoons: buy a meal, get one song."
+      }},
+    { ico:"🦺", title:"New workers forget the safety steps at our training center",
+      goal:"help new workers remember the safety steps at our training center",
+      plain:["Hold refresher training","Put up safety posters","Give a written quiz"],
+      mix:{
+        jeepney:"Post the safety steps like jeepney stops along the work area, so workers follow the \"route\" in order.",
+        lola:"Turn each step into a short saying or rhyme, the way lolas pass down advice, so it sticks.",
+        kid:"Use picture cards with big, simple drawings and almost no text. Anyone can follow them in 5 seconds.",
+        coach:"Run a 2-minute safety \"warm-up drill\" before every shift, the way teams practice before a game.",
+        videoke:"Write a short safety jingle to a familiar tune. Workers sing it while they set up."
+      }},
+    { ico:"🏫", title:"Parents rarely come to our school meetings",
+      goal:"get more parents to come to our school meetings",
+      plain:["Send a letter to parents","Post on the school Facebook page","Offer a raffle prize"],
+      mix:{
+        jeepney:"Hold short meetings at pick-up time, right at the school gate, where parents already wait.",
+        lola:"Invite the lolos and lolas who do school pick-up, and welcome them as guests, not substitutes.",
+        kid:"Let students host the meeting and show their work. Parents come to see their child, not to hear a report.",
+        coach:"Make it \"game day\": 20 minutes of updates, then a parents vs. teachers volleyball match.",
+        videoke:"Open with a 10-minute videoke icebreaker and merienda, and keep the serious part to 20 minutes."
+      }}
+  ];
+
+  var TESTS = [
+    ["Roll it out everywhere next month","Go big right away",0,
+     "Big launches cost time and money. If the idea doesn't work, everyone is disappointed. Start smaller."],
+    ["Try it once this week with a small group, then ask them what they think","Test small, listen, then improve",2,
+     "Yes! A small test is cheap, fast, and honest. The people who try it will tell you what to fix."],
+    ["Write a full proposal and wait for approval","Plan everything first",1,
+     "Planning helps, but you won't know if the idea works until real people try it. Test small first."]
+  ];
+
+  var state, stage=document.getElementById("stage"), progress=document.getElementById("progress");
+  var STEPS=6, idx=0;
+  var reduce=window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function reset(){ state={p:null, mine:"", lensesUsed:[], basket:[], fav:null}; }
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+  function drawProgress(){progress.innerHTML="";for(var i=0;i<STEPS;i++){var s=document.createElement("span");if(i<idx)s.className="done";else if(i===idx)s.className="now";progress.appendChild(s);}}
+  function go(){idx++;render();document.getElementById("game").scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"});}
+  function wire(id,fn){var el=document.getElementById(id); if(el) el.addEventListener("click",fn);}
+
+  /* slot-reel spin: cycles through items, slows down, lands on target */
+  function spin(reel,items,target,done){
+    var ico=reel.querySelector(".ico"), txt=reel.querySelector(".txt");
+    function show(it){ico.textContent=it.ico; txt.textContent=it.label;}
+    if(reduce){show(target);done();return;}
+    reel.classList.remove("landed"); reel.classList.add("spinning");
+    var n=0, total=16, delay=55;
+    (function tick(){
+      n++;
+      if(n>=total){ show(target); reel.classList.remove("spinning"); void reel.offsetWidth; reel.classList.add("landed"); done(); return; }
+      show(items[n%items.length]); delay+=n>10?35:6; setTimeout(tick,delay);
+    })();
+  }
+  function probItems(){return PROBLEMS.map(function(p){return {ico:p.ico,label:p.title};});}
+  function lensItems(){return LENSES.map(function(l){return {ico:l.ico,label:"From the point of view of "+l.name};});}
+
+  /* Step 1: spin the problem + your idea first */
+  function step1(){
+    stage.innerHTML=
+      '<p class="round-label">Step 1 of 5 · Your idea first</p>'+
+      '<h2 class="round-title">Spin a problem</h2>'+
+      '<p class="reel-label">The problem</p>'+
+      '<div class="reel" id="preel"><span class="ico">❓</span><span class="txt">Tap Spin to get a problem</span></div>'+
+      '<div class="actions" style="margin-top:12px"><button class="btn btn-spin" type="button" id="spinP">🎰 Spin</button></div>'+
+      '<div id="write" style="display:none">'+
+        '<p class="ask">Before any AI: what is your idea? Write one quick idea.</p>'+
+        '<label for="mine" class="hint" style="display:block;margin:0 0 6px">Not sure where to start? Think of one person this problem affects. What would make them say yes? Any idea counts, even a silly one.</label>'+
+        '<textarea id="mine" placeholder="My idea is..."></textarea>'+
+        '<p class="hint">🙈 This stays on your screen. Nothing is saved or sent.</p>'+
+        '<div class="actions"><button class="btn btn-main" type="button" id="lock" disabled>Lock in my idea →</button><button class="btn btn-soft" type="button" id="skip">I\'m stuck, skip</button></div>'+
+      '</div>';
+    var reel=document.getElementById("preel"), spinBtn=document.getElementById("spinP");
+    spinBtn.addEventListener("click",function(){
+      spinBtn.disabled=true;
+      var choices=PROBLEMS.map(function(_,i){return i;}).filter(function(i){return i!==state.p;});
+      var pick=choices[Math.floor(Math.random()*choices.length)];
+      spin(reel,probItems(),{ico:PROBLEMS[pick].ico,label:PROBLEMS[pick].title},function(){
+        state.p=pick; spinBtn.disabled=false; spinBtn.textContent="🎰 Spin again";
+        document.getElementById("write").style.display="block";
+      });
+    });
+    var ta=document.getElementById("mine"), lock=document.getElementById("lock");
+    ta.addEventListener("input",function(){lock.disabled=ta.value.trim().length<3;});
+    lock.addEventListener("click",function(){state.mine=ta.value.trim(); go();});
+    wire("skip",function(){state.mine=""; go();});
+  }
+
+  /* Step 2: what a plain prompt gives */
+  function step2(){
+    var P=PROBLEMS[state.p];
+    stage.innerHTML=
+      '<p class="round-label">Step 2 of 5 · The plain prompt</p>'+
+      '<h2 class="round-title">What does a plain prompt give you?</h2>'+
+      (state.mine?'<div class="mine"><b>Your idea</b>'+esc(state.mine)+'</div>':'')+
+      '<div class="prompt"><b>Plain prompt:</b> "Give me ideas to '+esc(P.goal)+'."'+
+        '<ul class="ai-list">'+P.plain.map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul></div>'+
+      '<p class="ask">'+(state.mine?'How do these compare to your idea?':'What do you notice about these ideas?')+'</p>'+
+      '<div class="choices">'+
+        (state.mine?
+          '<button class="choice" type="button">Mine is more creative</button><button class="choice" type="button">About the same</button><button class="choice" type="button">The AI ideas are better</button>':
+          '<button class="choice" type="button">They are useful</button><button class="choice" type="button">I have heard them before</button><button class="choice" type="button">They could fit any town in the world</button>')+
+      '</div><div class="box" id="fb"></div><div id="nw"></div>';
+    stage.querySelectorAll(".choice").forEach(function(b){
+      b.addEventListener("click",function(){
+        stage.querySelectorAll(".choice").forEach(function(c){c.disabled=true;}); b.classList.add("picked");
+        var fb=document.getElementById("fb");
+        fb.innerHTML='<h3>Every answer is fair. Here is the pattern. 🔎</h3><p>A plain prompt usually gets the most <b>common</b> answers, because AI predicts what usually comes next. These ideas are safe and familiar, and they could fit almost any place. '+(state.mine?'Your idea came from <b>your</b> experience, and that matters. ':'')+'Now let\'s add a twist.</p>';
+        fb.classList.add("show");
+        document.getElementById("nw").innerHTML='<div class="actions"><button class="btn btn-main" type="button" id="next">Add a twist 🎡</button></div>'; wire("next",go);
+      });
+    });
+  }
+
+  /* Step 3: spin the lens */
+  function step3(){
+    var P=PROBLEMS[state.p];
+    stage.innerHTML=
+      '<p class="round-label">Step 3 of 5 · Mix it up</p>'+
+      '<h2 class="round-title">Spin an unexpected point of view</h2>'+
+      '<p>Same problem: <b>'+esc(P.title)+'</b>. Now we ask for ideas from someone you would never expect.</p>'+
+      '<p class="reel-label" style="margin-top:12px">The twist</p>'+
+      '<div class="reel lens" id="lreel"><span class="ico">🎡</span><span class="txt">Tap Spin to get a point of view</span></div>'+
+      '<div class="actions" style="margin-top:12px"><button class="btn btn-spin" type="button" id="spinL">🎰 Spin</button></div>'+
+      '<div id="out"></div>'+
+      '<div class="basket" id="basket" style="display:none"><h3>🧺 Your idea basket</h3><ul id="blist"></ul></div>'+
+      '<div class="box" id="fb"><h3>See what happened?</h3><p>Adding "from the point of view of..." pushed the ideas somewhere new and more local. You can use the same trick with any AI tool, and with your own brain too.</p></div>'+
+      '<div id="nw"></div>';
+    var reel=document.getElementById("lreel"), btn=document.getElementById("spinL");
+    btn.addEventListener("click",function(){
+      var left=LENSES.filter(function(l){return state.lensesUsed.indexOf(l.key)<0;});
+      if(!left.length) return;
+      btn.disabled=true;
+      var L=left[Math.floor(Math.random()*left.length)];
+      spin(reel,lensItems(),{ico:L.ico,label:"From the point of view of "+L.name},function(){
+        state.lensesUsed.push(L.key);
+        var idea={lens:L, text:P.mix[L.key], rating:""}; state.basket.push(idea);
+        var out=document.getElementById("out");
+        out.innerHTML='<div class="idea-card"><span class="lens-name">'+L.ico+' Mixed with '+esc(L.name)+'</span><p>'+esc(idea.text)+'</p>'+
+          '<div class="rate" role="group" aria-label="Rate this idea"><button type="button" data-r="🤪 Wild">🤪 Wild</button><button type="button" data-r="🤔 Interesting">🤔 Interesting</button><button type="button" data-r="💡 Useful">💡 Useful</button></div></div>';
+        out.querySelectorAll(".rate button").forEach(function(rb){
+          rb.addEventListener("click",function(){out.querySelectorAll(".rate button").forEach(function(x){x.classList.remove("on");}); rb.classList.add("on"); idea.rating=rb.getAttribute("data-r"); drawBasket();});
+        });
+        drawBasket();
+        var leftNow=LENSES.length-state.lensesUsed.length;
+        btn.disabled=leftNow===0; btn.textContent=leftNow?"🎰 Spin again ("+leftNow+" left)":"All spun!";
+        if(state.basket.length===2){ document.getElementById("fb").classList.add("show"); }
+        if(state.basket.length>=2 && !document.getElementById("next")){
+          document.getElementById("nw").innerHTML='<div class="actions"><button class="btn btn-main" type="button" id="next">Pick a favorite →</button></div>'; wire("next",go);
+        }
+      });
+    });
+    function drawBasket(){
+      document.getElementById("basket").style.display="block";
+      document.getElementById("blist").innerHTML=state.basket.map(function(b){return '<li><b>'+b.lens.ico+' '+esc(b.lens.name)+'</b>'+(b.rating?' · '+b.rating:'')+'</li>';}).join("");
+    }
+  }
+
+  /* Step 4: pick a favorite and test it small */
+  function step4(){
+    var opts=state.basket.map(function(b){return {label:b.lens.ico+" "+b.text, short:"the "+b.lens.name+" idea"};});
+    if(state.mine) opts.unshift({label:"✍️ My own idea: "+state.mine, short:"your own idea"});
+    stage.innerHTML=
+      '<p class="round-label">Step 4 of 5 · Choose and test</p>'+
+      '<h2 class="round-title">Which idea would you actually try?</h2>'+
+      '<div class="choices" id="favs">'+opts.map(function(o,i){return '<button class="choice" type="button" data-i="'+i+'">'+esc(o.label)+'</button>';}).join("")+'</div>'+
+      '<div id="test"></div><div id="nw"></div>';
+    stage.querySelectorAll("#favs .choice").forEach(function(b){
+      b.addEventListener("click",function(){
+        stage.querySelectorAll("#favs .choice").forEach(function(c){c.classList.remove("picked");}); b.classList.add("picked");
+        state.fav=opts[+b.getAttribute("data-i")];
+        var t=document.getElementById("test");
+        if(t.innerHTML) { t.querySelector(".fav-name").textContent=state.fav.short; return; }
+        t.innerHTML='<p class="ask">Great pick. What is the best way to try <span class="fav-name">'+esc(state.fav.short)+'</span>?</p>'+
+          '<div class="choices" id="tests">'+TESTS.map(function(d,i){return '<button class="choice" type="button" data-i="'+i+'">'+esc(d[0])+'<small>'+esc(d[1])+'</small></button>';}).join("")+'</div><div class="box" id="fb"></div>';
+        t.querySelectorAll("#tests .choice").forEach(function(tb){
+          tb.addEventListener("click",function(){
+            var d=TESTS[+tb.getAttribute("data-i")], fb=document.getElementById("fb");
+            t.querySelectorAll("#tests .choice").forEach(function(c){c.classList.remove("picked","right","wrong");});
+            tb.classList.add(d[2]===2?"right":(d[2]===1?"picked":"wrong"));
+            fb.style.setProperty("--c",d[2]===2?"var(--green)":(d[2]===1?"#F59E0B":"var(--pink)"));
+            fb.style.setProperty("--bg",d[2]===2?"#E8FBF6":(d[2]===1?"#FFF7E6":"#FDF0F6"));
+            fb.innerHTML='<h3>'+(d[2]===2?"Smart move! 🧪":"Think again 🤔")+'</h3><p>'+esc(d[3])+'</p>'+(d[2]===2?"":"<p>Try another option.</p>");
+            fb.classList.remove("show"); void fb.offsetWidth; fb.classList.add("show");
+            if(d[2]===2 && !document.getElementById("next")){
+              document.getElementById("nw").innerHTML='<div class="actions"><button class="btn btn-main" type="button" id="next">Mix with real AI →</button></div>'; wire("next",go);
+            }
+          });
+        });
+      });
+    });
+  }
+
+  /* Step 5: take it to a real AI tool */
+  function step5(){
+    var P=PROBLEMS[state.p], L=state.basket[state.basket.length-1].lens;
+    var prompt="I want to "+P.goal+". Here is my own idea first: "+(state.mine?state.mine.replace(/[.!?\s]+$/,""):"[write your idea here]")+". Give me 3 more ideas from the point of view of "+L.name+". Keep them low-cost and doable in a Philippine community. Then tell me one thing that could go wrong with each idea.";
+    stage.innerHTML=
+      '<p class="round-label">Step 5 of 5 · Try it for real</p>'+
+      '<h2 class="round-title">Your mixer prompt is ready</h2>'+
+      '<p>This game used ideas written ahead of time. Want to try the trick with a real AI tool? Copy and paste this prompt into any free AI chat:</p>'+
+      '<div class="prompt" style="margin-top:10px" id="ptext">'+esc(prompt)+'</div>'+
+      '<div class="actions"><button class="btn btn-alt" type="button" id="copy">📋 Copy the prompt</button></div>'+
+      '<div class="box" style="--c:var(--blue);--bg:#EEF3FB;display:block;margin-top:14px"><h3>Notice the 3 moves in this prompt</h3><p>1. <b>Your idea goes first</b>, so AI builds on your thinking.<br>2. <b>An unexpected point of view</b> pushes past common answers.<br>3. <b>"What could go wrong?"</b> keeps you, the human, as the judge.</p></div>'+
+      '<p class="hint" style="margin-top:10px">No AI tool or no data right now? Try it on paper: ask a friend to play '+esc(L.name)+' for one minute.</p>'+
+      '<div class="actions"><button class="btn btn-pink" type="button" id="next">See what you learned →</button></div>';
+    wire("copy",function(){
+      var b=document.getElementById("copy");
+      function ok(){b.textContent="✓ Copied!";setTimeout(function(){b.textContent="📋 Copy the prompt";},1800);}
+      if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(prompt).then(ok,fallback);}else fallback();
+      function fallback(){var r=document.createRange();r.selectNodeContents(document.getElementById("ptext"));var s=window.getSelection();s.removeAllRanges();s.addRange(r);try{document.execCommand("copy");ok();}catch(e){b.textContent="Select the text and copy it";}}
+    });
+    wire("next",go);
+  }
+
+  function finale(){
+    stage.innerHTML=
+      '<p class="round-label">You did it! 🎉</p>'+
+      '<h2 class="round-title">3 big ideas you just discovered</h2>'+
+      '<div class="big-ideas">'+
+        '<div class="idea"><span class="ico">✍️</span><div><b>Your idea first.</b>Writing before you ask AI keeps your thinking yours. AI should build on your ideas, not replace them.</div></div>'+
+        '<div class="idea"><span class="ico">🎡</span><div><b>A twist unlocks new ideas.</b>A plain prompt gives common answers. Adding "from the point of view of..." pushes AI, and you, somewhere new and more local.</div></div>'+
+        '<div class="idea"><span class="ico">🧪</span><div><b>You decide, then test small.</b>AI can mix ideas all day. You choose what fits your people, try it small, and listen to what they say.</div></div>'+
+      '</div>'+
+      '<div class="talk"><h3>💬 Talk about it with your group</h3><p>Pick a real problem from your work. Whose unexpected point of view would you mix in, and why?</p></div>'+
+      '<div class="cta"><h3>Want to go deeper?</h3><p>Learn to use AI in ways that keep people at the center, with Global Learning Access.</p>'+
+        '<a class="btn btn-pink" href="https://globallearningaccess.com/home" target="_blank" rel="noopener">Visit Global Learning Access</a></div>'+
+      '<div class="actions"><button class="btn btn-soft" type="button" id="again">↺ Play again</button><a class="btn btn-alt" href="./">More games →</a></div>';
+    wire("again",function(){reset();idx=0;render();});
+  }
+
+  var STEPFNS=[step1,step2,step3,step4,step5,finale];
+  function render(){drawProgress();STEPFNS[idx]();}
+  reset(); render();
+})();
+</script>
+</body>
+</html>

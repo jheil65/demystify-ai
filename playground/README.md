@@ -13,6 +13,7 @@ The Playground lives in its own folder, `playground`, so it never touches the re
 | `ai-or-human.html` | Game 2: AI or Human? | https://jheil65.github.io/demystify-ai/playground/ai-or-human.html |
 | `three-audiences.html` | Game 3: Same Message, Three Audiences | https://jheil65.github.io/demystify-ai/playground/three-audiences.html |
 | `whos-missing.html` | Game 4: Who's Missing? | https://jheil65.github.io/demystify-ai/playground/whos-missing.html |
+| `idea-mixer.html` | Game 5: Idea Mixer | https://jheil65.github.io/demystify-ai/playground/idea-mixer.html |
 | `README.md` | This guide | (not shown on the site) |
 
 Your homepage has one button that links here ("🎮 Try the AI Playground"). Nothing else on the homepage changed.
@@ -30,7 +31,7 @@ Your homepage has one button that links here ("🎮 Try the AI Playground"). Not
 1. Go to https://github.com/jheil65/demystify-ai and click the `playground` folder.
 2. Click the file you want to change (for example, `finish-the-sentence.html`).
 3. Click the **pencil icon** (Edit) at the top right of the file.
-4. Use **Ctrl+F** (or Cmd+F) to find the words you want to change. All the game text is near the top of the `<script>` section: under the word `ROUNDS` in Finish the Sentence, and under `MESSAGES` and `FIX` in AI or Human?. Change only the words inside the quotation marks. In AI or Human?, words inside `[[double brackets]]` are the clues that get highlighted. In Same Message, Three Audiences, the text is under `AUDIENCES`; each choice is written as [text, score, why], where score 2 = great fit, 1 = okay, 0 = misses. In Who's Missing?, the numbers are under `GROUPS` (each group's `total` and `came` must add up to `TOTAL` = 400 and `ATTENDED` = 120), the reasons are under `REASONS` (1 = the right answer), and the final choices are under `DECISIONS` (2 = best, 1 = partly, 0 = misses).
+4. Use **Ctrl+F** (or Cmd+F) to find the words you want to change. All the game text is near the top of the `<script>` section: under the word `ROUNDS` in Finish the Sentence, and under `MESSAGES` and `FIX` in AI or Human?. Change only the words inside the quotation marks. In AI or Human?, words inside `[[double brackets]]` are the clues that get highlighted. In Same Message, Three Audiences, the text is under `AUDIENCES`; each choice is written as [text, score, why], where score 2 = great fit, 1 = okay, 0 = misses. In Who's Missing?, the numbers are under `GROUPS` (each group's `total` and `came` must add up to `TOTAL` = 400 and `ATTENDED` = 120), the reasons are under `REASONS` (1 = the right answer), and the final choices are under `DECISIONS` (2 = best, 1 = partly, 0 = misses). In Idea Mixer, the points of view are under `LENSES`, and each problem under `PROBLEMS` has a `title`, a `goal` (used inside the copyable prompt), 3 `plain` ideas, and one `mix` idea for each point of view. If you add a new point of view, add a matching idea to every problem.
 5. Click **Commit changes**, then **Commit changes** again.
 6. Wait 1–2 minutes, then refresh the live page.
 
