@@ -42,6 +42,14 @@ If something breaks, open the file, click **History**, and you can see and resto
 
 Easiest: ask Claude, "Build Playground Game 2 (AI or Human?) and add it to my site." Claude will create the file, turn on its tile on the Playground home page, and send you the link.
 
+## The Global edition (US · Canada · Australia)
+
+A second Playground lives in its own folder, `playground-global`, at https://jheil65.github.io/demystify-ai/playground-global/. It has the same 6 games with the same file names, rewritten with examples for the US, Canada, and Australia (schools, community colleges, small businesses, and county services). Both Playground home pages have a switch at the top to move between editions.
+
+- To edit a Global game, open the `playground-global` folder instead of `playground`. The data names (`ROUNDS`, `MESSAGES`, `AUDIENCES`, `GROUPS`, `PROBLEMS`, `SITUATIONS`) are the same.
+- Changing one edition never changes the other.
+- Game 6's law notes cover all three countries (privacy, copyright, and anti-discrimination laws). Laws change, so have a quick look once a year. For example, Canada tabled a bill in 2026 to replace its federal privacy law, PIPEDA, so the notes say "federal and provincial privacy laws" instead of naming it.
+
 ## Ideas for later
 
 - **Filipino language toggle:** worth adding once a native speaker can review the translation.

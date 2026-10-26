@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Same Message, Three Audiences · AI Playground · Demystifying AI for All</title>
+<meta name="description" content="A free, 5-minute game: send the same news to your principal, a parent, and a business partner, and see how each one reacts. No login, no grades, nothing saved.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗣️</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#EF3FA9;--purple:#783CBD;--teal:#22D3C5;--navy:#1B3A6B;--blue:#2E75B6;
+  --yellow:#FFD93D;--orange:#FF6B35;--green:#06D6A0;--ink:#1A1A2E;--light:#F7F8FC;
+  --white:#FFFFFF;--border:#E4E9F2;--muted:#5B6478;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito Sans',sans-serif;background:var(--light);color:var(--ink);line-height:1.55;min-height:100vh}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+.topbar{background:var(--navy);color:#fff;padding:14px 0}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.topbar a{color:rgba(255,255,255,.85);text-decoration:none;font-family:'Nunito',sans-serif;font-weight:700;font-size:14px}
+.topbar a:hover{color:var(--yellow)}
+.tag{font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--teal)}
+
+.intro{background:var(--navy);color:#fff;padding:8px 0 40px;position:relative;overflow:hidden}
+.intro::after{content:'';position:absolute;z-index:0;width:220px;height:220px;border-radius:50%;background:var(--blue);opacity:.3;right:-60px;top:-40px}
+.intro h1{font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(1.9rem,6.5vw,2.8rem);line-height:1.1;margin:14px 0 10px;position:relative;z-index:1}
+.intro h1 span{color:var(--yellow)}
+.intro p{color:rgba(255,255,255,.75);max-width:560px;position:relative;z-index:1}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;position:relative;z-index:1}
+.chip{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:40px;padding:5px 14px;font-size:13px;font-weight:600}
+
+.card{background:var(--white);border:1px solid var(--border);border-radius:20px;box-shadow:0 8px 30px rgba(27,58,107,.08);padding:24px;margin:-24px 0 20px;position:relative;z-index:1}
+.progress{display:flex;gap:6px;margin-bottom:18px}
+.progress span{flex:1;height:6px;border-radius:6px;background:var(--border);transition:background .3s}
+.progress span.done{background:var(--teal)}
+.progress span.now{background:var(--blue)}
+.round-label{font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--blue)}
+.round-title{font-family:'Nunito',sans-serif;font-weight:800;font-size:1.25rem;margin:4px 0 12px}
+
+.news{background:#FFF8DB;border:1px dashed #E8C400;border-radius:12px;padding:12px 14px;font-size:15px;margin-bottom:14px}
+.news b{font-family:'Nunito',sans-serif}
+.person{display:flex;gap:12px;align-items:center;background:var(--light);border-radius:14px;padding:12px 14px;margin-bottom:16px}
+.person .face{font-size:34px;line-height:1}
+.person b{font-family:'Nunito',sans-serif;display:block;font-size:16px}
+.person small{color:var(--muted);font-size:14px;display:block}
+
+.slot{margin-bottom:14px}
+.slot-label{font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.slot-label .n{background:var(--blue);color:#fff;width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:12px}
+.opts{display:grid;gap:8px}
+.opt{text-align:left;font-family:'Nunito Sans',sans-serif;font-weight:600;font-size:15px;padding:11px 14px;border-radius:12px;border:2px solid var(--border);background:#fff;color:var(--ink);cursor:pointer;transition:border-color .12s,background .12s}
+.opt:hover{border-color:var(--blue)}
+.opt.picked{border-color:var(--blue);background:#EAF2FB}
+.opt:focus-visible,.btn:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+.opt[disabled]{cursor:default}
+.opt .fb{display:none;font-size:13px;font-weight:700;margin-top:4px}
+.opt.r2 .fb{color:#047857}.opt.r1 .fb{color:#B45309}.opt.r0 .fb{color:#BE185D}
+.slot.judged .opt.picked .fb{display:block}
+.slot.judged .opt.picked.r2{border-color:var(--green);background:#E8FBF6}
+.slot.judged .opt.picked.r1{border-color:#F59E0B;background:#FFF7E6}
+.slot.judged .opt.picked.r0{border-color:var(--pink);background:#FDF0F6}
+.slot.judged .opt:not(.picked){display:none}
+
+.preview-label{font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;margin:18px 0 6px}
+.chat{background:#E9EEF6;border-radius:16px;padding:14px;display:grid;gap:10px}
+.bubble{max-width:88%;padding:12px 14px;border-radius:16px;font-size:15px;white-space:pre-line}
+.bubble.me{justify-self:end;background:var(--blue);color:#fff;border-bottom-right-radius:4px}
+.bubble.them{justify-self:start;background:#fff;border-bottom-left-radius:4px;animation:pop .4s ease}
+.bubble.event{justify-self:center;background:transparent;color:var(--muted);font-size:13px;font-style:italic;text-align:center;max-width:100%}
+.bubble .empty{opacity:.6;font-style:italic}
+.typing{justify-self:start;background:#fff;border-radius:16px;padding:12px 16px;display:flex;gap:4px}
+.typing span{width:7px;height:7px;border-radius:50%;background:#9AA6BC;animation:blink 1s infinite}
+.typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,100%{opacity:.3}50%{opacity:1}}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.result{display:none;margin-top:14px;border-radius:14px;padding:14px 16px;border-left:5px solid var(--c);background:var(--bg)}
+.result.show{display:block;animation:pop .35s ease}
+.result h3{font-family:'Nunito',sans-serif;font-weight:900;font-size:1.05rem;margin-bottom:4px}
+
+.btn{font-family:'Nunito',sans-serif;font-weight:800;font-size:16px;border:none;border-radius:40px;padding:13px 26px;cursor:pointer;transition:transform .12s,filter .12s,opacity .12s;text-decoration:none;display:inline-block}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+.btn[disabled]{opacity:.45;cursor:not-allowed;transform:none}
+.btn-main{background:var(--blue);color:#fff}
+.btn-pink{background:var(--pink);color:#fff}
+.btn-alt{background:var(--navy);color:#fff}
+.btn-soft{background:var(--light);color:var(--ink);border:2px solid var(--border)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+
+/* compare */
+.compare{display:grid;gap:12px}
+.cmp{border:1px solid var(--border);border-radius:14px;padding:14px;border-top:5px solid var(--c)}
+.cmp h3{font-family:'Nunito',sans-serif;font-weight:900;font-size:1rem;margin-bottom:6px}
+.cmp p{white-space:pre-line;font-size:15px}
+.cmp .score{font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;color:var(--muted);margin-top:6px}
+.generic{background:#FDF0F6;border:2px dashed var(--pink);border-radius:14px;padding:14px;margin:14px 0}
+.generic h3{font-family:'Nunito',sans-serif;font-weight:900;font-size:1rem;margin-bottom:6px}
+.prompt{background:var(--navy);color:#fff;border-radius:14px;padding:16px;margin:14px 0}
+.prompt h3{font-family:'Nunito',sans-serif;font-weight:900;color:var(--yellow);font-size:1rem;margin-bottom:6px}
+.prompt code{display:block;background:rgba(255,255,255,.1);border-radius:10px;padding:12px;font-family:'Nunito Sans',sans-serif;font-size:14px;white-space:pre-line;color:#fff}
+
+.big-ideas{display:grid;gap:10px;margin:14px 0}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--light);border-radius:14px;padding:14px}
+.idea .ico{font-size:24px;line-height:1}
+.idea b{font-family:'Nunito',sans-serif;display:block}
+.talk{background:#F1EAFB;border-radius:14px;padding:16px;margin-top:6px}
+.talk h3,.cta h3{font-family:'Nunito',sans-serif;font-weight:900;font-size:1.05rem;margin-bottom:6px}
+.cta{background:var(--navy);color:#fff;border-radius:16px;padding:18px;margin-top:16px}
+.cta p{color:rgba(255,255,255,.8);margin-bottom:12px}
+
+.note{font-size:13px;color:var(--muted);margin:6px 0 30px;text-align:center}
+footer{background:var(--navy);color:rgba(255,255,255,.55);text-align:center;padding:24px 16px;font-size:13px}
+footer a{color:var(--teal);text-decoration:none}
+footer strong{color:rgba(255,255,255,.85);font-family:'Nunito',sans-serif}
+@media (max-width:420px){.card{padding:18px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap">
+  <a href="./">← AI Playground</a>
+  <span class="tag">Game 3 of 6</span>
+</div></div>
+
+<header class="intro"><div class="wrap">
+  <h1>Same Message, <span>Three Audiences</span> 🗣️</h1>
+  <p>You have one piece of news and three very different people to tell. Build each message, press Send, and see how each person reacts.</p>
+  <div class="chips">
+    <span class="chip">⏱ About 5 minutes</span>
+    <span class="chip">🙈 No login</span>
+    <span class="chip">💾 Nothing is saved</span>
+    <span class="chip">✅ No wrong answers</span>
+  </div>
+</div></header>
+
+<main class="wrap">
+  <section class="card" id="game" aria-live="polite">
+    <div class="progress" id="progress" aria-hidden="true"></div>
+    <div id="stage"></div>
+  </section>
+  <p class="note">All names and places in this game are made up for learning.</p>
+</main>
+
+<footer>Part of <a href="../">Demystifying AI for All</a> · Built by <strong>Jeffery Heil</strong> · <a href="https://globallearningaccess.com/home" target="_blank" rel="noopener">Global Learning Access</a></footer>
+
+<script>
+(function(){
+  /* ------------------------------------------------------------
+     GAME TEXT. To edit the game, change the text here.
+     Each option: [text, score, why]. Score 2 = great fit, 1 = okay, 0 = misses.
+     ------------------------------------------------------------ */
+  var NEWS = "Because of a severe storm warning, Monday's family literacy workshop at the public library is moved to <b>Wednesday, 6 PM</b>, same room. You are <b>Ms. Carter</b>, the workshop leader.";
+
+  var AUDIENCES = [
+    {
+      face:"👩‍💼", name:"Dr. Hayes", who:"Your principal. Busy, direct, wants facts.", color:"var(--blue)",
+      slots:[
+        ["Greeting",[
+          ["Good morning, Dr. Hayes.",2,"Polite and direct. Just right for a principal."],
+          ["Heyyy! 😄",0,"Too casual for a work update to your boss."],
+          ["To Whom It May Concern:",1,"Too stiff. She knows you, so use her name."]]],
+        ["The news",[
+          ["Monday's family literacy workshop is moved to Wednesday, 6 PM, same room, because of the storm warning.",2,"Clear: what, when, where, and why in one sentence."],
+          ["Due to unforeseen meteorological circumstances, the aforementioned activity has been rescheduled.",0,"Sounds official but never gives the new date."],
+          ["Storm's coming, so we'll do it another time.",0,"No new date. She'll have to message you back."]]],
+        ["Next step",[
+          ["I've already messaged all 20 families. Two haven't confirmed yet, and I'll call them today.",2,"She can see the problem is handled. That's what a principal wants."],
+          ["Please advise.",1,"Polite, but advise on what? It gives her work to do."],
+          ["Can you tell the families?",0,"Passes your task to your boss."]]],
+        ["Closing",[
+          ["Thanks so much.",2,"Short, friendly, and professional."],
+          ["Love ya! 💕",0,"Not for a work message to your boss."],
+          ["Respectfully yours, ever in service to our school community,",1,"A bit much for a quick text."]]]
+      ],
+      replies:[
+        "?? Please call me. What's happening with the workshop?",
+        "Got it. When is the new date again, and do the families know?",
+        "Got it. Thanks for the quick update, and for reaching the families already. 👍"
+      ]
+    },
+    {
+      face:"👩", name:"Mrs. Nguyen", who:"A parent in the workshop. English is her second language, and she reads simple English best. She doesn't drive and takes two buses.", color:"var(--green)",
+      slots:[
+        ["Greeting",[
+          ["Hi Mrs. Nguyen! 😊",2,"Warm and friendly, and it uses her name."],
+          ["Dear Parent/Guardian,",0,"Feels like a form letter. Cold for a parent you see every week."],
+          ["Yo!",0,"Too casual, and she may not know who it's from."]]],
+        ["The news",[
+          ["No workshop on Monday because of the storm. We will meet on Wednesday at 6 PM, same room at the library.",2,"Short, simple sentences with the day, time, and place. Easy to follow."],
+          ["The workshop has been rescheduled due to inclement weather.",0,"\"Rescheduled\" and \"inclement weather\" may confuse her, and there's no new date."],
+          ["Moved to Wed!",1,"Short and friendly, but no time or place."]]],
+        ["Next step",[
+          ["If the bus is hard on Wednesday, tell me. I can help find a ride. Child care is still free.",2,"Offers help with the real barriers. That care is why she'll come."],
+          ["Please confirm your attendance using the online registration portal.",0,"She may not have a computer, or know how to use the portal."],
+          ["Just text back OK!",1,"Easy to do, but you could also show care for how she'll get there."]]],
+        ["Closing",[
+          ["Stay safe! – Ms. Carter",2,"Warm, and she knows who the text is from."],
+          ["Regards.",0,"Cold, and sounds like an office."],
+          ["Take care!",1,"Warm, but she may not have your number saved. Add your name."]]]
+      ],
+      replies:[
+        "(No reply.) Mrs. Nguyen didn't understand the message. On Monday, she takes two buses through the storm to a closed library. 😢",
+        "Sorry, what time on Wednesday? Same place?",
+        "Thank you so much! See you Wednesday. Stay safe too! ❤️"
+      ]
+    },
+    {
+      face:"👨‍💼", name:"Mr. Patel", who:"Owner of Patel's Corner Market. He donates the snacks for every workshop.", color:"var(--orange)",
+      slots:[
+        ["Greeting",[
+          ["Good afternoon, Mr. Patel.",2,"Polite and professional for a business partner."],
+          ["Hey boss!",1,"Friendly, but a little too casual for a partner who donates."],
+          ["Dear Sir/Madam,",0,"He's a known partner. Using no name feels like a form letter."]]],
+        ["The news",[
+          ["Our Monday family workshop is moved to Wednesday, 6 PM, because of the storm warning.",2,"Clear and short. He gets what he needs."],
+          ["Workshop moved.",0,"Moved to when? He can't plan his delivery."],
+          ["As you know, the whole neighborhood has been getting ready for the storm, buying supplies, and checking on neighbors, so...",1,"Kind, but he has to read a lot before the news."]]],
+        ["Next step",[
+          ["Could the snack delivery move to Wednesday afternoon instead of Monday?",2,"A clear question about the one thing that changes for him."],
+          ["Please adjust accordingly.",0,"Adjust what? He has to guess."],
+          ["Just cancel the delivery.",1,"Clear, but now there are no snacks for Wednesday."]]],
+        ["Closing",[
+          ["Thank you for always supporting our families.",2,"Thanks him for the relationship, not just this favor."],
+          ["Thanks.",1,"Fine, but a missed chance to show appreciation."],
+          ["So sorry for the trouble!! 🙏🙏",1,"Kind, but too apologetic for a simple change."]]]
+      ],
+      replies:[
+        "(No reply needed.) The snacks arrive Monday, the library is closed, and the boxes sit outside in the rain. 😬",
+        "Okay. So what should I do with Monday's delivery?",
+        "No problem! Wednesday delivery, noted. Have a great workshop. 🍎"
+      ]
+    }
+  ];
+
+  var GENERIC = "Dear all,\n\nPlease be informed that the workshop scheduled for Monday has been rescheduled due to inclement weather. Thank you for your understanding.";
+
+  var stage=document.getElementById("stage"), progress=document.getElementById("progress");
+  var TOTAL = AUDIENCES.length + 2;
+  var idx=0, sent=[];
+
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+  function drawProgress(){progress.innerHTML="";for(var i=0;i<TOTAL;i++){var s=document.createElement("span");if(i<idx)s.className="done";else if(i===idx)s.className="now";progress.appendChild(s);}}
+  function go(){idx++;render();document.getElementById("game").scrollIntoView({behavior:"smooth",block:"start"});}
+
+  function audienceRound(a){
+    var picks=new Array(a.slots.length);
+    stage.innerHTML =
+      '<p class="round-label">Person '+(idx+1)+' of '+AUDIENCES.length+'</p>'+
+      '<h2 class="round-title">Send the news to '+esc(a.name)+'</h2>'+
+      '<div class="news">📰 <b>The news:</b> '+NEWS+'</div>'+
+      '<div class="person"><span class="face">'+a.face+'</span><div><b>'+esc(a.name)+'</b><small>'+esc(a.who)+'</small></div></div>'+
+      a.slots.map(function(s,si){
+        return '<div class="slot" data-s="'+si+'"><div class="slot-label"><span class="n">'+(si+1)+'</span>'+esc(s[0])+'</div><div class="opts">'+
+          shuffle(s[1].map(function(o,oi){return [o,oi];})).map(function(p){
+            var o=p[0];
+            return '<button class="opt r'+o[1]+'" type="button" data-s="'+si+'" data-o="'+p[1]+'">'+esc(o[0])+'<span class="fb">'+(o[1]===2?"✓ ":o[1]===1?"~ ":"✗ ")+esc(o[2])+'</span></button>';
+          }).join("")+'</div></div>';
+      }).join("")+
+      '<p class="preview-label">📱 Your message</p>'+
+      '<div class="chat" id="chat"><div class="bubble me" id="mine"></div></div>'+
+      '<div class="actions"><button class="btn btn-main" type="button" id="send" disabled>Send ➤</button></div>'+
+      '<div class="result" id="result"></div>'+
+      '<div id="next-wrap"></div>';
+
+    function preview(){
+      var parts=a.slots.map(function(s,si){return picks[si]===undefined?null:s[1][picks[si]][0];});
+      var filled=parts.filter(function(p){return p;});
+      document.getElementById("mine").innerHTML = filled.length ? esc(parts.map(function(p){return p||"…";}).join("\n")) : '<span class="empty">Pick one line from each part above.</span>';
+      document.getElementById("send").disabled = filled.length<a.slots.length;
+    }
+    stage.querySelectorAll(".opt").forEach(function(b){
+      b.addEventListener("click",function(){
+        var si=+b.getAttribute("data-s");
+        picks[si]=+b.getAttribute("data-o");
+        stage.querySelectorAll('.opt[data-s="'+si+'"]').forEach(function(x){x.classList.toggle("picked",x===b);});
+        preview();
+      });
+    });
+    preview();
+
+    document.getElementById("send").addEventListener("click",function(){
+      this.disabled=true; this.textContent="Sent ✓";
+      stage.querySelectorAll(".opt").forEach(function(x){x.disabled=true;});
+      var score=0; a.slots.forEach(function(s,si){score+=s[1][picks[si]][1];});
+      var level = score>=7?2:(score>=4?1:0);
+      var text=a.slots.map(function(s,si){return s[1][picks[si]][0];}).join("\n");
+      sent.push({a:a,text:text,score:score,level:level});
+      var chat=document.getElementById("chat");
+      var typing=document.createElement("div"); typing.className="typing"; typing.innerHTML="<span></span><span></span><span></span>";
+      chat.appendChild(typing);
+      setTimeout(function(){
+        typing.remove();
+        var r=document.createElement("div");
+        var reply=a.replies[level];
+        r.className = reply.charAt(0)==="(" ? "bubble event" : "bubble them";
+        r.textContent = reply.charAt(0)==="(" ? reply : a.face+" "+reply;
+        chat.appendChild(r);
+        stage.querySelectorAll(".slot").forEach(function(s){s.classList.add("judged");});
+        var res=document.getElementById("result");
+        var looks=[["var(--pink)","#FDF0F6","The message didn't land. 😬"],["#F59E0B","#FFF7E6","Almost there!"],["var(--green)","#E8FBF6","Perfect fit! 🎉"]][level];
+        res.style.setProperty("--c",looks[0]); res.style.setProperty("--bg",looks[1]);
+        res.innerHTML='<h3>'+looks[2]+' Fit score: '+score+' out of 8</h3><p>Look above to see why each line worked, or didn\'t, for '+esc(a.name)+'.</p>';
+        res.classList.add("show");
+        var nw=document.getElementById("next-wrap");
+        nw.innerHTML='<div class="actions"><button class="btn btn-soft" type="button" id="retry">↺ Try '+esc(a.name)+' again</button><button class="btn btn-main" type="button" id="next">'+(idx===AUDIENCES.length-1?"Compare all three →":"Next person →")+'</button></div>';
+        document.getElementById("next").addEventListener("click",go);
+        document.getElementById("retry").addEventListener("click",function(){sent.pop();render();});
+      },1100);
+    });
+  }
+
+  function compare(){
+    stage.innerHTML =
+      '<p class="round-label">Side by side 👀</p>'+
+      '<h2 class="round-title">Same news, three different messages</h2>'+
+      '<div class="compare">'+sent.map(function(s){
+        return '<div class="cmp" style="--c:'+s.a.color+'"><h3>'+s.a.face+' To '+esc(s.a.name)+'</h3><p>'+esc(s.text)+'</p><p class="score">Fit score: '+s.score+' out of 8</p></div>';
+      }).join("")+'</div>'+
+      '<div class="generic"><h3>🤖 What AI writes if you just say "Write a message about the moved training"</h3><p style="white-space:pre-line">'+esc(GENERIC)+'</p>'+
+        '<p style="margin-top:8px"><b>One message for everyone, so it fits no one.</b> No new date, "inclement weather" would confuse Mrs. Nguyen, and Mr. Patel still doesn\'t know what to do with his delivery.</p></div>'+
+      '<div class="prompt"><h3>💡 The fix: tell AI who the reader is</h3><code>Write a short text to Mrs. Nguyen, a parent in my family literacy workshop. English is her second language, so use short, simple sentences. Tell her Monday\'s workshop moves to Wednesday, 6 PM, same room at the library, because of the storm. She takes two buses, so offer to help find a ride, and remind her child care is free. Keep it warm. Sign it Ms. Carter.</code></div>'+
+      '<div class="actions"><button class="btn btn-pink" type="button" id="next">What did you learn? →</button></div>';
+    document.getElementById("next").addEventListener("click",go);
+  }
+
+  function finale(){
+    stage.innerHTML =
+      '<p class="round-label">You did it! 🎉</p>'+
+      '<h2 class="round-title">3 big ideas you just discovered</h2>'+
+      '<div class="big-ideas">'+
+        '<div class="idea"><span class="ico">🗣️</span><div><b>The same news needs different words for different people.</b>Your principal needs facts. Mrs. Nguyen needs simple words, warmth, and help getting there. Mr. Patel needs to know what changes for him.</div></div>'+
+        '<div class="idea"><span class="ico">🤖</span><div><b>AI writes for "everyone" unless you tell it who.</b>Name the reader, your relationship, their language, and what they need to do. Then AI can adjust its tone.</div></div>'+
+        '<div class="idea"><span class="ico">❤️</span><div><b>You know the relationship. AI doesn\'t.</b>Only you know that Mrs. Nguyen takes two buses, or that Mr. Patel delivers on Mondays. Always read AI\'s draft as the person receiving it.</div></div>'+
+      '</div>'+
+      '<div class="talk"><h3>💬 Talk about it with your group</h3><p>Think of someone you write to often at work. What would AI need to know about them to write a message they would truly understand and appreciate?</p></div>'+
+      '<div class="cta"><h3>Want to go deeper?</h3><p>Learn to use AI in ways that keep people at the center, with Global Learning Access.</p>'+
+        '<a class="btn btn-pink" href="https://globallearningaccess.com/home" target="_blank" rel="noopener">Visit Global Learning Access</a></div>'+
+      '<div class="actions"><button class="btn btn-soft" type="button" id="again">↺ Play again</button><a class="btn btn-alt" href="./">More games →</a></div>';
+    document.getElementById("again").addEventListener("click",function(){idx=0;sent=[];render();});
+  }
+
+  function render(){
+    drawProgress();
+    if(idx<AUDIENCES.length) audienceRound(AUDIENCES[idx]);
+    else if(idx===AUDIENCES.length) compare();
+    else finale();
+  }
+  render();
+})();
+</script>
+</body>
+</html>

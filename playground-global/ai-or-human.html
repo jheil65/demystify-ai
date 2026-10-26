@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI or Human? · AI Playground · Demystifying AI for All</title>
+<meta name="description" content="A free, 5-minute game: can you tell a generic AI draft from a message a real person would write? No login, no grades, nothing saved.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕵️</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#EF3FA9;--purple:#783CBD;--teal:#22D3C5;--navy:#1B3A6B;--blue:#2E75B6;
+  --yellow:#FFD93D;--orange:#FF6B35;--green:#06D6A0;--ink:#1A1A2E;--light:#F7F8FC;
+  --white:#FFFFFF;--border:#E4E9F2;--muted:#5B6478;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito Sans',sans-serif;background:var(--light);color:var(--ink);line-height:1.55;min-height:100vh}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+.topbar{background:var(--navy);color:#fff;padding:14px 0}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.topbar a{color:rgba(255,255,255,.85);text-decoration:none;font-family:'Nunito',sans-serif;font-weight:700;font-size:14px}
+.topbar a:hover{color:var(--yellow)}
+.tag{font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--teal)}
+
+.intro{background:var(--navy);color:#fff;padding:8px 0 40px;position:relative;overflow:hidden}
+.intro::after{content:'';position:absolute;width:220px;height:220px;border-radius:50%;background:var(--purple);opacity:.2;right:-60px;top:-40px}
+.intro h1{font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(2rem,7vw,3rem);line-height:1.1;margin:14px 0 10px;position:relative}
+.intro h1 span{color:var(--yellow)}
+.intro p{color:rgba(255,255,255,.75);max-width:560px;position:relative}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;position:relative}
+.chip{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:40px;padding:5px 14px;font-size:13px;font-weight:600}
+
+.card{background:var(--white);border:1px solid var(--border);border-radius:20px;box-shadow:0 8px 30px rgba(27,58,107,.08);padding:24px;margin:-24px 0 20px;position:relative;z-index:1}
+.progress{display:flex;gap:6px;margin-bottom:18px}
+.progress span{flex:1;height:6px;border-radius:6px;background:var(--border);transition:background .3s}
+.progress span.done{background:var(--teal)}
+.progress span.now{background:var(--purple)}
+.round-label{font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--purple)}
+.round-title{font-family:'Nunito',sans-serif;font-weight:800;font-size:1.25rem;margin:4px 0 14px}
+
+/* message bubble */
+.msg-meta{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.avatar{width:38px;height:38px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.msg-meta b{font-family:'Nunito',sans-serif;display:block;font-size:15px}
+.msg-meta small{color:var(--muted);font-size:13px}
+.bubble{background:var(--light);border:1px solid var(--border);border-radius:4px 18px 18px 18px;padding:16px 18px;font-size:16px;white-space:pre-line;margin-bottom:16px}
+.bubble mark{background:#FFF1A8;border-radius:4px;padding:0 2px;color:inherit;transition:background .3s}
+.bubble mark.gen{background:#FDE2EC}
+.bubble.hide-marks mark{background:transparent;padding:0}
+
+.ask{font-weight:700;margin-bottom:10px}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.choice{font-family:'Nunito',sans-serif;font-weight:800;font-size:16px;padding:16px 10px;border-radius:14px;border:2px solid var(--border);background:#fff;color:var(--ink);cursor:pointer;transition:transform .12s,border-color .12s,background .12s;line-height:1.25}
+.choice small{display:block;font-weight:600;font-size:12px;color:var(--muted);margin-top:2px}
+.choice:hover{border-color:var(--purple);transform:translateY(-2px)}
+.choice:focus-visible,.btn:focus-visible,.fix:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+.choice[disabled]{cursor:default;transform:none}
+.choice.picked{border-color:var(--purple);background:#F1EAFB}
+
+.reveal{display:none;margin-top:16px;border-radius:14px;padding:16px;border-left:5px solid var(--c)}
+.reveal.show{display:block;animation:pop .35s ease}
+.reveal h3{font-family:'Nunito',sans-serif;font-weight:900;font-size:1.05rem;margin-bottom:8px}
+.reveal ul{padding-left:20px}
+.reveal li{margin-bottom:6px}
+.reveal .key{font-size:13px;color:var(--muted);margin-top:8px}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.btn{font-family:'Nunito',sans-serif;font-weight:800;font-size:16px;border:none;border-radius:40px;padding:13px 26px;cursor:pointer;transition:transform .12s,filter .12s;text-decoration:none;display:inline-block}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+.btn-main{background:var(--purple);color:#fff}
+.btn-pink{background:var(--pink);color:#fff}
+.btn-alt{background:var(--navy);color:#fff}
+.btn-soft{background:var(--light);color:var(--ink);border:2px solid var(--border)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+
+/* fix-it round */
+.fixes{display:grid;gap:8px;margin:4px 0 14px}
+.fix{display:flex;align-items:center;gap:10px;text-align:left;font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;padding:12px 14px;border-radius:14px;border:2px solid var(--border);background:#fff;cursor:pointer;color:var(--ink)}
+.fix .box{width:22px;height:22px;border-radius:6px;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;color:#fff}
+.fix.on{border-color:var(--green);background:#E8FBF6}
+.fix.on .box{background:var(--green);border-color:var(--green)}
+.meter{display:flex;align-items:center;gap:10px;margin:0 0 12px;font-family:'Nunito',sans-serif;font-weight:800;font-size:14px}
+.meter-track{flex:1;height:12px;border-radius:8px;background:var(--light);overflow:hidden}
+.meter-fill{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pink),var(--yellow),var(--green));transition:width .5s}
+
+/* finale */
+.twist{background:var(--navy);color:#fff;border-radius:16px;padding:20px;margin:6px 0 16px}
+.twist h3{font-family:'Nunito',sans-serif;font-weight:900;font-size:1.3rem;margin-bottom:8px;color:var(--yellow)}
+.twist p{color:rgba(255,255,255,.85);margin-bottom:8px}
+.big-ideas{display:grid;gap:10px;margin:14px 0}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--light);border-radius:14px;padding:14px}
+.idea .ico{font-size:24px;line-height:1}
+.idea b{font-family:'Nunito',sans-serif;display:block}
+.talk{background:#F1EAFB;border-radius:14px;padding:16px;margin-top:6px}
+.talk h3,.cta h3{font-family:'Nunito',sans-serif;font-weight:900;font-size:1.05rem;margin-bottom:6px}
+.cta{background:var(--navy);color:#fff;border-radius:16px;padding:18px;margin-top:16px}
+.cta p{color:rgba(255,255,255,.8);margin-bottom:12px}
+
+.note{font-size:13px;color:var(--muted);margin:6px 0 30px;text-align:center}
+footer{background:var(--navy);color:rgba(255,255,255,.55);text-align:center;padding:24px 16px;font-size:13px}
+footer a{color:var(--teal);text-decoration:none}
+footer strong{color:rgba(255,255,255,.85);font-family:'Nunito',sans-serif}
+@media (max-width:420px){.card{padding:18px}.choice{font-size:15px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap">
+  <a href="./">← AI Playground</a>
+  <span class="tag">Game 2 of 6</span>
+</div></div>
+
+<header class="intro"><div class="wrap">
+  <h1>AI or <span>Human?</span> 🕵️</h1>
+  <p>Six messages from schools, workplaces, and communities. For each one, decide: does it sound like a generic AI draft, or like a real person wrote it? Look for the clues. Then fix a message yourself.</p>
+  <div class="chips">
+    <span class="chip">⏱ About 5 minutes</span>
+    <span class="chip">🙈 No login</span>
+    <span class="chip">💾 Nothing is saved</span>
+    <span class="chip">✅ No wrong answers</span>
+  </div>
+</div></header>
+
+<main class="wrap">
+  <section class="card" id="game" aria-live="polite">
+    <div class="progress" id="progress" aria-hidden="true"></div>
+    <div id="stage"></div>
+  </section>
+  <p class="note">All names, places, and messages in this game are made up for learning. Any resemblance to real people is a coincidence.</p>
+</main>
+
+<footer>Part of <a href="../">Demystifying AI for All</a> · Built by <strong>Jeffery Heil</strong> · <a href="https://globallearningaccess.com/home" target="_blank" rel="noopener">Global Learning Access</a></footer>
+
+<script>
+(function(){
+  /* ------------------------------------------------------------
+     MESSAGES. To edit the game, change the text here.
+     type: "ai" = generic AI draft, "person" = sounds like a real person.
+     In "text", wrap clue words in [[double brackets]]; they get highlighted
+     after the player answers.
+     ------------------------------------------------------------ */
+  var MESSAGES = [
+    {
+      type:"ai", icon:"📢", from:"Riverside Community Center", where:"Posted on the community center's Facebook page",
+      text:"[[Dear Valued Residents,]]\n\nWe are pleased to inform you that [[an important community event]] will be taking place [[soon]]. This event aims to [[foster unity, promote well-being, and strengthen community ties]]. We encourage everyone to participate actively.\n\nThank you for your continued support.",
+      clues:[
+        "<b>No date, time, or place.</b> \"Soon\" and \"an important event\" tell residents nothing they can act on.",
+        "<b>Buzzwords in threes:</b> \"foster unity, promote well-being, and strengthen community ties.\" Generic AI drafts love lists of three.",
+        "<b>It could be from anywhere.</b> Nothing in it belongs to this neighborhood."
+      ]
+    },
+    {
+      type:"person", icon:"👩‍🏫", from:"Ms. Rivera, 3rd grade teacher", where:"Message to the class families' group chat",
+      text:"Hi [[Room 12 families]]! Quick reminder: [[Family Math Night is tomorrow, Thurs, 5:30 in the cafeteria]]. [[Pizza's on us]] 🍕 Little brothers and sisters are welcome too! Can't make it? [[Reply here and I'll send the game packet home.]] [[¡Los esperamos!]]\n[[– Ms. Rivera]]",
+      clues:[
+        "<b>Exact details:</b> the class, the day, the time, the place.",
+        "<b>A welcome for every family:</b> siblings invited, a way to join from home, and a little Spanish for families who speak it.",
+        "<b>A name and a relationship:</b> she signs off as herself, and families know who to message."
+      ]
+    },
+    {
+      type:"ai", icon:"🛒", from:"Nana Pat's Bakery", where:"Facebook post for a small home business",
+      text:"[[Elevate your snacking experience]] with our delicious, high-quality treats! [[Crafted with passion and care]], our products are [[perfect for every occasion]]. Don't miss out! Order now and [[indulge in a taste you'll never forget]]! #Delicious #Quality",
+      clues:[
+        "<b>Advertising clichés:</b> \"elevate your experience,\" \"crafted with passion,\" \"perfect for every occasion.\"",
+        "<b>It never says what she sells.</b> Cinnamon rolls? Sourdough? Price? Pickup where, and when?",
+        "<b>The real Nana Pat is missing.</b> Her customers buy from her because they know her, and that warmth is gone."
+      ]
+    },
+    {
+      type:"person", icon:"🏛️", from:"County Benefits Office", where:"Message to a family member applying for assistance",
+      text:"Hi [[Ms. Lewis]], we received [[your dad's]] application for the senior meal program. [[We're still missing a proof of address]], like a utility bill. You can [[upload it on the portal or drop it at Window 3 by Friday at 5]]. Questions? [[Just reply here.]]\n[[– Dana, case worker]]",
+      clues:[
+        "<b>One clear next step:</b> exactly what is missing, two ways to send it, and by when.",
+        "<b>Real names:</b> \"Ms. Lewis,\" \"your dad,\" and a real person who signs her name.",
+        "<b>Short and practical:</b> it reads like a staff member who handles cases like this every day."
+      ]
+    },
+    {
+      type:"ai", icon:"💼", from:"Project Officer", where:"Email to a supervisor",
+      text:"[[I hope this message finds you well.]] I wanted to take a moment to provide a [[comprehensive update]] regarding the current status of the project. Overall, [[significant progress has been made across multiple areas]], and the team remains [[committed to delivering exceptional results]].\n\n[[Please do not hesitate to reach out]] should you have any questions.",
+      clues:[
+        "<b>Famous AI openers and closers:</b> \"I hope this message finds you well\" and \"Please do not hesitate to reach out.\"",
+        "<b>Promises a \"comprehensive update\" but gives zero facts.</b> No numbers, no dates, no names, no problems.",
+        "<b>Too smooth.</b> Real updates usually include at least one thing that is late or hard."
+      ]
+    },
+    {
+      type:"person", icon:"🔧", from:"Coach Mike, apprenticeship instructor", where:"Message to the training cohort group chat",
+      text:"Morning, [[Cohort 12]]! 🌞 Tomorrow is [[hands-on day in the welding shop]]. Bring your [[steel-toe boots and safety glasses]], plus your notes from [[Tuesday]]. [[Sorry for the late post, our power went out last night]] 😅 See you at [[7:30]]!",
+      clues:[
+        "<b>Specific and useful:</b> the cohort, the shop, what to bring, and what time.",
+        "<b>A small, human detail:</b> the power outage apology. Nobody would make that up for a template.",
+        "<b>Warm, casual tone</b> that fits an instructor who knows his apprentices."
+      ]
+    }
+  ];
+
+  /* The "fix it" round: a generic message the player rewrites by adding details. */
+  var FIX = {
+    base:{ greet:"Dear Valued Residents,", what:"an important community event", when:"soon", where:"", close:"Thank you for your continued support." },
+    options:[
+      { id:"when",  label:"📅 Add the date and time",           value:{when:"this Saturday, June 14, at 9 AM"} },
+      { id:"where", label:"📍 Add the place",                   value:{where:" at Riverside Park, by the playground"} },
+      { id:"what",  label:"🧹 Say what the event actually is",   value:{what:"a park clean-up and free bike tune-ups for kids"} },
+      { id:"voice", label:"👋 Sound like a neighbor",            value:{greet:"Hi, neighbors!", close:"Bring gloves if you have them. Coffee and donuts are on us! – Sam at the Community Center"} }
+    ]
+  };
+
+  var stage=document.getElementById("stage"), progress=document.getElementById("progress");
+  var TOTAL = MESSAGES.length + 2; // 6 messages + fix-it + finale
+  var idx=0, agree=0;
+
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+
+  function drawProgress(){
+    progress.innerHTML="";
+    for(var i=0;i<TOTAL;i++){var s=document.createElement("span");if(i<idx)s.className="done";else if(i===idx)s.className="now";progress.appendChild(s);}
+  }
+  function markup(text,gen){
+    return esc(text).replace(/\[\[(.+?)\]\]/g,'<mark class="'+(gen?"gen":"")+'">$1</mark>');
+  }
+  function go(){idx++;render();document.getElementById("game").scrollIntoView({behavior:"smooth",block:"start"});}
+
+  function messageRound(m){
+    var ai = m.type==="ai";
+    stage.innerHTML =
+      '<p class="round-label">Message '+(idx+1)+' of '+MESSAGES.length+'</p>'+
+      '<h2 class="round-title">Generic AI draft, or a real person?</h2>'+
+      '<div class="msg-meta"><span class="avatar">'+m.icon+'</span><div><b>'+esc(m.from)+'</b><small>'+esc(m.where)+'</small></div></div>'+
+      '<div class="bubble hide-marks" id="bubble">'+markup(m.text,ai)+'</div>'+
+      '<p class="ask">What do you think?</p>'+
+      '<div class="choices">'+
+        '<button class="choice" type="button" data-v="ai">🤖 Generic AI draft<small>Smooth but general</small></button>'+
+        '<button class="choice" type="button" data-v="person">🙋 A real person<small>Specific and personal</small></button>'+
+      '</div>'+
+      '<div class="reveal" id="reveal" style="--c:'+(ai?"var(--pink)":"var(--green)")+';background:'+(ai?"#FDF0F6":"#E8FBF6")+'">'+
+        '<h3 id="verdict"></h3>'+
+        '<p style="margin-bottom:8px">The clues (now highlighted in the message):</p>'+
+        '<ul>'+m.clues.map(function(c){return '<li>'+c+'</li>';}).join("")+'</ul>'+
+      '</div>'+
+      '<div id="next-wrap"></div>';
+    stage.querySelectorAll(".choice").forEach(function(b){
+      b.addEventListener("click",function(){
+        var v=b.getAttribute("data-v");
+        stage.querySelectorAll(".choice").forEach(function(c){c.disabled=true;});
+        b.classList.add("picked");
+        document.getElementById("bubble").classList.remove("hide-marks");
+        var match = v===m.type; if(match) agree++;
+        document.getElementById("verdict").textContent =
+          (ai ? "🤖 This is the generic AI draft. " : "🙋 This one sounds like a real person. ") +
+          (match ? "You spotted it!" : "Tricky one! Here's what gives it away.");
+        document.getElementById("reveal").classList.add("show");
+        document.getElementById("next-wrap").innerHTML='<div class="actions"><button class="btn btn-main" type="button" id="next">'+(idx===MESSAGES.length-1?"Now you try →":"Next message →")+'</button></div>';
+        document.getElementById("next").addEventListener("click",go);
+      });
+    });
+  }
+
+  function fixRound(){
+    var state={};
+    stage.innerHTML =
+      '<p class="round-label">Your turn ✍️</p>'+
+      '<h2 class="round-title">Turn the generic draft into a real message</h2>'+
+      '<p style="margin-bottom:12px">Remember the community center post from Message 1? Tap each fix and watch it change.</p>'+
+      '<div class="fixes">'+FIX.options.map(function(o){
+        return '<button class="fix" type="button" data-id="'+o.id+'" aria-pressed="false"><span class="box">✓</span>'+esc(o.label)+'</button>';
+      }).join("")+'</div>'+
+      '<div class="meter"><span>Generic</span><span class="meter-track"><span class="meter-fill" id="meter"></span></span><span>Personal</span></div>'+
+      '<div class="msg-meta"><span class="avatar">📢</span><div><b>Riverside Community Center</b><small>Posted on the community center\'s Facebook page</small></div></div>'+
+      '<div class="bubble" id="fixed"></div>'+
+      '<div class="reveal" id="fixdone" style="--c:var(--green);background:#E8FBF6"><h3>That\'s a message people can act on. 🎉</h3><p>Notice what made the difference: not fancier words, but <b>real details only you know</b>. AI can only write this well when you give it these details.</p></div>'+
+      '<div id="next-wrap"></div>';
+    function draw(){
+      var v={}; for(var k in FIX.base) v[k]=FIX.base[k];
+      var on=0;
+      FIX.options.forEach(function(o){ if(state[o.id]){ on++; for(var k in o.value) v[k]=o.value[k]; } });
+      document.getElementById("fixed").textContent =
+        v.greet+"\n\nWe are pleased to inform you that "+v.what+" will be taking place "+v.when+v.where+". We encourage everyone to participate.\n\n"+v.close;
+      document.getElementById("meter").style.width=(on/FIX.options.length*100)+"%";
+      if(on===FIX.options.length && !document.getElementById("next")){
+        document.getElementById("fixdone").classList.add("show");
+        document.getElementById("next-wrap").innerHTML='<div class="actions"><button class="btn btn-pink" type="button" id="next">See the twist →</button></div>';
+        document.getElementById("next").addEventListener("click",go);
+      }
+    }
+    stage.querySelectorAll(".fix").forEach(function(b){
+      b.addEventListener("click",function(){
+        var id=b.getAttribute("data-id"); state[id]=!state[id];
+        b.classList.toggle("on",state[id]); b.setAttribute("aria-pressed",state[id]?"true":"false");
+        draw();
+      });
+    });
+    draw();
+  }
+
+  function finale(){
+    stage.innerHTML =
+      '<p class="round-label">The twist 🎭</p>'+
+      '<h2 class="round-title">AI wrote all six messages.</h2>'+
+      '<p>Your gut matched the clues '+agree+' out of '+MESSAGES.length+' times. But here is the secret:</p>'+
+      '<div class="twist"><h3>Every message in this game was written with AI.</h3>'+
+        '<p>The "generic" ones came from AI with no details. The "real person" ones came from AI after it was given real details: a name, a place, a time, the right tone, even a little Spanish.</p>'+
+        '<p>So the clues you spotted are clues of <b>generic writing</b>, not proof of AI.</p></div>'+
+      '<div class="big-ideas">'+
+        '<div class="idea"><span class="ico">🔎</span><div><b>You cannot reliably catch AI by its style.</b>Polished writing is not proof of AI, and casual writing is not proof of a person. "AI detectors" make the same mistake, and they can wrongly accuse honest students and staff.</div></div>'+
+        '<div class="idea"><span class="ico">📍</span><div><b>Details are what make a message real.</b>Dates, places, names, and respect for the reader. AI only writes this way when you give it those details.</div></div>'+
+        '<div class="idea"><span class="ico">✅</span><div><b>Judge the message, not the author.</b>Ask: Is it accurate? Is it specific? Is it right for this reader? That question works whether a person or AI wrote it.</div></div>'+
+      '</div>'+
+      '<div class="talk"><h3>💬 Talk about it with your group</h3><p>If you suspected a colleague, trainee, or student used AI, how would you find out fairly, without accusing them based on style alone?</p></div>'+
+      '<div class="cta"><h3>Want to go deeper?</h3><p>Learn to use AI in ways that keep people at the center, with Global Learning Access.</p>'+
+        '<a class="btn btn-pink" href="https://globallearningaccess.com/home" target="_blank" rel="noopener">Visit Global Learning Access</a></div>'+
+      '<div class="actions"><button class="btn btn-soft" type="button" id="again">↺ Play again</button><a class="btn btn-alt" href="./">More games →</a></div>';
+    document.getElementById("again").addEventListener("click",function(){idx=0;agree=0;render();});
+  }
+
+  function render(){
+    drawProgress();
+    if(idx<MESSAGES.length) messageRound(MESSAGES[idx]);
+    else if(idx===MESSAGES.length) fixRound();
+    else finale();
+  }
+  render();
+})();
+</script>
+</body>
+</html>

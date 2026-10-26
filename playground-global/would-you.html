@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Would You? · AI Playground · Demystifying AI for All</title>
+<meta name="description" content="A free, 5-minute game: make quick calls on real AI situations. There are no right answers, only good reasons. No login, no grades, nothing saved.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚖️</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#EF3FA9;--purple:#783CBD;--teal:#22D3C5;--navy:#1B3A6B;--blue:#2E75B6;
+  --yellow:#FFD93D;--orange:#FF6B35;--green:#06D6A0;--ink:#1A1A2E;--light:#F7F8FC;
+  --white:#FFFFFF;--border:#E4E9F2;--muted:#5B6478;
+  --acc:#0E8C82;--accbg:#E7FAF8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito Sans',sans-serif;background:var(--light);color:var(--ink);line-height:1.55;min-height:100vh}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+.topbar{background:var(--navy);color:#fff;padding:14px 0}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.topbar a{color:rgba(255,255,255,.85);text-decoration:none;font-family:'Nunito',sans-serif;font-weight:700;font-size:14px}
+.topbar a:hover{color:var(--yellow)}
+.tag{font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--teal)}
+
+.intro{background:var(--navy);color:#fff;padding:8px 0 40px;position:relative;overflow:hidden}
+.intro::after{content:'';position:absolute;z-index:0;width:220px;height:220px;border-radius:50%;background:var(--teal);opacity:.16;right:-60px;top:-40px}
+.intro h1{font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(2rem,7vw,3rem);line-height:1.1;margin:14px 0 10px;position:relative;z-index:1}
+.intro h1 span{color:var(--yellow)}
+.intro p{color:rgba(255,255,255,.75);max-width:560px;position:relative;z-index:1}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;position:relative;z-index:1}
+.chip{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:40px;padding:5px 14px;font-size:13px;font-weight:600}
+
+.card{background:var(--white);border:1px solid var(--border);border-radius:20px;box-shadow:0 8px 30px rgba(27,58,107,.08);padding:24px;margin:-24px 0 20px;position:relative;z-index:1}
+.progress{display:flex;gap:6px;margin-bottom:18px}
+.progress span{flex:1;height:6px;border-radius:6px;background:var(--border);transition:background .3s}
+.progress span.done{background:var(--teal)}
+.progress span.now{background:var(--acc)}
+.round-label{font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--acc)}
+.round-title{font-family:'Nunito',sans-serif;font-weight:800;font-size:1.25rem;margin:4px 0 12px}
+p+p{margin-top:8px}
+
+.situation{display:flex;gap:14px;align-items:flex-start;background:linear-gradient(135deg,var(--navy),#2A4F8C);color:#fff;border-radius:16px;padding:18px}
+.situation .ico{font-size:40px;line-height:1;flex:none}
+.situation p{font-size:1.05rem;font-weight:600;line-height:1.5}
+.situation b{color:var(--yellow);font-family:'Nunito',sans-serif;font-size:1.15rem;display:block;margin-top:8px}
+
+.ask{font-weight:700;margin:16px 0 10px}
+.choices{display:grid;gap:10px}
+.choices.three{grid-template-columns:repeat(3,1fr)}
+.choice{font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;padding:14px 12px;border-radius:14px;border:2px solid var(--border);background:#fff;color:var(--ink);cursor:pointer;transition:transform .12s,border-color .12s,background .12s;text-align:left;line-height:1.3}
+.choices.three .choice{text-align:center}
+.choice .e{display:block;font-size:24px;margin-bottom:2px}
+.choice:hover{border-color:var(--acc);transform:translateY(-2px)}
+.choice:focus-visible,.btn:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+.choice[disabled]{cursor:default;transform:none}
+.choice[disabled]:not(.picked){opacity:.55}
+.choice.picked{border-color:var(--acc);background:var(--accbg);opacity:1}
+.choice .v{font-size:13px;font-weight:700;color:var(--muted);display:block;margin-top:3px}
+
+.reveal{display:none;margin-top:16px}
+.reveal.show{display:block;animation:pop .35s ease}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.reveal h3{font-family:'Nunito',sans-serif;font-weight:900;font-size:1.05rem;margin-bottom:8px}
+.voices{display:grid;gap:8px}
+.voice{display:flex;gap:10px;align-items:flex-start;background:var(--light);border-radius:12px;padding:10px 12px;font-size:15px}
+.voice .tagv{font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;border-radius:20px;padding:3px 10px;white-space:nowrap;flex:none;margin-top:1px}
+.tagv.y{background:#E8FBF6;color:#047857}
+.tagv.c{background:#FFF7E6;color:#A15C00}
+.tagv.n{background:#FDF0F6;color:#B0237A}
+.voice b{font-family:'Nunito',sans-serif}
+.same{font-size:14px;font-weight:700;color:var(--acc);margin-top:8px}
+.qbox{border-left:5px solid var(--blue);background:#EEF3FB;border-radius:14px;padding:12px 14px;margin-top:12px}
+.lbox{border-left:5px solid var(--purple);background:#F1EAFB;border-radius:14px;padding:12px 14px;margin-top:10px;font-size:15px}
+.qbox b,.lbox b{font-family:'Nunito',sans-serif}
+
+/* compass */
+.compass{border:2px solid var(--border);border-radius:16px;padding:16px;margin:12px 0}
+.top-value{text-align:center;margin-bottom:12px}
+.top-value .big{font-size:48px;line-height:1}
+.top-value h3{font-family:'Nunito',sans-serif;font-weight:900;font-size:1.3rem;color:var(--acc)}
+.vbar{display:grid;grid-template-columns:150px 1fr 22px;gap:8px;align-items:center;margin-bottom:6px;font-size:14px;font-weight:700}
+.vbar .track{display:block;height:14px;background:var(--light);border-radius:6px;overflow:hidden}
+.vbar .fill{display:block;height:100%;background:var(--teal);border-radius:6px;width:0;transition:width .8s}
+.calls{display:flex;gap:8px;margin-top:12px}
+.calls div{flex:1;text-align:center;background:var(--light);border-radius:12px;padding:8px}
+.calls b{display:block;font-family:'Nunito',sans-serif;font-weight:900;font-size:1.4rem}
+.calls span{font-size:12px;font-weight:700;color:var(--muted)}
+
+.btn{font-family:'Nunito',sans-serif;font-weight:800;font-size:16px;border:none;border-radius:40px;padding:13px 26px;cursor:pointer;transition:transform .12s,filter .12s;text-decoration:none;display:inline-block}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+.btn-main{background:var(--acc);color:#fff}
+.btn-pink{background:var(--pink);color:#fff}
+.btn-alt{background:var(--navy);color:#fff}
+.btn-soft{background:var(--light);color:var(--ink);border:2px solid var(--border)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+
+.big-ideas{display:grid;gap:10px;margin:14px 0}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--light);border-radius:14px;padding:14px}
+.idea .ico{font-size:24px;line-height:1}
+.idea b{font-family:'Nunito',sans-serif;display:block}
+.talk{background:#F1EAFB;border-radius:14px;padding:16px;margin-top:6px}
+.talk h3,.cta h3{font-family:'Nunito',sans-serif;font-weight:900;font-size:1.05rem;margin-bottom:6px}
+.cta{background:var(--navy);color:#fff;border-radius:16px;padding:18px;margin-top:16px}
+.cta p{color:rgba(255,255,255,.8);margin-bottom:12px}
+.hint{font-size:14px;color:var(--muted)}
+
+.note{font-size:13px;color:var(--muted);margin:6px 0 30px;text-align:center}
+footer{background:var(--navy);color:rgba(255,255,255,.55);text-align:center;padding:24px 16px;font-size:13px}
+footer a{color:var(--teal);text-decoration:none}
+footer strong{color:rgba(255,255,255,.85);font-family:'Nunito',sans-serif}
+@media (max-width:420px){.card{padding:18px}.choices.three{grid-template-columns:1fr}.choices.three .choice{text-align:left;display:flex;align-items:center;gap:10px}.choices.three .choice .e{margin:0}.vbar{grid-template-columns:128px 1fr 20px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap">
+  <a href="./">← AI Playground</a>
+  <span class="tag">Game 6 of 6</span>
+</div></div>
+
+<header class="intro"><div class="wrap">
+  <h1>Would <span>You?</span> ⚖️</h1>
+  <p>Six quick calls on real AI situations. There are no right answers, only good reasons. At the end, see your own AI compass.</p>
+  <div class="chips">
+    <span class="chip">⏱ About 5 minutes</span>
+    <span class="chip">🙈 No login</span>
+    <span class="chip">💾 Nothing is saved</span>
+    <span class="chip">✅ No wrong answers</span>
+  </div>
+</div></header>
+
+<main class="wrap">
+  <section class="card" id="game" aria-live="polite">
+    <div class="progress" id="progress" aria-hidden="true"></div>
+    <div id="stage"></div>
+  </section>
+  <p class="note">The situations and people in this game are made up for learning. The law notes are simple summaries, not legal advice.</p>
+</main>
+
+<footer>Part of <a href="../">Demystifying AI for All</a> · Built by <strong>Jeffery Heil</strong> · <a href="https://globallearningaccess.com/home" target="_blank" rel="noopener">Global Learning Access</a></footer>
+
+<script>
+(function(){
+  /* ------------------------------------------------------------
+     GAME DATA. To edit the game, change the words inside the quotes.
+     VALUES: the 6 values a reason can point to.
+     SITUATIONS: each has a situation, a question, 3 reasons
+     [value key, text], 3 voices [y = yes, c = with conditions,
+     n = no], a question to ask first, and a law or tip note.
+     ------------------------------------------------------------ */
+  var VALUES = {
+    privacy: { ico:"🔒", short:"Privacy",       title:"Privacy Protector",  desc:"You notice when people's information needs care." },
+    honesty: { ico:"💬", short:"Honesty",       title:"Honesty Keeper",     desc:"You want people to know when AI is involved." },
+    help:    { ico:"🚀", short:"Helpfulness",   title:"Problem Solver",     desc:"You see how AI can save time so you can help more people." },
+    human:   { ico:"🤝", short:"Human touch",   title:"People First",       desc:"You protect real human connection." },
+    fair:    { ico:"⚖️", short:"Fairness",      title:"Fairness Champion",  desc:"You think about who might be left out or left behind." },
+    creators:{ ico:"©️", short:"Creators",      title:"Creator Respecter",  desc:"You stand up for the people who make things." }
+  };
+
+  var SITUATIONS = [
+    { ico:"🏪", label:"The corner store",
+      text:"A family-owned corner store uses AI to write friendly replies to customer messages on social media. The customers don't know.",
+      q:"Would you do the same?",
+      reasons:[["honesty","Customers should know when AI writes the message"],["help","Fast replies keep a small business alive"],["human","Loyal customers come for the personal connection"]],
+      voices:[["y","Rosa, store owner","Yes. I read every reply before I send it. The words are AI's, but the care is mine."],
+              ["c","Mark, online seller","Only for simple questions like prices and hours. Complaints, I answer myself."],
+              ["n","Lorna, a regular customer","No. I message that store because I know the owner. I want her, not a robot."]],
+      ask:"Am I checking every reply? Would my customers feel tricked if they found out?",
+      note:"💬 <b>Tip:</b> one simple line, like \"Some replies are drafted with AI and checked by me,\" keeps trust." },
+
+    { ico:"📝", label:"The essay",
+      text:"A student wrote an essay herself, then used AI to fix the grammar. The teacher never said whether AI was allowed.",
+      q:"Would you count it as her own work?",
+      reasons:[["honesty","She should tell the teacher she used AI"],["fair","Classmates without AI access may be at a disadvantage"],["help","Grammar help lets her own ideas shine"]],
+      voices:[["y","Mr. Davis, teacher","Yes. The ideas are hers. It's like asking a friend to proofread."],
+              ["c","Ms. Okafor, teacher","Yes, if she tells the teacher how she used it. Being open makes it fair."],
+              ["n","Liam, a classmate","No. The teacher is grading her writing, and grammar is part of it."]],
+      ask:"What did the teacher expect? Would she be comfortable telling the teacher exactly what AI did?",
+      note:"💬 <b>Tip:</b> when the rules are unclear, ask, and say how you used AI. It protects everyone." },
+
+    { ico:"🎨", label:"The festival poster",
+      text:"Your town needs a festival poster by tomorrow, with no budget. An AI tool can make one \"in the style of\" a famous living illustrator.",
+      q:"Would you use it?",
+      reasons:[["creators","An artist's style is their life's work"],["help","The festival needs a poster fast, and there's no budget"],["fair","Local artists could be paid or credited for this work"]],
+      voices:[["y","Nel, town council member","Yes. It's for a free community event, and no one is selling it."],
+              ["c","Ana, a designer","Only if I describe a general look without naming a real artist, and invite local students to help."],
+              ["n","Jordan, an illustrator","No. Our styles are how we earn a living. Hire us or credit us."]],
+      ask:"Am I copying a real person's recognizable work? Could a local artist or student do this instead?",
+      note:"©️ <b>Copyright laws</b> in all three countries (the US Copyright Act, Canada's Copyright Act, and Australia's Copyright Act 1968) protect creators' works. Copying a real artist's recognizable work without permission can break them. A style on its own usually isn't protected, so imitating a living artist's style is a fairness question, even when it is legal." },
+
+    { ico:"🩺", label:"Your aunt's lab results",
+      text:"Your aunt sends you a photo of her lab results and asks, \"Can you just ask AI what this means?\"",
+      q:"Would you paste it into a free AI chat?",
+      reasons:[["privacy","Health information is private and sensitive"],["help","It could help her understand before seeing the doctor"],["human","Only her doctor knows her full health history"]],
+      voices:[["y","Ben, her nephew","Yes, but I'd crop out her name and ask only what each test measures."],
+              ["c","Liza, a nurse","Only to learn the words. Then she should bring her questions to her doctor."],
+              ["n","Grace, a privacy lawyer","No. Health data is sensitive, and free tools may keep what you paste."]],
+      ask:"Did she say yes to sharing it? Have I removed her name and details? Will a doctor confirm what AI says?",
+      note:"🔒 <b>Health privacy:</b> in the US, HIPAA protects health information held by doctors and insurers, but it usually does not cover what you paste into a free AI tool yourself. Canada (federal and provincial privacy and health laws) and Australia (the Privacy Act 1988) also treat health information as sensitive. Once you paste it, you may lose control of it." },
+
+    { ico:"🍎", label:"The instructor's feedback",
+      text:"You teach at a community college and have 40 assignments to grade by Friday.",
+      q:"Would you let AI write the first draft of feedback for each student?",
+      reasons:[["human","Students deserve feedback from someone who knows them"],["help","Time saved means more time to teach"],["privacy","Students' names and work shouldn't go into an AI tool"]],
+      voices:[["y","Instructor Mae","Yes. I give AI the rubric, not names. Then I edit every comment and add one personal line."],
+              ["c","Mr. Ramos","Only for the common mistakes. The personal comments, I write myself."],
+              ["n","Ms. Joy","No. My students can tell when feedback isn't from me, and trust matters."]],
+      ask:"Am I removing names and ID numbers before I paste anything? Will I read every comment before it goes out? What does my school's AI policy say?",
+      note:"🔒 <b>Student privacy:</b> in the US, FERPA protects student education records. Canada and Australia protect student information through provincial, state, and national privacy laws. Remove names and ID numbers before using a public AI tool, and follow your school's AI policy." },
+
+    { ico:"💼", label:"The job applications",
+      text:"A small company gets 200 job applications. They want AI to pick the top 20, and they will only read those.",
+      q:"Would you do it?",
+      reasons:[["fair","AI can repeat old biases and skip good people"],["help","No small team can read 200 applications carefully"],["human","Every applicant deserves a human look"]],
+      voices:[["y","Rico, business owner","Yes. We're a team of five. Without help, we'd never finish."],
+              ["c","Dina, HR manager","Only if a person checks a sample of the ones AI rejected, and we test the tool for bias first."],
+              ["n","Jamal, an applicant","No. My school isn't famous. A tool might drop me before anyone sees my skills."]],
+      ask:"Who might the tool unfairly skip? Will a human check who got left out?",
+      note:"⚖️ <b>Anti-discrimination laws</b> in all three countries (like Title VII in the US, human rights codes in Canada, and federal anti-discrimination acts in Australia) apply to hiring, even when AI helps decide. Some places, like New York City, also require bias audits of AI hiring tools." }
+  ];
+
+  var CALLS=[["y","👍","Yes"],["c","🤔","Only with conditions"],["n","👎","No"]];
+  var CALLNAME={y:"Yes",c:"With conditions",n:"No"};
+
+  var stage=document.getElementById("stage"), progress=document.getElementById("progress");
+  var STEPS=SITUATIONS.length+1, idx=0, answers=[];
+  var reduce=window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+  function drawProgress(){progress.innerHTML="";for(var i=0;i<STEPS;i++){var s=document.createElement("span");if(i<idx)s.className="done";else if(i===idx)s.className="now";progress.appendChild(s);}}
+  function go(){idx++;render();document.getElementById("game").scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"});}
+
+  function situation(){
+    var S=SITUATIONS[idx], a={call:null,value:null};
+    stage.innerHTML=
+      '<p class="round-label">Situation '+(idx+1)+' of '+SITUATIONS.length+' · '+esc(S.label)+'</p>'+
+      '<div class="situation" style="margin-top:8px"><span class="ico">'+S.ico+'</span><p>'+esc(S.text)+'<b>'+esc(S.q)+'</b></p></div>'+
+      '<p class="ask">Make your call:</p>'+
+      '<div class="choices three" id="calls">'+CALLS.map(function(c){return '<button class="choice" type="button" data-c="'+c[0]+'"><span class="e">'+c[1]+'</span>'+c[2]+'</button>';}).join("")+'</div>'+
+      '<div id="why" style="display:none"><p class="ask">What matters most to you here?</p>'+
+        '<div class="choices" id="reasons">'+S.reasons.map(function(r,i){var V=VALUES[r[0]];return '<button class="choice" type="button" data-i="'+i+'">'+esc(r[1])+'<span class="v">'+V.ico+' '+V.short+'</span></button>';}).join("")+'</div></div>'+
+      '<div class="reveal" id="reveal"></div>';
+    stage.querySelectorAll("#calls .choice").forEach(function(b){
+      b.addEventListener("click",function(){
+        stage.querySelectorAll("#calls .choice").forEach(function(c){c.disabled=true;}); b.classList.add("picked");
+        a.call=b.getAttribute("data-c");
+        document.getElementById("why").style.display="block";
+      });
+    });
+    stage.querySelectorAll("#reasons .choice").forEach(function(b){
+      b.addEventListener("click",function(){
+        stage.querySelectorAll("#reasons .choice").forEach(function(c){c.disabled=true;}); b.classList.add("picked");
+        a.value=S.reasons[+b.getAttribute("data-i")][0]; answers[idx]=a;
+        var match=S.voices.filter(function(v){return v[0]===a.call;})[0];
+        var r=document.getElementById("reveal");
+        r.innerHTML='<h3>🗣️ Voices around the table</h3>'+
+          '<div class="voices">'+S.voices.map(function(v){return '<div class="voice"><span class="tagv '+v[0]+'">'+CALLNAME[v[0]]+'</span><span><b>'+esc(v[1])+':</b> '+esc(v[2])+'</span></div>';}).join("")+'</div>'+
+          '<p class="same">You agree with '+esc(match[1])+'. The others have good reasons too.</p>'+
+          '<div class="qbox"><b>❓ A good question to ask first:</b> '+esc(S.ask)+'</div>'+
+          '<div class="lbox">'+S.note+'</div>'+
+          '<div class="actions"><button class="btn '+(idx===SITUATIONS.length-1?'btn-pink':'btn-main')+'" type="button" id="next">'+(idx===SITUATIONS.length-1?'See my AI compass 🧭':'Next situation →')+'</button></div>';
+        r.classList.add("show");
+        document.getElementById("next").addEventListener("click",go);
+      });
+    });
+  }
+
+  function finale(){
+    var counts={}, calls={y:0,c:0,n:0};
+    Object.keys(VALUES).forEach(function(k){counts[k]=0;});
+    answers.forEach(function(a){counts[a.value]++; calls[a.call]++;});
+    var max=Math.max.apply(null,Object.keys(counts).map(function(k){return counts[k];}));
+    var tops=Object.keys(counts).filter(function(k){return counts[k]===max;});
+    var topHTML=tops.length===1?
+      '<div class="big">'+VALUES[tops[0]].ico+'</div><p class="hint">Your strongest value in this game</p><h3>'+VALUES[tops[0]].title+'</h3><p>'+VALUES[tops[0]].desc+'</p>':
+      '<div class="big">'+tops.map(function(k){return VALUES[k].ico;}).join(" ")+'</div><p class="hint">You balanced several values</p><h3>'+tops.map(function(k){return VALUES[k].title;}).join(" + ")+'</h3><p>You weigh more than one thing before you decide. That is a strength.</p>';
+    var order=Object.keys(VALUES).sort(function(a,b){return counts[b]-counts[a];});
+    stage.innerHTML=
+      '<p class="round-label">You did it! 🎉</p>'+
+      '<h2 class="round-title">Your AI compass 🧭</h2>'+
+      '<div class="compass"><div class="top-value">'+topHTML+'</div>'+
+        order.map(function(k){var V=VALUES[k];return '<div class="vbar"><span>'+V.ico+' '+V.short+'</span><span class="track"><span class="fill" data-w="'+Math.round(counts[k]/SITUATIONS.length*100)+'"></span></span><span>'+counts[k]+'</span></div>';}).join("")+
+        '<div class="calls"><div><b>'+calls.y+'</b><span>👍 Yes</span></div><div><b>'+calls.c+'</b><span>🤔 With conditions</span></div><div><b>'+calls.n+'</b><span>👎 No</span></div></div>'+
+      '</div>'+
+      '<p class="hint">This is just for reflection, not a test of who you are. Good teams need every one of these values.</p>'+
+      '<h2 class="round-title" style="margin-top:18px">3 big ideas you just discovered</h2>'+
+      '<div class="big-ideas">'+
+        '<div class="idea"><span class="ico">⚖️</span><div><b>Good reasons matter more than quick answers.</b>Two thoughtful people can make different calls. What matters is that you can explain why.</div></div>'+
+        '<div class="idea"><span class="ico">📜</span><div><b>Some lines are law, not opinion.</b>In the US, Canada, and Australia, privacy, copyright, and anti-discrimination laws still apply when AI is involved.</div></div>'+
+        '<div class="idea"><span class="ico">🤝</span><div><b>"With conditions" is often the wisest call.</b>AI helps, a person checks, and people are told. That keeps humans at the center.</div></div>'+
+      '</div>'+
+      '<div class="talk"><h3>💬 Talk about it with your group</h3><p>Which situation would your team disagree about most? Then make your own "Would you?" question from your work.</p></div>'+
+      '<div class="cta"><h3>Want to go deeper?</h3><p>Learn to use AI in ways that keep people at the center, with Global Learning Access.</p>'+
+        '<a class="btn btn-pink" href="https://globallearningaccess.com/home" target="_blank" rel="noopener">Visit Global Learning Access</a></div>'+
+      '<div class="actions"><button class="btn btn-soft" type="button" id="again">↺ Play again</button><a class="btn btn-alt" href="./">More games →</a></div>';
+    requestAnimationFrame(function(){requestAnimationFrame(function(){stage.querySelectorAll(".fill").forEach(function(f){f.style.width=f.getAttribute("data-w")+"%";});});});
+    document.getElementById("again").addEventListener("click",function(){answers=[];idx=0;render();});
+  }
+
+  function render(){drawProgress(); if(idx<SITUATIONS.length) situation(); else finale();}
+  render();
+})();
+</script>
+</body>
+</html>

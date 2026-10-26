@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Who's Missing? · AI Playground · Demystifying AI for All</title>
+<meta name="description" content="A free, 5-minute game: a county health report says 90% satisfied. Dig into the data and find the people the numbers leave out. No login, no grades, nothing saved.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📊</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#EF3FA9;--purple:#783CBD;--teal:#22D3C5;--navy:#1B3A6B;--blue:#2E75B6;
+  --yellow:#FFD93D;--orange:#FF6B35;--green:#06D6A0;--ink:#1A1A2E;--light:#F7F8FC;
+  --white:#FFFFFF;--border:#E4E9F2;--muted:#5B6478;--gray:#CBD3E1;
+  --came:#06A77D;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito Sans',sans-serif;background:var(--light);color:var(--ink);line-height:1.55;min-height:100vh}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+.topbar{background:var(--navy);color:#fff;padding:14px 0}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.topbar a{color:rgba(255,255,255,.85);text-decoration:none;font-family:'Nunito',sans-serif;font-weight:700;font-size:14px}
+.topbar a:hover{color:var(--yellow)}
+.tag{font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--teal)}
+
+.intro{background:var(--navy);color:#fff;padding:8px 0 40px;position:relative;overflow:hidden}
+.intro::after{content:'';position:absolute;z-index:0;width:220px;height:220px;border-radius:50%;background:var(--green);opacity:.16;right:-60px;top:-40px}
+.intro h1{font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(2rem,7vw,3rem);line-height:1.1;margin:14px 0 10px;position:relative;z-index:1}
+.intro h1 span{color:var(--yellow)}
+.intro p{color:rgba(255,255,255,.75);max-width:560px;position:relative;z-index:1}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;position:relative;z-index:1}
+.chip{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:40px;padding:5px 14px;font-size:13px;font-weight:600}
+
+.card{background:var(--white);border:1px solid var(--border);border-radius:20px;box-shadow:0 8px 30px rgba(27,58,107,.08);padding:24px;margin:-24px 0 20px;position:relative;z-index:1}
+.progress{display:flex;gap:6px;margin-bottom:18px}
+.progress span{flex:1;height:6px;border-radius:6px;background:var(--border);transition:background .3s}
+.progress span.done{background:var(--teal)}
+.progress span.now{background:var(--came)}
+.round-label{font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--came)}
+.round-title{font-family:'Nunito',sans-serif;font-weight:800;font-size:1.25rem;margin:4px 0 12px}
+p+p{margin-top:8px}
+
+/* report */
+.report{border:2px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:16px}
+.report-head{background:var(--came);color:#fff;padding:14px 16px}
+.report-head small{font-family:'Nunito',sans-serif;font-weight:800;font-size:11px;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+.report-head h3{font-family:'Nunito',sans-serif;font-weight:900;font-size:1.3rem;line-height:1.2}
+.report-body{padding:14px 16px}
+.stat-row{display:flex;gap:10px;margin-bottom:12px}
+.stat{flex:1;background:var(--light);border-radius:12px;padding:10px;text-align:center}
+.stat b{display:block;font-family:'Nunito',sans-serif;font-weight:900;font-size:1.6rem;color:var(--came);line-height:1.1}
+.stat span{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.hbar{display:grid;grid-template-columns:118px 1fr 40px;gap:8px;align-items:center;margin-bottom:7px;font-size:14px;font-weight:700}
+.hbar .track{display:block;height:18px;background:var(--light);border-radius:6px;overflow:hidden}
+.hbar .fill{display:block;height:100%;background:var(--came);border-radius:6px;width:0;transition:width .8s}
+.hbar .pct{text-align:right;color:var(--muted)}
+
+/* choices */
+.ask{font-weight:700;margin:4px 0 10px}
+.choices{display:grid;gap:10px}
+.choices.two{grid-template-columns:1fr 1fr}
+.choices.three{grid-template-columns:repeat(3,1fr)}
+.choice{font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;padding:14px 12px;border-radius:14px;border:2px solid var(--border);background:#fff;color:var(--ink);cursor:pointer;transition:transform .12s,border-color .12s,background .12s;text-align:left;line-height:1.3}
+.choices.three .choice,.choices.two .choice{text-align:center}
+.choice small{display:block;font-family:'Nunito Sans',sans-serif;font-weight:600;font-size:13px;color:var(--muted);margin-top:3px}
+.choice:hover{border-color:var(--came);transform:translateY(-2px)}
+.choice:focus-visible,.btn:focus-visible,.sitio:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+.choice[disabled]{cursor:default;transform:none}
+.choice.picked{border-color:var(--came);background:#E6F7F2}
+.choice.right{border-color:var(--green);background:#E8FBF6}
+.choice.wrong{border-color:var(--pink);background:#FDF0F6}
+
+.box{display:none;margin-top:14px;border-radius:14px;padding:14px 16px;border-left:5px solid var(--c,var(--green));background:var(--bg,#E8FBF6)}
+.box.show{display:block;animation:pop .35s ease}
+.box h3{font-family:'Nunito',sans-serif;font-weight:900;font-size:1.05rem;margin-bottom:4px}
+.ai-says{background:#EEF3FB;border:2px dashed var(--blue);border-radius:14px;padding:14px 16px;margin-top:12px}
+.ai-says b{font-family:'Nunito',sans-serif}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* dots */
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:13px;font-weight:700;margin:10px 0}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:50%;vertical-align:-1px;margin-right:5px}
+.dots{display:grid;grid-template-columns:repeat(20,1fr);gap:3px;background:var(--light);border-radius:12px;padding:10px}
+.dot{aspect-ratio:1;border-radius:50%;background:var(--gray);transition:background .4s,transform .4s}
+.dot.came{background:var(--came)}
+.dot.pop{transform:scale(1.25)}
+.big-number{font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(1.3rem,5vw,1.6rem);margin:12px 0 4px}
+.big-number span{color:var(--pink)}
+
+/* sitios */
+.sitios{display:grid;gap:10px}
+.sitio{display:block;width:100%;text-align:left;border:2px solid var(--border);border-radius:14px;padding:12px;background:#fff;cursor:pointer;color:var(--ink);font-family:'Nunito Sans',sans-serif}
+.sitio.open{border-color:var(--came)}
+.sitio-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:8px}
+.sitio-top b{font-family:'Nunito',sans-serif;font-size:16px}
+.sitio-top span{font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;color:var(--muted)}
+.sitio .dots{padding:6px;gap:2px}
+.sitio .info{display:none;font-size:14px;margin-top:8px;color:var(--ink)}
+.sitio.open .info{display:block}
+.sitio .tap{font-size:12px;font-weight:700;color:var(--came);margin-top:6px}
+.sitio.open .tap{display:none}
+
+/* match */
+.group{border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:12px}
+.group h3{font-family:'Nunito',sans-serif;font-weight:900;font-size:1rem;margin-bottom:8px}
+.group .fb{display:none;font-size:14px;font-weight:700;margin-top:8px}
+.group.done .fb{display:block}
+
+.btn{font-family:'Nunito',sans-serif;font-weight:800;font-size:16px;border:none;border-radius:40px;padding:13px 26px;cursor:pointer;transition:transform .12s,filter .12s;text-decoration:none;display:inline-block}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+.btn-main{background:var(--came);color:#fff}
+.btn-pink{background:var(--pink);color:#fff}
+.btn-alt{background:var(--navy);color:#fff}
+.btn-soft{background:var(--light);color:var(--ink);border:2px solid var(--border)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+
+.big-ideas{display:grid;gap:10px;margin:14px 0}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--light);border-radius:14px;padding:14px}
+.idea .ico{font-size:24px;line-height:1}
+.idea b{font-family:'Nunito',sans-serif;display:block}
+.talk{background:#F1EAFB;border-radius:14px;padding:16px;margin-top:6px}
+.talk h3,.cta h3{font-family:'Nunito',sans-serif;font-weight:900;font-size:1.05rem;margin-bottom:6px}
+.cta{background:var(--navy);color:#fff;border-radius:16px;padding:18px;margin-top:16px}
+.cta p{color:rgba(255,255,255,.8);margin-bottom:12px}
+
+.note{font-size:13px;color:var(--muted);margin:6px 0 30px;text-align:center}
+footer{background:var(--navy);color:rgba(255,255,255,.55);text-align:center;padding:24px 16px;font-size:13px}
+footer a{color:var(--teal);text-decoration:none}
+footer strong{color:rgba(255,255,255,.85);font-family:'Nunito',sans-serif}
+@media (max-width:420px){.card{padding:18px}.hbar{grid-template-columns:100px 1fr 38px}.choices.three{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap">
+  <a href="./">← AI Playground</a>
+  <span class="tag">Game 4 of 6</span>
+</div></div>
+
+<header class="intro"><div class="wrap">
+  <h1>Who's <span>Missing?</span> 📊</h1>
+  <p>A county health report looks like a big success. Dig into the numbers, find the people they leave out, and decide what to do next.</p>
+  <div class="chips">
+    <span class="chip">⏱ About 5 minutes</span>
+    <span class="chip">🙈 No login</span>
+    <span class="chip">💾 Nothing is saved</span>
+    <span class="chip">✅ No wrong answers</span>
+  </div>
+</div></header>
+
+<main class="wrap">
+  <section class="card" id="game" aria-live="polite">
+    <div class="progress" id="progress" aria-hidden="true"></div>
+    <div id="stage"></div>
+  </section>
+  <p class="note">Maple Valley and all numbers in this game are made up for learning.</p>
+</main>
+
+<footer>Part of <a href="../">Demystifying AI for All</a> · Built by <strong>Jeffery Heil</strong> · <a href="https://globallearningaccess.com/home" target="_blank" rel="noopener">Global Learning Access</a></footer>
+
+<script>
+(function(){
+  /* ------------------------------------------------------------
+     GAME DATA. To edit the game, change the text and numbers here.
+     The groups must add up to TOTAL, and "came" must add up to ATTENDED.
+     ------------------------------------------------------------ */
+  var TOTAL = 400, ATTENDED = 120;
+  var GROUPS = [
+    { key:"downtown", name:"Downtown", total:140, came:98, color:"#2E75B6",
+      info:"Close to the health center. Most seniors can walk there or take a short bus ride." },
+    { key:"eastside", name:"Eastside", total:130, came:18, color:"#FF6B35",
+      info:"A neighborhood of working families. Many seniors care for their grandchildren on weekday mornings while parents are at work." },
+    { key:"rural", name:"Rural Hills (outside town)", total:90, came:4, color:"#783CBD",
+      info:"A 40-minute drive on country roads. No bus route, and a ride costs about $40 each way." },
+    { key:"home", name:"Homebound seniors (all areas)", total:40, came:0, color:"#EF3FA9",
+      info:"Bedridden or caring for a sick spouse. They cannot leave home at all." }
+  ];
+
+  var REASONS = [
+    { key:"eastside", q:"Why did so few seniors from Eastside come?",
+      opts:[["The check-up was on a weekday morning, when they care for grandchildren",1],["They don't care about their health",0],["They prefer their own doctors",0]],
+      fb:"Timing. A weekday morning fits seniors with free time, not grandparents who are caregivers. Blaming them (\"they don't care\") is a common, unfair assumption." },
+    { key:"rural", q:"Why did almost no one from Rural Hills come?",
+      opts:[["They were not invited",0],["The drive is long, and a ride costs $40",1],["They already had check-ups",0]],
+      fb:"Distance and cost. For a senior on a fixed income, $80 round trip is a lot of money, and many no longer drive." },
+    { key:"home", q:"Why did none of the homebound seniors come?",
+      opts:[["They cannot leave home",1],["They did not like the doctor",0],["They forgot",0]],
+      fb:"They physically can't come. They may need the check-up most of all, and they are completely invisible in the report." }
+  ];
+
+  var DECISIONS = [
+    ["Celebrate and run it the same way next year","90% satisfied!",0,
+     "This keeps serving the same 120 people. The 280 who couldn't come stay invisible."],
+    ["Go to them: a Saturday session in Eastside with kids' activities, a mobile health van in Rural Hills, and home visits","Bring the service to the people who are missing",2,
+     "Yes! You fixed the real barriers: time, distance, and mobility. Next year's numbers will tell a truer story."],
+    ["Survey the 120 seniors who came again, with more questions","Get more data",1,
+     "More data from the same people will never show you who is missing. Ask the people who didn't come."]
+  ];
+
+  var AI_FIRST = "Based on the data, the Senior Check-Up Day was highly successful, with 90% satisfaction among 120 seniors served. I recommend continuing the current approach and promoting this success.";
+
+  var stage=document.getElementById("stage"), progress=document.getElementById("progress");
+  var STEPS=6, idx=0;
+
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+  function drawProgress(){progress.innerHTML="";for(var i=0;i<STEPS;i++){var s=document.createElement("span");if(i<idx)s.className="done";else if(i===idx)s.className="now";progress.appendChild(s);}}
+  function go(){idx++;render();document.getElementById("game").scrollIntoView({behavior:"smooth",block:"start"});}
+  function nextBtn(label,cls){return '<div class="actions"><button class="btn '+(cls||"btn-main")+'" type="button" id="next">'+label+'</button></div>';}
+  function wireNext(){document.getElementById("next").addEventListener("click",go);}
+  function dotsHTML(n,came,color){
+    var h=""; for(var i=0;i<n;i++){ h+='<span class="dot'+(i<came?' came':'')+'"'+(i<came&&color?' style="background:'+color+'"':'')+'></span>'; } return h;
+  }
+
+  /* Step 1: the report */
+  function report(){
+    stage.innerHTML=
+      '<p class="round-label">Step 1 of 5 · The report</p>'+
+      '<h2 class="round-title">Is the program working?</h2>'+
+      '<div class="report"><div class="report-head"><small>Maple Valley Health Department</small><h3>Senior Check-Up Day: a big success! 🎉</h3></div>'+
+      '<div class="report-body">'+
+        '<div class="stat-row"><div class="stat"><b>120</b><span>Seniors served</span></div><div class="stat"><b>90%</b><span>Satisfied</span></div></div>'+
+        '<div class="hbar"><span>Very satisfied</span><span class="track"><span class="fill" data-w="60"></span></span><span class="pct">60%</span></div>'+
+        '<div class="hbar"><span>Satisfied</span><span class="track"><span class="fill" data-w="30"></span></span><span class="pct">30%</span></div>'+
+        '<div class="hbar"><span>Not satisfied</span><span class="track"><span class="fill" data-w="10"></span></span><span class="pct">10%</span></div>'+
+      '</div></div>'+
+      '<p class="ask">Based on this report, is the program working for the seniors of Maple Valley?</p>'+
+      '<div class="choices two"><button class="choice" type="button" data-v="yes">👍 Yes, it\'s a success</button><button class="choice" type="button" data-v="unsure">🤔 I need to know more</button></div>'+
+      '<div class="box" id="fb"></div><div id="nw"></div>';
+    requestAnimationFrame(function(){requestAnimationFrame(function(){stage.querySelectorAll(".fill").forEach(function(f){f.style.width=f.getAttribute("data-w")+"%";});});});
+    stage.querySelectorAll(".choice").forEach(function(b){
+      b.addEventListener("click",function(){
+        stage.querySelectorAll(".choice").forEach(function(c){c.disabled=true;}); b.classList.add("picked");
+        var yes=b.getAttribute("data-v")==="yes", fb=document.getElementById("fb");
+        fb.innerHTML=(yes?'<h3>That\'s what most people conclude, and AI too.</h3>':'<h3>Good instinct! 🔎</h3>')+
+          '<p>Here is what an AI tool said when it was given only this report:</p>'+
+          '<div class="ai-says">🤖 <b>AI:</b> "'+esc(AI_FIRST)+'"</div>'+
+          '<p style="margin-top:10px">The math is correct. But something big is missing. Let\'s dig.</p>';
+        fb.classList.add("show");
+        document.getElementById("nw").innerHTML=nextBtn("Dig deeper ⛏️"); wireNext();
+      });
+    });
+  }
+
+  /* Step 2: count everyone */
+  function countAll(){
+    stage.innerHTML=
+      '<p class="round-label">Step 2 of 5 · Count everyone</p>'+
+      '<h2 class="round-title">How many seniors live in Maple Valley?</h2>'+
+      '<p>The report counted 120 seniors. Guess how many seniors are on the county\'s list.</p>'+
+      '<div class="choices three" style="margin-top:12px"><button class="choice" type="button">130</button><button class="choice" type="button">200</button><button class="choice" type="button">400</button></div>'+
+      '<div id="reveal"></div><div id="nw"></div>';
+    stage.querySelectorAll(".choice").forEach(function(b){
+      b.addEventListener("click",function(){
+        stage.querySelectorAll(".choice").forEach(function(c){c.disabled=true;}); b.classList.add("picked");
+        var guess=b.textContent;
+        var r=document.getElementById("reveal");
+        r.innerHTML=
+          '<p class="big-number">'+(guess==="400"?"Yes! ":"")+'There are <span>400</span> seniors. Each dot is one person.</p>'+
+          '<div class="legend"><span><i style="background:var(--came)"></i>Came to the check-up (120)</span><span><i style="background:var(--gray)"></i>Never came (280)</span></div>'+
+          '<div class="dots" id="dots">'+dotsHTML(TOTAL,0)+'</div>'+
+          '<div class="box" id="fb" style="--c:var(--pink);--bg:#FDF0F6"><h3>70% of seniors were never counted.</h3><p>The "90% satisfied" is 90% of the people who came, not 90% of the seniors. The report only heard from people who could get there.</p></div>';
+        var dots=r.querySelectorAll(".dot"), i=0;
+        (function fill(){
+          for(var k=0;k<12 && i<ATTENDED;k++,i++){dots[i].classList.add("came");}
+          if(i<ATTENDED) setTimeout(fill,25);
+          else { document.getElementById("fb").classList.add("show"); document.getElementById("nw").innerHTML=nextBtn("Where are the missing seniors? →"); wireNext(); }
+        })();
+      });
+    });
+  }
+
+  /* Step 3: where are they */
+  function where(){
+    var opened={};
+    stage.innerHTML=
+      '<p class="round-label">Step 3 of 5 · Where are they?</p>'+
+      '<h2 class="round-title">Tap each group to see who came</h2>'+
+      '<p>Same 400 seniors, now sorted by where they live. Colored dots came. Gray dots did not.</p>'+
+      '<div class="sitios" style="margin-top:12px">'+GROUPS.map(function(g){
+        var pct=Math.round(g.came/g.total*100);
+        return '<button class="sitio" type="button" data-k="'+g.key+'" aria-expanded="false"><div class="sitio-top"><b>'+esc(g.name)+'</b><span>'+g.came+' of '+g.total+' came ('+pct+'%)</span></div>'+
+          '<div class="dots">'+dotsHTML(g.total,g.came,g.color)+'</div><div class="info">'+esc(g.info)+'</div><div class="tap">Tap to learn more</div></button>';
+      }).join("")+'</div>'+
+      '<div class="box" id="fb"><h3>The averages hid the gaps.</h3><p>Downtown looks great at 70%. But only 4% of Rural Hills came, and <b>none</b> of the 40 homebound seniors. The people who need the service most were the least likely to be counted.</p></div><div id="nw"></div>';
+    stage.querySelectorAll(".sitio").forEach(function(b){
+      b.addEventListener("click",function(){
+        var k=b.getAttribute("data-k"); b.classList.add("open"); b.setAttribute("aria-expanded","true"); opened[k]=1;
+        if(Object.keys(opened).length===GROUPS.length && !document.getElementById("next")){
+          document.getElementById("fb").classList.add("show"); document.getElementById("nw").innerHTML=nextBtn("Why are they missing? →"); wireNext();
+        }
+      });
+    });
+  }
+
+  /* Step 4: why */
+  function why(){
+    var done=0;
+    stage.innerHTML=
+      '<p class="round-label">Step 4 of 5 · Why are they missing?</p>'+
+      '<h2 class="round-title">Choose the most likely reason</h2>'+
+      REASONS.map(function(r,ri){
+        var g=GROUPS.filter(function(x){return x.key===r.key;})[0];
+        return '<div class="group" data-r="'+ri+'" style="border-left:5px solid '+g.color+'"><h3>'+esc(r.q)+'</h3><div class="choices">'+
+          r.opts.map(function(o,oi){return '<button class="choice" type="button" data-o="'+oi+'">'+esc(o[0])+'</button>';}).join("")+
+          '</div><p class="fb">'+esc(r.fb)+'</p></div>';
+      }).join("")+
+      '<div class="box" id="fb" style="--c:var(--blue);--bg:#EEF3FB"><h3>📣 One more reason for everyone</h3><p>The check-up was announced only on the county website and social media, and only in English. Many seniors don\'t go online, and some read another language best. <b>How</b> you invite people decides <b>who</b> shows up.</p></div><div id="nw"></div>';
+    stage.querySelectorAll(".group").forEach(function(gEl){
+      var r=REASONS[+gEl.getAttribute("data-r")];
+      gEl.querySelectorAll(".choice").forEach(function(b){
+        b.addEventListener("click",function(){
+          if(gEl.classList.contains("done")) return;
+          var ok=r.opts[+b.getAttribute("data-o")][1]===1;
+          gEl.querySelectorAll(".choice").forEach(function(c,ci){c.disabled=true; if(r.opts[ci][1]===1) c.classList.add("right");});
+          if(!ok) b.classList.add("wrong");
+          gEl.querySelector(".fb").textContent=(ok?"✓ ":"The likely reason is in green. ")+r.fb;
+          gEl.classList.add("done"); done++;
+          if(done===REASONS.length){ document.getElementById("fb").classList.add("show"); document.getElementById("nw").innerHTML=nextBtn("Make a decision →"); wireNext(); }
+        });
+      });
+    });
+  }
+
+  /* Step 5: decide */
+  function decide(){
+    stage.innerHTML=
+      '<p class="round-label">Step 5 of 5 · Decide</p>'+
+      '<h2 class="round-title">You plan next year\'s Senior Check-Up Day. What do you do?</h2>'+
+      '<div class="choices">'+DECISIONS.map(function(d,i){return '<button class="choice" type="button" data-i="'+i+'">'+esc(d[0])+'<small>'+esc(d[1])+'</small></button>';}).join("")+'</div>'+
+      '<div class="box" id="fb"></div><div id="nw"></div>';
+    stage.querySelectorAll(".choice").forEach(function(b){
+      b.addEventListener("click",function(){
+        var d=DECISIONS[+b.getAttribute("data-i")];
+        var fb=document.getElementById("fb");
+        stage.querySelectorAll(".choice").forEach(function(c){c.classList.remove("picked","right","wrong");});
+        b.classList.add(d[2]===2?"right":(d[2]===1?"picked":"wrong"));
+        fb.style.setProperty("--c",d[2]===2?"var(--green)":(d[2]===1?"#F59E0B":"var(--pink)"));
+        fb.style.setProperty("--bg",d[2]===2?"#E8FBF6":(d[2]===1?"#FFF7E6":"#FDF0F6"));
+        fb.innerHTML='<h3>'+(d[2]===2?"Great decision! 🎉":"Think again 🤔")+'</h3><p>'+esc(d[3])+'</p>'+(d[2]===2?"":"<p>Try another option.</p>");
+        fb.classList.remove("show"); void fb.offsetWidth; fb.classList.add("show");
+        if(d[2]===2 && !document.getElementById("next")){ stage.querySelectorAll(".choice").forEach(function(c){c.disabled=true;}); document.getElementById("nw").innerHTML=nextBtn("See what you learned →","btn-pink"); wireNext(); }
+      });
+    });
+  }
+
+  function finale(){
+    stage.innerHTML=
+      '<p class="round-label">You did it! 🎉</p>'+
+      '<h2 class="round-title">3 big ideas you just discovered</h2>'+
+      '<div class="big-ideas">'+
+        '<div class="idea"><span class="ico">🧮</span><div><b>Always ask: out of how many?</b>"90% satisfied" sounded great, until we learned it was 90% of only 120 out of 400 seniors.</div></div>'+
+        '<div class="idea"><span class="ico">🤖</span><div><b>AI can only analyze the data you give it.</b>It did the math correctly and still gave bad advice, because the missing people were never in the data. AI cannot see who is not there. You can.</div></div>'+
+        '<div class="idea"><span class="ico">👵</span><div><b>Behind every number is a person, and behind every gap is a reason.</b>Timing, distance, cost, health, and how we invite people decide who gets counted. Ask the missing people, not just the ones who came.</div></div>'+
+      '</div>'+
+      '<div class="talk"><h3>💬 Talk about it with your group</h3><p>Think of a report or survey in your own work. Who might be missing from it, and how could you hear from them?</p></div>'+
+      '<div class="cta"><h3>Want to go deeper?</h3><p>Learn to use AI in ways that keep people at the center, with Global Learning Access.</p>'+
+        '<a class="btn btn-pink" href="https://globallearningaccess.com/home" target="_blank" rel="noopener">Visit Global Learning Access</a></div>'+
+      '<div class="actions"><button class="btn btn-soft" type="button" id="again">↺ Play again</button><a class="btn btn-alt" href="./">More games →</a></div>';
+    document.getElementById("again").addEventListener("click",function(){idx=0;render();});
+  }
+
+  var STEPFNS=[report,countAll,where,why,decide,finale];
+  function render(){drawProgress();STEPFNS[idx]();}
+  render();
+})();
+</script>
+</body>
+</html>

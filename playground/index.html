@@ -56,6 +56,10 @@ a.tile:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
 .cta h2{font-family:'Nunito',sans-serif;font-weight:900;font-size:1.25rem}
 .cta p{color:rgba(255,255,255,.75)}
 .cta a{background:var(--pink);color:#fff;text-decoration:none;font-family:'Nunito',sans-serif;font-weight:800;border-radius:40px;padding:12px 24px;white-space:nowrap}
+.edition{display:inline-flex;gap:4px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:40px;padding:4px;margin-top:14px;position:relative;z-index:1}
+.edition a,.edition span{font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;border-radius:40px;padding:6px 14px;text-decoration:none;color:rgba(255,255,255,.85)}
+.edition span{background:var(--yellow);color:var(--navy)}
+.edition a:hover{background:rgba(255,255,255,.15)}
 footer{background:var(--navy);color:rgba(255,255,255,.55);text-align:center;padding:24px 16px;font-size:13px}
 footer a{color:var(--teal);text-decoration:none}
 footer strong{color:rgba(255,255,255,.85);font-family:'Nunito',sans-serif}
@@ -78,6 +82,7 @@ footer strong{color:rgba(255,255,255,.85);font-family:'Nunito',sans-serif}
       <span>💾 Nothing is saved</span>
       <span>✅ No wrong answers</span>
     </div>
+    <nav class="edition" aria-label="Choose an edition"><span aria-current="page">🇵🇭 Philippines</span><a href="../playground-global/">🌎 US · Canada · Australia</a></nav>
   </div>
 </header>
 
