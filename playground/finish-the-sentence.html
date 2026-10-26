@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finish the Sentence · AI Playground · Demystifying AI for All</title>
+<meta name="description" content="A free, 5-minute game that shows how AI really works: it predicts the next word. No login, no grades, nothing saved.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔮</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#EF3FA9;--purple:#783CBD;--teal:#22D3C5;--navy:#1B3A6B;--blue:#2E75B6;
+  --yellow:#FFD93D;--orange:#FF6B35;--green:#06D6A0;--ink:#1A1A2E;--light:#F7F8FC;
+  --white:#FFFFFF;--border:#E4E9F2;--muted:#5B6478;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito Sans',sans-serif;background:var(--light);color:var(--ink);line-height:1.55;min-height:100vh}
+a{color:var(--blue)}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+
+/* top bar */
+.topbar{background:var(--navy);color:#fff;padding:14px 0}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.topbar a{color:rgba(255,255,255,.85);text-decoration:none;font-family:'Nunito',sans-serif;font-weight:700;font-size:14px}
+.topbar a:hover{color:var(--yellow)}
+.tag{font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--teal)}
+
+/* intro */
+.intro{background:var(--navy);color:#fff;padding:8px 0 40px;position:relative;overflow:hidden}
+.intro::after{content:'';position:absolute;width:220px;height:220px;border-radius:50%;background:var(--pink);opacity:.12;right:-60px;top:-40px}
+.intro h1{font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(2rem,7vw,3rem);line-height:1.1;margin:14px 0 10px}
+.intro h1 span{color:var(--yellow)}
+.intro p{color:rgba(255,255,255,.75);max-width:560px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:40px;padding:5px 14px;font-size:13px;font-weight:600}
+
+/* card */
+.card{background:var(--white);border:1px solid var(--border);border-radius:20px;box-shadow:0 8px 30px rgba(27,58,107,.08);padding:24px;margin:-24px 0 20px;position:relative;z-index:1}
+.progress{display:flex;gap:6px;margin-bottom:18px}
+.progress span{flex:1;height:6px;border-radius:6px;background:var(--border);transition:background .3s}
+.progress span.done{background:var(--teal)}
+.progress span.now{background:var(--pink)}
+.round-label{font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--purple)}
+.round-title{font-family:'Nunito',sans-serif;font-weight:800;font-size:1.25rem;margin:4px 0 14px}
+.context{background:#FFF8DB;border:1px dashed #E8C400;border-radius:12px;padding:10px 14px;font-size:14px;margin-bottom:12px}
+.context b{font-family:'Nunito',sans-serif}
+.sentence{font-family:'Nunito',sans-serif;font-weight:800;font-size:clamp(1.3rem,5vw,1.7rem);line-height:1.35;background:var(--light);border-radius:14px;padding:18px;margin-bottom:16px}
+.blank{display:inline-block;min-width:90px;border-bottom:4px solid var(--pink);color:var(--pink);text-align:center;padding:0 4px}
+.ask{font-weight:700;margin-bottom:10px}
+.options{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.opt{font-family:'Nunito',sans-serif;font-weight:800;font-size:16px;padding:14px 10px;border-radius:14px;border:2px solid var(--border);background:#fff;color:var(--ink);cursor:pointer;transition:transform .12s,border-color .12s,background .12s}
+.opt:hover{border-color:var(--teal);transform:translateY(-2px)}
+.opt:focus-visible,.btn:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+.opt[disabled]{cursor:default;transform:none}
+.opt.picked{border-color:var(--pink);background:#FDE7F4}
+
+/* bars */
+.bars{margin-top:18px;display:none}
+.bars.show{display:block}
+.bars h3{font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;margin-bottom:10px}
+.bar-row{display:grid;grid-template-columns:110px 1fr 46px;align-items:center;gap:10px;margin-bottom:8px}
+.bar-word{font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;overflow-wrap:anywhere}
+.bar-track{display:block;height:22px;background:var(--light);border-radius:8px;overflow:hidden}
+.bar-fill{display:block;height:100%;width:0;border-radius:8px;background:var(--blue);transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.bar-row.top .bar-fill{background:var(--teal)}
+.bar-row.mine .bar-word::after{content:'← your guess';display:block;color:var(--pink);font-size:12px;font-weight:700}
+.bar-pct{font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;text-align:right;color:var(--muted)}
+.feedback{margin-top:12px;font-weight:700}
+.lesson{margin-top:14px;background:#E8FBF6;border-left:5px solid var(--green);border-radius:12px;padding:14px 16px;display:none}
+.lesson.show{display:block}
+.lesson b{font-family:'Nunito',sans-serif}
+
+.btn{font-family:'Nunito',sans-serif;font-weight:800;font-size:16px;border:none;border-radius:40px;padding:13px 26px;cursor:pointer;transition:transform .12s,filter .12s}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+.btn-main{background:var(--pink);color:#fff}
+.btn-alt{background:var(--navy);color:#fff}
+.btn-soft{background:var(--light);color:var(--ink);border:2px solid var(--border)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.hidden{display:none!important}
+
+/* creative mode */
+.gen-out{margin-top:14px;display:grid;gap:8px}
+.gen-line{background:var(--light);border-radius:12px;padding:12px 14px;font-family:'Nunito',sans-serif;font-weight:700;animation:pop .35s ease}
+.gen-line small{display:block;font-family:'Nunito Sans',sans-serif;font-weight:700;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* finale */
+.big-ideas{display:grid;gap:10px;margin:14px 0}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--light);border-radius:14px;padding:14px}
+.idea .ico{font-size:24px;line-height:1}
+.idea b{font-family:'Nunito',sans-serif;display:block}
+.talk{background:#F1EAFB;border-radius:14px;padding:16px;margin-top:6px}
+.talk h3,.cta h3{font-family:'Nunito',sans-serif;font-weight:900;font-size:1.05rem;margin-bottom:6px}
+.cta{background:var(--navy);color:#fff;border-radius:16px;padding:18px;margin-top:16px}
+.cta p{color:rgba(255,255,255,.8);margin-bottom:12px}
+.cta a.btn{display:inline-block;text-decoration:none}
+
+.note{font-size:13px;color:var(--muted);margin:6px 0 30px;text-align:center}
+footer{background:var(--navy);color:rgba(255,255,255,.55);text-align:center;padding:24px 16px;font-size:13px}
+footer a{color:var(--teal);text-decoration:none}
+footer strong{color:rgba(255,255,255,.85);font-family:'Nunito',sans-serif}
+
+@media (max-width:420px){.bar-row{grid-template-columns:88px 1fr 40px}.card{padding:18px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap">
+  <a href="./">← AI Playground</a>
+  <span class="tag">Game 1 of 6</span>
+</div></div>
+
+<header class="intro"><div class="wrap">
+  <h1>Finish the <span>Sentence</span> 🔮</h1>
+  <p>AI tools like ChatGPT, Gemini, and Claude seem to "know" things. Here is the secret: they are predicting the next word, one word at a time. Play 5 quick rounds and see it for yourself.</p>
+  <div class="chips">
+    <span class="chip">⏱ About 5 minutes</span>
+    <span class="chip">🙈 No login</span>
+    <span class="chip">💾 Nothing is saved</span>
+    <span class="chip">✅ No wrong answers</span>
+  </div>
+</div></header>
+
+<main class="wrap">
+  <section class="card" id="game" aria-live="polite">
+    <div class="progress" id="progress" aria-hidden="true"></div>
+    <div id="stage"></div>
+  </section>
+  <p class="note">The percentages in this game are illustrations, made up to show how prediction works. Real AI tools calculate them from billions of examples of text.</p>
+</main>
+
+<footer>Part of <a href="../">Demystifying AI for All</a> · Built by <strong>Jeffery Heil</strong> · <a href="https://globallearningaccess.com/home" target="_blank" rel="noopener">Global Learning Access</a></footer>
+
+<script>
+(function(){
+  /* ------------------------------------------------------------
+     ROUNDS. To edit the game, change the text here.
+     probs: word -> illustrative percentage (they do not need to add to 100;
+     the rest is "all other words").
+     ------------------------------------------------------------ */
+  var ROUNDS = [
+    {
+      kind: "guess",
+      title: "Round 1: What comes next?",
+      before: "Every morning before work, I drink a cup of",
+      after: ".",
+      ask: "What word do you think AI would predict?",
+      probs: [["coffee",58],["tea",13],["water",9],["hot chocolate",6],["salabat",2]],
+      lesson: "<b>AI picks the most common pattern it has seen.</b> \"Coffee\" follows this sentence most often in the text AI learned from, so it wins. Salabat (ginger tea) is part of many Filipino mornings, but it is rare in that mostly English text, so AI almost never predicts it. AI is not wrong about your morning. It just does not know you."
+    },
+    {
+      kind: "context",
+      title: "Round 2: The power of context",
+      before: "Don't forget to bring",
+      after: "",
+      ask: "First guess: with no other information, what would AI predict?",
+      probs: [["your",34],["the",16],["a",12],["food",6],["an",5]],
+      ctxText: "<b>Now add context:</b> It is typhoon season in Tacloban, and Lola sends a text:",
+      ctxBefore: "Anak, it's raining hard. Don't forget to bring an",
+      ctxAfter: "!",
+      ctxProbs: [["umbrella",64],["extra shirt",9],["emergency kit",8],["ID",4],["apple",1]],
+      lesson: "<b>Context changes everything.</b> With no context, AI can only make a vague guess. Add who, where, and what is happening, and its prediction becomes useful. That is why your own context (your role, your place, the people you serve) makes AI work so much better for you."
+    },
+    {
+      kind: "guess",
+      title: "Round 3: Confident, but guessing",
+      before: "The captain of our barangay is named",
+      after: ".",
+      ask: "AI has never met your barangay captain. What will it predict?",
+      probs: [["Juan",9],["Maria",7],["Jose",6],["Ana",5],["Pedro",4]],
+      lesson: "<b>AI predicts; it does not know.</b> Even with no real information, AI still produces a likely-sounding name. In a real chat, it might say it smoothly and confidently. Notice how low and spread out the percentages are: that is a sign of guessing. This is why we always check AI's facts, especially about local people and places."
+    },
+    {
+      kind: "guess",
+      title: "Round 4: Patterns can carry stereotypes",
+      before: "The nurse said that",
+      after: " would be back in a few minutes.",
+      ask: "Which word do you think AI would predict?",
+      probs: [["she",71],["he",12],["they",9],["the doctor",5]],
+      lesson: "<b>AI repeats the patterns in its data, including unfair ones.</b> Many nurses are men, but most of the text AI learned from says \"she,\" so AI leans that way. The same thing can happen with jobs, regions, languages, and communities. A human needs to notice when a pattern is a stereotype."
+    },
+    {
+      kind: "creative",
+      title: "Round 5: Safe mode vs. Creative mode",
+      before: "Our fiesta this year will have",
+      after: "",
+      ask: "Tap each button a few times. What changes?",
+      safe: "Our fiesta this year will have food, music, and dancing.",
+      creative: [
+        "Our fiesta this year will have a lechon contest judged by the barangay lolas.",
+        "Our fiesta this year will have karaoke until sunrise and a parade of decorated tricycles.",
+        "Our fiesta this year will have a giant puto cake and a sack race for the councilors.",
+        "Our fiesta this year will have glowing parols made by the high school students.",
+        "Our fiesta this year will have a basketball league, a talent show, and too much pancit.",
+        "Our fiesta this year will have a boat procession at sunset and a cook-off for the best adobo."
+      ],
+      lesson: "<b>AI writes one word at a time, with a little randomness.</b> In \"safe\" mode, it always takes the most likely word, so you get the same plain sentence every time. In \"creative\" mode, it sometimes picks a less likely word, so every answer is different. That is why asking the same question twice can give you two different answers. Neither one is \"the truth.\""
+    }
+  ];
+
+  var stage = document.getElementById("stage");
+  var progress = document.getElementById("progress");
+  var idx = 0, matches = 0;
+
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+
+  function drawProgress(){
+    progress.innerHTML="";
+    for(var i=0;i<=ROUNDS.length;i++){
+      var s=document.createElement("span");
+      if(i<idx) s.className="done"; else if(i===idx) s.className="now";
+      progress.appendChild(s);
+    }
+  }
+
+  function sentence(before, after, word){
+    return '<div class="sentence">'+esc(before)+' <span class="blank">'+(word?esc(word):"&nbsp;?&nbsp;")+'</span>'+esc(after)+'</div>';
+  }
+
+  function barsHTML(probs, mine, heading){
+    var max = probs[0][1];
+    var rows = probs.map(function(p,i){
+      var cls = "bar-row"+(i===0?" top":"")+(p[0]===mine?" mine":"");
+      return '<div class="'+cls+'"><span class="bar-word">'+esc(p[0])+'</span><span class="bar-track"><span class="bar-fill" data-w="'+(p[1]/max*100)+'"></span></span><span class="bar-pct">'+p[1]+'%</span></div>';
+    }).join("");
+    var others = 100 - probs.reduce(function(t,p){return t+p[1];},0);
+    return '<h3>'+heading+'</h3>'+rows+(others>0?'<p class="bar-pct" style="text-align:left;margin-top:4px">All other words: '+others+'%</p>':'');
+  }
+
+  function animateBars(el){
+    requestAnimationFrame(function(){requestAnimationFrame(function(){
+      el.querySelectorAll(".bar-fill").forEach(function(f){f.style.width=f.getAttribute("data-w")+"%";});
+    });});
+  }
+
+  function nextButton(label){
+    var last = idx === ROUNDS.length-1;
+    return '<div class="actions"><button class="btn btn-main" type="button" id="next">'+(label || (last?"See what you learned →":"Next round →"))+'</button></div>';
+  }
+
+  function wireNext(){
+    var n=document.getElementById("next");
+    if(n) n.addEventListener("click",function(){idx++;render();document.getElementById("game").scrollIntoView({behavior:"smooth",block:"start"});});
+  }
+
+  function guessRound(r, probs, before, after, onDone, heading){
+    var box=document.createElement("div");
+    box.innerHTML = sentence(before, after) + '<p class="ask">'+esc(r.askNow||r.ask)+'</p><div class="options">'+shuffle(probs).map(function(p){
+      return '<button class="opt" type="button" data-w="'+esc(p[0])+'">'+esc(p[0])+'</button>';}).join("")+'</div><div class="bars"></div><p class="feedback"></p>';
+    box.querySelectorAll(".opt").forEach(function(b){
+      b.addEventListener("click",function(){
+        var mine=b.getAttribute("data-w");
+        box.querySelectorAll(".opt").forEach(function(o){o.disabled=true;});
+        b.classList.add("picked");
+        box.querySelector(".sentence .blank").textContent = probs[0][0];
+        var bars=box.querySelector(".bars");
+        bars.innerHTML=barsHTML(probs,mine,heading||"How likely is each word? (illustration)");
+        bars.classList.add("show");
+        animateBars(bars);
+        var top = mine===probs[0][0];
+        if(top) matches++;
+        box.querySelector(".feedback").textContent = top
+          ? "You thought like the AI! Your guess was its top prediction."
+          : "Interesting! AI's top prediction was “"+probs[0][0]+".” Your guess makes sense too. You know things AI does not.";
+        onDone();
+      });
+    });
+    return box;
+  }
+
+  function render(){
+    drawProgress();
+    if(idx>=ROUNDS.length){ finale(); return; }
+    var r=ROUNDS[idx];
+    stage.innerHTML='<p class="round-label">Round '+(idx+1)+' of '+ROUNDS.length+'</p><h2 class="round-title">'+esc(r.title)+'</h2>';
+    var lesson=document.createElement("div"); lesson.className="lesson"; lesson.innerHTML=r.lesson;
+    var nextWrap=document.createElement("div");
+
+    if(r.kind==="guess"){
+      stage.appendChild(guessRound(r,r.probs,r.before,r.after,function(){
+        lesson.classList.add("show"); nextWrap.innerHTML=nextButton(); wireNext();
+      }));
+    }
+    else if(r.kind==="context"){
+      var part2=document.createElement("div");
+      stage.appendChild(guessRound(r,r.probs,r.before,r.after,function(){
+        var go=document.createElement("div"); go.className="actions";
+        go.innerHTML='<button class="btn btn-alt" type="button">Now add context →</button>';
+        go.firstChild.addEventListener("click",function(){
+          go.remove();
+          var ctx=document.createElement("div");
+          ctx.innerHTML='<div class="context" style="margin-top:18px">'+r.ctxText+'</div>';
+          part2.appendChild(ctx);
+          part2.appendChild(guessRound({ask:"Second guess: with this context, what would AI predict?"},r.ctxProbs,r.ctxBefore,r.ctxAfter,function(){
+            lesson.classList.add("show"); nextWrap.innerHTML=nextButton(); wireNext();
+          },"With context: how likely is each word?"));
+        });
+        part2.appendChild(go);
+      },"With no context: how likely is each word?"));
+      stage.appendChild(part2);
+    }
+    else if(r.kind==="creative"){
+      var box=document.createElement("div");
+      box.innerHTML=sentence(r.before,r.after,"...")+'<p class="ask">'+esc(r.ask)+'</p>'+
+        '<div class="actions" style="margin-top:0"><button class="btn btn-alt" type="button" id="safe">🛡 Safe mode</button><button class="btn btn-main" type="button" id="crea">🎨 Creative mode</button></div><div class="gen-out" id="out"></div>';
+      stage.appendChild(box);
+      var out=box.querySelector("#out"), clicks=0, lastC=-1;
+      function add(label,text){
+        var d=document.createElement("div"); d.className="gen-line"; d.innerHTML='<small>'+label+'</small>'+esc(text);
+        out.insertBefore(d,out.firstChild);
+        while(out.children.length>4) out.removeChild(out.lastChild);
+        clicks++;
+        if(clicks>=3 && !lesson.classList.contains("show")){ lesson.classList.add("show"); nextWrap.innerHTML=nextButton(); wireNext(); }
+      }
+      box.querySelector("#safe").addEventListener("click",function(){add("🛡 Safe mode",r.safe);});
+      box.querySelector("#crea").addEventListener("click",function(){
+        var j; do{ j=Math.floor(Math.random()*r.creative.length);}while(j===lastC && r.creative.length>1);
+        lastC=j; add("🎨 Creative mode",r.creative[j]);
+      });
+    }
+    stage.appendChild(lesson);
+    stage.appendChild(nextWrap);
+  }
+
+  function finale(){
+    var guessRounds = ROUNDS.filter(function(r){return r.kind!=="creative";}).length + 1; // context round has 2 guesses
+    stage.innerHTML =
+      '<p class="round-label">You did it! 🎉</p>'+
+      '<h2 class="round-title">3 big ideas you just discovered</h2>'+
+      '<p>You matched AI’s top prediction '+matches+' out of '+guessRounds+' times. That is not a score. It shows how predictable common patterns are, and how much you know that AI does not.</p>'+
+      '<div class="big-ideas">'+
+        '<div class="idea"><span class="ico">🔮</span><div><b>AI predicts. It does not know.</b>It chooses likely words, even when it has no real information, and it can sound sure while guessing.</div></div>'+
+        '<div class="idea"><span class="ico">🧭</span><div><b>Your context makes AI useful.</b>Tell it who you are, where you are, and who you serve, and its predictions get much better.</div></div>'+
+        '<div class="idea"><span class="ico">👀</span><div><b>You are the human check.</b>AI repeats common patterns, including stereotypes, and misses local life like salabat and your barangay. You notice what it misses.</div></div>'+
+      '</div>'+
+      '<div class="talk"><h3>💬 Talk about it with your group</h3><p>Which round surprised you most? Think of one thing about your community or your work that AI would probably predict wrong. Share it with a classmate or colleague.</p></div>'+
+      '<div class="cta"><h3>Want to go deeper?</h3><p>Learn to use AI in ways that keep people at the center, with Global Learning Access.</p>'+
+        '<a class="btn btn-main" href="https://globallearningaccess.com/home" target="_blank" rel="noopener">Visit Global Learning Access</a></div>'+
+      '<div class="actions"><button class="btn btn-soft" type="button" id="again">↺ Play again</button><a class="btn btn-alt" href="./" style="text-decoration:none">More games →</a></div>';
+    document.getElementById("again").addEventListener("click",function(){idx=0;matches=0;render();});
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>
