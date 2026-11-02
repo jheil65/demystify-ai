@@ -333,6 +333,8 @@ body.present .how{font-size:1.1rem}
     <div class="how"><span class="ico">🛠️</span><div><b data-t="howBuildB"></b><span data-t="howBuild"></span></div></div>
     <label class="q" data-t="q1"></label>
     <div class="picks" id="pBiz"></div>
+    <div class="hidden" id="pOtherWrap"><label class="q" for="pOther" data-t="qOther"></label>
+    <input class="txt" id="pOther" type="text" autocomplete="off" data-ph="phOther"></div>
     <label class="q" for="pPlace" data-t="qPlace"></label>
     <input class="txt" id="pPlace" type="text" placeholder="Quezon City" autocomplete="off">
     <label class="q" for="pProduct" data-t="q2"></label>
@@ -463,7 +465,7 @@ body.present .how{font-size:1.1rem}
       s4lead:"A <b>prompt</b> is the instruction or question you give AI. The clearer your prompt, the better the answer. Use this 4-part formula:",
       f1:"1 · Who am I?", f1s:"Your business and where", f2:"2 · What do I sell?", f2s:"Products or services",
       f3:"3 · Who are my customers?", f3s:"Who it's for", f4:"4 · What do I need?", f4s:"The task and tone",
-      q1:"1 · What's your business?", qPlace:'Where are you? <i>(for example: Quezon City)</i>',
+      q1:"1 · What's your business?", qOther:'What kind of business? <i>(for example: bike repair shop)</i>', phOther:"bike repair shop", qPlace:'Where are you? <i>(for example: Quezon City)</i>',
       q2:"2 · What do you sell?", q3:"3 · Who are your customers?", q4:"4 · What do you need?", qTone:"What tone and language?",
       build:"✨ Build my prompt", yourPrompt:"📋 Your prompt", copy:"Copy prompt", copied:"✓ Copied!",
       badge:"Practice preview · not real AI", previewH:"Here's what AI <i>might</i> write:",
@@ -530,7 +532,7 @@ body.present .how{font-size:1.1rem}
       s4lead:"Ang <b>prompt</b> ay ang utos o tanong na ibinibigay mo sa AI. Mas malinaw ang prompt, mas maganda ang sagot. Gamitin ang 4-part formula:",
       f1:"1 · Sino ako?", f1s:"Negosyo mo at saan ka", f2:"2 · Ano ang binebenta ko?", f2s:"Produkto o serbisyo",
       f3:"3 · Sino ang customers ko?", f3s:"Para kanino", f4:"4 · Ano ang kailangan ko?", f4s:"Gawain at tono",
-      q1:"1 · Anong negosyo mo?", qPlace:'Saan ka? <i>(halimbawa: Quezon City)</i>',
+      q1:"1 · Anong negosyo mo?", qOther:'Anong klaseng negosyo? <i>(halimbawa: bike repair shop)</i>', phOther:"bike repair shop", qPlace:'Saan ka? <i>(halimbawa: Quezon City)</i>',
       q2:"2 · Ano ang binebenta mo?", q3:"3 · Sino ang customers mo?", q4:"4 · Ano ang kailangan mo?", qTone:"Anong tono at wika?",
       build:"✨ Buuin ang prompt ko", yourPrompt:"📋 Ang prompt mo", copy:"Copy ang prompt", copied:"✓ Na-copy na!",
       badge:"Practice preview · hindi totoong AI", previewH:"Ganito ang <i>puwedeng</i> isagot ng AI:",
@@ -639,7 +641,9 @@ body.present .how{font-size:1.1rem}
       {k:"online shop", label:"📦 Online seller", product:"pre-loved clothes", cust:"moms and students on Facebook"},
       {k:"salon", label:"💇 Salon / Barber", product:"haircuts, rebonding, and manicures", cust:"people in our barangay"},
       {k:"bakery", label:"🥖 Bakery / Kakanin", product:"pandesal, ensaymada, and kakanin", cust:"families in the morning"},
-      {k:"milk tea and coffee stand", label:"🧋 Milk tea / Coffee", product:"milk tea and iced coffee", cust:"students and call center agents"}
+      {k:"milk tea and coffee stand", label:"🧋 Milk tea / Coffee", product:"milk tea and iced coffee", cust:"students and call center agents"},
+      {k:"small home-based business", label:"🧑‍💻 Freelance / Home-based", product:"virtual assistant and bookkeeping services", cust:"busy small business owners"},
+      {k:"small business", label:"✏️ Other (type yours)", product:"products and services", cust:"people in my area", other:true}
     ],
     tl: [
       {k:"sari-sari store", label:"🏪 Sari-sari store", product:"kape, de-lata, at load", cust:"mga kapitbahay at estudyante"},
@@ -647,7 +651,9 @@ body.present .how{font-size:1.1rem}
       {k:"online shop", label:"📦 Online seller", product:"pre-loved na damit", cust:"mga nanay at estudyante sa Facebook"},
       {k:"salon", label:"💇 Salon / Barber", product:"gupit, rebond, at manicure", cust:"mga taga-barangay"},
       {k:"bakery", label:"🥖 Bakery / Kakanin", product:"pandesal, ensaymada, at kakanin", cust:"mga pamilya tuwing umaga"},
-      {k:"milk tea at kape stand", label:"🧋 Milk tea / Kape", product:"milk tea at iced coffee", cust:"mga estudyante at call center agents"}
+      {k:"milk tea at kape stand", label:"🧋 Milk tea / Kape", product:"milk tea at iced coffee", cust:"mga estudyante at call center agents"},
+      {k:"maliit na home-based na negosyo", label:"🧑‍💻 Freelance / Home-based", product:"virtual assistant at bookkeeping services", cust:"mga busy na may-ari ng maliit na negosyo"},
+      {k:"maliit na negosyo", label:"✏️ Iba pa (i-type)", product:"mga produkto at serbisyo", cust:"mga tao sa lugar namin", other:true}
     ]
   };
   var TASKS = {
@@ -849,7 +855,7 @@ body.present .how{font-size:1.1rem}
       el.appendChild(b);
     });
   }
-  function setPlaceholders(){ var b=BIZ[L][selIdx.biz]; $("pProduct").placeholder=b.product; $("pCust").placeholder=b.cust; }
+  function setPlaceholders(){ var b=BIZ[L][selIdx.biz]; $("pProduct").placeholder=b.product; $("pCust").placeholder=b.cust; $("pOther").placeholder=t("phOther"); $("pOtherWrap").classList.toggle("hidden",!b.other); }
   function setupBuilder(){
     picks($("pBiz"),BIZ[L],"biz"); picks($("pTask"),TASKS[L],"task"); picks($("pTone"),TONES[L],"tone");
     setPlaceholders();
@@ -857,7 +863,7 @@ body.present .how{font-size:1.1rem}
   }
   function vals(){
     var b=BIZ[L][selIdx.biz];
-    return { biz:b.k, place:$("pPlace").value.trim()||"Quezon City", product:$("pProduct").value.trim()||b.product, cust:$("pCust").value.trim()||b.cust };
+    return { biz:(b.other&&$("pOther").value.trim())||b.k, place:$("pPlace").value.trim()||"Quezon City", product:$("pProduct").value.trim()||b.product, cust:$("pCust").value.trim()||b.cust };
   }
   function fill(s,v){
     return s.replace(/\{Product\}/g, v.product.charAt(0).toUpperCase()+v.product.slice(1))
