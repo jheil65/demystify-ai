@@ -1,10 +1,10 @@
-# SPARK AI Intro: How to Use and Edit It
+# SPARK AI Express: How to Use and Edit It
 
 *For Jeff. Plain steps, no coding knowledge needed.*
 
 **Live page:** https://jheil65.github.io/demystify-ai/spark-intro/
 
-A reusable, interactive session page for nanopreneurs and micropreneurs. It works on phones and on a projector, and it keeps working if the Wi-Fi drops after it loads. Nothing a learner types is saved or sent anywhere.
+SPARK AI Express is a reusable, interactive session page for nanopreneurs and micropreneurs. It works on phones and on a projector, and it keeps working if the Wi-Fi drops after it loads. Nothing a learner types is saved or sent anywhere.
 
 ## Languages
 
@@ -29,7 +29,7 @@ Tip: `https://jheil65.github.io/demystify-ai/spark-intro/?present` opens straigh
 3. Why use AI? (4 benefits; "AI is your helper, you are still the bida")
 4. How to use AI (4-part prompt builder, a clearly labeled practice preview, and links to Gemini, ChatGPT, Claude, and Copilot)
 5. When to use AI (Safe or Not Safe, 7 situations, with RA 10173 and RA 8293)
-6. What's next? (try it tonight, PTTC certification, SPARK AI course, AI Playground)
+6. What's next? (try it tonight, Digital and AI Readiness Certification, SPARK AI course, AI Playground)
 
 ## How to make a small text change yourself
 
