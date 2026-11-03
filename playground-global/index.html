@@ -45,6 +45,7 @@ a.tile:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
 .tile .go{margin-top:14px;font-family:'Nunito',sans-serif;font-weight:800;color:var(--c)}
 .tile.soon{opacity:.62;box-shadow:none}
 .tile.soon .go{color:var(--muted)}
+.tile .mod{display:block;font-weight:700;font-size:13px;color:var(--muted);margin-top:2px}
 .badge{display:inline-block;font-family:'Nunito',sans-serif;font-weight:800;font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:3px 10px;border-radius:20px;background:#E8FBF6;color:#047857;margin-left:6px;vertical-align:middle}
 .tile.soon .badge{background:var(--light);color:var(--muted)}
 
@@ -75,7 +76,7 @@ footer strong{color:rgba(255,255,255,.85);font-family:'Nunito',sans-serif}
   <div class="wrap">
     <div class="pill"><span class="dot"></span>Global Learning Access · AI Playground</div>
     <h1>Play first. <span>Learn second.</span> 🎮</h1>
-    <p>Short, friendly games that show how AI really works, made for educators and professionals in the US, Canada, and Australia, and anyone curious about AI. Try one before a lesson, after a lesson, or just for fun.</p>
+    <p>Short, friendly games that show how AI really works, made for educators and professionals in the US, Canada, and Australia, and anyone curious about AI. Try one before a lesson, after a lesson, or just for fun. Each game matches one of the six modules in GLA's <b>Foundations of Generative AI</b> course.</p>
     <div class="promises">
       <span>⏱ About 5 minutes each</span>
       <span>🙈 No login</span>
@@ -88,23 +89,26 @@ footer strong{color:rgba(255,255,255,.85);font-family:'Nunito',sans-serif}
 
 <main class="wrap">
   <section class="grid" aria-label="Games">
-    <a class="tile" href="finish-the-sentence.html" style="--c:var(--pink)">
-      <span class="emoji">🔮</span>
-      <span class="num">Game 1 <span class="badge">Play now</span></span>
-      <h2>Finish the Sentence</h2>
-      <p>Guess the next word like an AI does. Discover why AI predicts instead of knowing, and why your context matters.</p>
-      <span class="go">Play →</span>
-    </a>
     <a class="tile" href="ai-or-human.html" style="--c:var(--purple)">
       <span class="emoji">🕵️</span>
-      <span class="num">Game 2 <span class="badge">Play now</span></span>
+      <span class="num">Game 1 <span class="badge">Play now</span></span>
+      <span class="mod">Module 1 · Intro to AI</span>
       <h2>AI or Human?</h2>
       <p>Can you tell a generic AI draft from a real message? Spot the clues, fix a message yourself, and get ready for a twist.</p>
+      <span class="go">Play →</span>
+    </a>
+    <a class="tile" href="finish-the-sentence.html" style="--c:var(--pink)">
+      <span class="emoji">🔮</span>
+      <span class="num">Game 2 <span class="badge">Play now</span></span>
+      <span class="mod">Module 2 · How AI Works</span>
+      <h2>Finish the Sentence</h2>
+      <p>Guess the next word like an AI does. Discover why AI predicts instead of knowing, and why your context matters.</p>
       <span class="go">Play →</span>
     </a>
     <a class="tile" href="three-audiences.html" style="--c:var(--blue)">
       <span class="emoji">🗣️</span>
       <span class="num">Game 3 <span class="badge">Play now</span></span>
+      <span class="mod">Module 3 · Writing and Communication</span>
       <h2>Same Message, Three Audiences</h2>
       <p>Your principal, a parent, a business partner. Send the same news to each one, and see how they react.</p>
       <span class="go">Play →</span>
@@ -112,6 +116,7 @@ footer strong{color:rgba(255,255,255,.85);font-family:'Nunito',sans-serif}
     <a class="tile" href="whos-missing.html" style="--c:var(--green)">
       <span class="emoji">📊</span>
       <span class="num">Game 4 <span class="badge">Play now</span></span>
+      <span class="mod">Module 4 · Data and Insights</span>
       <h2>Who's Missing?</h2>
       <p>Dig into a simple community health chart and find the people the numbers leave out.</p>
       <span class="go">Play →</span>
@@ -119,6 +124,7 @@ footer strong{color:rgba(255,255,255,.85);font-family:'Nunito',sans-serif}
     <a class="tile" href="idea-mixer.html" style="--c:var(--orange)">
       <span class="emoji">🎡</span>
       <span class="num">Game 5 <span class="badge">Play now</span></span>
+      <span class="mod">Module 5 · Ideas and Creativity</span>
       <h2>Idea Mixer</h2>
       <p>Spin two wheels, a problem and an unexpected point of view, and see what new ideas appear.</p>
       <span class="go">Play →</span>
@@ -126,6 +132,7 @@ footer strong{color:rgba(255,255,255,.85);font-family:'Nunito',sans-serif}
     <a class="tile" href="would-you.html" style="--c:var(--teal)">
       <span class="emoji">⚖️</span>
       <span class="num">Game 6 <span class="badge">Play now</span></span>
+      <span class="mod">Module 6 · Ethics and Responsible Use</span>
       <h2>Would You?</h2>
       <p>Quick calls on real AI situations. There are no right answers, only good reasons.</p>
       <span class="go">Play →</span>

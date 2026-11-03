@@ -9,12 +9,12 @@ The Playground lives in its own folder, `playground`, so it never touches the re
 | File | What it is | Live address |
 | :---- | :---- | :---- |
 | `index.html` | The Playground home page (6 game tiles) | https://jheil65.github.io/demystify-ai/playground/ |
-| `finish-the-sentence.html` | Game 1: Finish the Sentence | https://jheil65.github.io/demystify-ai/playground/finish-the-sentence.html |
-| `ai-or-human.html` | Game 2: AI or Human? | https://jheil65.github.io/demystify-ai/playground/ai-or-human.html |
-| `three-audiences.html` | Game 3: Same Message, Three Audiences | https://jheil65.github.io/demystify-ai/playground/three-audiences.html |
-| `whos-missing.html` | Game 4: Who's Missing? | https://jheil65.github.io/demystify-ai/playground/whos-missing.html |
-| `idea-mixer.html` | Game 5: Idea Mixer | https://jheil65.github.io/demystify-ai/playground/idea-mixer.html |
-| `would-you.html` | Game 6: Would You? | https://jheil65.github.io/demystify-ai/playground/would-you.html |
+| `ai-or-human.html` | Game 1: AI or Human? (Module 1) | https://jheil65.github.io/demystify-ai/playground/ai-or-human.html |
+| `finish-the-sentence.html` | Game 2: Finish the Sentence (Module 2) | https://jheil65.github.io/demystify-ai/playground/finish-the-sentence.html |
+| `three-audiences.html` | Game 3: Same Message, Three Audiences (Module 3) | https://jheil65.github.io/demystify-ai/playground/three-audiences.html |
+| `whos-missing.html` | Game 4: Who's Missing? (Module 4) | https://jheil65.github.io/demystify-ai/playground/whos-missing.html |
+| `idea-mixer.html` | Game 5: Idea Mixer (Module 5) | https://jheil65.github.io/demystify-ai/playground/idea-mixer.html |
+| `would-you.html` | Game 6: Would You? (Module 6) | https://jheil65.github.io/demystify-ai/playground/would-you.html |
 | `README.md` | This guide | (not shown on the site) |
 
 Your homepage has one button that links here ("🎮 Try the AI Playground"). Nothing else on the homepage changed.
@@ -40,7 +40,7 @@ If something breaks, open the file, click **History**, and you can see and resto
 
 ## How to add a new game
 
-Easiest: ask Claude, "Build Playground Game 2 (AI or Human?) and add it to my site." Claude will create the file, turn on its tile on the Playground home page, and send you the link.
+Easiest: ask Claude, "Build Playground Game 2 (Finish the Sentence) and add it to my site." Claude will create the file, turn on its tile on the Playground home page, and send you the link.
 
 ## The Global edition (US · Canada · Australia)
 
@@ -54,4 +54,4 @@ A second Playground lives in its own folder, `playground-global`, at https://jhe
 
 - **Filipino language toggle:** worth adding once a native speaker can review the translation.
 - **"Something confused me" link:** create a short anonymous Google Form, and Claude can add the link to each game's ending.
-- **Course links:** link each game from the matching Foundations module in OpenLearning as an optional warm-up (Game 1 fits Module 2).
+- **Course links:** link each game from the matching Foundations module in OpenLearning as an optional warm-up (Game 1 fits Module 1, Game 2 fits Module 2, and so on).
