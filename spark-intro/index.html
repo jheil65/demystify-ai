@@ -23,7 +23,7 @@ h1,h2,h3,.btn,.chip,.opt{font-family:'Nunito',system-ui,sans-serif}
 
 /* top bar */
 .topbar{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff}
-.topbar .wrap{display:flex;align-items:center;gap:10px;padding-top:10px;padding-bottom:10px}
+.topbar .wrap{max-width:1180px;display:flex;align-items:center;gap:10px;padding-top:10px;padding-bottom:10px}
 .brand{font-family:'Nunito',sans-serif;font-weight:900;font-size:15px;white-space:nowrap}
 .brand span{color:var(--yellow)}
 .jump{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;flex:1}
@@ -214,6 +214,7 @@ body.present .choices .opt,body.present .opt{font-size:20px}
 .lang{display:flex;flex:0 0 auto;background:rgba(255,255,255,.12);border-radius:30px;padding:3px}
 .lang button{border:0;background:transparent;color:#fff;font-family:'Nunito',sans-serif;font-weight:900;font-size:13px;padding:5px 10px;border-radius:30px;cursor:pointer}
 .lang button[aria-pressed=true]{background:var(--yellow);color:var(--navy)}
+@media (max-width:1000px){.jump{gap:4px}.jump a{padding:5px 8px}}
 @media (max-width:520px){.present-btn{display:none}.brand{display:none}}
 /* activity flow */
 .how{display:flex;gap:10px;align-items:flex-start;background:#EEF4FF;border:2px solid #C9DBFF;border-radius:14px;padding:10px 14px;margin-bottom:16px;font-weight:700;color:var(--navy)}
