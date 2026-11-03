@@ -764,7 +764,7 @@ footer a { color:var(--teal);text-decoration:none; }
       <div class="stat-chip"><div class="num">20+</div><div class="lbl">Techniques</div></div>
       <div class="stat-chip"><div class="num">6</div><div class="lbl">Frameworks</div></div>
       <div class="stat-chip"><div class="num">50+</div><div class="lbl">Glossary Terms</div></div>
-      <div class="stat-chip"><div class="num">8</div><div class="lbl">Podcasts</div></div>
+      <div class="stat-chip"><div class="num">9</div><div class="lbl">Podcasts</div></div>
       <div class="stat-chip"><div class="num">HCAI</div><div class="lbl">Deep Dive</div></div>
       <div class="stat-chip"><div class="num">9</div><div class="lbl">Resources</div></div>
     </div>
@@ -1412,15 +1412,30 @@ const PODCASTS = [
     web:"https://www.sineadbovell.com"
   },
   {
+    emoji:"🤖", title:"Machine Gods",
+    host:"Kevin Roose & Casey Newton · NPR", freq:"Twice weekly · Video + audio",
+    tags:["News","Tech Policy","Society","Accessible"],
+    tagColor:"#783CBD",
+    banner:"linear-gradient(90deg,#783CBD,#22D3C5)",
+    audience:["new-to-ai","educators","futurism","professionals"],
+    featured:true,
+    desc:"The new show from the creators of Hard Fork, launched with NPR in fall 2026. Kevin and Casey cover the biggest consumer, business, and policy conversations of the AI era, with reporting, debate, and interviews with the people shaping the technology.",
+    why:"If you liked Hard Fork, this is where Kevin and Casey went next. It is video-first, so you can watch it on YouTube or just listen as a podcast. Twice a week, they explain what is happening in AI in plain language and with real humor. It is a good habit for staying current without hours of reading.",
+    apple:"https://podcasts.apple.com/us/podcast/machine-gods/id6812430636",
+    spotify:"https://open.spotify.com/search/Machine%20Gods%20NPR",
+    youtube:"https://www.youtube.com/results?search_query=Machine+Gods+NPR+Kevin+Roose+Casey+Newton",
+    web:"https://www.npr.org/podcasts/g-s1-143588/machine-gods"
+  },
+  {
     emoji:"📰", title:"Hard Fork",
-    host:"Kevin Roose & Casey Newton · The New York Times", freq:"Weekly",
+    host:"Kevin Roose & Casey Newton · The New York Times", freq:"Ended 2026 · Archive",
     tags:["News","Tech Policy","Society","Accessible"],
     tagColor:"#2E75B6",
     banner:"linear-gradient(90deg,#1B3A6B,#2E75B6)",
     audience:["new-to-ai","educators","futurism"],
-    featured:true,
+    featured:false,
     desc:"A show about the future that's already here. Two of tech journalism's sharpest voices make sense of the rapidly changing world of AI and technology — smart, funny, and never condescending.",
-    why:"This is the one to listen to every week if you want to stay genuinely informed without spending hours reading. Kevin and Casey explain what's happening, why it matters, and what to make of it — in plain language, with real humor. You'll feel more confident talking about AI in a classroom or a boardroom after just a few episodes.",
+    why:"The show ended in 2026, and the hosts now make Machine Gods (above). The archive is still worth a listen. This is the one to listen to if you want to stay genuinely informed without spending hours reading. Kevin and Casey explain what's happening, why it matters, and what to make of it — in plain language, with real humor. You'll feel more confident talking about AI in a classroom or a boardroom after just a few episodes.",
     apple:"https://podcasts.apple.com/us/podcast/hard-fork/id1528594034",
     spotify:"https://open.spotify.com/show/44fllCS2FTFr2x2kjP9xeT",
     web:"https://www.nytimes.com/column/hard-fork"
@@ -1589,6 +1604,7 @@ function renderPodcasts() {
         <div class="pod-links">
           ${p.featured ? `<a class="pod-link-btn featured" href="${p.spotify}" target="_blank">🎵 Spotify</a>` : `<a class="pod-link-btn" href="${p.spotify}" target="_blank">🎵 Spotify</a>`}
           <a class="pod-link-btn" href="${p.apple}" target="_blank">🎵 Apple</a>
+          ${p.youtube ? `<a class="pod-link-btn" href="${p.youtube}" target="_blank">▶️ YouTube</a>` : ''}
           <a class="pod-link-btn" href="${p.web}" target="_blank">🌐 Website</a>
         </div>
       `;
