@@ -500,13 +500,13 @@ body.present .how{font-size:1.1rem}
       howSonsB:"Laro · 7 sitwasyon · mga 5 minuto", howSons:"Pumili ng sagot, basahin ang paliwanag, tapos i-tap ang Susunod na sitwasyon. Tapos ka na pagkatapos ng sitwasyon 7.",
       doneAct:"✅ Tapos na ang activity! Galing!",
       go2:"Next: 2 · Ano ang AI? ↓", go3:"Next: 3 · Bakit gamitin ang AI? ↓", go4:"Next: 4 · Paano gamitin ang AI? ↓", go5:"Next: 5 · Kailan gamitin ang AI? ↓", go6:"Next: 6 · Ano ang susunod? ↓",
-      nav1:"1 Gamit mo na", nav2:"2 Ano ang AI?", nav3:"3 Bakit?", nav4:"4 Paano?", nav5:"5 Kailan?", nav6:"6 Next",
+      nav1:"1 Gumagamit ka na", nav2:"2 Ano ang AI?", nav3:"3 Bakit?", nav4:"4 Paano?", nav5:"5 Kailan?", nav6:"6 Next",
       title:'AI para sa <span>Negosyo Mo</span> ⚡',
       titleIntro:"Para sa mga MSME at solopreneur: tindahan, carinderia, online seller, at iba pa. Paano makakatulong ang AI sa negosyo mo, at kailan dapat mag-ingat.",
       chip1:"📱 Sa phone mo lang", chip2:"🔓 Walang login", chip3:"💾 Walang naise-save", chip4:"✅ Walang maling sagot",
-      ag1:"Gamit mo na ang AI", ag2:"Ano ang AI?", ag3:"Bakit gamitin ang AI?", ag4:"Paano gamitin ang AI?", ag5:"Kailan gamitin (at hindi gamitin) ang AI?", ag6:"Ano ang susunod?",
+      ag1:"Gumagamit ka na ng AI", ag2:"Ano ang AI?", ag3:"Bakit gamitin ang AI?", ag4:"Paano gamitin ang AI?", ag5:"Kailan gamitin (at hindi gamitin) ang AI?", ag6:"Ano ang susunod?",
       scan:"I-scan para sumabay! 📲", scanShort:"I-scan para sumabay",
-      s1h:'Gamit mo na ang <span>AI</span> araw-araw!',
+      s1h:'Gumagamit ka na ng <span>AI</span> araw-araw!',
       s1lead:"I-tap ang mga app na <b>ginamit mo ngayong linggo</b>. Tingnan kung paano ka na tinutulungan ng AI, kahit hindi mo napapansin.",
       used:"✓ Ginamit ko ito!", count1:"Gumagamit ka na ng <span>{n}</span> AI tool ngayong linggo! 🎉", countN:"Gumagamit ka na ng <span>{n}</span> AI tools ngayong linggo! 🎉",
       s1idea:"<b>Big idea:</b> AI ay mga programa na natututo sa napakaraming halimbawa (data), para manghula, magrekomenda, o gumawa ng bagong text at larawan. Hindi na ito bago sa'yo. Ngayon, matututunan mo itong gamitin <b>para sa negosyo mo</b>.",
@@ -565,24 +565,24 @@ body.present .how{font-size:1.1rem}
   /* 1 · AI YOU ALREADY USE */
   var APPS = {
     en: [
-      ["📘","Facebook","AI chooses which posts and ads you see, based on what you like and watch."],
+      ["📘","Facebook / TikTok","AI chooses which posts, videos, ads, and products you see, based on what you like, watch, and buy."],
       ["🛒","Shopee / Lazada","\"Recommended for you\" comes from AI that studies what you looked at and bought."],
       ["💰","GCash / Maya","AI helps spot suspicious transactions to protect your money."],
       ["🗺️","Waze / Google Maps","AI finds the fastest route and predicts traffic."],
       ["🛵","Grab / foodpanda / Lalamove","AI predicts how long delivery takes and which rider is closest."],
       ["📸","Your phone camera","AI makes photos of your products look better, especially in low light."],
-      ["🎵","TikTok / YouTube","AI picks the next video you're likely to watch."],
+      ["▶️","YouTube","AI picks the next video you're likely to watch."],
       ["🎧","Spotify","AI picks songs and playlists for you, based on what you listen to."],
       ["🗣️","Voice typing and translate","AI turns your voice into text and translates other languages."]
     ],
     tl: [
-      ["📘","Facebook","Pinipili ng AI kung anong posts at ads ang makikita mo, batay sa mga ni-like at pinanood mo."],
+      ["📘","Facebook / TikTok","Pinipili ng AI kung anong posts, videos, ads, at produkto ang makikita mo, batay sa mga ni-like, pinanood, at binili mo."],
       ["🛒","Shopee / Lazada","Ang \"Recommended for you\" ay galing sa AI na nag-aaral ng mga tiningnan at binili mo."],
       ["💰","GCash / Maya","Tumutulong ang AI na makita ang kahina-hinalang transaction para protektahan ang pera mo."],
       ["🗺️","Waze / Google Maps","Hinahanap ng AI ang pinakamabilis na daan at hinuhulaan ang traffic."],
       ["🛵","Grab / foodpanda / Lalamove","Hinuhulaan ng AI kung gaano katagal ang delivery at sino ang pinakamalapit na rider."],
       ["📸","Camera ng phone mo","Ginagamit ang AI para gumanda ang litrato ng paninda mo, lalo na sa dilim."],
-      ["🎵","TikTok / YouTube","Pinipili ng AI ang susunod na video na malamang panonoorin mo."],
+      ["▶️","YouTube","Pinipili ng AI ang susunod na video na malamang panonoorin mo."],
       ["🎧","Spotify","Pinipili ng AI ang mga kanta at playlist para sa'yo, batay sa mga pinapakinggan mo."],
       ["🗣️","Voice typing at translate","Ginagawang text ng AI ang boses mo, at isinasalin ang ibang wika."]
     ]
@@ -807,6 +807,8 @@ body.present .how{font-size:1.1rem}
     });
     return box;
   }
+  function toCard(id){ var el=$(id); if(!el) return; var r=el.getBoundingClientRect();
+    if(r.top<60||r.top>window.innerHeight*0.5) window.scrollTo({top:window.scrollY+r.top-64,behavior:"smooth"}); }
   function ftsRender(){
     ftsProgress();
     var st=$("ftsStage"), R=ROUNDS[L];
@@ -814,14 +816,14 @@ body.present .how{font-size:1.1rem}
       st.innerHTML='<div class="done-banner" style="margin:0 0 14px">'+t("doneAct")+'</div><p class="round-label">'+t("ftsDoneK")+'</p><h3 class="round-title">'+t("ftsDoneH")+'</h3>'+
         '<div class="lesson" style="margin-top:0">'+t("ftsDone")+'</div>'+
         '<div class="actions"><button class="btn btn-soft" type="button" id="ftsAgain">'+t("again")+'</button><a class="btn btn-alt" href="#s3">'+t("go3")+'</a></div>';
-      $("ftsAgain").addEventListener("click",function(){fIdx=0;ftsRender();});
+      $("ftsAgain").addEventListener("click",function(){fIdx=0;ftsRender();toCard("fts");});
       return;
     }
     var r=R[fIdx];
     st.innerHTML='<p class="round-label">'+t("roundOf",{i:fIdx+1,n:R.length})+'</p><h3 class="round-title">'+esc(r.title)+'</h3>';
     var lesson=document.createElement("div"); lesson.className="lesson hidden"; lesson.innerHTML=r.lesson;
     var nx=document.createElement("div");
-    function finish(){ lesson.classList.remove("hidden"); nx.innerHTML='<div class="actions"><button class="btn btn-main" type="button">'+(fIdx===R.length-1?t("seeLearned"):t("nextRound"))+'</button></div>'; nx.querySelector("button").addEventListener("click",function(){fIdx++;ftsRender();}); }
+    function finish(){ lesson.classList.remove("hidden"); nx.innerHTML='<div class="actions"><button class="btn btn-main" type="button">'+(fIdx===R.length-1?t("seeLearned"):t("nextRound"))+'</button></div>'; nx.querySelector("button").addEventListener("click",function(){fIdx++;ftsRender();toCard("fts");}); }
     if(r.kind==="guess"){ st.appendChild(guessBlock(r.ask,r.probs,r.before,r.after,t("barsH"),finish)); }
     else {
       var part2=document.createElement("div");
@@ -901,7 +903,7 @@ body.present .how{font-size:1.1rem}
         '<p>'+t("sonsDoneP")+'</p>'+
         '<div class="rules"><div><span>🔒</span>'+t("r1")+'</div><div><span>©️</span>'+t("r2")+'</div><div><span>👀</span>'+t("r3")+'</div></div>'+
         '<div class="actions"><button class="btn btn-soft" type="button" id="sonsAgain">'+t("again")+'</button><a class="btn btn-alt" href="#s6">'+t("go6")+'</a></div>';
-      $("sonsAgain").addEventListener("click",function(){sIdx=0;good=0;sonsRender();});
+      $("sonsAgain").addEventListener("click",function(){sIdx=0;good=0;sonsRender();toCard("sons");});
       return;
     }
     var c=C[sIdx];
@@ -919,7 +921,7 @@ body.present .how{font-size:1.1rem}
         var head = a===c.best ? t("vBest") : (match ? t("vAlso") : t("vOther"));
         $("sv").innerHTML='<div class="verdict"><p style="font-weight:900;margin-bottom:4px">'+head+'</p><p>'+c.why+'</p></div>'+
           '<div class="actions"><button class="btn btn-main" type="button" id="sNext">'+(sIdx===C.length-1?t("seeResult"):t("nextSit"))+'</button></div>';
-        $("sNext").addEventListener("click",function(){sIdx++;sonsRender();});
+        $("sNext").addEventListener("click",function(){sIdx++;sonsRender();toCard("sons");});
       });
     });
   }
