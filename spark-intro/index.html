@@ -55,7 +55,6 @@ h1,h2,h3,.btn,.chip,.opt{font-family:'Nunito',system-ui,sans-serif}
 body.present .home-link{display:none}
 .gla-logo{display:inline-block;background:#fff;border-radius:16px;padding:10px 18px;margin-bottom:18px;box-shadow:0 6px 20px rgba(0,0,0,.25)}
 .gla-logo img{display:block;width:clamp(200px,60vw,300px);height:auto}
-body.present .gla-logo img{width:340px}
 .hero-grid{display:grid;grid-template-columns:1fr;gap:24px;align-items:center}
 .qr-box{background:#fff;border-radius:20px;padding:14px;text-align:center;color:var(--ink);max-width:280px;display:none}
 .qr-box svg{width:100%;height:auto;display:block}
@@ -206,7 +205,17 @@ body.present .hero-grid{grid-template-columns:1fr 360px}
 body.present .qr-box{display:block;max-width:360px}
 body.present .pnav{display:flex}
 body.present .mini-qr{display:block}
-body.present #s0 ~ .mini-qr{display:block}
+body.present.on-title .mini-qr{display:none}
+body.present #s0 .wrap{max-width:1240px}
+body.present #s0 .gla-logo{padding:8px 14px;margin-bottom:10px}
+body.present #s0 .gla-logo img{width:200px}
+body.present #s0 .kicker{margin-bottom:4px}
+body.present .hero h1{font-size:clamp(2.6rem,6.2vh,4.6rem);line-height:1.05}
+body.present #s0 .hero-grid{grid-template-columns:1fr minmax(260px,min(400px,52vh))}
+body.present #s0 .qr-box{max-width:none;width:100%}
+body.present #s0 .agenda{grid-template-columns:1fr 1fr;gap:6px;margin-top:14px;max-width:none}
+body.present #s0 .agenda a{padding:8px 12px;font-size:1rem}
+body.present #s0.slide{padding:64px 0 24px}
 body.present .tiles{grid-template-columns:repeat(4,1fr)}
 body.present .sentence{font-size:2.2rem}
 body.present .scard{font-size:1.7rem}
@@ -968,6 +977,7 @@ body.present .how{font-size:1.1rem}
   function onScroll(){
     var n=current();
     $("sNum").textContent=(n+1)+" / "+slides.length;
+    document.body.classList.toggle("on-title", n===0);
     links.forEach(function(a){ a.classList.toggle("on", a.getAttribute("href")==="#"+slides[n].id); });
   }
   window.addEventListener("scroll",onScroll,{passive:true}); onScroll();
