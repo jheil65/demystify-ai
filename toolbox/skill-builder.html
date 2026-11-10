@@ -150,6 +150,12 @@ footer strong{color:rgba(255,255,255,.85);font-family:'Nunito',sans-serif}
 
 @media (max-width:420px){.card{padding:18px}.counters{gap:6px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.setnav{display:flex;gap:6px;overflow-x:auto;padding:12px 0 2px;position:relative;z-index:1}
+.setnav a{flex:0 0 auto;font-family:'Nunito',sans-serif;font-weight:800;font-size:12.5px;color:rgba(255,255,255,.88);border:1px solid rgba(255,255,255,.28);border-radius:40px;padding:6px 10px;text-decoration:none;white-space:nowrap}
+.setnav a:hover{border-color:var(--yellow);color:var(--yellow)}
+.setnav a[aria-current="page"]{background:var(--yellow);color:var(--navy);border-color:var(--yellow)}
+.alldone{margin-top:14px;background:#E8FBF6;border-left:5px solid var(--green);border-radius:12px;padding:14px 16px;animation:pop .3s ease}
+.alldone b{font-family:'Nunito',sans-serif}
 </style>
 </head>
 <body>
@@ -160,6 +166,7 @@ footer strong{color:rgba(255,255,255,.85);font-family:'Nunito',sans-serif}
 </div></div>
 
 <header class="intro"><div class="wrap">
+  <nav class="setnav" aria-label="Pages in the AI Toolbox"><a href="./">🧰 Toolbox</a><a href="skill-builder.html" aria-current="page">🧩 Skill Builder</a><a href="then-and-now.html">🧭 Custom bots</a></nav>
   <h1>Teach AI how <span>you</span> work. 🧩</h1>
   <p>A skill is a short set of directions you write once and reuse: when to use it, what steps to follow, and when to stop and ask a person. Fill in five boxes and take your skill to any AI tool, including free accounts.</p>
   <div class="chips">

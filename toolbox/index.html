@@ -162,6 +162,12 @@ footer a{color:var(--teal);text-decoration:none}
 footer strong{color:rgba(255,255,255,.85);font-family:'Nunito',sans-serif}
 @media (max-width:520px){.card{padding:18px}.split,.two{grid-template-columns:1fr}.nrow{grid-template-columns:76px 1fr}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.setnav{display:flex;gap:6px;overflow-x:auto;padding:12px 0 2px;position:relative;z-index:1}
+.setnav a{flex:0 0 auto;font-family:'Nunito',sans-serif;font-weight:800;font-size:12.5px;color:rgba(255,255,255,.88);border:1px solid rgba(255,255,255,.28);border-radius:40px;padding:6px 10px;text-decoration:none;white-space:nowrap}
+.setnav a:hover{border-color:var(--yellow);color:var(--yellow)}
+.setnav a[aria-current="page"]{background:var(--yellow);color:var(--navy);border-color:var(--yellow)}
+.alldone{margin-top:14px;background:#E8FBF6;border-left:5px solid var(--green);border-radius:12px;padding:14px 16px;animation:pop .3s ease}
+.alldone b{font-family:'Nunito',sans-serif}
 </style>
 </head>
 <body>
@@ -172,6 +178,7 @@ footer strong{color:rgba(255,255,255,.85);font-family:'Nunito',sans-serif}
 </div></div>
 
 <header class="intro"><div class="wrap">
+  <nav class="setnav" aria-label="Pages in the AI Toolbox"><a href="./" aria-current="page">🧰 Toolbox</a><a href="skill-builder.html">🧩 Skill Builder</a><a href="then-and-now.html">🧭 Custom bots</a></nav>
   <h1>AI can do more than <span>chat</span>. 🧰</h1>
   <p>Most people only ever type a question and read the answer. Today's AI tools have more inside them: they can read your documents, make pictures, build small apps, research for you, tutor you, and slow down to think. Try each one here first, with no account and no pressure. Then see where to find it in five popular tools.</p>
   <div class="chips">
@@ -191,6 +198,9 @@ footer strong{color:rgba(255,255,255,.85);font-family:'Nunito',sans-serif}
     <p class="lead">Pick any one. There is no order and no score. Each has a short hands-on try.</p>
     <div class="needs" id="needs" role="group" aria-label="Choose something AI can do"></div>
     <div class="meter" aria-live="polite"><span id="meterText">Tried 0 of 6</span><span class="track"><span class="fill" id="meterFill"></span></span></div>
+    <div class="alldone hidden" id="allDone"><b>You tried all six.</b> Ready for a next step? Save your own directions so any AI tool works your way, or see why Gems and custom GPTs are changing names.
+      <div class="actions"><a class="btn btn-main" href="skill-builder.html">🧩 Skill Builder</a><a class="btn btn-soft" href="then-and-now.html">🧭 Where did my custom bot go?</a></div>
+    </div>
   </section>
 
   <section class="card" id="panel" style="--c:var(--pink)" aria-live="polite"></section>
@@ -331,6 +341,7 @@ footer strong{color:rgba(255,255,255,.85);font-family:'Nunito',sans-serif}
     needs.children[PINDEX[id]].classList.add("done");
     $("meterText").textContent = n===POWERS.length ? "You tried all 6. Nice work." : "Tried "+n+" of "+POWERS.length;
     $("meterFill").style.width=(n/POWERS.length*100)+"%";
+    if(n===POWERS.length) $("allDone").classList.remove("hidden");
   }
 
   function openPower(i, scroll){
