@@ -9,6 +9,7 @@
 | `index.html` | The AI Toolbox: six hands-on powers, the five-tool comparison, and a matching game | https://jheil65.github.io/demystify-ai/toolbox/ |
 | `skill-builder.html` | The Skill Builder as its own tool | https://jheil65.github.io/demystify-ai/toolbox/skill-builder.html |
 | `then-and-now.html` | "Where did my custom bot go?" (Gems, custom GPTs, and Copilot agents becoming skills and plugins) | https://jheil65.github.io/demystify-ai/toolbox/then-and-now.html |
+| `toolkit-card.html` | Pack Your Toolkit: the ENGAGE "Start Here" activity. Unlisted (not in the link row); share the link from OpenLearning | https://jheil65.github.io/demystify-ai/toolbox/toolkit-card.html |
 
 ## Ground rules (same as the Playground)
 
@@ -22,6 +23,7 @@ Product names, dates, and free limits change. All of them live near the top of e
 
 - **Toolbox (`index.html`):** under `POWERS`, each power has a `names` list in this order: Gemini, ChatGPT, Copilot, Claude, DeepSeek. Each line is the name to look for, then a badge letter: `f` free with limits, `p` usually paid, `c` check your plan, `n` not offered. The tool descriptions are under `TOOLS`. The matching game is under `MATCH`.
 - **Then and Now (`then-and-now.html`):** names and dates are under `TOOLS`. The chart is under `TABLE`.
+- **Pack Your Toolkit (`toolkit-card.html`):** the questions are in the page text itself. Answers are kept only in the learner's own browser so they can leave and come back. Nothing is sent anywhere. The four Portable AI template names must match the homepage.
 - **Skill Builder (`skill-builder.html`):** the starter examples are under `EXAMPLES`.
 - After any update, change the "Last checked" date near the bottom of the page.
 

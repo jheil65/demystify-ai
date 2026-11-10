@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pack Your Toolkit · Demystifying AI for All</title>
+<meta name="description" content="Explore the Demystifying AI site and bring back five souvenirs you will use in the ENGAGE course. No login. Your answers stay on your device.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎒</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#EF3FA9;--purple:#783CBD;--teal:#22D3C5;--navy:#1B3A6B;--blue:#2E75B6;
+  --yellow:#FFD93D;--orange:#FF6B35;--green:#06D6A0;--ink:#1A1A2E;--light:#F7F8FC;
+  --white:#FFFFFF;--border:#E4E9F2;--muted:#5B6478;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito Sans',sans-serif;background:var(--light);color:var(--ink);line-height:1.55;min-height:100vh}
+a{color:var(--blue)}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px}
+
+.topbar{background:var(--navy);color:#fff;padding:14px 0}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.topbar a{color:rgba(255,255,255,.85);text-decoration:none;font-family:'Nunito',sans-serif;font-weight:700;font-size:14px}
+.topbar a:hover{color:var(--yellow)}
+.tag{font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--teal);text-align:right}
+
+.intro{background:var(--navy);color:#fff;padding:8px 0 52px;position:relative;overflow:hidden}
+.intro::after{content:'';position:absolute;width:220px;height:220px;border-radius:50%;background:var(--pink);opacity:.12;right:-60px;top:-40px}
+.intro h1{font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(2rem,7vw,3rem);line-height:1.1;margin:14px 0 10px;position:relative;z-index:1}
+.intro h1 span{color:var(--yellow)}
+.intro p{color:rgba(255,255,255,.8);max-width:600px;position:relative;z-index:1}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;position:relative;z-index:1}
+.chip{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:40px;padding:5px 14px;font-size:13px;font-weight:600}
+
+.card.first{margin-top:-28px;position:relative;z-index:2}
+.steps{display:flex;gap:6px;margin:-26px 0 14px;position:relative;z-index:2;overflow-x:auto;padding-bottom:4px}
+.steps a{flex:1 0 auto;text-align:center;background:#fff;border:1px solid var(--border);border-radius:40px;padding:9px 14px;font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;color:var(--navy);text-decoration:none;box-shadow:0 6px 18px rgba(27,58,107,.08);white-space:nowrap}
+.steps a:hover{border-color:var(--teal)}
+
+.card{background:var(--white);border:1px solid var(--border);border-radius:20px;box-shadow:0 8px 30px rgba(27,58,107,.08);padding:24px;margin:0 0 20px;border-top:6px solid var(--c,var(--teal));scroll-margin-top:12px}
+.kicker{font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--c,var(--purple))}
+.card h2{font-family:'Nunito',sans-serif;font-weight:900;font-size:1.45rem;line-height:1.2;margin:2px 0 8px}
+.card h3{font-family:'Nunito',sans-serif;font-weight:800;font-size:1.05rem;margin:0 0 6px}
+.lead{color:var(--muted);margin-bottom:16px}
+.ask{font-weight:700;margin:14px 0 10px}
+
+.btn{font-family:'Nunito',sans-serif;font-weight:800;font-size:16px;border:none;border-radius:40px;padding:13px 26px;cursor:pointer;transition:transform .12s,filter .12s;text-decoration:none;display:inline-block}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+.btn-main{background:var(--pink);color:#fff}
+.btn-alt{background:var(--navy);color:#fff}
+.btn-soft{background:var(--light);color:var(--ink);border:2px solid var(--border)}
+.btn[disabled]{opacity:.45;cursor:default;transform:none}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+.hidden{display:none!important}
+
+/* pickers */
+.picker{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
+.pick{font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;padding:12px 8px;border-radius:14px;border:2px solid var(--border);background:#fff;color:var(--ink);cursor:pointer;transition:border-color .12s,background .12s}
+.pick:hover{border-color:var(--teal)}
+.pick[aria-pressed="true"]{border-color:var(--navy);background:var(--navy);color:#fff}
+.seg{display:inline-flex;background:var(--light);border:2px solid var(--border);border-radius:40px;padding:4px;margin:16px 0 12px}
+.seg button{font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;border:none;background:none;border-radius:40px;padding:8px 22px;cursor:pointer;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--yellow);color:var(--navy)}
+
+/* name tag */
+.nametag{border-radius:16px;overflow:hidden;border:2px solid var(--border);animation:pop .3s ease}
+.nametag .top{background:var(--pink);color:#fff;text-align:center;padding:10px;font-family:'Nunito',sans-serif;font-weight:900;letter-spacing:.08em;text-transform:uppercase;font-size:13px}
+.nametag.then .top{background:var(--muted)}
+.nametag .body{padding:18px;text-align:center;background:#fff}
+.nametag .name{font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(1.6rem,6vw,2.2rem);line-height:1.15;color:var(--navy)}
+.nametag.then .name{text-decoration:line-through;text-decoration-color:var(--pink);text-decoration-thickness:3px}
+.nametag.then .name.kept{text-decoration:none}
+.nametag .what{color:var(--muted);margin-top:8px;text-align:left}
+.facts{display:grid;gap:8px;margin-top:12px}
+.fact{display:flex;gap:10px;align-items:flex-start;background:var(--light);border-radius:12px;padding:11px 13px;font-size:15px}
+.fact .ico{font-size:18px;line-height:1.3}
+.fact b{font-family:'Nunito',sans-serif}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* walk */
+.task{background:#FFF8DB;border:1px dashed #E8C400;border-radius:12px;padding:12px 14px;margin-bottom:6px}
+.task b{font-family:'Nunito',sans-serif}
+.counters{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
+.counter{background:var(--light);border-radius:12px;padding:10px;text-align:center}
+.counter .n{font-family:'Nunito',sans-serif;font-weight:900;font-size:1.6rem;color:var(--navy);line-height:1}
+.counter .l{font-size:12px;font-weight:700;color:var(--muted);margin-top:4px}
+.walk{display:grid;gap:8px}
+.wstep{display:flex;gap:12px;align-items:flex-start;border-radius:14px;padding:13px;background:var(--light);border-left:5px solid var(--border);animation:pop .3s ease}
+.wstep .ico{font-size:22px;line-height:1.2}
+.wstep b{font-family:'Nunito',sans-serif;display:block}
+.wstep.you{border-left-color:var(--pink);background:#FDE7F4}
+.wstep.ai{border-left-color:var(--teal)}
+.wstep small{display:inline-block;font-family:'Nunito',sans-serif;font-weight:800;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.lesson{margin-top:14px;background:#E8FBF6;border-left:5px solid var(--green);border-radius:12px;padding:14px 16px}
+.lesson b{font-family:'Nunito',sans-serif}
+.caution{margin-top:12px;background:#FFF1EA;border-left:5px solid var(--orange);border-radius:12px;padding:14px 16px}
+.caution b{font-family:'Nunito',sans-serif}
+
+/* quiz */
+.progress{display:flex;gap:6px;margin-bottom:14px}
+.progress span{flex:1;height:6px;border-radius:6px;background:var(--border)}
+.progress span.done{background:var(--teal)}
+.progress span.now{background:var(--pink)}
+.q{font-family:'Nunito',sans-serif;font-weight:800;font-size:1.15rem;line-height:1.35;background:var(--light);border-radius:14px;padding:16px;margin-bottom:12px}
+.options{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.opt{font-family:'Nunito',sans-serif;font-weight:800;font-size:16px;padding:14px 10px;border-radius:14px;border:2px solid var(--border);background:#fff;color:var(--ink);cursor:pointer;transition:border-color .12s,background .12s}
+.opt:hover{border-color:var(--teal)}
+.opt[disabled]{cursor:default}
+.opt.right{border-color:var(--green);background:#E8FBF6}
+.opt.picked{border-color:var(--pink);background:#FDE7F4}
+.tablewrap{overflow-x:auto;border:1px solid var(--border);border-radius:14px;margin-top:14px}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:var(--navy);color:#fff;font-family:'Nunito',sans-serif;font-weight:800;font-size:13px}
+tbody th{font-family:'Nunito',sans-serif;font-weight:800;background:var(--light)}
+tbody tr:last-child th,tbody tr:last-child td{border-bottom:none}
+
+/* builder */
+.examples{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.field{margin-bottom:12px}
+.field label{display:block;font-family:'Nunito',sans-serif;font-weight:800;margin-bottom:4px}
+.field .hint{font-size:13px;color:var(--muted);margin-bottom:6px}
+.field input,.field textarea{width:100%;font-family:'Nunito Sans',sans-serif;font-size:16px;color:var(--ink);border:2px solid var(--border);border-radius:12px;padding:11px 13px;background:#fff}
+.field textarea{min-height:92px;resize:vertical}
+.field input:focus,.field textarea:focus{border-color:var(--teal);outline:none}
+.out{margin-top:16px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tabs button{font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;border:2px solid var(--border);border-bottom:none;background:var(--light);color:var(--muted);border-radius:12px 12px 0 0;padding:8px 14px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+pre{background:var(--ink);color:#F4F6FB;border-radius:0 12px 12px 12px;padding:16px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13.5px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere;max-height:340px;overflow:auto}
+.where{font-size:14px;color:var(--muted);margin-top:8px}
+
+/* finale */
+.big-ideas{display:grid;gap:10px;margin:14px 0}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--light);border-radius:14px;padding:14px}
+.idea .ico{font-size:24px;line-height:1}
+.idea b{font-family:'Nunito',sans-serif;display:block}
+.talk{background:#F1EAFB;border-radius:14px;padding:16px;margin-top:6px}
+.cta{background:var(--navy);color:#fff;border-radius:16px;padding:18px;margin-top:16px}
+.cta p{color:rgba(255,255,255,.8);margin-bottom:12px}
+.sources{font-size:13.5px;color:var(--muted);margin:0 0 30px}
+.sources summary{cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;color:var(--navy);padding:6px 0}
+.sources ul{padding-left:20px;margin-top:6px}
+.sources li{margin-bottom:5px}
+.checked{display:inline-block;background:#E8FBF6;color:#047857;font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;letter-spacing:.04em;border-radius:20px;padding:3px 10px}
+footer{background:var(--navy);color:rgba(255,255,255,.55);text-align:center;padding:24px 16px;font-size:13px}
+footer a{color:var(--teal);text-decoration:none}
+footer strong{color:rgba(255,255,255,.85);font-family:'Nunito',sans-serif}
+
+@media (max-width:420px){.card{padding:18px}.counters{gap:6px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.setnav{display:flex;gap:6px;overflow-x:auto;padding:12px 0 2px;position:relative;z-index:1}
+.setnav a{flex:0 0 auto;font-family:'Nunito',sans-serif;font-weight:800;font-size:12.5px;color:rgba(255,255,255,.88);border:1px solid rgba(255,255,255,.28);border-radius:40px;padding:6px 10px;text-decoration:none;white-space:nowrap}
+.setnav a:hover{border-color:var(--yellow);color:var(--yellow)}
+.setnav a[aria-current="page"]{background:var(--yellow);color:var(--navy);border-color:var(--yellow)}
+.alldone{margin-top:14px;background:#E8FBF6;border-left:5px solid var(--green);border-radius:12px;padding:14px 16px;animation:pop .3s ease}
+.alldone b{font-family:'Nunito',sans-serif}
+.sv{position:relative}
+.sv .num{position:absolute;top:-18px;right:18px;width:44px;height:44px;border-radius:50%;background:var(--c,var(--teal));color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 4px 12px rgba(27,58,107,.18)}
+.sv .packed{display:none;font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;background:#E8FBF6;color:#047857;border-radius:20px;padding:2px 10px;margin-left:8px;vertical-align:middle}
+.sv.done .packed{display:inline-block}
+.go{display:inline-block;margin:2px 0 14px;font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;background:var(--navy);color:#fff;text-decoration:none;border-radius:40px;padding:9px 18px}
+.go:hover{filter:brightness(1.15)}
+.why{background:#FFF8DB;border-left:5px solid #E8C400;border-radius:12px;padding:11px 14px;margin-bottom:14px;font-size:15px}
+.why b{font-family:'Nunito',sans-serif}
+.choices{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:4px}
+.ch{font-family:'Nunito',sans-serif;font-weight:800;font-size:14.5px;padding:9px 13px;border-radius:12px;border:2px solid var(--border);background:#fff;color:var(--ink);cursor:pointer}
+.ch:hover{border-color:var(--teal)}
+.ch[aria-pressed="true"]{border-color:var(--navy);background:var(--navy);color:#fff}
+.bar{position:sticky;top:0;z-index:5;background:var(--navy);color:#fff;padding:9px 0;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+.bar .wrap{display:flex;align-items:center;gap:12px;font-family:'Nunito',sans-serif;font-weight:800;font-size:14px}
+.bar .track{flex:1;height:8px;background:rgba(255,255,255,.2);border-radius:8px;overflow:hidden}
+.bar .fill{height:100%;width:0;background:var(--yellow);border-radius:8px;transition:width .4s}
+.bar a{color:var(--yellow);text-decoration:none;white-space:nowrap}
+.note{font-size:14px;color:var(--muted);margin-top:8px}
+.privacy{background:#FDE7F4;border-left:5px solid var(--pink);border-radius:12px;padding:12px 15px;margin-bottom:14px;font-size:15px}
+.privacy b{font-family:'Nunito',sans-serif}
+pre{border-radius:12px}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap">
+  <a href="./" target="_blank" rel="noopener">The AI Toolbox ↗</a>
+  <span class="tag">ENGAGE · Start Here</span>
+</div></div>
+
+<header class="intro"><div class="wrap">
+  <h1>Pack your <span>toolkit</span>. 🎒</h1>
+  <p>ENGAGE is where you start creating with AI. Before you do, take a walk through the Demystifying AI site and bring back five souvenirs. Each one is something you made or decided, and you will use them later in the course.</p>
+  <div class="chips">
+    <span class="chip">⏱ About 30 to 40 minutes</span>
+    <span class="chip">🧭 Any order</span>
+    <span class="chip">☕ Take breaks. Your answers wait for you.</span>
+    <span class="chip">🙈 No login</span>
+  </div>
+</div></header>
+
+<div class="bar" aria-live="polite"><div class="wrap">
+  <span id="barText">0 of 5 packed</span>
+  <span class="track"><span class="fill" id="barFill"></span></span>
+  <a href="#finish">Finish ↓</a>
+</div></div>
+
+<main class="wrap" style="padding-top:34px">
+
+  <section class="card" style="--c:var(--navy)" aria-labelledby="h-how">
+    <span class="kicker" style="color:var(--navy)">How this works</span>
+    <h2 id="h-how">Explore, bring something back, share it</h2>
+    <div class="big-ideas">
+      <div class="idea"><span class="ico">1️⃣</span><div><b>Explore.</b>Each souvenir has a button that opens part of the site in a new tab. Try things there.</div></div>
+      <div class="idea"><span class="ico">2️⃣</span><div><b>Come back and fill in the boxes.</b>Short answers in your own words are perfect. There are no wrong answers.</div></div>
+      <div class="idea"><span class="ico">3️⃣</span><div><b>Copy your toolkit and post it in OpenLearning.</b>The button at the bottom puts everything together for you.</div></div>
+    </div>
+    <p class="note">Your answers are kept on this device only, so you can close the page and return later. Nothing is sent to us.</p>
+  </section>
+
+  <!-- 1 -->
+  <section class="card sv" id="sv-skill" style="--c:var(--green)" aria-labelledby="h-skill">
+    <span class="num" aria-hidden="true">🧩</span>
+    <span class="kicker">Souvenir 1 of 5</span>
+    <h2 id="h-skill">My skill <span class="packed">✓ packed</span></h2>
+    <p class="lead">Build one skill for a task you do every week. A skill is a short set of directions that tells AI how you like that task done.</p>
+    <div class="why"><b>Why you need it:</b> you will use this skill in Module 3, and it could become a major part of your capstone project.</div>
+    <a class="go" href="skill-builder.html" target="_blank" rel="noopener">Open the Skill Builder ↗</a>
+    <div class="field"><label for="skillTask">What weekly task is your skill for?</label>
+      <input id="skillTask" data-k="skillTask" type="text" maxlength="200" autocomplete="off"></div>
+    <div class="field"><label for="skillText">Paste your finished skill here</label>
+      <p class="hint">In the Skill Builder, tap Copy. Then come back and paste.</p>
+      <textarea id="skillText" data-k="skillText" style="min-height:140px"></textarea></div>
+  </section>
+
+  <!-- 2 -->
+  <section class="card sv" id="sv-power" style="--c:var(--pink)" aria-labelledby="h-power">
+    <span class="num" aria-hidden="true">⚡</span>
+    <span class="kicker">Souvenir 2 of 5</span>
+    <h2 id="h-power">My new power <span class="packed">✓ packed</span></h2>
+    <p class="lead">You have chatted with AI. Now pick one power you have <b>never used before</b>. Try the practice version in the Toolbox, then try it for real in your own AI tool. If your account does not have that button, use the free-account tip on the same page.</p>
+    <a class="go" href="./#powers" target="_blank" rel="noopener">Open the AI Toolbox ↗</a>
+    <div class="field"><label id="l-power">Which power did you try?</label>
+      <div class="choices" role="group" aria-labelledby="l-power" data-choice="power">
+        <button type="button" class="ch">📎 Read my document</button>
+        <button type="button" class="ch">🎨 Make a picture</button>
+        <button type="button" class="ch">🧱 Build something with me</button>
+        <button type="button" class="ch">🔎 Research a big question</button>
+        <button type="button" class="ch">🎓 Help me learn it</button>
+        <button type="button" class="ch">🧠 Think harder</button>
+      </div></div>
+    <div class="field"><label for="powerReal">What happened when you tried it for real?</label>
+      <p class="hint">What did you ask for, and what did you get?</p>
+      <textarea id="powerReal" data-k="powerReal"></textarea></div>
+    <div class="field"><label for="powerJob">What was your job as the human?</label>
+      <p class="hint">What did you have to check, decide, or fix yourself?</p>
+      <textarea id="powerJob" data-k="powerJob"></textarea></div>
+  </section>
+
+  <!-- 3 -->
+  <section class="card sv" id="sv-tool" style="--c:var(--purple)" aria-labelledby="h-tool">
+    <span class="num" aria-hidden="true">🧰</span>
+    <span class="kicker">Souvenir 3 of 5</span>
+    <h2 id="h-tool">My tools <span class="packed">✓ packed</span></h2>
+    <p class="lead">You have probably tried a few AI tools by now. Look at "Meet the five" to compare what each one offers, then decide your plan for ENGAGE.</p>
+    <a class="go" href="./#five" target="_blank" rel="noopener">Open "Meet the five" ↗</a>
+    <div class="field"><label id="l-plan">In ENGAGE, I plan to:</label>
+      <div class="choices" role="group" aria-labelledby="l-plan" data-choice="plan">
+        <button type="button" class="ch">Stick with one tool</button>
+        <button type="button" class="ch">Use more than one</button>
+        <button type="button" class="ch">I am still deciding</button>
+      </div></div>
+    <div class="field"><label for="toolWhich">Which tool or tools?</label>
+      <input id="toolWhich" data-k="toolWhich" type="text" maxlength="200" autocomplete="off"></div>
+    <div class="field"><label for="toolWhy">Why is that the right plan for you?</label>
+      <p class="hint">Think about what you can access, what your workplace allows, and what each tool does well.</p>
+      <textarea id="toolWhy" data-k="toolWhy"></textarea></div>
+  </section>
+
+  <!-- 4 -->
+  <section class="card sv" id="sv-portable" style="--c:var(--blue)" aria-labelledby="h-portable">
+    <span class="num" aria-hidden="true">🧳</span>
+    <span class="kicker">Souvenir 4 of 5</span>
+    <h2 id="h-portable">My Portable AI <span class="packed">✓ packed</span></h2>
+    <p class="lead">Portable AI templates do the job of paid features in any free account. They are worth knowing even if you have a paid plan, because someone you work with does not. On the main page, tap the <b>🧳 Portable AI</b> tab, pick one template, and try it in your AI tool.</p>
+    <a class="go" href="../" target="_blank" rel="noopener">Open the main page ↗</a>
+    <div class="field"><label id="l-tpl">Which template did you try?</label>
+      <div class="choices" role="group" aria-labelledby="l-tpl" data-choice="tpl">
+        <button type="button" class="ch">🧑‍🍳 Build Your Own Assistant</button>
+        <button type="button" class="ch">📚 Knowledge Pack</button>
+        <button type="button" class="ch">🧾 AI Operating Procedure</button>
+        <button type="button" class="ch">🚀 Project Starter</button>
+      </div></div>
+    <div class="field"><label for="portUse">What did you use it for, and how did it go?</label>
+      <textarea id="portUse" data-k="portUse"></textarea></div>
+    <div class="field"><label for="portShare">Who could you share it with, and why would it help them?</label>
+      <p class="hint">Describe the person by role, not by name. Example: a co-teacher who only has a free account.</p>
+      <textarea id="portShare" data-k="portShare"></textarea></div>
+  </section>
+
+  <!-- 5 -->
+  <section class="card sv" id="sv-surprise" style="--c:var(--orange)" aria-labelledby="h-surprise">
+    <span class="num" aria-hidden="true">✨</span>
+    <span class="kicker">Souvenir 5 of 5</span>
+    <h2 id="h-surprise">My surprise <span class="packed">✓ packed</span></h2>
+    <p class="lead">Spend five minutes anywhere else on the site. Play a Playground game, open a podcast or video, read an article, or visit "Where did my custom bot go?" Follow whatever catches your eye.</p>
+    <a class="go" href="../" target="_blank" rel="noopener">Explore the site ↗</a>
+    <a class="go" href="../playground/" target="_blank" rel="noopener" style="background:var(--pink)">AI Playground ↗</a>
+    <div class="field"><label for="surWhat">What did you explore, and what surprised you or changed how you think about AI?</label>
+      <textarea id="surWhat" data-k="surWhat"></textarea></div>
+    <div class="field"><label for="surUse">How might you use it in your own work, or with the people you teach or serve?</label>
+      <textarea id="surUse" data-k="surUse"></textarea></div>
+  </section>
+
+  <!-- FINISH -->
+  <section class="card" id="finish" style="--c:var(--yellow)" aria-labelledby="h-finish">
+    <span class="kicker" style="color:var(--navy)">Last step</span>
+    <h2 id="h-finish">Share your toolkit</h2>
+    <p class="lead" id="finishMsg"></p>
+    <div class="privacy"><b>Before you post:</b> everyone in the course can read your post. Take out names and private details about students, clients, or coworkers.</div>
+    <pre id="outBox" tabindex="0" style="max-height:300px"></pre>
+    <div class="actions">
+      <button type="button" class="btn btn-main" id="copyBtn">Copy my toolkit</button>
+      <button type="button" class="btn btn-soft" id="dlBtn">Download as a file</button>
+    </div>
+    <div class="big-ideas" style="margin-top:18px">
+      <div class="idea"><span class="ico">📋</span><div><b>Then go to OpenLearning.</b>Open the ENGAGE "Start Here" module, choose Post text in the Pack Your Toolkit activity, and paste.</div></div>
+      <div class="idea"><span class="ico">👀</span><div><b>Read two classmates' toolkits there.</b>Borrow one idea, and leave a comment telling them which one.</div></div>
+    </div>
+    <div class="actions"><button type="button" class="btn btn-soft" id="clearBtn">Clear my answers from this device</button></div>
+  </section>
+</main>
+
+<footer>Part of <a href="../">Demystifying AI for All</a> · Built by <strong>Jeffery Heil</strong> for the ENGAGE course by <a href="https://globallearningaccess.com/home" target="_blank" rel="noopener">Global Learning Access</a></footer>
+
+<script>
+(function(){
+  function $(id){return document.getElementById(id);}
+  var KEY="daia-toolkit-card-v1";
+  var data={};
+  try{ data=JSON.parse(localStorage.getItem(KEY)||"{}")||{}; }catch(e){ data={}; }
+  function save(){ try{ localStorage.setItem(KEY,JSON.stringify(data)); }catch(e){} }
+
+  /* text boxes */
+  var fields=document.querySelectorAll("[data-k]");
+  Array.prototype.forEach.call(fields,function(f){
+    if(data[f.dataset.k]) f.value=data[f.dataset.k];
+    f.addEventListener("input",function(){ data[f.dataset.k]=f.value; save(); render(); });
+  });
+  /* choice buttons */
+  var groups=document.querySelectorAll("[data-choice]");
+  Array.prototype.forEach.call(groups,function(g){
+    var k=g.dataset.choice;
+    Array.prototype.forEach.call(g.children,function(b){
+      b.setAttribute("aria-pressed", data[k]===b.textContent ? "true":"false");
+      b.addEventListener("click",function(){
+        data[k] = data[k]===b.textContent ? "" : b.textContent; save();
+        Array.prototype.forEach.call(g.children,function(x){ x.setAttribute("aria-pressed", data[k]===x.textContent ? "true":"false"); });
+        render();
+      });
+    });
+  });
+
+  function v(k){ return (data[k]||"").trim(); }
+  /* A souvenir counts as packed when all of its parts have something in them. */
+  var SOUV=[
+    ["sv-skill",["skillTask","skillText"]],
+    ["sv-power",["power","powerReal","powerJob"]],
+    ["sv-tool",["plan","toolWhich","toolWhy"]],
+    ["sv-portable",["tpl","portUse","portShare"]],
+    ["sv-surprise",["surWhat","surUse"]]
+  ];
+  function ans(k){ return v(k)||"(not answered yet)"; }
+  function buildText(){
+    return [
+      "🎒 MY ENGAGE TOOLKIT","",
+      "🧩 1. MY SKILL",
+      "The weekly task it is for: "+ans("skillTask"),
+      "My skill:", ans("skillText"),"",
+      "⚡ 2. MY NEW POWER",
+      "The power I tried: "+ans("power"),
+      "What happened when I tried it for real: "+ans("powerReal"),
+      "My job as the human: "+ans("powerJob"),"",
+      "🧰 3. MY TOOLS",
+      "My plan for ENGAGE: "+ans("plan"),
+      "Which tool or tools: "+ans("toolWhich"),
+      "Why: "+ans("toolWhy"),"",
+      "🧳 4. MY PORTABLE AI",
+      "The template I tried: "+ans("tpl"),
+      "What I used it for and how it went: "+ans("portUse"),
+      "Who I could share it with and why: "+ans("portShare"),"",
+      "✨ 5. MY SURPRISE",
+      "What I explored and what surprised me: "+ans("surWhat"),
+      "How I might use it: "+ans("surUse")
+    ].join("\n");
+  }
+  function render(){
+    var n=0;
+    SOUV.forEach(function(s){
+      var ok=s[1].every(function(k){return v(k);});
+      $(s[0]).classList.toggle("done",ok); if(ok) n++;
+    });
+    $("barText").textContent=n+" of 5 packed";
+    $("barFill").style.width=(n/5*100)+"%";
+    $("finishMsg").textContent = n===5
+      ? "All five souvenirs are packed. Nice work. Copy your toolkit and take it to OpenLearning."
+      : (n===0 ? "Your toolkit will appear here as you fill in the boxes above."
+               : "You have packed "+n+" of 5. You can copy what you have now, or finish the rest first. Completing all five is the goal.");
+    $("outBox").textContent=buildText();
+  }
+  $("copyBtn").addEventListener("click",function(){
+    var text=buildText(), btn=$("copyBtn");
+    function ok(){ btn.textContent="Copied ✓ Now paste it in OpenLearning"; setTimeout(function(){btn.textContent="Copy my toolkit";},2600); }
+    function fallback(){
+      var ta=document.createElement("textarea"); ta.value=text; ta.style.position="fixed"; ta.style.opacity="0";
+      document.body.appendChild(ta); ta.select();
+      try{ document.execCommand("copy"); ok(); }catch(e){ btn.textContent="Select the text above and copy it"; }
+      document.body.removeChild(ta);
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(ok,fallback); } else { fallback(); }
+  });
+  $("dlBtn").addEventListener("click",function(){
+    var blob=new Blob([buildText()],{type:"text/plain"});
+    var a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="my-engage-toolkit.txt";
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function(){URL.revokeObjectURL(a.href);},1000);
+  });
+  $("clearBtn").addEventListener("click",function(){
+    if(!window.confirm("Clear all your answers from this device? This cannot be undone.")) return;
+    data={}; try{ localStorage.removeItem(KEY); }catch(e){}
+    Array.prototype.forEach.call(fields,function(f){f.value="";});
+    Array.prototype.forEach.call(document.querySelectorAll(".ch"),function(b){b.setAttribute("aria-pressed","false");});
+    render();
+  });
+  render();
+})();
+</script>
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "bd52202e57cc448caf8023f1639ce27d"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
