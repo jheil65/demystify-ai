@@ -789,7 +789,7 @@ footer a { color:var(--teal);text-decoration:none; }
     <button class="cat-btn" data-cat="framework"><span class="icon">🏗️</span> Frameworks</button>
     <button class="cat-btn" data-cat="ailiteracy"><span class="icon">🧠</span> AI Literacy</button>
     <button class="cat-btn" data-cat="glossary"><span class="icon">📖</span> Glossary</button>
-    <button class="cat-btn" data-cat="podcasts"><span class="icon">🎙️</span> Podcasts</button>
+    <button class="cat-btn" data-cat="podcasts"><span class="icon">🎙️</span> Podcasts & YouTube</button>
     <button class="cat-btn" data-cat="hcai"><span class="icon">🌱</span> HCAI</button>
   </div>
 </div>
@@ -1168,11 +1168,11 @@ function copyMaster(){
 // ── GLOSSARY DATA ────────────────────────────────────────────────────────────
 const GLOSSARY = [
   // FOUNDATION TIER
-  {term:"Artificial Intelligence (AI)",icon:"🤖",tier:"foundation",cat:"core",def:"The science and engineering of making computers perform tasks that normally require human intelligence — like understanding language, recognizing patterns, making decisions, and learning from experience.",context:"<strong>Why it matters:</strong> AI isn't one thing — it's an umbrella term for dozens of technologies. When someone says 'AI did this,' it's worth asking: which kind? How was it trained? By whom?",prompt:"When I ask for your help, briefly note which AI capability you're primarily using (language generation, pattern recognition, reasoning, etc.) so I understand what's happening."},
-  {term:"Generative AI",icon:"✨",tier:"foundation",cat:"core",def:"AI that creates new content — text, images, audio, video, code — based on patterns learned from vast amounts of existing content. ChatGPT, Claude, Midjourney, and DALL-E are all generative AI tools.",context:"<strong>Why it matters:</strong> Generative AI is different from earlier AI. It doesn't just classify or predict — it produces. That makes it powerful for learning and work, and also easier to misuse.",prompt:"You are a generative AI. When you produce a response, briefly flag if the content is drawn from well-established knowledge vs. synthesized/generated — so I can evaluate it accordingly."},
+  {term:"Artificial Intelligence (AI)",icon:"🤖",tier:"foundation",cat:"core",def:"The broadest umbrella term. It refers to any machine or system capable of mimicking human cognitive functions like problem-solving, pattern recognition, or learning. (Even early, rule-based systems like traditional computer vision for fingerprints often get colloquially grouped here.) Think of AI, ML, DL, and GenAI as Russian nesting dolls, each fitting inside the previous one.",context:"<strong>Why it matters:</strong> AI isn't one thing — it's an umbrella term for dozens of technologies. When someone says 'AI did this,' it's worth asking: which kind? How was it trained? By whom?",prompt:"When I ask for your help, briefly note which AI capability you're primarily using (language generation, pattern recognition, reasoning, etc.) so I understand what's happening."},
+  {term:"Generative AI (GenAI)",icon:"✨",tier:"foundation",cat:"core",def:"A specific application of DL/ML. Instead of just categorizing or analyzing existing data (e.g., identifying a dog in a photo), GenAI generates entirely <em>new</em> content (text, images, code) based on the patterns it learned.",context:"<strong>Why it matters:</strong> Generative AI is different from earlier AI. It doesn't just classify or predict — it produces. That makes it powerful for learning and work, and also easier to misuse.",prompt:"You are a generative AI. When you produce a response, briefly flag if the content is drawn from well-established knowledge vs. synthesized/generated — so I can evaluate it accordingly."},
   {term:"Large Language Model (LLM)",icon:"📚",tier:"foundation",cat:"core",def:"A type of AI trained on enormous amounts of text — books, websites, articles — to understand and generate human language. GPT-4, Claude, Gemini, and Llama are all LLMs.",context:"<strong>Why it matters:</strong> LLMs don't 'know' things the way humans do — they predict what words should come next based on patterns. Understanding this helps you interpret their outputs critically.",prompt:"As an LLM, you generate responses based on patterns in training data. When answering, flag any areas where your response is a likely pattern rather than verified fact."},
   {term:"Algorithm",icon:"⚙️",tier:"foundation",cat:"core",def:"A set of step-by-step instructions a computer follows to solve a problem or complete a task. Every AI system runs on algorithms — they're the rules that govern how the system behaves.",context:"<strong>Why it matters:</strong> Algorithms aren't neutral. They reflect the priorities and assumptions of whoever designed them. The algorithm deciding what you see on social media is also an algorithm.",prompt:"Walk me through the key steps in your reasoning process for this task, so I understand the logic behind your output."},
-  {term:"Machine Learning (ML)",icon:"🧩",tier:"foundation",cat:"core",def:"A way of building AI where the system learns from data rather than being explicitly programmed with rules. The more data it sees, the better it gets — like a student learning from examples rather than a textbook.",context:"<strong>Why it matters:</strong> ML systems are only as good as their training data. If the data is biased or incomplete, the system learns those flaws too.",prompt:"What patterns in your training data most likely influence your response to this topic?"},
+  {term:"Machine Learning (ML)",icon:"🧩",tier:"foundation",cat:"core",def:"A subset of AI. Instead of being explicitly programmed with rules for every scenario, ML systems are trained on large amounts of data to recognize patterns and make predictions on their own.",context:"<strong>Why it matters:</strong> ML systems are only as good as their training data. If the data is biased or incomplete, the system learns those flaws too.",prompt:"What patterns in your training data most likely influence your response to this topic?"},
   {term:"Training Data",icon:"🗄️",tier:"foundation",cat:"core",def:"The massive collection of text, images, or other content an AI learns from. For LLMs, this is typically billions of words scraped from the internet, books, and other sources.",context:"<strong>Why it matters:</strong> Training data shapes everything an AI knows and believes. If it was mostly written in English by Western sources, it may not represent Filipino, African, or other cultural contexts well.",prompt:"What languages, regions, or cultural contexts is your training data most likely underrepresented in? How might that affect your answer here?"},
   {term:"Prompt",icon:"💬",tier:"foundation",cat:"prompting",def:"The instruction or question you give to an AI. The quality of your prompt directly determines the quality of the response — more context, clearer intent, and specific format requests all lead to better outputs.",context:"<strong>Why it matters:</strong> Prompting is a skill that can be learned. A well-crafted prompt is like a clear assignment brief — it removes ambiguity and gives the AI what it needs to help you effectively.",prompt:"Before answering, rate the clarity of my prompt on a scale of 1–10 and suggest one way I could improve it."},
   {term:"Hallucination",icon:"🌀",tier:"foundation",cat:"ethics",def:"When an AI confidently produces information that is factually wrong or completely made up — while sounding entirely convincing. A known limitation of all current LLMs.",context:"<strong>Why it matters:</strong> AI hallucinations can spread misinformation fast. For educators, students, and healthcare workers especially, verifying AI outputs against trusted sources is essential.",prompt:"After your response, flag any claims that you are less than 90% confident about, and suggest how I could verify them."},
@@ -1214,10 +1214,11 @@ const GLOSSARY = [
   {term:"Agentic AI",icon:"🤖",tier:"critical",cat:"core",def:"AI systems that can plan and execute multi-step tasks autonomously — browsing, coding, emailing, booking — with minimal human direction. A rapidly expanding capability in 2025.",context:"<strong>Why it matters:</strong> Agentic AI dramatically amplifies what AI can do — and the risks when it goes wrong. Understanding where to place human checkpoints is one of the most important design questions of the moment.",prompt:"For this multi-step task, where in the process do you recommend I stay in the loop rather than letting you proceed autonomously?"},
 
   // ADDITIONAL FOUNDATION
-  {term:"Artificial General Intelligence (AGI)",icon:"🧠",tier:"foundation",cat:"core",def:"A hypothetical AI that can perform any intellectual task a human can do — reasoning, creativity, learning — across any domain. Does not yet exist. Current AI is narrow; AGI would be general.",context:"<strong>Why it matters:</strong> AGI is the subject of intense debate and significant investment. Some researchers believe it's imminent; others think it's decades away. It shapes how we think about AI risk and governance.",prompt:""},
-  {term:"Narrow AI",icon:"📍",tier:"foundation",cat:"core",def:"AI designed to perform a specific, limited task very well — like facial recognition, spam filtering, or language translation. All current AI is narrow AI. Also called Weak AI.",context:"<strong>Why it matters:</strong> Narrow AI excels at its specific task but can't generalize. A chess AI can't write a lesson plan. A translation AI can't diagnose a disease. Context matters.",prompt:""},
+  {term:"Artificial General Intelligence (AGI)",icon:"🧠",tier:"foundation",cat:"core",def:"'Strong AI.' A theoretical milestone where a machine possesses human-level cognitive flexibility, able to learn and perform any intellectual task a human can across multiple domains.",context:"<strong>Why it matters:</strong> AGI is the subject of intense debate and significant investment. Some researchers believe it's imminent; others think it's decades away. It shapes how we think about AI risk and governance.",prompt:""},
+  {term:"Artificial Narrow Intelligence (ANI)",icon:"📍",tier:"foundation",cat:"core",def:"'Weak AI.' Systems designed to handle one specific task brilliantly (like playing chess, translating text, or recognizing a fingerprint). <strong>All AI that exists today is ANI.</strong>",context:"<strong>Why it matters:</strong> Narrow AI excels at its specific task but can't generalize. A chess AI can't write a lesson plan. A translation AI can't diagnose a disease. Context matters.",prompt:""},
+  {term:"Artificial Superintelligence (ASI)",icon:"🚀",tier:"foundation",cat:"core",def:"A theoretical system that dramatically surpasses human cognitive ability in every practical field, from scientific creativity to social intelligence.",context:"<strong>Why it matters:</strong> ASI does not exist. It is the last of three capability levels: ANI (what we have today), AGI (human-level), and ASI (beyond human). Knowing the difference helps you sort real, present-day AI questions from speculation about the future.",prompt:""},
   {term:"Neural Network",icon:"🕸️",tier:"foundation",cat:"technical",def:"A computing architecture loosely inspired by the human brain — made up of layers of interconnected nodes that process information. The foundation of deep learning and most modern AI.",context:"<strong>Why it matters:</strong> Neural networks learn by adjusting the strength of connections between nodes — millions or billions of them. This is how they 'learn' from data without explicit rules.",prompt:""},
-  {term:"Deep Learning",icon:"🌊",tier:"foundation",cat:"technical",def:"A type of machine learning using neural networks with many layers ('deep' refers to the number of layers). Powers image recognition, language models, and most cutting-edge AI applications.",context:"<strong>Why it matters:</strong> Deep learning is responsible for most recent AI breakthroughs — but its inner workings are notoriously hard to interpret, contributing to the 'black box' problem.",prompt:""},
+  {term:"Deep Learning (DL)",icon:"🌊",tier:"foundation",cat:"technical",def:"A subset of ML. It uses multi-layered 'artificial neural networks' inspired by the human brain to process incredibly complex, unstructured data (like raw video, audio, or natural language) without needing human engineers to pre-label the features.",context:"<strong>Why it matters:</strong> Deep learning is responsible for most recent AI breakthroughs — but its inner workings are notoriously hard to interpret, contributing to the 'black box' problem.",prompt:""},
   {term:"API (Application Programming Interface)",icon:"🔌",tier:"practical",cat:"technical",def:"A set of protocols that lets different software programs talk to each other. AI APIs allow developers to integrate AI capabilities into their own apps, websites, and tools.",context:"<strong>Why it matters:</strong> APIs are how most AI tools you encounter are built. When you use an AI-powered feature in an app, it's almost certainly calling an AI company's API behind the scenes.",prompt:""},
   {term:"Model",icon:"🏷️",tier:"foundation",cat:"technical",def:"In AI, a model is the trained system — the result of running a machine learning algorithm on training data. GPT-4, Claude 3, and Gemini 1.5 are all models.",context:"<strong>Why it matters:</strong> Different models have different strengths, knowledge cutoffs, biases, and capabilities. Knowing which model you're using matters for evaluating outputs.",prompt:"Without knowing exactly which model you are, what are the most important limitations I should keep in mind when deciding how much to trust this response?"},
   {term:"Knowledge Cutoff",icon:"📅",tier:"practical",cat:"technical",def:"The date after which an AI model has no knowledge of world events — because its training data stops at that point. Events after the cutoff are unknown to the model unless it has real-time search.",context:"<strong>Why it matters:</strong> AI can confidently give you outdated information about regulations, research findings, or current events. Always check the knowledge cutoff for time-sensitive topics.",prompt:"What is your knowledge cutoff? Is this a topic where recent developments since your cutoff might significantly affect your answer?"},
@@ -1526,6 +1527,20 @@ const PODCASTS = [
     spotify:"https://open.spotify.com/show/5WeXjuoZFrqDrNUlKMEDjD",
     web:"https://www.aidailybrief.com"
   },
+  {
+    emoji:"🎬", title:"Parthknowsai (YouTube Shorts)",
+    host:"Parth · AI engineer", freq:"Short videos",
+    tags:["YouTube","Shorts","AI Research","Visual"],
+    tagColor:"#FF6B35",
+    banner:"linear-gradient(90deg,#FF6B35,#EF3FA9)",
+    audience:["new-to-ai","educators","professionals"],
+    featured:false,
+    desc:"A YouTube channel from an AI engineer who turns current AI research and tools into clear, visual explanations. The Shorts are bite-sized: one idea per video, explained in about a minute.",
+    why:"Short on time? Each Short gives you one AI idea you can take in between classes or on a break. Parth focuses on accurate research from reputable sources and steers away from hype, which makes these a good way to build your understanding a little at a time.",
+    whyLabel:"Why you should watch",
+    shorts:"https://www.youtube.com/@parthknowsai/shorts",
+    youtube:"https://www.youtube.com/@parthknowsai"
+  },
 ];
 
 const POD_AUDIENCES = {
@@ -1552,11 +1567,11 @@ function renderPodcasts() {
   wrap.innerHTML = `
     <div class="podcasts-intro">
       <div class="pi-badge">🎙️ Curated Listening</div>
-      <h2>AI & Futurism Podcasts</h2>
-      <p>The best shows for staying informed, thinking critically, and going deeper on AI — curated for educators, trainers, and anyone on a learning journey. Works on any device, any commute, any bandwidth.</p>
+      <h2>AI & Futurism Podcasts & YouTube</h2>
+      <p>The best shows and channels for staying informed, thinking critically, and going deeper on AI — curated for educators, trainers, and anyone on a learning journey. Works on any device, any commute, any bandwidth.</p>
     </div>
     <div class="podcast-filter-bar">
-      <button class="pod-filter-btn active" data-audience="all">🎧 All Podcasts (${PODCASTS.length})</button>
+      <button class="pod-filter-btn active" data-audience="all">🎧 All (${PODCASTS.length})</button>
       <button class="pod-filter-btn" data-audience="new-to-ai">🟢 New to AI (${audienceCounts['new-to-ai']||0})</button>
       <button class="pod-filter-btn" data-audience="educators">🏫 Educators (${audienceCounts['educators']||0})</button>
       <button class="pod-filter-btn" data-audience="futurism">🔮 Futurism (${audienceCounts['futurism']||0})</button>
@@ -1600,14 +1615,15 @@ function renderPodcasts() {
             </div>
           </div>
           <div class="pod-desc">${p.desc}</div>
-          <div class="pod-why"><strong>🎯 Why you should listen</strong>${p.why}</div>
+          <div class="pod-why"><strong>🎯 ${p.whyLabel || 'Why you should listen'}</strong>${p.why}</div>
           <div class="pod-tags" style="margin-top:4px">${audienceHTML}</div>
         </div>
         <div class="pod-links">
-          ${p.featured ? `<a class="pod-link-btn featured" href="${p.spotify}" target="_blank">🎵 Spotify</a>` : `<a class="pod-link-btn" href="${p.spotify}" target="_blank">🎵 Spotify</a>`}
-          <a class="pod-link-btn" href="${p.apple}" target="_blank">🎵 Apple</a>
+          ${p.shorts ? `<a class="pod-link-btn" href="${p.shorts}" target="_blank">🎬 Shorts</a>` : ''}
+          ${p.spotify ? `<a class="pod-link-btn${p.featured ? ' featured' : ''}" href="${p.spotify}" target="_blank">🎵 Spotify</a>` : ''}
+          ${p.apple ? `<a class="pod-link-btn" href="${p.apple}" target="_blank">🎵 Apple</a>` : ''}
           ${p.youtube ? `<a class="pod-link-btn" href="${p.youtube}" target="_blank">▶️ YouTube</a>` : ''}
-          <a class="pod-link-btn" href="${p.web}" target="_blank">🌐 Website</a>
+          ${p.web ? `<a class="pod-link-btn" href="${p.web}" target="_blank">🌐 Website</a>` : ''}
         </div>
       `;
       grid.appendChild(card);
