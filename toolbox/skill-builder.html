@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skill Builder: Directions That Work in Any AI Tool · Demystifying AI for All</title>
+<meta name="description" content="Write your own AI skill in plain words. Fill in five boxes and get directions you can paste into any AI tool, including free accounts. No login, nothing saved.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧩</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#EF3FA9;--purple:#783CBD;--teal:#22D3C5;--navy:#1B3A6B;--blue:#2E75B6;
+  --yellow:#FFD93D;--orange:#FF6B35;--green:#06D6A0;--ink:#1A1A2E;--light:#F7F8FC;
+  --white:#FFFFFF;--border:#E4E9F2;--muted:#5B6478;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito Sans',sans-serif;background:var(--light);color:var(--ink);line-height:1.55;min-height:100vh}
+a{color:var(--blue)}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px}
+
+.topbar{background:var(--navy);color:#fff;padding:14px 0}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.topbar a{color:rgba(255,255,255,.85);text-decoration:none;font-family:'Nunito',sans-serif;font-weight:700;font-size:14px}
+.topbar a:hover{color:var(--yellow)}
+.tag{font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--teal);text-align:right}
+
+.intro{background:var(--navy);color:#fff;padding:8px 0 52px;position:relative;overflow:hidden}
+.intro::after{content:'';position:absolute;width:220px;height:220px;border-radius:50%;background:var(--pink);opacity:.12;right:-60px;top:-40px}
+.intro h1{font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(2rem,7vw,3rem);line-height:1.1;margin:14px 0 10px;position:relative;z-index:1}
+.intro h1 span{color:var(--yellow)}
+.intro p{color:rgba(255,255,255,.8);max-width:600px;position:relative;z-index:1}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;position:relative;z-index:1}
+.chip{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:40px;padding:5px 14px;font-size:13px;font-weight:600}
+
+.card.first{margin-top:-28px;position:relative;z-index:2}
+.steps{display:flex;gap:6px;margin:-26px 0 14px;position:relative;z-index:2;overflow-x:auto;padding-bottom:4px}
+.steps a{flex:1 0 auto;text-align:center;background:#fff;border:1px solid var(--border);border-radius:40px;padding:9px 14px;font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;color:var(--navy);text-decoration:none;box-shadow:0 6px 18px rgba(27,58,107,.08);white-space:nowrap}
+.steps a:hover{border-color:var(--teal)}
+
+.card{background:var(--white);border:1px solid var(--border);border-radius:20px;box-shadow:0 8px 30px rgba(27,58,107,.08);padding:24px;margin:0 0 20px;border-top:6px solid var(--c,var(--teal));scroll-margin-top:12px}
+.kicker{font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--c,var(--purple))}
+.card h2{font-family:'Nunito',sans-serif;font-weight:900;font-size:1.45rem;line-height:1.2;margin:2px 0 8px}
+.card h3{font-family:'Nunito',sans-serif;font-weight:800;font-size:1.05rem;margin:0 0 6px}
+.lead{color:var(--muted);margin-bottom:16px}
+.ask{font-weight:700;margin:14px 0 10px}
+
+.btn{font-family:'Nunito',sans-serif;font-weight:800;font-size:16px;border:none;border-radius:40px;padding:13px 26px;cursor:pointer;transition:transform .12s,filter .12s;text-decoration:none;display:inline-block}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+.btn-main{background:var(--pink);color:#fff}
+.btn-alt{background:var(--navy);color:#fff}
+.btn-soft{background:var(--light);color:var(--ink);border:2px solid var(--border)}
+.btn[disabled]{opacity:.45;cursor:default;transform:none}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+.hidden{display:none!important}
+
+/* pickers */
+.picker{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
+.pick{font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;padding:12px 8px;border-radius:14px;border:2px solid var(--border);background:#fff;color:var(--ink);cursor:pointer;transition:border-color .12s,background .12s}
+.pick:hover{border-color:var(--teal)}
+.pick[aria-pressed="true"]{border-color:var(--navy);background:var(--navy);color:#fff}
+.seg{display:inline-flex;background:var(--light);border:2px solid var(--border);border-radius:40px;padding:4px;margin:16px 0 12px}
+.seg button{font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;border:none;background:none;border-radius:40px;padding:8px 22px;cursor:pointer;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--yellow);color:var(--navy)}
+
+/* name tag */
+.nametag{border-radius:16px;overflow:hidden;border:2px solid var(--border);animation:pop .3s ease}
+.nametag .top{background:var(--pink);color:#fff;text-align:center;padding:10px;font-family:'Nunito',sans-serif;font-weight:900;letter-spacing:.08em;text-transform:uppercase;font-size:13px}
+.nametag.then .top{background:var(--muted)}
+.nametag .body{padding:18px;text-align:center;background:#fff}
+.nametag .name{font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(1.6rem,6vw,2.2rem);line-height:1.15;color:var(--navy)}
+.nametag.then .name{text-decoration:line-through;text-decoration-color:var(--pink);text-decoration-thickness:3px}
+.nametag.then .name.kept{text-decoration:none}
+.nametag .what{color:var(--muted);margin-top:8px;text-align:left}
+.facts{display:grid;gap:8px;margin-top:12px}
+.fact{display:flex;gap:10px;align-items:flex-start;background:var(--light);border-radius:12px;padding:11px 13px;font-size:15px}
+.fact .ico{font-size:18px;line-height:1.3}
+.fact b{font-family:'Nunito',sans-serif}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* walk */
+.task{background:#FFF8DB;border:1px dashed #E8C400;border-radius:12px;padding:12px 14px;margin-bottom:6px}
+.task b{font-family:'Nunito',sans-serif}
+.counters{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
+.counter{background:var(--light);border-radius:12px;padding:10px;text-align:center}
+.counter .n{font-family:'Nunito',sans-serif;font-weight:900;font-size:1.6rem;color:var(--navy);line-height:1}
+.counter .l{font-size:12px;font-weight:700;color:var(--muted);margin-top:4px}
+.walk{display:grid;gap:8px}
+.wstep{display:flex;gap:12px;align-items:flex-start;border-radius:14px;padding:13px;background:var(--light);border-left:5px solid var(--border);animation:pop .3s ease}
+.wstep .ico{font-size:22px;line-height:1.2}
+.wstep b{font-family:'Nunito',sans-serif;display:block}
+.wstep.you{border-left-color:var(--pink);background:#FDE7F4}
+.wstep.ai{border-left-color:var(--teal)}
+.wstep small{display:inline-block;font-family:'Nunito',sans-serif;font-weight:800;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.lesson{margin-top:14px;background:#E8FBF6;border-left:5px solid var(--green);border-radius:12px;padding:14px 16px}
+.lesson b{font-family:'Nunito',sans-serif}
+.caution{margin-top:12px;background:#FFF1EA;border-left:5px solid var(--orange);border-radius:12px;padding:14px 16px}
+.caution b{font-family:'Nunito',sans-serif}
+
+/* quiz */
+.progress{display:flex;gap:6px;margin-bottom:14px}
+.progress span{flex:1;height:6px;border-radius:6px;background:var(--border)}
+.progress span.done{background:var(--teal)}
+.progress span.now{background:var(--pink)}
+.q{font-family:'Nunito',sans-serif;font-weight:800;font-size:1.15rem;line-height:1.35;background:var(--light);border-radius:14px;padding:16px;margin-bottom:12px}
+.options{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.opt{font-family:'Nunito',sans-serif;font-weight:800;font-size:16px;padding:14px 10px;border-radius:14px;border:2px solid var(--border);background:#fff;color:var(--ink);cursor:pointer;transition:border-color .12s,background .12s}
+.opt:hover{border-color:var(--teal)}
+.opt[disabled]{cursor:default}
+.opt.right{border-color:var(--green);background:#E8FBF6}
+.opt.picked{border-color:var(--pink);background:#FDE7F4}
+.tablewrap{overflow-x:auto;border:1px solid var(--border);border-radius:14px;margin-top:14px}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:var(--navy);color:#fff;font-family:'Nunito',sans-serif;font-weight:800;font-size:13px}
+tbody th{font-family:'Nunito',sans-serif;font-weight:800;background:var(--light)}
+tbody tr:last-child th,tbody tr:last-child td{border-bottom:none}
+
+/* builder */
+.examples{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.field{margin-bottom:12px}
+.field label{display:block;font-family:'Nunito',sans-serif;font-weight:800;margin-bottom:4px}
+.field .hint{font-size:13px;color:var(--muted);margin-bottom:6px}
+.field input,.field textarea{width:100%;font-family:'Nunito Sans',sans-serif;font-size:16px;color:var(--ink);border:2px solid var(--border);border-radius:12px;padding:11px 13px;background:#fff}
+.field textarea{min-height:92px;resize:vertical}
+.field input:focus,.field textarea:focus{border-color:var(--teal);outline:none}
+.out{margin-top:16px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tabs button{font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;border:2px solid var(--border);border-bottom:none;background:var(--light);color:var(--muted);border-radius:12px 12px 0 0;padding:8px 14px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+pre{background:var(--ink);color:#F4F6FB;border-radius:0 12px 12px 12px;padding:16px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13.5px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere;max-height:340px;overflow:auto}
+.where{font-size:14px;color:var(--muted);margin-top:8px}
+
+/* finale */
+.big-ideas{display:grid;gap:10px;margin:14px 0}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--light);border-radius:14px;padding:14px}
+.idea .ico{font-size:24px;line-height:1}
+.idea b{font-family:'Nunito',sans-serif;display:block}
+.talk{background:#F1EAFB;border-radius:14px;padding:16px;margin-top:6px}
+.cta{background:var(--navy);color:#fff;border-radius:16px;padding:18px;margin-top:16px}
+.cta p{color:rgba(255,255,255,.8);margin-bottom:12px}
+.sources{font-size:13.5px;color:var(--muted);margin:0 0 30px}
+.sources summary{cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;color:var(--navy);padding:6px 0}
+.sources ul{padding-left:20px;margin-top:6px}
+.sources li{margin-bottom:5px}
+.checked{display:inline-block;background:#E8FBF6;color:#047857;font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;letter-spacing:.04em;border-radius:20px;padding:3px 10px}
+footer{background:var(--navy);color:rgba(255,255,255,.55);text-align:center;padding:24px 16px;font-size:13px}
+footer a{color:var(--teal);text-decoration:none}
+footer strong{color:rgba(255,255,255,.85);font-family:'Nunito',sans-serif}
+
+@media (max-width:420px){.card{padding:18px}.counters{gap:6px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap">
+  <a href="./">← The AI Toolbox</a>
+  <span class="tag">Skill Builder</span>
+</div></div>
+
+<header class="intro"><div class="wrap">
+  <h1>Teach AI how <span>you</span> work. 🧩</h1>
+  <p>A skill is a short set of directions you write once and reuse: when to use it, what steps to follow, and when to stop and ask a person. Fill in five boxes and take your skill to any AI tool, including free accounts.</p>
+  <div class="chips">
+    <span class="chip">⏱ About 5 minutes</span>
+    <span class="chip">🙈 No login</span>
+    <span class="chip">💾 Nothing is saved or sent</span>
+    <span class="chip">✅ Works in any AI tool</span>
+  </div>
+</div></header>
+
+<main class="wrap">
+
+  <section class="card first" id="build" style="--c:var(--green)" aria-labelledby="h-build">
+    <span class="kicker">Your directions, your words</span>
+    <h2 id="h-build">Build your skill</h2>
+    <p class="lead">A skill is a short set of directions written in plain words: when to use it, what steps to follow, and when to stop and ask a person. Fill in the boxes, or start from an example. Your words stay on this page. Nothing is sent anywhere.</p>
+    <div class="examples">
+      <button type="button" class="btn btn-soft" data-ex="educator">🍎 Start from an educator example</button>
+      <button type="button" class="btn btn-soft" data-ex="workplace">💼 Start from a workplace example</button>
+      <button type="button" class="btn btn-soft" data-ex="community">🏪 Start from a small business example</button>
+      <button type="button" class="btn btn-soft" data-ex="blank">Clear the boxes</button>
+    </div>
+    <div class="field">
+      <label for="fName">Name your skill</label>
+      <input id="fName" type="text" maxlength="60" placeholder="Example: Family message helper" autocomplete="off">
+    </div>
+    <div class="field">
+      <label for="fWhen">Use this when...</label>
+      <p class="hint">This is how the AI decides whether to pick the skill up. Be specific.</p>
+      <input id="fWhen" type="text" maxlength="200" placeholder="Example: I ask for help writing a message to families" autocomplete="off">
+    </div>
+    <div class="field">
+      <label for="fSteps">The steps to follow</label>
+      <p class="hint">One step per line, the way you would explain it to a new colleague.</p>
+      <textarea id="fSteps" placeholder="Example: Ask me what the message is about&#10;Keep it under 120 words"></textarea>
+    </div>
+    <div class="field">
+      <label for="fGood">A good result looks like...</label>
+      <input id="fGood" type="text" maxlength="200" placeholder="Example: Warm, clear, and easy to read on a phone" autocomplete="off">
+    </div>
+    <div class="field">
+      <label for="fHuman">Stop and ask me when...</label>
+      <p class="hint">This line keeps a person in charge. It is the most important one.</p>
+      <input id="fHuman" type="text" maxlength="200" placeholder="Example: The message involves grades, discipline, health, or money" autocomplete="off">
+    </div>
+    <div class="out">
+      <div class="tabs" role="tablist" aria-label="Choose a version">
+        <button type="button" role="tab" id="tabPaste" aria-selected="true" aria-controls="outBox">Paste-in version (any tool, free accounts)</button>
+        <button type="button" role="tab" id="tabFile" aria-selected="false" aria-controls="outBox">Skill file version</button>
+      </div>
+      <pre id="outBox" role="tabpanel" tabindex="0"></pre>
+      <p class="where" id="outWhere"></p>
+      <div class="actions">
+        <button type="button" class="btn btn-main" id="copyBtn">Copy</button>
+        <button type="button" class="btn btn-alt" id="dlBtn">Download as a file</button>
+      </div>
+    </div>
+  </section>
+
+  
+  <section class="card" style="--c:var(--purple)" aria-labelledby="h-use">
+    <span class="kicker">After you copy it</span>
+    <h2 id="h-use">Three ways to use your skill</h2>
+    <div class="big-ideas">
+      <div class="idea"><span class="ico">📋</span><div><b>Paste it (works everywhere, free).</b>Use the paste-in version as the first message of a new chat. Save it in your notes app so it is ready next time.</div></div>
+      <div class="idea"><span class="ico">📁</span><div><b>Save it as a skill.</b>Gemini and Claude let you add the skill file version in their skill settings, and ChatGPT keeps skills inside plugins. After that, the AI picks your skill up when a request matches. Menus differ by tool and plan.</div></div>
+      <div class="idea"><span class="ico">🤝</span><div><b>Share it with your team.</b>A skill is plain text. Put it in a shared document so colleagues can use the same directions, whichever AI tool each person has.</div></div>
+    </div>
+    <div class="talk"><h3>💬 Try this</h3><p>Test your skill twice with two different requests. Did the AI follow every step? Did it stop and ask when it should have? Change one line and test again. Good skills are revised, not written perfectly the first time.</p></div>
+    <div class="cta">
+      <h3>Want the bigger picture?</h3>
+      <p>See what else AI tools can do, or why Gems and custom GPTs are becoming skills.</p>
+      <div class="actions" style="margin-top:0">
+        <a class="btn btn-main" href="./">🧰 The AI Toolbox</a>
+        <a class="btn btn-soft" href="then-and-now.html">🧭 Where did my custom bot go?</a>
+      </div>
+    </div>
+  </section>
+  <p class="where" style="text-align:center;margin-bottom:30px">Skill file details checked November 10, 2026. Tools change their menus often.</p>
+</main>
+
+<footer>Part of <a href="../">Demystifying AI for All</a> · Built by <strong>Jeffery Heil</strong> · An independent, free resource, used in <a href="https://globallearningaccess.com/home" target="_blank" rel="noopener">Global Learning Access</a> trainings</footer>
+
+<script>
+(function(){
+  function $(id){return document.getElementById(id);}
+  /* ------------------------------------------------------------
+     EXAMPLES for the skill builder. Change the words inside the quotes.
+     In "steps", \n starts a new line.
+     ------------------------------------------------------------ */
+  var EXAMPLES = {
+    educator:{
+      name:"Family message helper",
+      when:"I ask for help writing a message to students' families",
+      steps:"Ask me what the message is about and who it is for, if I have not said\nWrite it in plain, friendly language a busy parent can read on a phone\nKeep it under 120 words\nOffer a second version in the home language I name, and remind me to have a fluent speaker read it",
+      good:"Warm, clear, respectful, and free of school jargon",
+      human:"The message involves grades, discipline, health, money, or a family's personal situation"
+    },
+    workplace:{
+      name:"Meeting notes to action list",
+      when:"I paste meeting notes and ask what needs to happen next",
+      steps:"List each action with who owns it and the due date\nMark anything with no owner or no date as \"needs a decision\"\nPut the three most urgent items first\nKeep every item to one line",
+      good:"A short list a teammate who missed the meeting could act on",
+      human:"The notes mention a customer complaint, a staffing issue, or anything confidential"
+    },
+    community:{
+      name:"Customer reply helper",
+      when:"I paste a customer message and ask for help replying",
+      steps:"Thank the customer by name\nAnswer their question in two or three short sentences\nIf they are unhappy, say sorry once and offer one clear next step\nMatch the language the customer wrote in",
+      good:"Friendly, short, and something I would be comfortable sending under my shop's name",
+      human:"The customer asks for a refund, reports a safety problem, or is very upset"
+    },
+    blank:{name:"",when:"",steps:"",good:"",human:""}
+  };
+  var F = {name:$("fName"),when:$("fWhen"),steps:$("fSteps"),good:$("fGood"),human:$("fHuman")};
+  var mode="paste";
+  function lines(text){ return text.split("\n").map(function(s){return s.trim();}).filter(Boolean); }
+  function slug(text){ return text.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"") || "my-skill"; }
+  function buildText(){
+    var name=F.name.value.trim()||"[Name your skill]";
+    var when=F.when.value.trim()||"[say when to use it]";
+    var steps=lines(F.steps.value); if(!steps.length) steps=["[add your steps]"];
+    var good=F.good.value.trim()||"[describe a good result]";
+    var human=F.human.value.trim()||"[say when to stop and ask]";
+    var numbered=steps.map(function(s,i){return (i+1)+". "+s;}).join("\n");
+    if(mode==="file"){
+      return "---\nname: "+slug(F.name.value)+"\ndescription: Use this when "+when+".\n---\n\n# "+name+"\n\n## Steps\n"+numbered+"\n\n## A good result\n"+good+"\n\n## Stop and ask me first\nPause and ask before continuing when "+human+".\nNever invent facts, names, or numbers. If something is missing, ask me.\n";
+    }
+    return "For this chat, follow these directions. I call them my \""+name+"\" skill.\n\nUse them when "+when+".\n\nSteps:\n"+numbered+"\n\nA good result is: "+good+".\n\nStop and ask me before continuing when "+human+".\nNever invent facts, names, or numbers. If something is missing, ask me.\n\nReply \"Ready\" and wait for my first request.";
+  }
+  function renderOut(){
+    $("outBox").textContent=buildText();
+    $("tabPaste").setAttribute("aria-selected", mode==="paste"?"true":"false");
+    $("tabFile").setAttribute("aria-selected", mode==="file"?"true":"false");
+    $("outWhere").textContent = mode==="paste"
+      ? "Paste this as the first message of a new chat in any AI tool. Save it in your notes app so you can reuse it."
+      : "Save this as a text file named SKILL.md, or paste it into your tool's skill editor. Gemini and Claude accept this format. In ChatGPT, skills live inside plugins. Menus differ by tool and plan.";
+  }
+  Object.keys(F).forEach(function(k){ F[k].addEventListener("input",renderOut); });
+  $("tabPaste").addEventListener("click",function(){mode="paste";renderOut();});
+  $("tabFile").addEventListener("click",function(){mode="file";renderOut();});
+  Array.prototype.forEach.call(document.querySelectorAll("[data-ex]"),function(b){
+    b.addEventListener("click",function(){
+      var ex=EXAMPLES[b.getAttribute("data-ex")];
+      Object.keys(F).forEach(function(k){F[k].value=ex[k];});
+      renderOut();
+    });
+  });
+  $("copyBtn").addEventListener("click",function(){
+    var text=buildText(), btn=$("copyBtn");
+    function ok(){ btn.textContent="Copied ✓"; setTimeout(function(){btn.textContent="Copy";},1800); }
+    function fallback(){
+      var ta=document.createElement("textarea"); ta.value=text; ta.style.position="fixed"; ta.style.opacity="0";
+      document.body.appendChild(ta); ta.select();
+      try{ document.execCommand("copy"); ok(); }catch(e){ btn.textContent="Select the text and copy it"; }
+      document.body.removeChild(ta);
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(ok,fallback); } else { fallback(); }
+  });
+  $("dlBtn").addEventListener("click",function(){
+    var isFile = mode==="file";
+    var blob=new Blob([buildText()],{type:"text/plain"});
+    var a=document.createElement("a"); a.href=URL.createObjectURL(blob);
+    a.download = isFile ? "SKILL.md" : slug(F.name.value)+".txt";
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function(){URL.revokeObjectURL(a.href);},1000);
+  });
+  renderOut();
+})();
+</script>
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "bd52202e57cc448caf8023f1639ce27d"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

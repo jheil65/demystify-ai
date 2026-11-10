@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The AI Toolbox: What Can AI Actually Do? · Demystifying AI for All</title>
+<meta name="description" content="New to AI? Try six things today's AI tools can do, hands-on, then see what each one is called in Gemini, ChatGPT, Copilot, Claude, and DeepSeek. Free, no login, nothing saved.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧰</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#EF3FA9;--purple:#783CBD;--teal:#22D3C5;--navy:#1B3A6B;--blue:#2E75B6;
+  --yellow:#FFD93D;--orange:#FF6B35;--green:#06D6A0;--ink:#1A1A2E;--light:#F7F8FC;
+  --white:#FFFFFF;--border:#E4E9F2;--muted:#5B6478;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito Sans',sans-serif;background:var(--light);color:var(--ink);line-height:1.55;min-height:100vh}
+a{color:var(--blue)}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px}
+.topbar{background:var(--navy);color:#fff;padding:14px 0}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.topbar a{color:rgba(255,255,255,.85);text-decoration:none;font-family:'Nunito',sans-serif;font-weight:700;font-size:14px}
+.topbar a:hover{color:var(--yellow)}
+.tag{font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--teal);text-align:right}
+.intro{background:var(--navy);color:#fff;padding:8px 0 52px;position:relative;overflow:hidden}
+.intro::after{content:'';position:absolute;width:220px;height:220px;border-radius:50%;background:var(--teal);opacity:.12;right:-60px;top:-40px}
+.intro h1{font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(2rem,7vw,3rem);line-height:1.1;margin:14px 0 10px;position:relative;z-index:1}
+.intro h1 span{color:var(--yellow)}
+.intro p{color:rgba(255,255,255,.8);max-width:600px;position:relative;z-index:1}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;position:relative;z-index:1}
+.chip{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:40px;padding:5px 14px;font-size:13px;font-weight:600}
+
+.card{background:var(--white);border:1px solid var(--border);border-radius:20px;box-shadow:0 8px 30px rgba(27,58,107,.08);padding:24px;margin:0 0 20px;border-top:6px solid var(--c,var(--teal));scroll-margin-top:12px}
+.card.first{margin-top:-28px;position:relative;z-index:2}
+.kicker{font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--c,var(--purple))}
+.card h2{font-family:'Nunito',sans-serif;font-weight:900;font-size:1.45rem;line-height:1.2;margin:2px 0 8px}
+.card h3{font-family:'Nunito',sans-serif;font-weight:800;font-size:1.05rem;margin:0 0 6px}
+.lead{color:var(--muted);margin-bottom:14px}
+.small{font-size:14px;color:var(--muted)}
+.hidden{display:none!important}
+
+.btn{font-family:'Nunito',sans-serif;font-weight:800;font-size:16px;border:none;border-radius:40px;padding:12px 24px;cursor:pointer;transition:transform .12s,filter .12s;text-decoration:none;display:inline-block}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+.btn-main{background:var(--pink);color:#fff}
+.btn-alt{background:var(--navy);color:#fff}
+.btn-soft{background:var(--light);color:var(--ink);border:2px solid var(--border)}
+.btn[disabled]{opacity:.45;cursor:default;transform:none}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+button:focus-visible,a:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+
+/* power picker */
+.needs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.need{position:relative;text-align:left;font-family:'Nunito',sans-serif;background:#fff;border:2px solid var(--border);border-radius:16px;padding:12px;cursor:pointer;color:var(--ink);transition:border-color .12s,transform .12s}
+.need:hover{border-color:var(--teal);transform:translateY(-2px)}
+.need .e{font-size:26px;line-height:1;display:block;margin-bottom:6px}
+.need b{display:block;font-weight:900;font-size:15px;line-height:1.2}
+.need span.s{display:block;font-family:'Nunito Sans',sans-serif;font-size:12.5px;color:var(--muted);margin-top:3px;line-height:1.3}
+.need[aria-pressed="true"]{border-color:var(--navy);background:#EEF3FB}
+.need.done::after{content:'✓ tried';position:absolute;top:8px;right:8px;background:#E8FBF6;color:#047857;font-size:11px;font-weight:800;border-radius:20px;padding:2px 8px}
+.meter{display:flex;align-items:center;gap:10px;margin:14px 0 0;font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;color:var(--navy)}
+.meter .track{flex:1;height:10px;background:var(--border);border-radius:10px;overflow:hidden}
+.meter .fill{height:100%;width:0;background:var(--teal);border-radius:10px;transition:width .4s}
+
+/* power panel */
+.plain{background:var(--light);border-radius:14px;padding:14px;margin-bottom:14px}
+.plain b{font-family:'Nunito',sans-serif}
+.try{border:2px dashed var(--border);border-radius:16px;padding:16px;margin-bottom:14px}
+.try > .lab{font-family:'Nunito',sans-serif;font-weight:900;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--pink);margin-bottom:8px;display:block}
+.sim-note{font-size:12.5px;color:var(--muted);margin-top:10px}
+.lesson{margin-top:12px;background:#E8FBF6;border-left:5px solid var(--green);border-radius:12px;padding:13px 15px;animation:pop .3s ease}
+.lesson b,.caution b,.yourjob b,.freetip b{font-family:'Nunito',sans-serif}
+.caution{margin-top:12px;background:#FFF1EA;border-left:5px solid var(--orange);border-radius:12px;padding:13px 15px;animation:pop .3s ease}
+.yourjob{background:#FDE7F4;border-left:5px solid var(--pink);border-radius:12px;padding:13px 15px;margin-bottom:12px}
+.freetip{background:#FFF8DB;border-left:5px solid #E8C400;border-radius:12px;padding:13px 15px;margin-bottom:12px}
+.freetip code{display:block;background:#fff;border:1px solid #F0DC7A;border-radius:10px;padding:10px;margin-top:8px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13.5px;white-space:pre-wrap}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.names{display:grid;gap:6px;margin-top:8px}
+.nrow{display:grid;grid-template-columns:86px 1fr;gap:10px;align-items:start;background:var(--light);border-radius:10px;padding:9px 12px;font-size:14.5px}
+.nrow b{font-family:'Nunito',sans-serif}
+.badge{display:inline-block;font-family:'Nunito',sans-serif;font-weight:800;font-size:11px;border-radius:20px;padding:1px 8px;margin-left:4px;vertical-align:middle;white-space:nowrap}
+.b-free{background:#E8FBF6;color:#047857}
+.b-paid{background:#FFF1EA;color:#B4400F}
+.b-no{background:#ECEEF3;color:#4A5266}
+.b-check{background:#F1EAFB;color:#5B2A9A}
+
+/* shared sim bits */
+.opts{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.o{font-family:'Nunito',sans-serif;font-weight:800;font-size:14.5px;padding:10px 14px;border-radius:12px;border:2px solid var(--border);background:#fff;color:var(--ink);cursor:pointer;text-align:left}
+.o:hover{border-color:var(--teal)}
+.o[aria-pressed="true"],.o.on{border-color:var(--navy);background:var(--navy);color:#fff}
+.o[disabled]{opacity:.5;cursor:default}
+.bubble{border-radius:14px;padding:11px 14px;margin:8px 0;max-width:92%;animation:pop .3s ease}
+.bubble.me{background:var(--navy);color:#fff;margin-left:auto}
+.bubble.ai{background:var(--light);border:1px solid var(--border)}
+.bubble small{display:block;font-family:'Nunito',sans-serif;font-weight:800;font-size:11px;letter-spacing:.06em;text-transform:uppercase;opacity:.7}
+.doc{background:#FFFDF5;border:1px solid #EADFAF;border-radius:12px;padding:14px;font-size:14.5px;margin-bottom:10px}
+.doc h4{font-family:'Nunito',sans-serif;font-weight:900;margin-bottom:6px}
+.doc span.hit{background:var(--yellow);border-radius:4px;padding:0 2px}
+.scene{border-radius:14px;height:150px;display:flex;align-items:center;justify-content:center;gap:10px;font-size:54px;border:2px solid var(--border);position:relative;overflow:hidden;background:#EEF1F7}
+.scene .words{position:absolute;bottom:8px;left:0;right:0;text-align:center;font-family:'Nunito',sans-serif;font-weight:900;font-size:15px;color:var(--navy)}
+.scene.photo{background:linear-gradient(#BFE3FF,#F4E9D0)}
+.scene.cartoon{background:var(--yellow);border:4px solid var(--ink)}
+.scene.paint{background:linear-gradient(135deg,#FBD3E9,#C9F0E8,#FFF2B8)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.two > div{background:var(--light);border-radius:12px;padding:11px 13px;font-size:14px}
+.two h4{font-family:'Nunito',sans-serif;font-weight:900;font-size:13px;margin-bottom:4px}
+.two ul{padding-left:18px}
+.grp{font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;margin-top:8px}
+.prompt{background:var(--ink);color:#F4F6FB;border-radius:12px;padding:11px 13px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13.5px;margin-top:10px;white-space:pre-wrap}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.preview{border:2px solid var(--border);border-radius:14px;padding:14px;background:#fff;min-height:170px}
+.preview .ptitle{font-family:'Nunito',sans-serif;font-weight:900;transition:font-size .2s}
+.preview .pq{background:var(--light);border-radius:10px;padding:8px 10px;margin-top:8px;font-size:14px}
+.preview .pbtn{display:inline-block;margin-top:10px;border-radius:30px;padding:6px 16px;color:#fff;font-family:'Nunito',sans-serif;font-weight:800;font-size:14px}
+.preview .ptimer{float:right;font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;background:var(--ink);color:#fff;border-radius:20px;padding:2px 10px}
+.log{display:grid;gap:6px;margin-top:10px}
+.log div{background:var(--light);border-left:4px solid var(--teal);border-radius:10px;padding:9px 12px;font-size:14.5px;animation:pop .3s ease}
+.log div.flag{border-left-color:var(--orange);background:#FFF1EA}
+.think{background:var(--ink);color:#CFE9E5;border-radius:12px;padding:12px 14px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13.5px;margin:8px 0;animation:pop .3s ease}
+.think div{margin:3px 0}
+.think .fix{color:var(--yellow)}
+
+/* meet the five */
+.picker{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:8px;margin-bottom:14px}
+.pick{font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;padding:12px 8px;border-radius:14px;border:2px solid var(--border);background:#fff;color:var(--ink);cursor:pointer}
+.pick:hover{border-color:var(--teal)}
+.pick[aria-pressed="true"]{border-color:var(--navy);background:var(--navy);color:#fff}
+.who{font-size:14px;color:var(--muted);margin-bottom:8px}
+.facts{display:grid;gap:8px;margin:10px 0}
+.fact{display:flex;gap:10px;align-items:flex-start;background:var(--light);border-radius:12px;padding:11px 13px;font-size:15px}
+.fact .ico{font-size:18px;line-height:1.3}
+.fact b{font-family:'Nunito',sans-serif}
+.legend{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;font-size:13px;color:var(--muted)}
+
+/* match game */
+.progress{display:flex;gap:6px;margin-bottom:14px}
+.progress span{flex:1;height:6px;border-radius:6px;background:var(--border)}
+.progress span.done{background:var(--teal)}
+.progress span.now{background:var(--pink)}
+.q{font-family:'Nunito',sans-serif;font-weight:800;font-size:1.12rem;line-height:1.35;background:var(--light);border-radius:14px;padding:16px;margin-bottom:12px}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
+.m{font-family:'Nunito',sans-serif;font-weight:800;font-size:14.5px;padding:12px 10px;border-radius:14px;border:2px solid var(--border);background:#fff;color:var(--ink);cursor:pointer}
+.m:hover{border-color:var(--teal)}
+.m[disabled]{cursor:default}
+.m.right{border-color:var(--green);background:#E8FBF6}
+.m.picked{border-color:var(--pink);background:#FDE7F4}
+
+.big-ideas{display:grid;gap:10px;margin:14px 0}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--light);border-radius:14px;padding:14px}
+.idea .ico{font-size:24px;line-height:1}
+.idea b{font-family:'Nunito',sans-serif;display:block}
+.talk{background:#F1EAFB;border-radius:14px;padding:16px;margin-top:6px}
+.cta{background:var(--navy);color:#fff;border-radius:16px;padding:18px;margin-top:16px}
+.cta p{color:rgba(255,255,255,.8);margin-bottom:12px}
+.sources{font-size:13.5px;color:var(--muted);margin:0 0 30px}
+.sources summary{cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;color:var(--navy);padding:6px 0}
+.sources ul{padding-left:20px;margin-top:6px}
+.sources li{margin-bottom:5px}
+.checked{display:inline-block;background:#E8FBF6;color:#047857;font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;border-radius:20px;padding:3px 10px}
+footer{background:var(--navy);color:rgba(255,255,255,.55);text-align:center;padding:24px 16px;font-size:13px}
+footer a{color:var(--teal);text-decoration:none}
+footer strong{color:rgba(255,255,255,.85);font-family:'Nunito',sans-serif}
+@media (max-width:520px){.card{padding:18px}.split,.two{grid-template-columns:1fr}.nrow{grid-template-columns:76px 1fr}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap">
+  <a href="../">← Demystifying AI for All</a>
+  <span class="tag">The AI Toolbox</span>
+</div></div>
+
+<header class="intro"><div class="wrap">
+  <h1>AI can do more than <span>chat</span>. 🧰</h1>
+  <p>Most people only ever type a question and read the answer. Today's AI tools have more inside them: they can read your documents, make pictures, build small apps, research for you, tutor you, and slow down to think. Try each one here first, with no account and no pressure. Then see where to find it in five popular tools.</p>
+  <div class="chips">
+    <span class="chip">⏱ About 15 minutes, or one at a time</span>
+    <span class="chip">🙈 No login</span>
+    <span class="chip">💾 Nothing is saved</span>
+    <span class="chip">🧪 Practice versions, not live AI</span>
+  </div>
+</div></header>
+
+<main class="wrap">
+
+  <!-- PART 1 -->
+  <section class="card first" id="powers" style="--c:var(--teal)" aria-labelledby="h-powers">
+    <span class="kicker" style="color:#0E8F86">Part 1 · Try it</span>
+    <h2 id="h-powers">What do you need to do?</h2>
+    <p class="lead">Pick any one. There is no order and no score. Each has a short hands-on try.</p>
+    <div class="needs" id="needs" role="group" aria-label="Choose something AI can do"></div>
+    <div class="meter" aria-live="polite"><span id="meterText">Tried 0 of 6</span><span class="track"><span class="fill" id="meterFill"></span></span></div>
+  </section>
+
+  <section class="card" id="panel" style="--c:var(--pink)" aria-live="polite"></section>
+
+  <!-- PART 2 -->
+  <section class="card" id="five" style="--c:var(--purple)" aria-labelledby="h-five">
+    <span class="kicker">Part 2 · Compare</span>
+    <h2 id="h-five">Meet the five</h2>
+    <p class="lead">These five tools can do most of the same things. They use different names, and what is free differs. Pick one to see where each power lives.</p>
+    <div class="picker" id="toolPicker" role="group" aria-label="Choose an AI tool"></div>
+    <div id="toolStage"></div>
+    <div class="legend">
+      <span><span class="badge b-free">free, with limits</span> a few uses per day or week</span>
+      <span><span class="badge b-paid">usually paid</span></span>
+      <span><span class="badge b-check">check your plan</span> it varies or we could not confirm</span>
+      <span><span class="badge b-no">not offered</span></span>
+    </div>
+  </section>
+
+  <!-- PART 3 -->
+  <section class="card" id="match" style="--c:var(--blue)" aria-labelledby="h-match">
+    <span class="kicker">Part 3 · Use it</span>
+    <h2 id="h-match">Which one would you reach for?</h2>
+    <p class="lead">Six everyday situations. Pick the power that fits best. Guessing is welcome.</p>
+    <div id="matchStage" aria-live="polite"></div>
+  </section>
+
+  <section class="card" style="--c:var(--yellow)" aria-labelledby="h-end">
+    <span class="kicker" style="color:var(--navy)">What to take with you</span>
+    <h2 id="h-end">Learn the job, not the brand.</h2>
+    <div class="big-ideas">
+      <div class="idea"><span class="ico">🧰</span><div><b>Ask "what do I need to do?" first.</b>Once you know the job (read this, make that, teach me, research this), you can find the matching button in any tool.</div></div>
+      <div class="idea"><span class="ico">🔑</span><div><b>The best tool is often the one you can get to.</b>A free tool you are allowed to use, and know well, beats a famous one you cannot access. Most powers have a free workaround, and each one on this page shows you how.</div></div>
+      <div class="idea"><span class="ico">🧑‍🤝‍🧑</span><div><b>Every power comes with a human job.</b>Check the source. Test the app. Look at who is in the picture. Do your own thinking when you are learning. The AI does not do these for you.</div></div>
+    </div>
+    <div class="talk"><h3>💬 Talk about it with your group</h3><p>Which power surprised you most? Think of one person you know who only uses AI to chat. Which power would help them this week, and what would you warn them about?</p></div>
+    <div class="cta">
+      <h3>Keep going</h3>
+      <p>Save your own directions so any AI tool works your way, or see why Gems and custom GPTs are changing names.</p>
+      <div class="actions" style="margin-top:0">
+        <a class="btn btn-main" href="skill-builder.html">🧩 Skill Builder</a>
+        <a class="btn btn-soft" href="then-and-now.html">🧭 Where did my custom bot go?</a>
+        <a class="btn btn-soft" href="../playground/">🎮 AI Playground</a>
+      </div>
+    </div>
+  </section>
+
+  <details class="sources">
+    <summary>Where these facts come from <span class="checked">Last checked: November 10, 2026</span></summary>
+    <p>Feature names and free limits change often and differ by country, age, and account type. Treat the badges as a starting point and check inside your own tool. Some DeepSeek and Claude details come from general knowledge of the apps and were not confirmed on a company page today.</p>
+    <ul>
+      <li>Google, <a href="https://support.google.com/gemini/answer/18560919?hl=en" target="_blank" rel="noopener">About the transition from Gems to skills</a></li>
+      <li>WriteNexa, <a href="https://www.writenexa.com/blog/chatgpt-free-in-2026-what-you-get-what-still-runs-out-and-when-it-resets/" target="_blank" rel="noopener">ChatGPT Free in 2026</a></li>
+      <li>DEV Community, <a href="https://dev.to/theaidownside/microsoft-strips-copilots-free-features-and-puts-deep-research-behind-a-subscription-6g6" target="_blank" rel="noopener">Microsoft puts Deep Research behind a subscription</a></li>
+      <li>Whizi, <a href="https://whizi.io/resources/can-claude-generate-images/" target="_blank" rel="noopener">Can Claude generate images?</a></li>
+      <li>Global Times, <a href="https://www.globaltimes.cn/page/202604/1359726.shtml" target="_blank" rel="noopener">DeepSeek unveils V4 model</a></li>
+    </ul>
+  </details>
+</main>
+
+<footer>Part of <a href="../">Demystifying AI for All</a> · Built by <strong>Jeffery Heil</strong> · An independent, free resource, used in <a href="https://globallearningaccess.com/home" target="_blank" rel="noopener">Global Learning Access</a> trainings</footer>
+
+<script>
+(function(){
+  function $(id){return document.getElementById(id);}
+  function el(tag, cls, text){var e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e;}
+  function btn(cls, text, fn){var b=el("button",cls,text); b.type="button"; b.addEventListener("click",fn); return b;}
+  function box(cls, bold, text){var d=el("div",cls); d.appendChild(el("b",null,bold+" ")); d.appendChild(document.createTextNode(text)); return d;}
+
+  var TOOL_ORDER = ["Gemini","ChatGPT","Copilot","Claude","DeepSeek"];
+  /* Badge codes: f = free with limits, p = usually paid, c = check your plan, n = not offered */
+  var BADGE = {f:["b-free","free, with limits"],p:["b-paid","usually paid"],c:["b-check","check your plan"],n:["b-no","not offered"]};
+
+  /* ------------------------------------------------------------
+     POWERS. To edit the words, change the text inside the quotes.
+     names: one line per tool, in this order:
+       Gemini, ChatGPT, Copilot, Claude, DeepSeek
+     Each line is [what to look for, badge code].
+     ------------------------------------------------------------ */
+  var POWERS = [
+    { id:"files", e:"📎", need:"Read my document", sub:"Answer from a file I give it",
+      title:"Read my document", feature:"Often called: upload, attach, or add files",
+      plain:"You hand the AI a file, like a handbook, a spreadsheet, or a photo of a notice, and ask questions about it. It answers from your file instead of from its general memory.",
+      job:"Keep private information out (names, grades, health, account numbers) unless your organization has approved the tool. Ask it to quote the sentence it used.",
+      tip:["No upload button, or you hit the limit? Paste the text into the chat and add:","Answer only from the text I pasted. Quote the sentence you used. If the answer is not there, say so."],
+      names:[["Upload files, or Add from Drive","f"],["Add photos and files","f"],["Upload","f"],["Add files","f"],["Attach (reads the text in files)","f"]] },
+    { id:"image", e:"🎨", need:"Make a picture", sub:"Create an image from my words",
+      title:"Make a picture", feature:"Often called: create image",
+      plain:"You describe a picture in words and the AI draws it. Some tools can also make short videos and music the same way.",
+      job:"Look at who and what is in the picture. If you leave details out, the AI fills them in with the most common images it learned from, and that is how stereotypes slip in. Tell people when an image is AI-made.",
+      tip:["Free accounts usually get only a few pictures a day. Make each one count by deciding the details first:","Create an image of [who, with details], in [place], in [style]. Include the words \"[text]\"."],
+      names:[["Create image","f"],["Create image","f"],["Create an image","f"],["Does not make pictures. It can draw charts and diagrams.","n"],["Does not make pictures in the chat app","n"]] },
+    { id:"build", e:"🧱", need:"Build something with me", sub:"A quiz, a tool, a web page",
+      title:"Build something with me", feature:"Often called: Canvas, Artifacts, or Pages",
+      plain:"A workspace opens beside the chat. You describe what you want, the AI writes the document or the computer code, and you see the result right away. You ask for changes in plain words. You do not need to know how to code.",
+      job:"Test it like a learner would. Click everything. Check the content for mistakes. The AI built it quickly, and you are the one who decides whether it is good enough to share.",
+      tip:["No workspace in your tool? Ask for the code and open it yourself:","Write this as one HTML file I can save and open in my browser: [describe it]. Keep it simple and phone-friendly."],
+      names:[["Canvas","f"],["Canvas","c"],["Pages","c"],["Artifacts","f"],["Writes the code. Preview is limited.","f"]] },
+    { id:"research", e:"🔎", need:"Research a big question", sub:"Many sources, one report",
+      title:"Research a big question", feature:"Often called: deep research",
+      plain:"Instead of one quick answer, the AI makes a plan, searches many websites, reads them, and writes a report with links to its sources. It takes minutes, not seconds.",
+      job:"Open the sources that matter. A long report with links looks trustworthy, and it can still misread a page or lean on a weak source.",
+      tip:["No research button, or it is paid in your tool? Do it in steps in a regular chat with web search on:","First, list 5 questions we need to answer about [topic]. Then answer them one at a time, with a link for every claim. Tell me which sources you trust least and why."],
+      names:[["Deep research","f"],["Deep research","c"],["Researcher (removed from free accounts in August 2026)","p"],["Research","c"],["DeepThink with Search (a search, not a full report)","f"]] },
+    { id:"learn", e:"🎓", need:"Help me learn it", sub:"A tutor, not an answer machine",
+      title:"Help me learn it", feature:"Often called: guided learning or study mode",
+      plain:"The AI switches from giving answers to teaching. It asks you questions, gives hints, checks what you understand, and lets you do the thinking.",
+      job:"Stay in the struggle a little. If you ask it to give you the answer, it will. The learning happens when you answer its questions yourself.",
+      tip:["Any free chat can act like a tutor if you ask this way:","Be my tutor for [topic]. Do not give me the answer. Ask me one question at a time, give a hint if I am stuck, and check my understanding before moving on."],
+      names:[["Guided learning","f"],["Study mode","f"],["Study and Learn","c"],["Learning mode","c"],["No tutor button. Use the tutor prompt in the free-account tip.","n"]] },
+    { id:"think", e:"🧠", need:"Think harder", sub:"Slow down for tricky problems",
+      title:"Think harder", feature:"Often called: thinking, reasoning, or a model picker",
+      plain:"Most tools let you choose between a fast mode and a slower mode that works through a problem step by step before it answers. Slower is better for puzzles, planning, math, and anything with many conditions.",
+      job:"Thinking mode is more careful, not always correct. Read its steps when you can, and check the result when it matters.",
+      tip:["No thinking button? Ask for the steps:","Work through this step by step. Then check your own answer and tell me if you find a mistake."],
+      names:[["Model menu (Fast, Thinking, Pro)","f"],["Think","f"],["Think Deeper","f"],["Extended thinking","c"],["DeepThink","f"]] }
+  ];
+  var PINDEX = {}; POWERS.forEach(function(p,i){PINDEX[p.id]=i;});
+
+  /* ---------- Part 1: picker and panel ---------- */
+  var tried = {}, cur = null;
+  var needs = $("needs");
+  POWERS.forEach(function(p,i){
+    var b = el("button","need"); b.type="button"; b.setAttribute("aria-pressed","false");
+    var e=el("span","e",p.e); e.setAttribute("aria-hidden","true");
+    b.appendChild(e); b.appendChild(el("b",null,p.need)); b.appendChild(el("span","s",p.sub));
+    b.addEventListener("click",function(){ openPower(i,true); });
+    needs.appendChild(b);
+  });
+  var extra = el("a","need"); extra.href="skill-builder.html"; extra.style.textDecoration="none";
+  var ee=el("span","e","🧩"); ee.setAttribute("aria-hidden","true");
+  extra.appendChild(ee); extra.appendChild(el("b",null,"Remember how I like it")); extra.appendChild(el("span","s","Skills. Opens the Skill Builder →"));
+  needs.appendChild(extra);
+
+  function markTried(id){
+    if(tried[id]) return; tried[id]=true;
+    var n=Object.keys(tried).length;
+    needs.children[PINDEX[id]].classList.add("done");
+    $("meterText").textContent = n===POWERS.length ? "You tried all 6. Nice work." : "Tried "+n+" of "+POWERS.length;
+    $("meterFill").style.width=(n/POWERS.length*100)+"%";
+  }
+
+  function openPower(i, scroll){
+    cur=i; var p=POWERS[i], panel=$("panel");
+    Array.prototype.forEach.call(needs.children,function(b,bi){ if(b.tagName==="BUTTON") b.setAttribute("aria-pressed", bi===i?"true":"false"); });
+    panel.textContent="";
+    panel.appendChild(el("span","kicker",p.feature));
+    panel.appendChild(el("h2",null,p.e+" "+p.title));
+    var plain=el("div","plain"); plain.appendChild(el("b",null,"In plain words: ")); plain.appendChild(document.createTextNode(p.plain)); panel.appendChild(plain);
+    var tr=el("div","try"); tr.appendChild(el("span","lab","Try it"));
+    var stage=el("div"); tr.appendChild(stage); panel.appendChild(tr);
+    SIMS[p.id](stage, function(){ markTried(p.id); });
+    panel.appendChild(box("yourjob","Your job as the human:",p.job));
+    var tip=el("div","freetip"); tip.appendChild(el("b",null,"Free-account tip: ")); tip.appendChild(document.createTextNode(p.tip[0])); tip.appendChild(el("code",null,p.tip[1])); panel.appendChild(tip);
+    panel.appendChild(el("h3",null,"Where to find it"));
+    var names=el("div","names");
+    p.names.forEach(function(n,ti){ names.appendChild(nameRow(TOOL_ORDER[ti], n)); });
+    panel.appendChild(names);
+    var acts=el("div","actions");
+    var nextI=(i+1)%POWERS.length;
+    acts.appendChild(btn("btn btn-main","Next: "+POWERS[nextI].need+" →",function(){openPower(nextI,true);}));
+    var a=el("a","btn btn-soft","Compare the five tools ↓"); a.href="#five"; acts.appendChild(a);
+    panel.appendChild(acts);
+    if(scroll){ panel.scrollIntoView({behavior: window.matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth", block:"start"}); }
+  }
+  function nameRow(label, n){
+    var row=el("div","nrow"); row.appendChild(el("b",null,label));
+    var s=el("span",null,n[0]); var bd=el("span","badge "+BADGE[n[1]][0],BADGE[n[1]][1]); s.appendChild(document.createTextNode(" ")); s.appendChild(bd);
+    row.appendChild(s); return row;
+  }
+
+  /* ------------------------------------------------------------
+     SIMS. One small practice activity per power.
+     The text near the top of each one is safe to edit.
+     ------------------------------------------------------------ */
+  var SIMS = {};
+
+  /* --- Read my document --- */
+  SIMS.files = function(stage, done){
+    var DOC_TITLE = "Community Center: Room Booking Rules";
+    var DOC = [
+      "Rooms can be booked by any resident aged 18 or older.",
+      "Bookings must be made at least 7 days before the event.",
+      "Each booking is for a maximum of 4 hours.",
+      "Registered nonprofit groups do not pay a fee.",
+      "All other groups pay a cleaning deposit, which is returned after the event."
+    ];
+    var QS = [
+      ["How far ahead do I need to book?", "At least 7 days before your event.", 1],
+      ["Does my nonprofit have to pay?", "No. Registered nonprofit groups do not pay a fee.", 3],
+      ["Can we bring food?", "The document does not say anything about food. I would ask the community center directly.", -1]
+    ];
+    var asked=0;
+    var doc=el("div","doc"); doc.appendChild(el("h4",null,"📄 "+DOC_TITLE));
+    var spans=DOC.map(function(s){var sp=el("span",null,s+" "); doc.appendChild(sp); return sp;});
+    stage.appendChild(doc);
+    stage.appendChild(el("p","small","You uploaded this page. Ask it something:"));
+    var opts=el("div","opts"), out=el("div");
+    QS.forEach(function(q){
+      opts.appendChild(btn("o",q[0],function(){
+        spans.forEach(function(sp){sp.classList.remove("hit");});
+        out.textContent="";
+        var me=el("div","bubble me"); me.appendChild(el("small",null,"You")); me.appendChild(document.createTextNode(q[0])); out.appendChild(me);
+        var ai=el("div","bubble ai"); ai.appendChild(el("small",null,"AI")); ai.appendChild(document.createTextNode(q[1])); out.appendChild(ai);
+        if(q[2]>=0){ spans[q[2]].classList.add("hit"); out.appendChild(box("lesson","See the highlight?","That is the sentence the answer came from. A good answer from a document can always point to its source.")); }
+        else { out.appendChild(box("caution","Nothing is highlighted.","The answer is not in the document, and this AI said so. That is the behavior you want. Some tools will guess instead, which is why you ask for the quote.")); }
+        asked++; if(asked>=2) done();
+      }));
+    });
+    stage.appendChild(opts); stage.appendChild(out);
+    stage.appendChild(el("p","sim-note","Practice version. A real tool reads your actual file, including long ones."));
+  };
+
+  /* --- Make a picture --- */
+  SIMS.image = function(stage, done){
+    var BASE = "a scientist";
+    var GROUPS = [
+      { key:"who", label:"Who, exactly?", guess:"What the scientist looks like", opts:[["a woman in her 50s","👩🏽‍🔬"],["a young man who uses a wheelchair","🧑🏿‍🦽"],["a grandmother teaching her grandchild","👵🏼"]] },
+      { key:"where", label:"Where?", guess:"The setting", opts:[["in a rice field","🌾"],["in a school lab","🧪"],["at a kitchen table","🍲"]] },
+      { key:"style", label:"What style?", guess:"The art style", opts:[["as a photo","photo"],["as a cartoon","cartoon"],["as a watercolor painting","paint"]] },
+      { key:"words", label:"Any words on it?", guess:"Whether to add text", opts:[["with the words \"Science Week\"","Science Week"],["with no text",""]] }
+    ];
+    var pick={};
+    var scene=el("div","scene"); stage.appendChild(scene);
+    var prompt=el("div","prompt"); stage.appendChild(prompt);
+    var two=el("div","two"); var dec=el("div"), gue=el("div"); two.appendChild(dec); two.appendChild(gue); stage.appendChild(two);
+    GROUPS.forEach(function(g){
+      stage.appendChild(el("div","grp",g.label));
+      var opts=el("div","opts");
+      g.opts.forEach(function(o,oi){
+        var b=btn("o",o[0],function(){ pick[g.key]=(pick[g.key]===oi?undefined:oi); render(); });
+        b.setAttribute("aria-pressed","false"); b.dataset.g=g.key; b.dataset.i=oi; opts.appendChild(b);
+      });
+      stage.appendChild(opts);
+    });
+    var out=el("div"); stage.appendChild(out);
+    stage.appendChild(el("p","sim-note","Practice version. The emoji stand in for a picture. A real tool would draw a full image."));
+    function render(){
+      Array.prototype.forEach.call(stage.querySelectorAll(".o"),function(b){ b.setAttribute("aria-pressed", pick[b.dataset.g]==b.dataset.i ? "true":"false"); });
+      var who=pick.who!=null?GROUPS[0].opts[pick.who]:null, where=pick.where!=null?GROUPS[1].opts[pick.where]:null,
+          style=pick.style!=null?GROUPS[2].opts[pick.style]:null, words=pick.words!=null?GROUPS[3].opts[pick.words]:null;
+      scene.className="scene"+(style?" "+style[1]:""); scene.textContent="";
+      scene.appendChild(el("span",null, who?who[1]:"🧑‍🔬"));
+      scene.appendChild(el("span",null, where?where[1]:"❓"));
+      if(words && words[1]) scene.appendChild(el("span","words",words[1]));
+      var text="Create an image of "+(who? "a scientist, "+who[0] : BASE);
+      if(where) text+=", "+where[0]; if(style) text+=", "+style[0]; if(words) text+=", "+words[0];
+      prompt.textContent=text+".";
+      dec.textContent=""; gue.textContent="";
+      dec.appendChild(el("h4",null,"✅ You decided")); gue.appendChild(el("h4",null,"🎲 The AI will guess"));
+      var du=el("ul"), gu=el("ul"), n=0;
+      GROUPS.forEach(function(g){ if(pick[g.key]!=null){ du.appendChild(el("li",null,g.opts[pick[g.key]][0])); n++; } else { gu.appendChild(el("li",null,g.guess)); } });
+      if(!n) du.appendChild(el("li",null,"Only: a scientist"));
+      if(n===GROUPS.length) gu.appendChild(el("li",null,"Much less now"));
+      dec.appendChild(du); gue.appendChild(gu);
+      out.textContent="";
+      if(n===0){ out.appendChild(box("caution","Start here:","with only \"a scientist,\" the AI decides everything else. It usually picks the most common picture it has seen. Add details and watch the guess list shrink.")); }
+      if(n>=3){ out.appendChild(box("lesson","Now the picture is yours.","You made the choices instead of leaving them to the AI's habits. The same idea works for writing: details in, better results out.")); done(); }
+    }
+    render();
+  };
+
+  /* --- Build something with me --- */
+  SIMS.build = function(stage, done){
+    var REQS = [
+      ["Make me a 2-question quiz about recycling", "<h1>Recycling Quiz</h1> + 2 questions", function(s){s.made=true;}],
+      ["Make the title bigger", "h1 { font-size: 28px }", function(s){s.big=true;}],
+      ["Change the button to green", "button { background: green }", function(s){s.green=true;}],
+      ["Add a 60-second timer", "startTimer(60)", function(s){s.timer=true;}]
+    ];
+    var state={}, count=0, code=[];
+    var split=el("div","split"), left=el("div"), right=el("div"); split.appendChild(left); split.appendChild(right); stage.appendChild(split);
+    left.appendChild(el("p","small","Chat. Tap a request, top to bottom:"));
+    var pv=el("div","preview"); right.appendChild(el("p","small","Workspace preview:")); right.appendChild(pv);
+    var codeBox=el("div","prompt hidden"); var out=el("div");
+    var btns=REQS.map(function(r,i){
+      var b=btn("o",r[0],function(){ r[2](state); code.push(r[1]); b.disabled=true; b.classList.add("on"); count++; if(btns[i+1]) btns[i+1].disabled=false; render(); });
+      b.style.display="block"; b.style.width="100%"; b.style.marginBottom="8px"; if(i>0) b.disabled=true; left.appendChild(b); return b;
+    });
+    var peek=btn("btn btn-soft","Peek at the code",function(){ codeBox.classList.toggle("hidden"); });
+    stage.appendChild(el("div","actions")).appendChild(peek);
+    stage.appendChild(codeBox); stage.appendChild(out);
+    stage.appendChild(el("p","sim-note","Practice version. A real workspace writes working code and lets you click through the finished app."));
+    function render(){
+      pv.textContent="";
+      if(!state.made){ pv.appendChild(el("p","small","Nothing here yet. Ask for something.")); }
+      else{
+        if(state.timer) pv.appendChild(el("span","ptimer","⏱ 1:00"));
+        var t=el("div","ptitle","Recycling Quiz"); t.style.fontSize=state.big?"28px":"17px"; pv.appendChild(t);
+        pv.appendChild(el("div","pq","1. Which bin does a glass jar go in?"));
+        pv.appendChild(el("div","pq","2. Can a greasy pizza box be recycled?"));
+        var pb=el("span","pbtn","Check answers"); pb.style.background=state.green?"#0E9F6E":"#5B6478"; pv.appendChild(pb);
+      }
+      codeBox.textContent = code.length ? code.join("\n") : "(no code yet)";
+      out.textContent="";
+      if(count>=2) { out.appendChild(box("lesson","You are directing, not coding.","You said what you wanted in plain words and the AI changed the code. Tap \"Peek at the code\" to see what it wrote for you.")); done(); }
+      if(count===REQS.length) out.appendChild(box("caution","Before you share it:","is question 2 answered correctly for your town? Recycling rules differ by place. The AI built the quiz. Checking the content is still on you."));
+    }
+    render();
+  };
+
+  /* --- Research a big question --- */
+  SIMS.research = function(stage, done){
+    var QUESTION = "How are schools in different countries handling student phones?";
+    var PLAN = ["Find official rules from 3 countries", "Look for studies on what happened after the rules", "Collect what teachers and students say", "Write a report with links"];
+    var STEPS = [
+      ["Searching for official policy pages...", ""],
+      ["Reading 14 pages in full...", ""],
+      ["One country's rule changed last year. Searching again for the newer version...", ""],
+      ["Found 2 studies that disagree. Noting both sides...", ""],
+      ["Writing the report and attaching sources...", ""]
+    ];
+    stage.appendChild(el("div","q",QUESTION));
+    var opts=el("div","opts"), out=el("div"); stage.appendChild(opts); stage.appendChild(out);
+    stage.appendChild(el("p","sim-note","Practice version. No real searching happens here, and the report is made up to show the pattern."));
+    opts.appendChild(btn("o","⚡ Quick answer",function(){
+      out.textContent="";
+      var ai=el("div","bubble ai"); ai.appendChild(el("small",null,"AI · about 3 seconds")); ai.appendChild(document.createTextNode("Many countries now limit phones during class. Rules range from full bans to teacher choice. Supporters point to better focus, and critics raise safety and fairness concerns.")); out.appendChild(ai);
+      out.appendChild(box("lesson","Fast and reasonable.","Good for getting your bearings. Notice what is missing: which countries, which rules, how recent, and where any of it came from."));
+    }));
+    opts.appendChild(btn("o","🔎 Deep research",function(){
+      out.textContent="";
+      out.appendChild(el("h3",null,"First, it shows you a plan:"));
+      var log=el("div","log"); PLAN.forEach(function(s,i){ log.appendChild(el("div",null,(i+1)+". "+s)); }); out.appendChild(log);
+      out.appendChild(el("p","small","You can change the plan before it starts. That is your first chance to steer."));
+      var go=btn("btn btn-main","Approve the plan →",function(){
+        go.disabled=true;
+        var run=el("div","log"); out.appendChild(run); var i=0;
+        function step(){
+          if(i<STEPS.length){ run.appendChild(el("div",null,STEPS[i][0])); i++; setTimeout(step, window.matchMedia("(prefers-reduced-motion:reduce)").matches?0:650); }
+          else finish();
+        }
+        step();
+      });
+      out.appendChild(el("div","actions")).appendChild(go);
+    }));
+    function finish(){
+      var ai=el("div","bubble ai"); ai.appendChild(el("small",null,"AI · about 8 minutes · 6 pages · 19 sources"));
+      ai.appendChild(document.createTextNode("A report with sections for each country, a comparison table, a summary of two studies that disagree, and a numbered link after each claim."));
+      out.appendChild(ai);
+      var chk=btn("btn btn-alt","Check source number 7",function(){
+        chk.disabled=true;
+        var f=el("div","log"); var d=el("div","flag","Source 7 is a personal blog from 2021 with no author listed. The report used it for a claim about test scores."); f.appendChild(d); out.appendChild(f);
+        out.appendChild(box("caution","This is why you open the sources.","A research report is a strong first draft from a fast reader. It is not a fact-checker. You decide which sources are good enough for your purpose."));
+        done();
+      });
+      out.appendChild(el("div","actions")).appendChild(chk);
+    }
+  };
+
+  /* --- Help me learn it --- */
+  SIMS.learn = function(stage, done){
+    stage.appendChild(el("div","q","What is 25% of 80?"));
+    var opts=el("div","opts"), out=el("div"); stage.appendChild(opts); stage.appendChild(out);
+    stage.appendChild(el("p","sim-note","Practice version. A real tutor mode responds to whatever you type."));
+    function ai(text){ var b=el("div","bubble ai"); b.appendChild(el("small",null,"AI")); b.appendChild(document.createTextNode(text)); out.appendChild(b); }
+    function ask(text, choices, right, onRight, hint){
+      ai(text);
+      var o=el("div","opts"); out.appendChild(o);
+      choices.forEach(function(c,i){
+        o.appendChild(btn("o",c,function(){
+          if(i===right){ Array.prototype.forEach.call(o.children,function(x){x.disabled=true;}); o.children[i].classList.add("on"); onRight(); }
+          else { o.children[i].disabled=true; ai(hint); }
+        }));
+      });
+    }
+    opts.appendChild(btn("o","💬 Regular chat",function(){
+      out.textContent=""; ai("20.");
+      out.appendChild(box("lesson","Correct, and done in a second.","Useful when you only need the number. Ask yourself: could you do the next one on your own?"));
+    }));
+    opts.appendChild(btn("o","🎓 Tutor mode",function(){
+      out.textContent="";
+      ask("Let's work it out together. What does \"percent\" mean?", ["Out of 10","Out of 100","Out of 1,000"], 1, function(){
+        ask("Yes. So 25% means 25 out of 100. Which fraction is that the same as?", ["One half","One quarter","One fifth"], 1, function(){
+          ask("Right, one quarter. So what is one quarter of 80?", ["20","25","40"], 0, function(){
+            ai("You got it: 20. And you now have a shortcut. For 25% of anything, divide by 4.");
+            out.appendChild(box("lesson","Same answer. Who did the thinking this time?","You did. It took longer, and you can now do the next one without the AI. That trade is the whole point of a tutor mode."));
+            done();
+          }, "Not quite. Try splitting 80 into 4 equal parts.");
+        }, "Close. Think of money: 25 cents is which part of a dollar?");
+      }, "Not quite. Hint: \"cent\" is the same word as in \"century.\"");
+    }));
+  };
+
+  /* --- Think harder --- */
+  SIMS.think = function(stage, done){
+    stage.appendChild(el("div","q","A vendor has 17 mangoes. She sells all but 9, then buys 4 more. How many does she have now?"));
+    var opts=el("div","opts"), out=el("div"); stage.appendChild(opts); stage.appendChild(out);
+    stage.appendChild(el("p","sim-note","Practice version, and a simple one. Many fast modes get this puzzle right today. The pattern shows up on harder, multi-step problems."));
+    var seen={};
+    opts.appendChild(btn("o","⚡ Fast mode",function(){
+      out.textContent=""; seen.f=true;
+      var ai=el("div","bubble ai"); ai.appendChild(el("small",null,"AI · under 1 second")); ai.appendChild(document.createTextNode("17 minus 9 is 8, plus 4 is 12. She has 12 mangoes.")); out.appendChild(ai);
+      out.appendChild(box("caution","Read the question again.","\"All but 9\" means 9 are left, not 9 sold. The fast answer grabbed the numbers and rushed."));
+      if(seen.t) done();
+    }));
+    opts.appendChild(btn("o","🧠 Thinking mode",function(){
+      out.textContent=""; seen.t=true;
+      var th=el("div","think");
+      ["Thinking...","She starts with 17.","\"Sells all but 9.\" If I do 17 minus 9, I am treating 9 as the number sold."].forEach(function(t){th.appendChild(el("div",null,t));});
+      th.appendChild(el("div","fix","Wait. \"All but 9\" means 9 remain. So she has 9."));
+      th.appendChild(el("div",null,"Then she buys 4 more: 9 + 4 = 13."));
+      out.appendChild(th);
+      var ai=el("div","bubble ai"); ai.appendChild(el("small",null,"AI · about 6 seconds")); ai.appendChild(document.createTextNode("She has 13 mangoes. She kept 9 and bought 4 more.")); out.appendChild(ai);
+      out.appendChild(box("lesson","It caught its own mistake.","Thinking mode drafts, checks, and corrects before it answers. That takes longer and often uses up a limited allowance, so save it for problems that need it."));
+      done();
+    }));
+  };
+
+  /* ------------------------------------------------------------
+     TOOLS for Part 2. Change the words inside the quotes.
+     ------------------------------------------------------------ */
+  var TOOLS = [
+    { label:"Gemini", who:"Made by Google",
+      known:"It sits inside your Google account and connects to Drive, Docs, and Gmail. It puts the most creative tools in one menu, including video and music.",
+      pick:"You already use Gmail, Google Docs, or Google Classroom.",
+      note:"School accounts and people under 18 may see fewer features." },
+    { label:"ChatGPT", who:"Made by OpenAI",
+      known:"The most widely used AI tool, so most tutorials and examples you find online are written for it. A broad all-rounder.",
+      pick:"You want the tool that most guides, videos, and colleagues are using.",
+      note:"The free plan is generous for chat and tighter on pictures, files, and research." },
+    { label:"Copilot", who:"Made by Microsoft",
+      known:"It lives inside Word, Excel, PowerPoint, and Teams. With a work or school sign-in, it follows your organization's privacy rules.",
+      pick:"Your school or workplace gives you a Microsoft 365 account.",
+      note:"What you see depends heavily on what your organization has turned on." },
+    { label:"Claude", who:"Made by Anthropic",
+      known:"Often chosen for writing, working through long documents, and building small apps in its side workspace. It does not make pictures.",
+      pick:"Most of your work is reading, writing, or building simple tools.",
+      note:"The free plan has a daily message limit." },
+    { label:"DeepSeek", who:"Made by DeepSeek, a company in China",
+      known:"Free to use, and its model files are open, so a school or company can run it on its own computers. Strong at step-by-step reasoning, with fewer extras.",
+      pick:"Cost is your main barrier, and you have checked your organization's rules.",
+      note:"The app stores chats on servers in China, and some governments and schools restrict it. Keep personal and student information out, as with any AI tool." }
+  ];
+  var SHORT = {files:"Read",image:"Picture",build:"Build",research:"Research",learn:"Learn",think:"Think"};
+  var curTool=0, tp=$("toolPicker");
+  TOOLS.forEach(function(t,i){ var b=btn("pick",t.label,function(){curTool=i;renderTool();}); tp.appendChild(b); });
+  function renderTool(){
+    var t=TOOLS[curTool], st=$("toolStage"); st.textContent="";
+    Array.prototype.forEach.call(tp.children,function(b,i){b.setAttribute("aria-pressed",i===curTool?"true":"false");});
+    st.appendChild(el("h3",null,t.label)); st.appendChild(el("p","who",t.who));
+    var facts=el("div","facts");
+    [["⭐","Known for:",t.known],["👍","A good first pick if:",t.pick],["📝","Good to know:",t.note]].forEach(function(f){
+      var row=el("div","fact"); var ico=el("span","ico",f[0]); ico.setAttribute("aria-hidden","true");
+      var tx=el("span"); tx.appendChild(el("b",null,f[1]+" ")); tx.appendChild(document.createTextNode(f[2])); row.appendChild(ico); row.appendChild(tx); facts.appendChild(row);
+    });
+    st.appendChild(facts);
+    st.appendChild(el("h3",null,"Where the six powers live in "+t.label));
+    var names=el("div","names");
+    POWERS.forEach(function(p){ names.appendChild(nameRow(p.e+" "+SHORT[p.id], p.names[curTool])); });
+    st.appendChild(names);
+  }
+  renderTool();
+
+  /* ------------------------------------------------------------
+     MATCH. Each line: [situation, id of the best power, why].
+     ------------------------------------------------------------ */
+  var MATCH = [
+    ["You have a 40-page staff handbook and need the rule about late enrollment.", "files", "Read my document. Give it the handbook and ask it to quote the rule, so you can confirm it yourself."],
+    ["Your nephew keeps asking AI for his homework answers and is not learning the material.", "learn", "Help me learn it. A tutor mode asks him questions instead of handing over answers."],
+    ["You want a simple flashcard game your class can play on their phones.", "build", "Build something with me. Describe the game, test it, and ask for changes in plain words."],
+    ["You need to compare how three cities run their youth job programs, with sources you can show your director.", "research", "Research a big question. You get a report with links, and you open the important ones before you share it."],
+    ["You need a poster image for a community clean-up day.", "image", "Make a picture. Decide who is in it, where, and the style before you ask, so the AI is not guessing."],
+    ["You are scheduling 5 volunteers across 3 shifts, and each person has different days they cannot work.", "think", "Think harder. Many conditions at once is where the slower, step-by-step mode helps. Check the final schedule against the conditions."]
+  ];
+  var mi=0, mscore=0;
+  function renderMatch(){
+    var st=$("matchStage"); st.textContent="";
+    if(mi>=MATCH.length){
+      st.appendChild(el("h3",null,"You matched "+mscore+" of "+MATCH.length+"."));
+      st.appendChild(el("p","lead","Some situations fit more than one power, so a different pick is not a wrong one. The habit that matters is pausing to ask which job you are doing before you start typing."));
+      st.appendChild(el("div","actions")).appendChild(btn("btn btn-soft","Play again",function(){mi=0;mscore=0;renderMatch();}));
+      return;
+    }
+    var item=MATCH[mi];
+    var prog=el("div","progress"); prog.setAttribute("aria-hidden","true");
+    MATCH.forEach(function(_,i){ prog.appendChild(el("span", i<mi?"done":(i===mi?"now":""))); }); st.appendChild(prog);
+    st.appendChild(el("p","kicker","Situation "+(mi+1)+" of "+MATCH.length));
+    st.appendChild(el("div","q",item[0]));
+    var grid=el("div","mgrid"), fb=el("div");
+    POWERS.forEach(function(p){
+      var b=btn("m",p.e+" "+p.need,function(){
+        Array.prototype.forEach.call(grid.children,function(x,xi){ x.disabled=true; if(POWERS[xi].id===item[1]) x.classList.add("right"); });
+        if(p.id===item[1]) mscore++; else b.classList.add("picked");
+        fb.appendChild(box("lesson", p.id===item[1]?"Good match.":"That could help too. Our pick:", item[2]));
+        var nx=btn("btn btn-main", mi===MATCH.length-1?"Finish →":"Next situation →",function(){mi++;renderMatch();});
+        fb.appendChild(el("div","actions")).appendChild(nx); nx.focus();
+      });
+      grid.appendChild(b);
+    });
+    st.appendChild(grid); st.appendChild(fb);
+  }
+  renderMatch();
+
+  openPower(0,false);
+})();
+</script>
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "bd52202e57cc448caf8023f1639ce27d"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

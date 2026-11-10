@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Then and Now: Where Did My Custom Bot Go? · Demystifying AI for All</title>
+<meta name="description" content="Gems, custom GPTs, and Copilot GPTs are turning into skills and plugins. A free, hands-on guide to what changed between 2024 and now, and the one skill that still works in every AI tool.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧭</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#EF3FA9;--purple:#783CBD;--teal:#22D3C5;--navy:#1B3A6B;--blue:#2E75B6;
+  --yellow:#FFD93D;--orange:#FF6B35;--green:#06D6A0;--ink:#1A1A2E;--light:#F7F8FC;
+  --white:#FFFFFF;--border:#E4E9F2;--muted:#5B6478;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito Sans',sans-serif;background:var(--light);color:var(--ink);line-height:1.55;min-height:100vh}
+a{color:var(--blue)}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px}
+
+.topbar{background:var(--navy);color:#fff;padding:14px 0}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.topbar a{color:rgba(255,255,255,.85);text-decoration:none;font-family:'Nunito',sans-serif;font-weight:700;font-size:14px}
+.topbar a:hover{color:var(--yellow)}
+.tag{font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--teal);text-align:right}
+
+.intro{background:var(--navy);color:#fff;padding:8px 0 52px;position:relative;overflow:hidden}
+.intro::after{content:'';position:absolute;width:220px;height:220px;border-radius:50%;background:var(--pink);opacity:.12;right:-60px;top:-40px}
+.intro h1{font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(2rem,7vw,3rem);line-height:1.1;margin:14px 0 10px;position:relative;z-index:1}
+.intro h1 span{color:var(--yellow)}
+.intro p{color:rgba(255,255,255,.8);max-width:600px;position:relative;z-index:1}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;position:relative;z-index:1}
+.chip{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:40px;padding:5px 14px;font-size:13px;font-weight:600}
+
+.steps{display:flex;gap:6px;margin:-26px 0 14px;position:relative;z-index:2;overflow-x:auto;padding-bottom:4px}
+.steps a{flex:1 0 auto;text-align:center;background:#fff;border:1px solid var(--border);border-radius:40px;padding:9px 14px;font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;color:var(--navy);text-decoration:none;box-shadow:0 6px 18px rgba(27,58,107,.08);white-space:nowrap}
+.steps a:hover{border-color:var(--teal)}
+
+.card{background:var(--white);border:1px solid var(--border);border-radius:20px;box-shadow:0 8px 30px rgba(27,58,107,.08);padding:24px;margin:0 0 20px;border-top:6px solid var(--c,var(--teal));scroll-margin-top:12px}
+.kicker{font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--c,var(--purple))}
+.card h2{font-family:'Nunito',sans-serif;font-weight:900;font-size:1.45rem;line-height:1.2;margin:2px 0 8px}
+.card h3{font-family:'Nunito',sans-serif;font-weight:800;font-size:1.05rem;margin:0 0 6px}
+.lead{color:var(--muted);margin-bottom:16px}
+.ask{font-weight:700;margin:14px 0 10px}
+
+.btn{font-family:'Nunito',sans-serif;font-weight:800;font-size:16px;border:none;border-radius:40px;padding:13px 26px;cursor:pointer;transition:transform .12s,filter .12s;text-decoration:none;display:inline-block}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+.btn-main{background:var(--pink);color:#fff}
+.btn-alt{background:var(--navy);color:#fff}
+.btn-soft{background:var(--light);color:var(--ink);border:2px solid var(--border)}
+.btn[disabled]{opacity:.45;cursor:default;transform:none}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+.hidden{display:none!important}
+
+/* pickers */
+.picker{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
+.pick{font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;padding:12px 8px;border-radius:14px;border:2px solid var(--border);background:#fff;color:var(--ink);cursor:pointer;transition:border-color .12s,background .12s}
+.pick:hover{border-color:var(--teal)}
+.pick[aria-pressed="true"]{border-color:var(--navy);background:var(--navy);color:#fff}
+.seg{display:inline-flex;background:var(--light);border:2px solid var(--border);border-radius:40px;padding:4px;margin:16px 0 12px}
+.seg button{font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;border:none;background:none;border-radius:40px;padding:8px 22px;cursor:pointer;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--yellow);color:var(--navy)}
+
+/* name tag */
+.nametag{border-radius:16px;overflow:hidden;border:2px solid var(--border);animation:pop .3s ease}
+.nametag .top{background:var(--pink);color:#fff;text-align:center;padding:10px;font-family:'Nunito',sans-serif;font-weight:900;letter-spacing:.08em;text-transform:uppercase;font-size:13px}
+.nametag.then .top{background:var(--muted)}
+.nametag .body{padding:18px;text-align:center;background:#fff}
+.nametag .name{font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(1.6rem,6vw,2.2rem);line-height:1.15;color:var(--navy)}
+.nametag.then .name{text-decoration:line-through;text-decoration-color:var(--pink);text-decoration-thickness:3px}
+.nametag.then .name.kept{text-decoration:none}
+.nametag .what{color:var(--muted);margin-top:8px;text-align:left}
+.facts{display:grid;gap:8px;margin-top:12px}
+.fact{display:flex;gap:10px;align-items:flex-start;background:var(--light);border-radius:12px;padding:11px 13px;font-size:15px}
+.fact .ico{font-size:18px;line-height:1.3}
+.fact b{font-family:'Nunito',sans-serif}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* walk */
+.task{background:#FFF8DB;border:1px dashed #E8C400;border-radius:12px;padding:12px 14px;margin-bottom:6px}
+.task b{font-family:'Nunito',sans-serif}
+.counters{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
+.counter{background:var(--light);border-radius:12px;padding:10px;text-align:center}
+.counter .n{font-family:'Nunito',sans-serif;font-weight:900;font-size:1.6rem;color:var(--navy);line-height:1}
+.counter .l{font-size:12px;font-weight:700;color:var(--muted);margin-top:4px}
+.walk{display:grid;gap:8px}
+.wstep{display:flex;gap:12px;align-items:flex-start;border-radius:14px;padding:13px;background:var(--light);border-left:5px solid var(--border);animation:pop .3s ease}
+.wstep .ico{font-size:22px;line-height:1.2}
+.wstep b{font-family:'Nunito',sans-serif;display:block}
+.wstep.you{border-left-color:var(--pink);background:#FDE7F4}
+.wstep.ai{border-left-color:var(--teal)}
+.wstep small{display:inline-block;font-family:'Nunito',sans-serif;font-weight:800;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.lesson{margin-top:14px;background:#E8FBF6;border-left:5px solid var(--green);border-radius:12px;padding:14px 16px}
+.lesson b{font-family:'Nunito',sans-serif}
+.caution{margin-top:12px;background:#FFF1EA;border-left:5px solid var(--orange);border-radius:12px;padding:14px 16px}
+.caution b{font-family:'Nunito',sans-serif}
+
+/* quiz */
+.progress{display:flex;gap:6px;margin-bottom:14px}
+.progress span{flex:1;height:6px;border-radius:6px;background:var(--border)}
+.progress span.done{background:var(--teal)}
+.progress span.now{background:var(--pink)}
+.q{font-family:'Nunito',sans-serif;font-weight:800;font-size:1.15rem;line-height:1.35;background:var(--light);border-radius:14px;padding:16px;margin-bottom:12px}
+.options{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.opt{font-family:'Nunito',sans-serif;font-weight:800;font-size:16px;padding:14px 10px;border-radius:14px;border:2px solid var(--border);background:#fff;color:var(--ink);cursor:pointer;transition:border-color .12s,background .12s}
+.opt:hover{border-color:var(--teal)}
+.opt[disabled]{cursor:default}
+.opt.right{border-color:var(--green);background:#E8FBF6}
+.opt.picked{border-color:var(--pink);background:#FDE7F4}
+.tablewrap{overflow-x:auto;border:1px solid var(--border);border-radius:14px;margin-top:14px}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:var(--navy);color:#fff;font-family:'Nunito',sans-serif;font-weight:800;font-size:13px}
+tbody th{font-family:'Nunito',sans-serif;font-weight:800;background:var(--light)}
+tbody tr:last-child th,tbody tr:last-child td{border-bottom:none}
+
+/* builder */
+.examples{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.field{margin-bottom:12px}
+.field label{display:block;font-family:'Nunito',sans-serif;font-weight:800;margin-bottom:4px}
+.field .hint{font-size:13px;color:var(--muted);margin-bottom:6px}
+.field input,.field textarea{width:100%;font-family:'Nunito Sans',sans-serif;font-size:16px;color:var(--ink);border:2px solid var(--border);border-radius:12px;padding:11px 13px;background:#fff}
+.field textarea{min-height:92px;resize:vertical}
+.field input:focus,.field textarea:focus{border-color:var(--teal);outline:none}
+.out{margin-top:16px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tabs button{font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;border:2px solid var(--border);border-bottom:none;background:var(--light);color:var(--muted);border-radius:12px 12px 0 0;padding:8px 14px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+pre{background:var(--ink);color:#F4F6FB;border-radius:0 12px 12px 12px;padding:16px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13.5px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere;max-height:340px;overflow:auto}
+.where{font-size:14px;color:var(--muted);margin-top:8px}
+
+/* finale */
+.big-ideas{display:grid;gap:10px;margin:14px 0}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--light);border-radius:14px;padding:14px}
+.idea .ico{font-size:24px;line-height:1}
+.idea b{font-family:'Nunito',sans-serif;display:block}
+.talk{background:#F1EAFB;border-radius:14px;padding:16px;margin-top:6px}
+.cta{background:var(--navy);color:#fff;border-radius:16px;padding:18px;margin-top:16px}
+.cta p{color:rgba(255,255,255,.8);margin-bottom:12px}
+.sources{font-size:13.5px;color:var(--muted);margin:0 0 30px}
+.sources summary{cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;color:var(--navy);padding:6px 0}
+.sources ul{padding-left:20px;margin-top:6px}
+.sources li{margin-bottom:5px}
+.checked{display:inline-block;background:#E8FBF6;color:#047857;font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;letter-spacing:.04em;border-radius:20px;padding:3px 10px}
+footer{background:var(--navy);color:rgba(255,255,255,.55);text-align:center;padding:24px 16px;font-size:13px}
+footer a{color:var(--teal);text-decoration:none}
+footer strong{color:rgba(255,255,255,.85);font-family:'Nunito',sans-serif}
+
+@media (max-width:420px){.card{padding:18px}.counters{gap:6px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap">
+  <a href="./">← The AI Toolbox</a>
+  <span class="tag">Then and Now · 2024 to today</span>
+</div></div>
+
+<header class="intro"><div class="wrap">
+  <h1>Where did my <span>custom bot</span> go? 🧭</h1>
+  <p>In 2024, you built a Gem or a custom GPT and visited it like a separate little chatbot. Now those are turning into <b>skills</b> and <b>plugins</b>. The names changed. What you know about giving AI clear directions did not. Try four short activities to see what moved, and what stays yours.</p>
+  <div class="chips">
+    <span class="chip">⏱ About 10 minutes</span>
+    <span class="chip">🙈 No login</span>
+    <span class="chip">💾 Nothing is saved</span>
+    <span class="chip">🧪 Simulations, not live AI</span>
+  </div>
+</div></header>
+
+<main class="wrap">
+
+  <nav class="steps" aria-label="Activities on this page">
+    <a href="#names">1 · New names</a>
+    <a href="#walk">2 · Bot or skill?</a>
+    <a href="#same">3 · Same job</a>
+    <a href="#build">4 · Build yours</a>
+  </nav>
+
+  <!-- 1. NAME TAGS -->
+  <section class="card" id="names" style="--c:var(--purple)" aria-labelledby="h-names">
+    <span class="kicker">Activity 1</span>
+    <h2 id="h-names">The name tag swap</h2>
+    <p class="lead">Pick a tool. Then flip between 2024 and now to see what its "build your own assistant" feature is called today, and the dates to know.</p>
+    <div class="picker" id="toolPicker" role="group" aria-label="Choose an AI tool"></div>
+    <div><div class="seg" role="group" aria-label="Choose a year">
+      <button type="button" id="eraThen" aria-pressed="false">2024</button>
+      <button type="button" id="eraNow" aria-pressed="true">Now</button>
+    </div></div>
+    <div id="nameStage" aria-live="polite"></div>
+  </section>
+
+  <!-- 2. WALK -->
+  <section class="card" id="walk" style="--c:var(--pink)" aria-labelledby="h-walk">
+    <span class="kicker">Activity 2</span>
+    <h2 id="h-walk">A place you visit, or a skill AI picks up?</h2>
+    <p class="lead">Same job, two eras. Walk through each one and watch the counters.</p>
+    <div class="task"><b>The job:</b> "Summarize the feedback from last week's workshop, using my team's report format, and draft a thank-you note to the people who came."</div>
+    <div class="seg" role="group" aria-label="Choose how to do the job">
+      <button type="button" id="walkThen" aria-pressed="true">2024 way</button>
+      <button type="button" id="walkNow" aria-pressed="false">Now</button>
+    </div>
+    <div class="counters" aria-live="polite">
+      <div class="counter"><div class="n" id="cPlaces">0</div><div class="l">places you opened</div></div>
+      <div class="counter"><div class="n" id="cPastes">0</div><div class="l">copy and pastes</div></div>
+      <div class="counter"><div class="n" id="cChecks">0</div><div class="l">times you checked the work</div></div>
+    </div>
+    <div class="walk" id="walkStage" aria-live="polite"></div>
+    <div class="actions">
+      <button type="button" class="btn btn-main" id="walkNext">Next step →</button>
+      <button type="button" class="btn btn-soft" id="walkReset">Start over</button>
+    </div>
+    <div id="walkLesson"></div>
+  </section>
+
+  <!-- 3. SAME JOB -->
+  <section class="card" id="same" style="--c:var(--blue)" aria-labelledby="h-same">
+    <span class="kicker">Activity 3</span>
+    <h2 id="h-same">Same job, different name</h2>
+    <p class="lead">Every company names its features differently, which makes them look more different than they are. Four quick questions. Guessing is welcome.</p>
+    <div id="quizStage" aria-live="polite"></div>
+  </section>
+
+  <!-- 4. BUILD -->
+  <section class="card" id="build" style="--c:var(--green)" aria-labelledby="h-build">
+    <span class="kicker">Activity 4</span>
+    <h2 id="h-build">Build a skill that works anywhere</h2>
+    <p class="lead">A skill is a short set of directions written in plain words: when to use it, what steps to follow, and when to stop and ask a person. Fill in the boxes, or start from an example. Your words stay on this page. Nothing is sent anywhere.</p>
+    <div class="examples">
+      <button type="button" class="btn btn-soft" data-ex="educator">🍎 Start from an educator example</button>
+      <button type="button" class="btn btn-soft" data-ex="workplace">💼 Start from a workplace example</button>
+      <button type="button" class="btn btn-soft" data-ex="blank">Clear the boxes</button>
+    </div>
+    <div class="field">
+      <label for="fName">Name your skill</label>
+      <input id="fName" type="text" maxlength="60" placeholder="Example: Family message helper" autocomplete="off">
+    </div>
+    <div class="field">
+      <label for="fWhen">Use this when...</label>
+      <p class="hint">This is how the AI decides whether to pick the skill up. Be specific.</p>
+      <input id="fWhen" type="text" maxlength="200" placeholder="Example: I ask for help writing a message to families" autocomplete="off">
+    </div>
+    <div class="field">
+      <label for="fSteps">The steps to follow</label>
+      <p class="hint">One step per line, the way you would explain it to a new colleague.</p>
+      <textarea id="fSteps" placeholder="Example: Ask me what the message is about&#10;Keep it under 120 words"></textarea>
+    </div>
+    <div class="field">
+      <label for="fGood">A good result looks like...</label>
+      <input id="fGood" type="text" maxlength="200" placeholder="Example: Warm, clear, and easy to read on a phone" autocomplete="off">
+    </div>
+    <div class="field">
+      <label for="fHuman">Stop and ask me when...</label>
+      <p class="hint">This line keeps a person in charge. It is the most important one.</p>
+      <input id="fHuman" type="text" maxlength="200" placeholder="Example: The message involves grades, discipline, health, or money" autocomplete="off">
+    </div>
+    <div class="out">
+      <div class="tabs" role="tablist" aria-label="Choose a version">
+        <button type="button" role="tab" id="tabPaste" aria-selected="true" aria-controls="outBox">Paste-in version (any tool, free accounts)</button>
+        <button type="button" role="tab" id="tabFile" aria-selected="false" aria-controls="outBox">Skill file version</button>
+      </div>
+      <pre id="outBox" role="tabpanel" tabindex="0"></pre>
+      <p class="where" id="outWhere"></p>
+      <div class="actions">
+        <button type="button" class="btn btn-main" id="copyBtn">Copy</button>
+        <a class="btn btn-soft" href="skill-builder.html">Open the full Skill Builder →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINALE -->
+  <section class="card" style="--c:var(--yellow)" aria-labelledby="h-end">
+    <span class="kicker" style="color:var(--navy)">What to take with you</span>
+    <h2 id="h-end">Names change. Your thinking is portable.</h2>
+    <div class="big-ideas">
+      <div class="idea"><span class="ico">🏷️</span><div><b>The feature got a new name, not a new idea.</b>A Gem, a custom GPT, an agent, and a skill are all saved directions for the AI. If you could write one, you can write the others.</div></div>
+      <div class="idea"><span class="ico">📄</span><div><b>Keep your directions in your own notes.</b>Tools retire features, sometimes with only a few weeks of warning. Directions saved in a document you own can move to any tool, including free ones.</div></div>
+      <div class="idea"><span class="ico">🧑‍🤝‍🧑</span><div><b>A person still checks the work.</b>Fewer copy and pastes is convenient. It does not make the answer correct. The "stop and ask me" line is yours to write.</div></div>
+    </div>
+    <div class="talk"><h3>💬 Talk about it with your group</h3><p>Who gets left behind when a tool retires a feature with a deadline? Think about a colleague with a free account, a school account, or a slow connection. What is one thing your team could do so nobody loses their work?</p></div>
+    <div class="cta">
+      <h3>Want more practice?</h3>
+      <p>New to what AI tools can do? The AI Toolbox lets you try six powers hands-on. The Portable AI templates on the main page work in any free account.</p>
+      <div class="actions" style="margin-top:0">
+        <a class="btn btn-main" href="./">🧰 The AI Toolbox</a>
+        <a class="btn btn-soft" href="../playground/">🎮 AI Playground</a>
+        <a class="btn btn-soft" href="../">🧳 Portable AI tab on the main page</a>
+      </div>
+    </div>
+  </section>
+
+  <details class="sources">
+    <summary>Where these facts come from <span class="checked">Last checked: November 10, 2026</span></summary>
+    <p>AI products change quickly, and rollout dates can differ by account, country, and organization. Check the company's own help page before you plan around a date.</p>
+    <ul>
+      <li>Google, <a href="https://support.google.com/gemini/answer/18560919?hl=en" target="_blank" rel="noopener">About the transition from Gems to skills</a> (Gemini Apps Help)</li>
+      <li>TechCrunch, <a href="https://techcrunch.com/2026/09/28/google-is-killing-off-geminis-gems-in-favor-of-skills/" target="_blank" rel="noopener">Google is killing off Gemini's Gems in favor of "skills"</a></li>
+      <li>Virtualization Review, <a href="https://virtualizationreview.com/articles/2026/09/28/openai-to-retire-custom-gpts-replace-them-with-plugins.aspx" target="_blank" rel="noopener">OpenAI to retire custom GPTs, replace them with plugins</a></li>
+      <li>EdTech Innovation Hub, <a href="https://www.edtechinnovationhub.com/news/openai-to-retire-custom-gpts-in-december-as-creators-move-to-plugins" target="_blank" rel="noopener">OpenAI to retire custom GPTs in December</a></li>
+      <li>Topedia, <a href="https://blog.topedia.com/posts/copilot-agents-are-now-part-of-copilot-plugins" target="_blank" rel="noopener">Copilot Agents are now part of Copilot Plugins</a></li>
+      <li>AI Agents Library, <a href="https://www.aiagentslibrary.com/blog/chatgpt-vs-claude-vs-gemini-skills/" target="_blank" rel="noopener">ChatGPT vs Claude vs Gemini skills</a> (plan availability and the shared skill file format)</li>
+      <li>Global Times, <a href="https://www.globaltimes.cn/page/202604/1359726.shtml" target="_blank" rel="noopener">DeepSeek unveils V4 model</a></li>
+    </ul>
+  </details>
+</main>
+
+<footer>Part of <a href="../">Demystifying AI for All</a> · Built by <strong>Jeffery Heil</strong> · An independent, free resource, used in <a href="https://globallearningaccess.com/home" target="_blank" rel="noopener">Global Learning Access</a> trainings</footer>
+
+<script>
+(function(){
+  function $(id){return document.getElementById(id);}
+  function el(tag, cls, text){var e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e;}
+
+  /* ------------------------------------------------------------
+     TOOLS. To update a name or a date, change the text here.
+     then = what it was called in 2024. now = what it is called today.
+     kept: true means the 2024 feature still exists (no strike-through).
+     facts: each line is [emoji, bold label, sentence].
+     ------------------------------------------------------------ */
+  var TOOLS = [
+    {
+      id:"gemini", label:"Gemini",
+      then:{ name:"Gems", what:"Launched in 2024. You built a Gem with its own instructions and files, then opened that Gem whenever you needed it. Each Gem was a separate place with its own chats." },
+      now:{ name:"Skills", what:"Saved directions that work inside any Gemini chat. Gemini can pick one up when it fits your request, or you can call it by typing / and its name. You can use more than one in the same chat.",
+        facts:[
+          ["📅","Personal accounts (18+):","Gems become read-only on November 17, 2026 and are removed on December 17, 2026. Download your Gem files before then."],
+          ["🏫","School accounts:","Workspace for Education keeps Gems until June 2027. Business and nonprofit accounts keep them until March 2027."],
+          ["🆓","Free accounts:","Skills work on personal Google accounts without a paid plan."],
+          ["⚠️","Not everything moved:","At launch, skills do not work with Canvas, Deep Research, or Guided Learning. Sharing is promised for later."]
+        ] }
+    },
+    {
+      id:"chatgpt", label:"ChatGPT",
+      then:{ name:"Custom GPTs", what:"The GPT Store opened in January 2024. Each custom GPT was its own chatbot with instructions, knowledge files, and sometimes connections to other apps." },
+      now:{ name:"Plugins", what:"A plugin is a package. It can hold skills (your instructions), connected apps, and reference files. You install it once and it is available in your regular chats.",
+        facts:[
+          ["📅","Key date:","Custom GPTs are scheduled to retire on December 11, 2026. Some large organizations can ask to keep them until February 11, 2027."],
+          ["🔁","Moving a GPT:","In My GPTs, choose \"Migrate to plugin.\" Your instructions become a skill and your files are copied."],
+          ["⚠️","What does not move:","Old conversations, sharing settings, and custom actions. A migrated plugin starts private and may answer differently, so test it."],
+          ["🆓","Free accounts:","Reports say personal skills are not on the Free plan. Check your own plan, and keep a copy of your instructions either way."]
+        ] }
+    },
+    {
+      id:"copilot", label:"Copilot",
+      then:{ name:"Copilot GPTs", what:"A short-lived feature for personal Copilot accounts. Microsoft retired it in July 2024, and later that year started calling custom assistants \"agents.\"" },
+      now:{ name:"Plugins (agents + skills)", what:"Microsoft is gathering agents, skills, and connections under one Plugins button in Copilot. Agents still exist. They now live inside plugins.",
+        facts:[
+          ["📅","Key date:","The single Plugins button is rolling out through late November 2026."],
+          ["🔤","Naming history:","Plugins (2023), then agents (2024), then plugins again (2026). The idea underneath stayed the same."],
+          ["🏢","Who has it:","Mostly work and school accounts. What you see depends on what your organization has turned on."]
+        ] }
+    },
+    {
+      id:"claude", label:"Claude",
+      then:{ name:"Projects", kept:true, what:"Launched in 2024 and still here. A Project is a workspace that keeps your background files and instructions together for one body of work." },
+      now:{ name:"Skills (and Projects)", what:"Claude introduced skills in October 2025: folders of directions the AI picks up when a request matches. The format was shared openly, and Gemini and ChatGPT now use skills that work in a very similar way.",
+        facts:[
+          ["📅","Key date:","None. Nothing is being retired here, which is why this column looks calmer than the others."],
+          ["🔓","A shared format:","The skill file format (a text file named SKILL.md) is now an open standard that several companies maintain together. A skill written for one tool can often be uploaded to another."],
+          ["🆓","Free accounts:","Reports say skills are available on the free plan with some limits. Check your settings."]
+        ] }
+    },
+    {
+      id:"deepseek", label:"DeepSeek",
+      then:{ name:"Not on most people's radar", kept:true, what:"In 2024 few people outside China had heard of it. In January 2025 its R1 model made headlines for showing its step-by-step thinking on screen and for being free to download." },
+      now:{ name:"A free, open model (V4)", what:"DeepSeek V4 arrived in April 2026. Its model files are open, so schools, companies, and hobbyists can run it on their own computers. The chat app is free. It has no built-in skill or custom-bot library that we could confirm, so the paste-in version in Activity 4 is the way to go.",
+        facts:[
+          ["🧠","Why it matters:","It showed that strong AI does not have to come from a handful of expensive US products."],
+          ["🔒","Privacy:","The DeepSeek app stores chats on servers in China, and some governments and schools restrict it. Check your organization's rules. As with every AI tool, keep personal and student information out."],
+          ["💻","Running it yourself:","A copy that runs on your own computer keeps your data with you, but it needs a powerful machine and some technical help."]
+        ] }
+    }
+  ];
+
+  /* ---------- Activity 1 ---------- */
+  var curTool = 0, curEra = "now";
+  var picker = $("toolPicker");
+  TOOLS.forEach(function(t,i){
+    var b = el("button","pick",t.label);
+    b.type="button";
+    b.setAttribute("aria-pressed", i===0 ? "true":"false");
+    b.addEventListener("click",function(){ curTool=i; renderName(); });
+    picker.appendChild(b);
+  });
+  $("eraThen").addEventListener("click",function(){curEra="then";renderName();});
+  $("eraNow").addEventListener("click",function(){curEra="now";renderName();});
+
+  function renderName(){
+    var t = TOOLS[curTool], d = t[curEra], stage = $("nameStage");
+    Array.prototype.forEach.call(picker.children,function(b,i){b.setAttribute("aria-pressed", i===curTool?"true":"false");});
+    $("eraThen").setAttribute("aria-pressed", curEra==="then"?"true":"false");
+    $("eraNow").setAttribute("aria-pressed", curEra==="now"?"true":"false");
+    stage.textContent="";
+    var tag = el("div","nametag"+(curEra==="then"?" then":""));
+    tag.appendChild(el("div","top", curEra==="then" ? "In 2024, "+t.label+" called it" : "Today, "+t.label+" calls it"));
+    var body = el("div","body");
+    body.appendChild(el("div","name"+(d.kept?" kept":""), d.name));
+    body.appendChild(el("p","what", d.what));
+    tag.appendChild(body);
+    stage.appendChild(tag);
+    if(d.facts){
+      var facts = el("div","facts");
+      d.facts.forEach(function(f){
+        var row = el("div","fact");
+        var ico = el("span","ico",f[0]); ico.setAttribute("aria-hidden","true");
+        var txt = el("span");
+        txt.appendChild(el("b",null,f[1]+" "));
+        txt.appendChild(document.createTextNode(f[2]));
+        row.appendChild(ico); row.appendChild(txt); facts.appendChild(row);
+      });
+      stage.appendChild(facts);
+    } else {
+      var hint = el("p","where","Flip to \"Now\" to see what changed.");
+      stage.appendChild(hint);
+    }
+  }
+  renderName();
+
+  /* ------------------------------------------------------------
+     WALK. Each step: [who, emoji, title, detail, places, pastes, checks]
+     who: "you" (pink) or "ai" (teal). The numbers add to the counters.
+     ------------------------------------------------------------ */
+  var WALK = {
+    then:[
+      ["you","🚪","Open your \"Feedback Summarizer\" bot","It lives on its own page with its own chat history. You upload the feedback there.",1,0,0],
+      ["ai","📝","The bot writes a summary","It knows your report format because you saved that in its instructions.",0,0,0],
+      ["you","📋","Copy the summary","The summarizer cannot write in your thank-you voice. That is a different bot.",0,1,0],
+      ["you","🚪","Open your \"Thank-You Notes\" bot","A second page. It has never seen the feedback, so you paste the summary in.",1,1,0],
+      ["ai","💌","The second bot drafts the note","It only knows what you pasted. Anything you left out is gone.",0,0,0],
+      ["you","👀","You read both and fix what is off","Two bots, two chats, and you are the one carrying information between them.",0,0,1]
+    ],
+    now:[
+      ["you","💬","Open one regular chat and type the whole job","You upload the feedback once.",1,0,0],
+      ["ai","🧩","The AI picks up your \"Team report format\" skill","It noticed the words \"my team's report format\" and loaded those directions. You can also call a skill by name.",0,0,0],
+      ["ai","🧩","In the same chat, it picks up your \"Thank-you voice\" skill","Both skills work together, and the AI still has the feedback in front of it.",0,0,0],
+      ["ai","✋","Your skill tells it to stop and ask","\"Two comments mention a participant by name. Should I leave names out of the summary?\" You wrote that rule.",0,0,0],
+      ["you","👀","You answer, read both drafts, and fix what is off","Less carrying. The same amount of judgment.",0,0,1]
+    ]
+  };
+  var walkEra="then", walkIdx=0;
+  function setWalk(era){ walkEra=era; walkIdx=0; renderWalk(); }
+  $("walkThen").addEventListener("click",function(){setWalk("then");});
+  $("walkNow").addEventListener("click",function(){setWalk("now");});
+  $("walkReset").addEventListener("click",function(){setWalk(walkEra);});
+  $("walkNext").addEventListener("click",function(){ if(walkIdx<WALK[walkEra].length){walkIdx++; renderWalk();} });
+
+  function renderWalk(){
+    var steps = WALK[walkEra], stage=$("walkStage"), p=0,c=0,k=0;
+    $("walkThen").setAttribute("aria-pressed", walkEra==="then"?"true":"false");
+    $("walkNow").setAttribute("aria-pressed", walkEra==="now"?"true":"false");
+    stage.textContent="";
+    if(walkIdx===0){ stage.appendChild(el("p","where","Press \"Next step\" to begin.")); }
+    for(var i=0;i<walkIdx;i++){
+      var s=steps[i]; p+=s[4]; c+=s[5]; k+=s[6];
+      var row=el("div","wstep "+s[0]);
+      var ico=el("span","ico",s[1]); ico.setAttribute("aria-hidden","true");
+      var txt=el("div");
+      txt.appendChild(el("small",null, s[0]==="you"?"You":"The AI"));
+      txt.appendChild(el("b",null,s[2]));
+      txt.appendChild(document.createTextNode(s[3]));
+      row.appendChild(ico); row.appendChild(txt); stage.appendChild(row);
+    }
+    $("cPlaces").textContent=p; $("cPastes").textContent=c; $("cChecks").textContent=k;
+    var done = walkIdx>=steps.length;
+    $("walkNext").disabled = done;
+    var L=$("walkLesson"); L.textContent="";
+    if(done){
+      var box=el("div","lesson");
+      if(walkEra==="then"){
+        box.appendChild(el("b",null,"In 2024, a custom bot was a place you went. "));
+        box.appendChild(document.createTextNode("Each bot was good at one thing and could not see the others. Now try the \"Now\" way and compare the counters."));
+      } else {
+        box.appendChild(el("b",null,"Now, a skill is something the AI picks up inside your chat. "));
+        box.appendChild(document.createTextNode("Fewer places and no copy and paste. Look at the last counter, though. It did not change. Checking the work is still your job, and the \"stop and ask\" rule only exists because a person wrote it."));
+      }
+      L.appendChild(box);
+      if(walkEra==="now"){
+        var cau=el("div","caution");
+        cau.appendChild(el("b",null,"An honest note: "));
+        cau.appendChild(document.createTextNode("this is a simplified picture. Real tools sometimes pick the wrong skill or skip one, and what is available depends on your account."));
+        L.appendChild(cau);
+      }
+    }
+  }
+  renderWalk();
+
+  /* ------------------------------------------------------------
+     QUIZ. Each question: q, options, answer (number, starting at 0), why.
+     ------------------------------------------------------------ */
+  var QUIZ = [
+    { q:"Gemini and ChatGPT both have a side-by-side workspace called Canvas, where you edit a document or app next to the chat. What does Claude call its version?",
+      options:["Artifacts","Projects","Research"], answer:0,
+      why:"Artifacts. Copilot's version is called Pages. Four names, one idea: a workspace beside the chat." },
+    { q:"ChatGPT has Study mode, which asks you questions instead of handing over the answer. What is Gemini's version called?",
+      options:["Deep Research","Guided Learning","Canvas"], answer:1,
+      why:"Guided Learning. Claude has a Learning style and Copilot has Study and Learn. All four act like a tutor who makes you do the thinking." },
+    { q:"Gemini and ChatGPT call their long, multi-step research feature Deep Research. It plans, searches, reads, and writes a report with sources. What does Copilot call its version?",
+      options:["Pages","Designer","Researcher"], answer:2,
+      why:"Researcher. Claude calls its version Research. These reports include sources, and they can still get things wrong, so open the sources that matter to you." },
+    { q:"Which of these five tools can a school or company download and run on its own computers, with no account at all?",
+      options:["ChatGPT","DeepSeek","Copilot"], answer:1,
+      why:"DeepSeek. Its model files are open. That is a different kind of choice from picking between apps, and it comes with its own trade-offs in equipment and expertise." }
+  ];
+  /* The table shown at the end of the quiz. First item in each row is the job. */
+  var TABLE_HEAD = ["The job","Gemini","ChatGPT","Copilot","Claude","DeepSeek"];
+  var TABLE = [
+    ["Saved directions","Skills (were Gems)","Plugins with skills (were custom GPTs)","Plugins with agents and skills","Skills, Projects","Paste your own"],
+    ["Workspace beside the chat","Canvas","Canvas","Pages","Artifacts","None built in"],
+    ["Long research with sources","Deep Research","Deep research","Researcher","Research","DeepThink with Search"],
+    ["Tutor that asks, not tells","Guided Learning","Study mode","Study and Learn","Learning style","None built in"]
+  ];
+  var qi=0, score=0;
+  function renderQuiz(){
+    var stage=$("quizStage"); stage.textContent="";
+    if(qi>=QUIZ.length){ renderTable(stage); return; }
+    var item=QUIZ[qi];
+    var prog=el("div","progress"); prog.setAttribute("aria-hidden","true");
+    QUIZ.forEach(function(_,i){ prog.appendChild(el("span", i<qi?"done":(i===qi?"now":""))); });
+    stage.appendChild(prog);
+    stage.appendChild(el("p","kicker","Question "+(qi+1)+" of "+QUIZ.length));
+    stage.appendChild(el("div","q",item.q));
+    var opts=el("div","options"); var fb=el("div");
+    item.options.forEach(function(o,i){
+      var b=el("button","opt",o); b.type="button";
+      b.addEventListener("click",function(){
+        Array.prototype.forEach.call(opts.children,function(x,xi){ x.disabled=true; if(xi===item.answer) x.classList.add("right"); });
+        if(i===item.answer){ score++; } else { b.classList.add("picked"); }
+        var box=el("div","lesson");
+        box.appendChild(el("b",null,(i===item.answer?"Yes. ":"Good guess. ")));
+        box.appendChild(document.createTextNode(item.why));
+        fb.appendChild(box);
+        var acts=el("div","actions");
+        var nx=el("button","btn btn-main", qi===QUIZ.length-1?"See the whole chart →":"Next question →"); nx.type="button";
+        nx.addEventListener("click",function(){ qi++; renderQuiz(); });
+        acts.appendChild(nx); fb.appendChild(acts); nx.focus();
+      });
+      opts.appendChild(b);
+    });
+    stage.appendChild(opts); stage.appendChild(fb);
+  }
+  function renderTable(stage){
+    stage.appendChild(el("h3",null,"You matched "+score+" of "+QUIZ.length+". Here is the whole chart."));
+    stage.appendChild(el("p","lead","Read across a row. The names differ. The job is the same. If you learn the job in one tool, you already know what to look for in the next one."));
+    var wrap=el("div","tablewrap"), table=el("table"), thead=el("thead"), tr=el("tr");
+    TABLE_HEAD.forEach(function(h){ var th=el("th",null,h); th.scope="col"; tr.appendChild(th); });
+    thead.appendChild(tr); table.appendChild(thead);
+    var tb=el("tbody");
+    TABLE.forEach(function(r){
+      var row=el("tr");
+      r.forEach(function(c,i){ var cell=el(i===0?"th":"td",null,c); if(i===0) cell.scope="row"; row.appendChild(cell); });
+      tb.appendChild(row);
+    });
+    table.appendChild(tb); wrap.appendChild(table); stage.appendChild(wrap);
+    stage.appendChild(el("p","where","Names checked in November 2026. Features differ by plan and by country, and companies rename them often."));
+    var acts=el("div","actions"); var again=el("button","btn btn-soft","Play again"); again.type="button";
+    again.addEventListener("click",function(){ qi=0; score=0; renderQuiz(); });
+    acts.appendChild(again); stage.appendChild(acts);
+  }
+  renderQuiz();
+
+  /* ------------------------------------------------------------
+     EXAMPLES for the skill builder. Change the words inside the quotes.
+     In "steps", \n starts a new line.
+     ------------------------------------------------------------ */
+  var EXAMPLES = {
+    educator:{
+      name:"Family message helper",
+      when:"I ask for help writing a message to students' families",
+      steps:"Ask me what the message is about and who it is for, if I have not said\nWrite it in plain, friendly language a busy parent can read on a phone\nKeep it under 120 words\nOffer a second version in the home language I name, and remind me to have a fluent speaker read it",
+      good:"Warm, clear, respectful, and free of school jargon",
+      human:"The message involves grades, discipline, health, money, or a family's personal situation"
+    },
+    workplace:{
+      name:"Meeting notes to action list",
+      when:"I paste meeting notes and ask what needs to happen next",
+      steps:"List each action with who owns it and the due date\nMark anything with no owner or no date as \"needs a decision\"\nPut the three most urgent items first\nKeep every item to one line",
+      good:"A short list a teammate who missed the meeting could act on",
+      human:"The notes mention a customer complaint, a staffing issue, or anything confidential"
+    },
+    blank:{name:"",when:"",steps:"",good:"",human:""}
+  };
+  var F = {name:$("fName"),when:$("fWhen"),steps:$("fSteps"),good:$("fGood"),human:$("fHuman")};
+  var mode="paste";
+  function lines(text){ return text.split("\n").map(function(s){return s.trim();}).filter(Boolean); }
+  function slug(text){ return text.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"") || "my-skill"; }
+  function buildText(){
+    var name=F.name.value.trim()||"[Name your skill]";
+    var when=F.when.value.trim()||"[say when to use it]";
+    var steps=lines(F.steps.value); if(!steps.length) steps=["[add your steps]"];
+    var good=F.good.value.trim()||"[describe a good result]";
+    var human=F.human.value.trim()||"[say when to stop and ask]";
+    var numbered=steps.map(function(s,i){return (i+1)+". "+s;}).join("\n");
+    if(mode==="file"){
+      return "---\nname: "+slug(F.name.value)+"\ndescription: Use this when "+when+".\n---\n\n# "+name+"\n\n## Steps\n"+numbered+"\n\n## A good result\n"+good+"\n\n## Stop and ask me first\nPause and ask before continuing when "+human+".\nNever invent facts, names, or numbers. If something is missing, ask me.\n";
+    }
+    return "For this chat, follow these directions. I call them my \""+name+"\" skill.\n\nUse them when "+when+".\n\nSteps:\n"+numbered+"\n\nA good result is: "+good+".\n\nStop and ask me before continuing when "+human+".\nNever invent facts, names, or numbers. If something is missing, ask me.\n\nReply \"Ready\" and wait for my first request.";
+  }
+  function renderOut(){
+    $("outBox").textContent=buildText();
+    $("tabPaste").setAttribute("aria-selected", mode==="paste"?"true":"false");
+    $("tabFile").setAttribute("aria-selected", mode==="file"?"true":"false");
+    $("outWhere").textContent = mode==="paste"
+      ? "Paste this as the first message of a new chat in any AI tool. Save it in your notes app so you can reuse it."
+      : "Save this as a text file named SKILL.md, or paste it into your tool's skill editor. Gemini and Claude accept this format. In ChatGPT, skills live inside plugins. Menus differ by tool and plan.";
+  }
+  Object.keys(F).forEach(function(k){ F[k].addEventListener("input",renderOut); });
+  $("tabPaste").addEventListener("click",function(){mode="paste";renderOut();});
+  $("tabFile").addEventListener("click",function(){mode="file";renderOut();});
+  Array.prototype.forEach.call(document.querySelectorAll("[data-ex]"),function(b){
+    b.addEventListener("click",function(){
+      var ex=EXAMPLES[b.getAttribute("data-ex")];
+      Object.keys(F).forEach(function(k){F[k].value=ex[k];});
+      renderOut();
+    });
+  });
+  $("copyBtn").addEventListener("click",function(){
+    var text=buildText(), btn=$("copyBtn");
+    function ok(){ btn.textContent="Copied ✓"; setTimeout(function(){btn.textContent="Copy";},1800); }
+    function fallback(){
+      var ta=document.createElement("textarea"); ta.value=text; ta.style.position="fixed"; ta.style.opacity="0";
+      document.body.appendChild(ta); ta.select();
+      try{ document.execCommand("copy"); ok(); }catch(e){ btn.textContent="Select the text and copy it"; }
+      document.body.removeChild(ta);
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(ok,fallback); } else { fallback(); }
+  });
+  renderOut();
+})();
+</script>
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "bd52202e57cc448caf8023f1639ce27d"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
