@@ -183,6 +183,14 @@ pre{border-radius:12px}
 .todo{margin:-6px 0 14px 20px;font-size:15px}
 .todo li{margin-bottom:4px}
 .todo a{font-family:'Nunito',sans-serif;font-weight:800}
+.plainbox{background:#FFF8DB;border-left:5px solid #E8C400;border-radius:12px;padding:14px 16px;margin-bottom:16px}
+.plainbox b{font-family:'Nunito',sans-serif}
+.map{display:grid;gap:8px;margin-top:8px}
+.stop{display:flex;gap:12px;align-items:flex-start;background:var(--light);border:2px solid transparent;border-radius:14px;padding:12px 14px;text-decoration:none;color:var(--ink);font-size:15px}
+.stop:hover{border-color:var(--teal)}
+.stop .e{font-size:24px;line-height:1.1}
+.stop b{display:block;font-family:'Nunito',sans-serif;color:var(--navy)}
+.stop em{font-style:normal;font-weight:700;color:#0E8F86}
 </style>
 </head>
 <body>
@@ -197,7 +205,7 @@ pre{border-radius:12px}
   <p>ENGAGE is where you start creating with AI. Before you do, take a walk through the Demystifying AI site and bring back five souvenirs. Each one is something you made or decided, and you will use them later in the course.</p>
   <div class="chips">
     <span class="chip">⏱ About 30 to 40 minutes</span>
-    <span class="chip">🧭 Any order</span>
+    <span class="chip">🧭 Start with the tour</span>
     <span class="chip">☕ Take breaks. Your answers wait for you.</span>
     <span class="chip">🙈 No login</span>
   </div>
@@ -211,11 +219,29 @@ pre{border-radius:12px}
 
 <main class="wrap" style="padding-top:34px">
 
+  <section class="card" id="tour" style="--c:var(--teal)" aria-labelledby="h-tour">
+    <span class="kicker" style="color:#0E8F86">Before you pack · a two-minute tour</span>
+    <h2 id="h-tour">First time here? Welcome.</h2>
+    <p class="lead">Demystifying AI for All is a free site made to go with your GLA courses. You may have seen the link in SPARK or Foundations and never opened it, and that is completely fine. There is no login, and you can keep using it long after ENGAGE ends.</p>
+
+    <div class="plainbox"><b>The big idea: there is more under the hood.</b> In the first two courses, most of us used AI as a chat box: type a question, read the answer. The same tools can also read your documents, make pictures, build small apps, research a question with sources, tutor you, and slow down to think. We call these <b>powers</b>. Each AI tool gives them a different name, but the jobs are the same. ENGAGE asks you to create with AI, so this activity makes sure you have tried the powers first.</div>
+
+    <h3>What is on the site</h3>
+    <div class="map">
+      <a class="stop" href="./" target="_blank" rel="noopener"><span class="e" aria-hidden="true">🧰</span><span><b>The AI Toolbox ↗</b>Try six powers hands-on, then compare five tools: Gemini, ChatGPT, Copilot, Claude, and DeepSeek. <em>You will spend the most time here.</em></span></a>
+      <a class="stop" href="skill-builder.html" target="_blank" rel="noopener"><span class="e" aria-hidden="true">🧩</span><span><b>Skill Builder ↗</b>Write your directions once so AI does a task your way every time.</span></a>
+      <a class="stop" href="../" target="_blank" rel="noopener"><span class="e" aria-hidden="true">🗂️</span><span><b>Prompt library and Portable AI ↗</b>The main page. Ready-to-copy prompts sorted by purpose, plus Portable AI templates that work in any free account.</span></a>
+      <a class="stop" href="../playground/" target="_blank" rel="noopener"><span class="e" aria-hidden="true">🎮</span><span><b>AI Playground ↗</b>Short games that show how AI works on the inside.</span></a>
+      <a class="stop" href="../" target="_blank" rel="noopener"><span class="e" aria-hidden="true">🎙️</span><span><b>Keep learning ↗</b>On the main page: AI Literacy, a Glossary, Podcasts and YouTube, and Human-Centered AI.</span></a>
+    </div>
+    <p class="note">You do not need to visit all of these now. The five souvenirs below walk you through them one at a time, starting with the Toolbox.</p>
+  </section>
+
   <section class="card" style="--c:var(--navy)" aria-labelledby="h-how">
     <span class="kicker" style="color:var(--navy)">How this works</span>
     <h2 id="h-how">Explore, bring something back, share it</h2>
     <div class="big-ideas">
-      <div class="idea"><span class="ico">1️⃣</span><div><b>Explore.</b>Each souvenir has a button that opens part of the site in a new tab. Try things there.</div></div>
+      <div class="idea"><span class="ico">1️⃣</span><div><b>Explore.</b>Each souvenir has a button that opens part of the site in a new tab. Try things there. Going in order works best the first time.</div></div>
       <div class="idea"><span class="ico">2️⃣</span><div><b>Come back and fill in the boxes.</b>Short answers in your own words are perfect. There are no wrong answers.</div></div>
       <div class="idea"><span class="ico">3️⃣</span><div><b>Copy your toolkit and post it in OpenLearning.</b>The button at the bottom puts everything together for you.</div></div>
     </div>
@@ -223,26 +249,11 @@ pre{border-radius:12px}
   </section>
 
   <!-- 1 -->
-  <section class="card sv" id="sv-skill" style="--c:var(--green)" aria-labelledby="h-skill">
-    <span class="num" aria-hidden="true">🧩</span>
-    <span class="kicker">Souvenir 1 of 5</span>
-    <h2 id="h-skill">My skill <span class="packed">✓ packed</span></h2>
-    <p class="lead">Build one skill for a task you do every week. A skill is a short set of directions that tells AI how you like that task done.</p>
-    <div class="why"><b>Why you need it:</b> you will use this skill in Module 3, and it could become a major part of your capstone project.</div>
-    <a class="go" href="skill-builder.html" target="_blank" rel="noopener">Open the Skill Builder ↗</a>
-    <div class="field"><label for="skillTask">What weekly task is your skill for?</label>
-      <input id="skillTask" data-k="skillTask" type="text" maxlength="200" autocomplete="off"></div>
-    <div class="field"><label for="skillText">Paste your finished skill here</label>
-      <p class="hint">In the Skill Builder, tap Copy. Then come back and paste.</p>
-      <textarea id="skillText" data-k="skillText" style="min-height:140px"></textarea></div>
-  </section>
-
-  <!-- 2 -->
   <section class="card sv" id="sv-power" style="--c:var(--pink)" aria-labelledby="h-power">
     <span class="num" aria-hidden="true">⚡</span>
-    <span class="kicker">Souvenir 2 of 5</span>
+    <span class="kicker">Souvenir 1 of 5</span>
     <h2 id="h-power">My new power <span class="packed">✓ packed</span></h2>
-    <p class="lead">You have chatted with AI. Now pick one power you have <b>never used before</b>. Try the practice version in the Toolbox, then try it for real in your own AI tool. If your account does not have that button, use the free-account tip on the same page.</p>
+    <p class="lead">Start here. The AI Toolbox shows six things AI tools can do beyond chatting. Pick one power you have <b>never used before</b>. Try the practice version in the Toolbox, then try it for real in your own AI tool. If your account does not have that button, use the free-account tip on the same page.</p>
     <a class="go" href="./#powers" target="_blank" rel="noopener">Open the AI Toolbox ↗</a>
     <div class="field"><label id="l-power">Which power did you try? Tap one.</label>
       <div class="choices" role="group" aria-labelledby="l-power" data-choice="power">
@@ -261,10 +272,10 @@ pre{border-radius:12px}
       <textarea id="powerJob" data-k="powerJob"></textarea></div>
   </section>
 
-  <!-- 3 -->
+  <!-- 2 -->
   <section class="card sv" id="sv-tool" style="--c:var(--purple)" aria-labelledby="h-tool">
     <span class="num" aria-hidden="true">🧰</span>
-    <span class="kicker">Souvenir 3 of 5</span>
+    <span class="kicker">Souvenir 2 of 5</span>
     <h2 id="h-tool">My tools <span class="packed">✓ packed</span></h2>
     <p class="lead">You have probably tried a few AI tools by now. Look at "Meet the five" to compare what each one offers, then decide your plan for ENGAGE.</p>
     <a class="go" href="./#five" target="_blank" rel="noopener">Open "Meet the five" ↗</a>
@@ -279,6 +290,21 @@ pre{border-radius:12px}
     <div class="field"><label for="toolWhy">Why is that the right plan for you?</label>
       <p class="hint">Think about what you can access, what your workplace allows, and what each tool does well.</p>
       <textarea id="toolWhy" data-k="toolWhy"></textarea></div>
+  </section>
+
+  <!-- 3 -->
+  <section class="card sv" id="sv-skill" style="--c:var(--green)" aria-labelledby="h-skill">
+    <span class="num" aria-hidden="true">🧩</span>
+    <span class="kicker">Souvenir 3 of 5</span>
+    <h2 id="h-skill">My skill <span class="packed">✓ packed</span></h2>
+    <p class="lead">Now that you have seen what AI tools can do, teach one how <b>you</b> work. Build one skill for a task you do every week. A skill is a short set of directions that tells AI how you like that task done.</p>
+    <div class="why"><b>Why you need it:</b> you will use this skill in Module 3, and it could become a major part of your capstone project.</div>
+    <a class="go" href="skill-builder.html" target="_blank" rel="noopener">Open the Skill Builder ↗</a>
+    <div class="field"><label for="skillTask">What weekly task is your skill for?</label>
+      <input id="skillTask" data-k="skillTask" type="text" maxlength="200" autocomplete="off"></div>
+    <div class="field"><label for="skillText">Paste your finished skill here</label>
+      <p class="hint">In the Skill Builder, tap Copy. Then come back and paste.</p>
+      <textarea id="skillText" data-k="skillText" style="min-height:140px"></textarea></div>
   </section>
 
   <!-- 4 -->
@@ -371,9 +397,9 @@ pre{border-radius:12px}
   function v(k){ return (data[k]||"").trim(); }
   /* A souvenir counts as packed when all of its parts have something in them. */
   var SOUV=[
-    ["sv-skill",["skillTask","skillText"]],
     ["sv-power",["power","powerReal","powerJob"]],
     ["sv-tool",["plan","toolWhich","toolWhy"]],
+    ["sv-skill",["skillTask","skillText"]],
     ["sv-portable",["tpl","portUse","portShare"]],
     ["sv-surprise",["surWhat","surUse"]]
   ];
@@ -381,17 +407,17 @@ pre{border-radius:12px}
   function buildText(){
     return [
       "🎒 MY ENGAGE TOOLKIT","",
-      "🧩 1. MY SKILL",
-      "The weekly task it is for: "+ans("skillTask"),
-      "My skill:", ans("skillText"),"",
-      "⚡ 2. MY NEW POWER",
+      "⚡ 1. MY NEW POWER",
       "The power I tried: "+ans("power"),
       "What happened when I tried it for real: "+ans("powerReal"),
       "My job as the human: "+ans("powerJob"),"",
-      "🧰 3. MY TOOLS",
+      "🧰 2. MY TOOLS",
       "My plan for ENGAGE: "+ans("plan"),
       "Which tool or tools: "+ans("toolWhich"),
       "Why: "+ans("toolWhy"),"",
+      "🧩 3. MY SKILL",
+      "The weekly task it is for: "+ans("skillTask"),
+      "My skill:", ans("skillText"),"",
       "🧳 4. MY PORTABLE AI",
       "The template I tried: "+ans("tpl"),
       "What I used it for and how it went: "+ans("portUse"),
