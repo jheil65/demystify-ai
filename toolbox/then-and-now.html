@@ -591,12 +591,24 @@ footer strong{color:rgba(255,255,255,.85);font-family:'Nunito',sans-serif}
   var mode="paste";
   function lines(text){ return text.split("\n").map(function(s){return s.trim();}).filter(Boolean); }
   function slug(text){ return text.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"") || "my-skill"; }
+  /* Tidy what people type so it reads well mid-sentence:
+     drop a trailing period, and lowercase the first letter
+     unless the first word is "I" or looks like a name or acronym. */
+  function noDot(t){ return t.replace(/[.\s]+$/,""); }
+  function midSentence(t){
+    t=noDot(t);
+    var first=t.split(/\s/)[0]||"";
+    if(/^I($|['’])/.test(first)) return t;
+    if(first.length>1 && first===first.toUpperCase()) return t;
+    if(/^[A-Z][a-z]*[A-Z]/.test(first)) return t;
+    return t.charAt(0).toLowerCase()+t.slice(1);
+  }
   function buildText(){
     var name=F.name.value.trim()||"[Name your skill]";
-    var when=F.when.value.trim()||"[say when to use it]";
+    var when=midSentence(F.when.value.trim())||"[say when to use it]";
     var steps=lines(F.steps.value); if(!steps.length) steps=["[add your steps]"];
-    var good=F.good.value.trim()||"[describe a good result]";
-    var human=F.human.value.trim()||"[say when to stop and ask]";
+    var good=noDot(F.good.value.trim())||"[describe a good result]";
+    var human=midSentence(F.human.value.trim())||"[say when to stop and ask]";
     var numbered=steps.map(function(s,i){return (i+1)+". "+s;}).join("\n");
     if(mode==="file"){
       return "---\nname: "+slug(F.name.value)+"\ndescription: Use this when "+when+".\n---\n\n# "+name+"\n\n## Steps\n"+numbered+"\n\n## A good result\n"+good+"\n\n## Stop and ask me first\nPause and ask before continuing when "+human+".\nNever invent facts, names, or numbers. If something is missing, ask me.\n";
