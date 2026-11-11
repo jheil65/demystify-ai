@@ -178,6 +178,11 @@ footer strong{color:rgba(255,255,255,.85);font-family:'Nunito',sans-serif}
 .privacy{background:#FDE7F4;border-left:5px solid var(--pink);border-radius:12px;padding:12px 15px;margin-bottom:14px;font-size:15px}
 .privacy b{font-family:'Nunito',sans-serif}
 pre{border-radius:12px}
+.need-note{background:#FFF1EA;border-left:5px solid var(--orange);border-radius:12px;padding:10px 14px;font-size:14.5px;font-weight:600;margin-top:4px}
+.choices.needs{outline:3px dashed var(--orange);outline-offset:6px;border-radius:12px}
+.todo{margin:-6px 0 14px 20px;font-size:15px}
+.todo li{margin-bottom:4px}
+.todo a{font-family:'Nunito',sans-serif;font-weight:800}
 </style>
 </head>
 <body>
@@ -239,7 +244,7 @@ pre{border-radius:12px}
     <h2 id="h-power">My new power <span class="packed">✓ packed</span></h2>
     <p class="lead">You have chatted with AI. Now pick one power you have <b>never used before</b>. Try the practice version in the Toolbox, then try it for real in your own AI tool. If your account does not have that button, use the free-account tip on the same page.</p>
     <a class="go" href="./#powers" target="_blank" rel="noopener">Open the AI Toolbox ↗</a>
-    <div class="field"><label id="l-power">Which power did you try?</label>
+    <div class="field"><label id="l-power">Which power did you try? Tap one.</label>
       <div class="choices" role="group" aria-labelledby="l-power" data-choice="power">
         <button type="button" class="ch">📎 Read my document</button>
         <button type="button" class="ch">🎨 Make a picture</button>
@@ -263,7 +268,7 @@ pre{border-radius:12px}
     <h2 id="h-tool">My tools <span class="packed">✓ packed</span></h2>
     <p class="lead">You have probably tried a few AI tools by now. Look at "Meet the five" to compare what each one offers, then decide your plan for ENGAGE.</p>
     <a class="go" href="./#five" target="_blank" rel="noopener">Open "Meet the five" ↗</a>
-    <div class="field"><label id="l-plan">In ENGAGE, I plan to:</label>
+    <div class="field"><label id="l-plan">In ENGAGE, I plan to (tap one):</label>
       <div class="choices" role="group" aria-labelledby="l-plan" data-choice="plan">
         <button type="button" class="ch">Stick with one tool</button>
         <button type="button" class="ch">Use more than one</button>
@@ -283,7 +288,7 @@ pre{border-radius:12px}
     <h2 id="h-portable">My Portable AI <span class="packed">✓ packed</span></h2>
     <p class="lead">Portable AI templates do the job of paid features in any free account. They are worth knowing even if you have a paid plan, because someone you work with does not. On the main page, tap the <b>🧳 Portable AI</b> tab, pick one template, and try it in your AI tool.</p>
     <a class="go" href="../" target="_blank" rel="noopener">Open the main page ↗</a>
-    <div class="field"><label id="l-tpl">Which template did you try?</label>
+    <div class="field"><label id="l-tpl">Which template did you try? Tap one.</label>
       <div class="choices" role="group" aria-labelledby="l-tpl" data-choice="tpl">
         <button type="button" class="ch">🧑‍🍳 Build Your Own Assistant</button>
         <button type="button" class="ch">📚 Knowledge Pack</button>
@@ -291,6 +296,7 @@ pre{border-radius:12px}
         <button type="button" class="ch">🚀 Project Starter</button>
       </div></div>
     <div class="field"><label for="portUse">What did you use it for, and how did it go?</label>
+      <p class="hint">Two or three sentences in your own words is plenty. No need to paste the AI's full answer.</p>
       <textarea id="portUse" data-k="portUse"></textarea></div>
     <div class="field"><label for="portShare">Who could you share it with, and why would it help them?</label>
       <p class="hint">Describe the person by role, not by name. Example: a co-teacher who only has a free account.</p>
@@ -316,6 +322,8 @@ pre{border-radius:12px}
     <span class="kicker" style="color:var(--navy)">Last step</span>
     <h2 id="h-finish">Share your toolkit</h2>
     <p class="lead" id="finishMsg"></p>
+    <ul class="todo hidden" id="todoList"></ul>
+    <div class="why hidden" id="longNote"><b>One of your answers is quite long.</b> Classmates will read your post in a feed, so two or three sentences in your own words works better than a full AI reply. You can trim it in the box above.</div>
     <div class="privacy"><b>Before you post:</b> everyone in the course can read your post. Take out names and private details about students, clients, or coworkers.</div>
     <pre id="outBox" tabindex="0" style="max-height:300px"></pre>
     <div class="actions">
@@ -393,18 +401,54 @@ pre{border-radius:12px}
       "How I might use it: "+ans("surUse")
     ].join("\n");
   }
+  /* Plain-words names for each part, used in the "Still needed" notes. */
+  var LABEL={skillTask:"the weekly task", skillText:"your pasted skill",
+    power:"tap the power you tried", powerReal:"what happened when you tried it", powerJob:"your job as the human",
+    plan:"tap your plan", toolWhich:"which tool or tools", toolWhy:"why that plan fits you",
+    tpl:"tap the template you tried", portUse:"what you used it for", portShare:"who you could share it with",
+    surWhat:"what you explored", surUse:"how you might use it"};
+  var NAME={"sv-skill":"My skill","sv-power":"My new power","sv-tool":"My tools","sv-portable":"My Portable AI","sv-surprise":"My surprise"};
+  function noteFor(card){
+    var n=card.querySelector(".need-note");
+    if(!n){ n=document.createElement("p"); n.className="need-note"; card.appendChild(n); }
+    return n;
+  }
   function render(){
-    var n=0;
+    var n=0, todo=[];
     SOUV.forEach(function(s){
-      var ok=s[1].every(function(k){return v(k);});
-      $(s[0]).classList.toggle("done",ok); if(ok) n++;
+      var card=$(s[0]);
+      var missing=s[1].filter(function(k){return !v(k);});
+      var ok=missing.length===0, started=missing.length<s[1].length;
+      card.classList.toggle("done",ok); if(ok) n++;
+      var note=noteFor(card);
+      note.textContent = (!ok && started) ? "Almost packed. Still needed: "+missing.map(function(k){return LABEL[k];}).join(", ")+"." : "";
+      note.classList.toggle("hidden", ok || !started);
+      /* outline an untapped choice row once the rest of the card has answers */
+      Array.prototype.forEach.call(card.querySelectorAll("[data-choice]"),function(g){
+        g.classList.toggle("needs", !ok && started && !v(g.dataset.choice));
+      });
+      if(!ok) todo.push([s[0], started ? missing.map(function(k){return LABEL[k];}).join(", ") : "not started yet"]);
     });
     $("barText").textContent=n+" of 5 packed";
     $("barFill").style.width=(n/5*100)+"%";
     $("finishMsg").textContent = n===5
       ? "All five souvenirs are packed. Nice work. Copy your toolkit and take it to OpenLearning."
       : (n===0 ? "Your toolkit will appear here as you fill in the boxes above."
-               : "You have packed "+n+" of 5. You can copy what you have now, or finish the rest first. Completing all five is the goal.");
+               : "You have packed "+n+" of 5. Here is what is left:");
+    var list=$("todoList"); list.textContent="";
+    if(n>0 && n<5){
+      todo.forEach(function(t){
+        var li=document.createElement("li"), a=document.createElement("a");
+        a.href="#"+t[0]; a.textContent=NAME[t[0]];
+        li.appendChild(a); li.appendChild(document.createTextNode(": "+t[1]));
+        list.appendChild(li);
+      });
+    }
+    list.classList.toggle("hidden", !(n>0 && n<5));
+    /* gentle nudge when an answer is very long */
+    var long=false;
+    Array.prototype.forEach.call(fields,function(f){ if(f.dataset.k!=="skillText" && f.value.length>700) long=true; });
+    $("longNote").classList.toggle("hidden", !long);
     $("outBox").textContent=buildText();
   }
   $("copyBtn").addEventListener("click",function(){
