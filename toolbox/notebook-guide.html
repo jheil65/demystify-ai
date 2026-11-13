@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gemini Notebook Field Guide · Demystifying AI for All</title>
+<meta name="description" content="A hands-on beginner's guide to Gemini Notebook (formerly NotebookLM): see how answering from your own sources differs from a general chatbot, tour the three panels, and learn what to upload. Free, no login.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📓</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--body:'Nunito Sans',sans-serif;--head:'Nunito',sans-serif;--bg:#F7F8FC;--brand:#1B3A6B;--brand2:#783CBD;--ink:#1B3A6B;--pink:#EF3FA9;--teal:#22D3C5;--line:#E4E9F2;--soft:#F7F8FC;--link:#2E75B6}
+.topbar{background:#1B3A6B;color:#fff;padding:14px 0}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.topbar a{color:rgba(255,255,255,.85);text-decoration:none;font-family:'Nunito',sans-serif;font-weight:700;font-size:14px}
+.topbar a:hover{color:#FFD93D}
+.tag{font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#22D3C5;text-align:right}
+.intro{background:#1B3A6B;color:#fff;padding:8px 0 52px;position:relative;overflow:hidden}
+.intro::after{content:'';position:absolute;width:220px;height:220px;border-radius:50%;background:#22D3C5;opacity:.12;right:-60px;top:-40px}
+.intro h1{font-weight:900;font-size:clamp(2rem,7vw,2.9rem);line-height:1.1;margin:14px 0 10px;position:relative;z-index:1}
+.intro h1 span{color:#FFD93D}
+.intro p{color:rgba(255,255,255,.82);max-width:640px;position:relative;z-index:1}
+.intro .chips{position:relative;z-index:1}
+.setnav{display:flex;gap:6px;overflow-x:auto;padding:12px 0 2px;position:relative;z-index:1}
+.setnav a{flex:0 0 auto;font-family:'Nunito',sans-serif;font-weight:800;font-size:12.5px;color:rgba(255,255,255,.88);border:1px solid rgba(255,255,255,.28);border-radius:40px;padding:6px 10px;text-decoration:none;white-space:nowrap}
+.setnav a:hover{border-color:#FFD93D;color:#FFD93D}
+.setnav a[aria-current="page"]{background:#FFD93D;color:#1B3A6B;border-color:#FFD93D}
+.steps{display:flex;gap:6px;margin:-26px 0 14px;position:relative;z-index:2;overflow-x:auto;padding-bottom:4px}
+.steps a{flex:1 0 auto;text-align:center;background:#fff;border:1px solid var(--line);border-radius:40px;padding:9px 14px;font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;color:#1B3A6B;text-decoration:none;box-shadow:0 6px 18px rgba(27,58,107,.08);white-space:nowrap}
+.steps a:hover{border-color:#22D3C5}
+footer{background:#1B3A6B;color:rgba(255,255,255,.55);text-align:center;padding:24px 16px;font-size:13px}
+footer a{color:#22D3C5;text-decoration:none}
+footer strong{color:rgba(255,255,255,.85);font-family:'Nunito',sans-serif}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--body);background:var(--bg);color:#1f1b2e;line-height:1.6;font-size:17px}
+a{color:var(--link)}
+.wrap{max-width:860px;margin:0 auto;padding:0 16px}
+h1,h2,h3,.hd{font-family:var(--head)}
+.card{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 8px 26px rgba(40,30,90,.07);padding:24px;margin:0 0 20px;border-top:6px solid var(--c,var(--brand));scroll-margin-top:12px}
+.kicker{font-family:var(--head);font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--c,var(--brand2))}
+.card h2{font-weight:900;font-size:1.4rem;line-height:1.22;margin:2px 0 8px;color:var(--ink)}
+.card h3{font-weight:800;font-size:1.05rem;margin:0 0 6px;color:var(--ink)}
+.lead{color:#565170;margin-bottom:14px}
+.small{font-size:14px;color:#565170}
+.hidden{display:none!important}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.chip{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.26);border-radius:40px;padding:5px 14px;font-size:13px;font-weight:700}
+.btn{font-family:var(--head);font-weight:800;font-size:16px;border:none;border-radius:40px;padding:12px 24px;cursor:pointer;text-decoration:none;display:inline-block}
+.btn:hover{filter:brightness(1.07)}
+.btn-main{background:var(--pink);color:#fff}
+.btn-alt{background:var(--brand);color:#fff}
+.btn-soft{background:var(--soft);color:var(--ink);border:2px solid var(--line)}
+.btn[disabled]{opacity:.45;cursor:default}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;align-items:center}
+button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #ffd93d;outline-offset:2px}
+.sim-note{font-size:13px;color:#565170;margin-top:10px}
+.lesson{margin-top:14px;background:#e8fbf6;border-left:5px solid #06d6a0;border-radius:12px;padding:13px 15px}
+.caution{margin-top:14px;background:#fff1ea;border-left:5px solid #ff6b35;border-radius:12px;padding:13px 15px}
+.tipbox{background:#fff8db;border-left:5px solid #e8c400;border-radius:12px;padding:13px 15px}
+.job{background:#fde7f4;border-left:5px solid var(--pink);border-radius:12px;padding:13px 15px}
+.lesson b,.caution b,.tipbox b,.job b{font-family:var(--head)}
+
+/* pickers */
+.pick3{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-bottom:14px}
+.pk{text-align:left;font-family:var(--body);font-size:15px;background:#fff;border:2px solid var(--line);border-radius:16px;padding:13px 14px;cursor:pointer;color:#1f1b2e}
+.pk:hover{border-color:var(--brand2)}
+.pk small{display:block;font-family:var(--head);font-weight:800;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--brand2)}
+.pk b{display:block;font-family:var(--head);font-weight:900;font-size:16px;line-height:1.25;margin:2px 0}
+.pk span{display:block;font-size:13.5px;color:#565170;line-height:1.35}
+.pk[aria-pressed="true"]{border-color:var(--brand);background:var(--brand);color:#fff}
+.pk[aria-pressed="true"] small{color:#ffd93d}
+.pk[aria-pressed="true"] span{color:rgba(255,255,255,.86)}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pl{font-family:var(--head);font-weight:800;font-size:14px;background:#fff;border:2px solid var(--line);border-radius:40px;padding:8px 14px;cursor:pointer;color:#1f1b2e}
+.pl:hover{border-color:var(--brand2)}
+.pl[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:#fff}
+
+/* part 1 */
+.asked{background:var(--ink);color:#fff;border-radius:16px;padding:14px 16px;margin-bottom:14px}
+.asked small{display:block;font-family:var(--head);font-weight:800;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--teal)}
+.asked p{font-family:var(--head);font-weight:800;font-size:1.05rem;line-height:1.35}
+.duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:14px}
+.side{border-radius:16px;padding:16px;border:2px solid}
+.side.gen{background:#fff6f4;border-color:#f6c9bf}
+.side.nb{background:#eefbf9;border-color:var(--teal)}
+.side .who{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;align-items:center;margin-bottom:10px}
+.tagp{font-family:var(--head);font-weight:800;font-size:13px;border-radius:40px;padding:4px 12px}
+.gen .tagp{background:#fbdcd5;color:#7a2413}
+.nb .tagp{background:var(--brand2);color:#fff}
+.side .meta{font-family:var(--head);font-weight:800;font-size:12px}
+.gen .meta{color:#9a3412}.nb .meta{color:var(--brand2)}
+.ans{background:#fff;border-radius:12px;padding:13px 14px;border:1px solid var(--line)}
+.cite{font-family:var(--head);font-weight:900;font-size:12.5px;background:var(--brand2);color:#fff;border:none;border-radius:8px;padding:2px 9px;margin:0 2px;cursor:pointer;vertical-align:baseline}
+.cite:hover,.cite[aria-pressed="true"]{background:var(--pink)}
+.risk{margin-top:10px;background:#fbdcd5;color:#5f1d10;border-radius:12px;padding:11px 13px;font-size:15px}
+.risk b{font-family:var(--head);display:block}
+.proof{margin-top:10px;background:#f1eafb;border:2px solid #cdb8ea;border-radius:12px;padding:12px 13px;font-size:15px}
+.proof .src{font-family:var(--head);font-weight:800;color:var(--brand2);display:block;margin-bottom:6px}
+.proof .quote{background:#fff;border-radius:10px;padding:10px 12px;font-style:italic;border:1px solid #e3d6f5}
+details.more{background:var(--soft);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:16px}
+details.more summary{cursor:pointer;font-family:var(--head);font-weight:800;color:var(--ink)}
+.cmp{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-top:12px}
+.cmp div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;font-size:14.5px}
+.cmp b{display:block;font-family:var(--head);font-size:15.5px;color:var(--ink)}
+.cmp em{font-style:normal;display:inline-block;font-family:var(--head);font-weight:800;font-size:11px;border-radius:20px;padding:1px 9px;margin-bottom:4px;background:#f1eafb;color:#5b2a9a}
+.cmp .free em{background:#e8fbf6;color:#047857}
+
+/* part 2 */
+.screen{display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:8px;background:var(--ink);border-radius:16px;padding:10px;margin-bottom:14px}
+.pane{font-family:var(--head);text-align:left;background:#fff;border:3px solid transparent;border-radius:10px;padding:12px 10px;cursor:pointer;color:#1f1b2e;min-height:118px}
+.pane small{display:block;font-weight:800;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:#565170}
+.pane b{display:block;font-weight:900;font-size:15px;line-height:1.2;margin:4px 0}
+.pane span{display:block;font-size:20px}
+.pane[aria-pressed="true"]{border-color:var(--pink);background:#fde7f4}
+.pinfo{background:var(--soft);border-radius:16px;padding:16px}
+.pinfo ul{list-style:none;display:grid;gap:8px;margin-top:10px}
+.pinfo li{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 13px;font-size:15px}
+.pinfo li b{font-family:var(--head)}
+
+/* part 3 */
+.grid6{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin-bottom:16px}
+.fmt{background:var(--soft);border-radius:14px;padding:13px 14px;font-size:14.5px}
+.fmt b{display:block;font-family:var(--head);font-size:15.5px;color:var(--ink)}
+.bundle{background:var(--soft);border:2px solid var(--line);border-radius:16px;padding:16px;margin-bottom:16px}
+.bundle .out{background:#fff;border-radius:14px;padding:14px;margin-top:12px;border:1px solid var(--line)}
+.bundle ol{padding-left:22px;margin:8px 0;display:grid;gap:5px;font-size:15px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px}
+
+/* part 4 */
+.result{border-radius:16px;padding:16px;margin-top:12px;border:2px solid var(--line);background:var(--soft)}
+.result.good{border-color:var(--pink);background:#fde7f4}
+.prompts{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin-top:10px}
+.pr{text-align:left;font-family:var(--body);font-size:14.5px;background:var(--soft);border:2px solid var(--line);border-radius:14px;padding:13px;cursor:pointer;color:#1f1b2e}
+.pr:hover{border-color:var(--brand2)}
+.pr small{display:block;font-family:var(--head);font-weight:800;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--brand2);margin-bottom:5px}
+.pr i{display:block}
+.pr u{display:inline-block;margin-top:8px;text-decoration:none;font-family:var(--head);font-weight:800;font-size:13px;color:var(--brand2)}
+.pr.copied u{color:#047857}
+
+/* part 5 */
+.quiz{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:12px}
+.qc{background:var(--soft);border-radius:16px;padding:16px}
+.qc p{font-family:var(--head);font-weight:800;margin:4px 0 10px;line-height:1.35}
+.qo{display:block;width:100%;text-align:left;font-family:var(--body);font-size:15px;background:#fff;border:2px solid var(--line);border-radius:12px;padding:11px 12px;margin-bottom:8px;cursor:pointer;color:#1f1b2e}
+.qo:hover{border-color:var(--brand2)}
+.qo.right{border-color:#06d6a0;background:#e8fbf6}
+.qo.tried{border-color:#e8c400;background:#fff8db}
+.fb{border-radius:12px;padding:11px 13px;font-size:14.5px;font-weight:600}
+.fb.ok{background:#e8fbf6;color:#065f46}.fb.no{background:#fff8db;color:#6b5300}
+.badge{font-family:var(--head);font-weight:800;font-size:13px;background:var(--soft);border:1px solid var(--line);border-radius:40px;padding:4px 12px;white-space:nowrap}
+.badge.done{background:#e8fbf6;border-color:#06d6a0;color:#047857}
+
+.ideas{display:grid;gap:10px;margin:12px 0}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--soft);border-radius:14px;padding:14px}
+.idea .ico{font-size:24px;line-height:1}
+.idea b{font-family:var(--head);display:block}
+.cta{background:var(--ink);color:#fff;border-radius:16px;padding:18px;margin-top:14px}
+.cta h3{color:#fff}
+.cta p{color:rgba(255,255,255,.82);margin-bottom:12px}
+.sources{font-size:13.5px;color:#565170;margin:0 0 28px}
+.sources summary{cursor:pointer;font-family:var(--head);font-weight:800;color:var(--ink);padding:6px 0}
+.sources ul{padding-left:20px;margin-top:6px}
+.sources li{margin-bottom:5px}
+.checked{display:inline-block;background:#e8fbf6;color:#047857;font-family:var(--head);font-weight:800;font-size:12px;border-radius:20px;padding:3px 10px}
+@media (max-width:560px){.card{padding:18px}.screen{grid-template-columns:1fr}.pane{min-height:0}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap">
+  <a href="../">← Demystifying AI for All</a>
+  <span class="tag">Field Guide · Gemini Notebook</span>
+</div></div>
+
+<header class="intro"><div class="wrap">
+  <nav class="setnav" aria-label="Pages in the AI Toolbox"><a href="./">🧰 Toolbox</a><a href="skill-builder.html">🧩 Skill Builder</a><a href="then-and-now.html">🧭 Custom bots</a><a href="notebook-guide.html" aria-current="page">📓 Notebook guide</a></nav>
+  <h1>A researcher that <span>shows its sources</span>. 📓</h1>
+  <p>Most AI chatbots answer from everything they have absorbed, and when they do not know, they can fill the gap with a confident guess. <strong>Gemini Notebook</strong> (formerly NotebookLM) works differently. It answers from the documents, links, and videos <strong>you</strong> choose, and it adds numbered badges so you can check where each claim came from.</p>
+  <div class="chips">
+    <span class="chip">⏱ About 10 minutes</span>
+    <span class="chip">🙈 No login</span>
+    <span class="chip">🧪 Practice versions, not live AI</span>
+    <span class="chip">🇵🇭 Examples from Philippine workplaces</span>
+  </div>
+</div></header>
+
+<main class="wrap">
+  <nav class="steps" aria-label="Parts of this guide">
+    <a href="#part-1">1 · Compare</a><a href="#part-2">2 · Tour</a><a href="#part-3">3 · Sources</a><a href="#part-4">4 · Customize</a><a href="#part-5">5 · Check</a>
+  </nav>
+
+  <section class="card part" data-step="1" id="part-1" style="--c:var(--pink)" aria-labelledby="h-p1">
+    <span class="kicker">Part 1 · See the difference</span>
+    <h2 id="h-p1">Ask both the same question</h2>
+    <p class="lead">Pick one of three workplace questions. Compare how a general AI chatbot answers with how Gemini Notebook answers from your own documents. Then tap the purple <b>1</b> and <b>2</b> badges to see where each claim came from.</p>
+    <div class="pick3" id="scenPicker" role="group" aria-label="Choose a question"></div>
+    <div class="asked"><small>The question</small><p id="scenQ"></p></div>
+    <div class="duo">
+      <div class="side gen">
+        <div class="who"><span class="tagp">🎲 General AI chatbot</span><span class="meta">No sources shown</span></div>
+        <div class="ans" id="genAns"></div>
+        <div class="risk"><b>⚠️ Why this is risky for your work</b><span id="genRisk"></span></div>
+      </div>
+      <div class="side nb">
+        <div class="who"><span class="tagp">📓 Gemini Notebook</span><span class="meta">Answers from your sources</span></div>
+        <div class="ans" id="nbAns"></div>
+        <div class="proof" aria-live="polite"><span class="src" id="citSrc"></span><div class="quote" id="citQuote"></div></div>
+      </div>
+    </div>
+    <p class="sim-note">Practice version, not live AI. The answers and the sample documents are made up to show the pattern.</p>
+    <div class="lesson"><b>Both answers sound confident. Only one can be checked.</b> The general answer may be perfectly reasonable, but it is about the world in general. The notebook answer is about your documents, and it shows you the passage so you can judge it yourself.</div>
+    <div class="caution"><b>Grounded does not mean perfect.</b> In one 2025 study of questions about documents, a notebook tool still made a mistake in 13% of its answers, compared with 40% for general chatbots. Most mistakes were overconfident summaries, not invented facts. That is why the badges matter: tap them.</div>
+    <details class="more">
+      <summary>🔄 Do ChatGPT, Claude, or Copilot have something like this?</summary>
+      <div class="cmp">
+        <div class="free"><em>Free with a Google account</em><b>Gemini Notebook</b>Up to 50 sources per notebook on the free plan. Includes a Studio that turns sources into audio, video, mind maps, and study guides. Heavy use is limited by a usage allowance that refills during the day.</div>
+        <div class="free"><em>Free, up to 5 projects</em><b>Claude Projects</b>A project holds your files and standing instructions. Good for writing and analysis from your own material. No audio or mind map studio.</div>
+        <div><em>Check your plan</em><b>ChatGPT Projects</b>Groups chats and files in one place. It can still mix in general knowledge, so ask it to answer only from your files and to quote them.</div>
+        <div><em>Usually a paid work license</em><b>Microsoft 365 Copilot Notebooks</b>Pulls from your organization's Word, Excel, and SharePoint files. Available when your workplace has turned it on.</div>
+      </div>
+      <p class="small" style="margin-top:10px">No account for any of these? The free-account tip under "Read my document" in the AI Toolbox does a simple version of the same job in any chat tool.</p>
+    </details>
+  </section>
+
+  <section class="card part" data-step="2" id="part-2" style="--c:var(--brand2)" aria-labelledby="h-p2">
+    <span class="kicker">Part 2 · Screen tour</span>
+    <h2 id="h-p2">Where does everything live?</h2>
+    <p class="lead">When you open a notebook on a computer, the screen has three panels. Tap each one to see what it is for. On a phone, the same three areas appear as tabs.</p>
+    <div class="screen" id="panePicker" role="group" aria-label="The three panels of Gemini Notebook"></div>
+    <div class="pinfo" id="paneInfo" aria-live="polite"></div>
+  </section>
+
+  <section class="card part" data-step="3" id="part-3" style="--c:var(--teal)" aria-labelledby="h-p3">
+    <span class="kicker" style="color:#0E8F86">Part 3 · Choosing your sources</span>
+    <h2 id="h-p3">What can you put inside?</h2>
+    <p class="lead">You do not need special file types. You can mix up to <b>50 sources</b> in one notebook on the free plan. The notebook is only as good as what you put in, so choosing sources is the most important decision you make.</p>
+    <div class="grid6">
+      <div class="fmt"><b>📄 PDFs</b>Manuals, circulars, handbooks, reports. If a scanned PDF will not load, the text may be a picture. Try a text version.</div>
+      <div class="fmt"><b>📘 Word, PowerPoint, Excel</b>Word files upload directly. If a slide deck or spreadsheet will not load, save it as a PDF first, or paste the key table as copied text.</div>
+      <div class="fmt"><b>📗 Google Docs and Slides</b>Add them straight from your Google Drive.</div>
+      <div class="fmt"><b>🌐 Website links</b>Paste the address of a public page and the notebook reads its text. Some sites block this. If a link fails, copy the text in instead.</div>
+      <div class="fmt"><b>▶️ YouTube videos</b>Paste the link to a public video that has captions. The notebook reads the transcript.</div>
+      <div class="fmt"><b>🎙️ Audio and copied text</b>Upload a recording and it is turned into text. You can also paste in notes or an email thread.</div>
+    </div>
+    <div class="bundle">
+      <span class="kicker">Start with one anchor document, then add more</span>
+      <h3>Pick your path to see a sample set of sources</h3>
+      <p class="small" style="margin-bottom:10px">The paths are about how comfortable you are with the tool, not your job title.</p>
+      <div class="pills" id="bundlePicker" role="group" aria-label="Choose your path"></div>
+      <div class="out" id="bundleOut" aria-live="polite"></div>
+    </div>
+    <div class="two">
+      <div class="tipbox"><b>🔑 Account tip: personal or work account?</b> School and company Google accounts often block sharing a notebook outside the organization. If you need a shareable link for a course, a personal Gmail account is the smoother choice. Or use your work account and submit screenshots.</div>
+      <div class="job"><b>🛡️ Before you upload anything.</b> Leave out personal data: student names with grades, customer phone numbers, ID numbers, health or pay records. Follow your organization's rules and your country's privacy law (in the Philippines, the Data Privacy Act, RA 10173), and respect who owns a source (the IP Code, RA 8293).</div>
+    </div>
+  </section>
+
+  <section class="card part" data-step="4" id="part-4" style="--c:var(--pink)" aria-labelledby="h-p4">
+    <span class="kicker">Part 4 · The one move that changes your results</span>
+    <h2 id="h-p4">Customize before you generate</h2>
+    <p class="lead">Imagine you uploaded a 60-page manual. The Studio can turn it into an Audio Overview, a kind of podcast with two AI hosts. If you tap Generate straight away, it tries to cover all 60 pages. Compare what happens when you choose <b>Customize</b> first and say what you need.</p>
+    <div class="pills" id="modePicker" role="group" aria-label="Choose how to generate">
+      <button type="button" class="pl" data-mode="plain" aria-pressed="false">😐 Tap Generate straight away</button>
+      <button type="button" class="pl" data-mode="custom" aria-pressed="true">🎯 Tap Customize first</button>
+    </div>
+    <div class="result" id="modeOut" aria-live="polite"></div>
+    <h3 style="margin-top:18px">📋 Three instructions to copy and adapt</h3>
+    <p class="small">Tap a card to copy it. Replace the parts in [brackets] with your own details.</p>
+    <div class="prompts" id="promptList"></div>
+    <div class="job" style="margin-top:14px"><b>Your job as the human:</b> you are the editor. Listen to or read what the Studio made before you share it. It can stress the wrong point, mispronounce local names, or sound more certain than your source is.</div>
+  </section>
+
+  <section class="card part" data-step="5" id="part-5" style="--c:var(--brand2)" aria-labelledby="h-p5">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;align-items:flex-start">
+      <div><span class="kicker">Part 5 · Two-minute check</span>
+      <h2 id="h-p5">Which move fits best?</h2></div>
+      <span class="badge" id="quizBadge" aria-live="polite">Tried 0 of 4</span>
+    </div>
+    <p class="lead">Four quick situations. Guessing is welcome, and you can try both answers.</p>
+    <div class="quiz" id="quizList"></div>
+  </section>
+
+  <section class="card part" data-step="6" id="part-6" style="--c:#ffd93d" aria-labelledby="h-p6">
+    <span class="kicker" style="color:var(--ink)">What to take with you</span>
+    <h2 id="h-p6">You choose the sources. You check the claims.</h2>
+    <div class="ideas">
+      <div class="idea"><span class="ico">📚</span><div><b>The notebook only knows what you give it.</b>Good sources in, useful answers out. An outdated policy or a weak web page gives you confident answers about the wrong thing.</div></div>
+      <div class="idea"><span class="ico">🔢</span><div><b>Tap the citations that matter.</b>A numbered badge is an invitation to check, not proof. If an answer has no badge, treat it as a guess.</div></div>
+      <div class="idea"><span class="ico">🛡️</span><div><b>Keep people's private details out.</b>Remove names and personal data before you upload, even in a notebook only you can see.</div></div>
+    </div>
+    <div class="cta">
+      <h3>Ready to try it for real?</h3>
+      <p>Open Gemini Notebook, add one document you know well, and ask it three questions. Tap every badge.</p>
+      <div class="actions" style="margin-top:0">
+        <a class="btn btn-main" href="https://notebooklm.google.com/" target="_blank" rel="noopener">Open Gemini Notebook ↗</a>
+        <a class="btn btn-soft" href="./">🧰 Back to the AI Toolbox</a>
+        <a class="btn btn-soft" href="skill-builder.html">🧩 Skill Builder</a>
+      </div>
+    </div>
+  </section>
+
+
+  <details class="sources">
+    <summary>Where these facts come from <span class="checked">Last checked: November 12, 2026</span></summary>
+    <p>Gemini Notebook changes often, and limits differ by plan, country, and account type. Check inside your own notebook before you plan around a feature. Details about panel names, Studio features, and file types come from general knowledge of the tool and were not all confirmed on a Google page today.</p>
+    <ul>
+      <li>Google, <a href="https://blog.google/innovation-and-ai/products/gemini-notebook/notebooklm-gemini-notebook/" target="_blank" rel="noopener">NotebookLM is now Gemini Notebook</a> (renamed July 2026)</li>
+      <li>Elephas, <a href="https://elephas.app/blog/notebooklm-source-limits.md" target="_blank" rel="noopener">NotebookLM limits explained</a> (50 sources per notebook on the free plan; usage allowance)</li>
+      <li>arXiv, <a href="https://arxiv.org/abs/2509.25498v1" target="_blank" rel="noopener">Not Wrong, But Untrue: LLM Overconfidence in Document-Based Queries</a> (the 13% and 40% figures)</li>
+      <li>Claude Help Center, <a href="https://support.claude.com/en/articles/9517075-what-are-projects" target="_blank" rel="noopener">What are projects?</a> (free accounts, up to five projects)</li>
+    </ul>
+  </details>
+
+</main>
+
+<footer>Part of <a href="../">Demystifying AI for All</a> · Built by <strong>Jeffery Heil</strong> · An independent, free resource, used in <a href="https://globallearningaccess.com/home" target="_blank" rel="noopener">Global Learning Access</a> trainings</footer>
+
+<script>
+(function(){
+  function $(id){return document.getElementById(id);}
+  function el(tag,cls,text){var e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e;}
+  function btn(cls,fn){var b=document.createElement("button"); b.type="button"; b.className=cls; b.addEventListener("click",fn); return b;}
+  function press(group,idx){Array.prototype.forEach.call(group.children,function(b,i){b.setAttribute("aria-pressed",i===idx?"true":"false");});}
+
+  /* ------------------------------------------------------------
+     PART 1. The three questions. To edit, change the words inside
+     the quotation marks. In "nb", plain text is shown as is,
+     {b:"..."} is bold, and {c:1} or {c:2} is a citation badge.
+     Every document named here is a made-up sample.
+     ------------------------------------------------------------ */
+  var SCEN=[
+    { tag:"Education", title:"School grading guide", ask:"What do Performance Tasks count for?",
+      q:"What is the weight of Performance Tasks in our Grade 8 Science grades, and how many do we need this quarter?",
+      general:"In many schools, performance tasks and lab work count for about 30% to 50% of a science grade, with the rest split between written work and exams. The number of tasks is usually up to the teacher. Check your school's guidelines to be sure.",
+      risk:"Nothing here is false, and none of it is about your school. It gives a range where your documents give one number, and it cannot know your department's rule on how many tasks.",
+      nb:["According to your grading guide, Performance Tasks count for ",{b:"40%"}," of the quarterly grade in Grade 8 Science, with 40% for Written Work and 20% for the Quarterly Assessment",{c:1},". Your department memo adds that each teacher must give at least ",{b:"two rubric-scored performance tasks"}," this quarter",{c:2},"."],
+      cites:{1:["📄 Source 1: School Grading Guide (sample document), page 3","For Science and Mathematics, quarterly grades are computed as follows: Written Work 40%, Performance Tasks 40%, Quarterly Assessment 20%."],
+             2:["📝 Source 2: Science Department Memo, Quarter 2 (sample document), section 2","All Grade 8 Science teachers shall give a minimum of two (2) rubric-scored performance tasks in Quarter 2, using locally available materials."]} },
+    { tag:"Training and hospitality", title:"Kitchen cold-chain procedure", ask:"How cold, and how often do we log it?",
+      q:"What is our maximum cold-holding temperature, and how often must staff log it?",
+      general:"Food safety guidelines generally recommend keeping chilled food at or below 4°C to 5°C and checking temperatures at least twice a day, usually at opening and closing.",
+      risk:"A fair general answer, and it would get your team in trouble. Your own procedure requires a log every 2 hours and before every delivery. A general chatbot has never seen your procedure.",
+      nb:["Your food safety handbook says chilled trays must be held at ",{b:"4°C or below"}," during storage and transport",{c:1},". Your kitchen procedure requires staff to record probe readings ",{b:"every 2 hours"},", and again 15 minutes before a delivery van leaves",{c:2},"."],
+      cites:{1:["📄 Source 1: Catering Food Safety Handbook (sample document), section 4.2","Chilled foods shall be kept at an internal temperature of 4°C or below during storage and transport."],
+             2:["📝 Source 2: Cold-Chain Procedure (sample document), rule 2B","The kitchen lead on duty must log tray temperatures every two (2) hours on Form CC-04 and 15 minutes before vehicle dispatch."]} },
+    { tag:"Small business", title:"Supplier contract", ask:"What if the delivery is 5 days late?",
+      q:"What penalty applies if our packaging supplier delivers 5 business days late?",
+      general:"Many supply contracts include a late-delivery penalty of around 0.5% to 1% of the order value per week of delay, often with exceptions for events like typhoons.",
+      risk:"A reasonable guess about contracts in general. Your contract says something different: a 3-day grace period, then 2% per day. Acting on the general answer could cost you money or a supplier relationship.",
+      nb:["Under clause 9.3 of your supplier agreement, a ",{b:"3-business-day grace period"}," applies first. From day 4, the buyer may deduct ",{b:"2% of the delayed order's value per day"},", so a 5-day delay means a 4% deduction",{c:1},". Delays caused by a port closure under Tropical Cyclone Wind Signal No. 2 or higher are exempt if the supplier sends written notice within 24 hours",{c:2},"."],
+      cites:{1:["📄 Source 1: Packaging Supplier Agreement (sample document), clause 9.3","Following a three (3) business day grace period, Buyer shall deduct two percent (2.0%) of the affected purchase order value for each subsequent day of delay."],
+             2:["📄 Source 1, a different passage: clause 11.1","Port closures under Tropical Cyclone Wind Signal No. 2 or higher shall suspend penalties, provided Supplier sends written notice within 24 hours."]} }
+  ];
+  var scenPicker=$("scenPicker"), curScen=0;
+  SCEN.forEach(function(s,i){
+    var b=btn("pk",function(){showScen(i);});
+    b.appendChild(el("small",null,s.tag)); b.appendChild(el("b",null,s.title)); b.appendChild(el("span",null,s.ask));
+    scenPicker.appendChild(b);
+  });
+  function showCite(n){
+    var c=SCEN[curScen].cites[n];
+    $("citSrc").textContent=c[0]; $("citQuote").textContent="“"+c[1]+"”";
+    Array.prototype.forEach.call($("nbAns").querySelectorAll(".cite"),function(x){x.setAttribute("aria-pressed",x.dataset.n==n?"true":"false");});
+  }
+  function showScen(i){
+    curScen=i; var s=SCEN[i]; press(scenPicker,i);
+    $("scenQ").textContent=s.q; $("genAns").textContent=s.general; $("genRisk").textContent=s.risk;
+    var box=$("nbAns"); box.textContent="";
+    s.nb.forEach(function(part){
+      if(typeof part==="string") box.appendChild(document.createTextNode(part));
+      else if(part.b) box.appendChild(el("strong",null,part.b));
+      else if(part.c){ var c=btn("cite",function(){showCite(part.c);}); c.textContent=part.c; c.dataset.n=part.c; c.setAttribute("aria-label","Show source "+part.c); box.appendChild(c); }
+    });
+    showCite(1);
+  }
+
+  /* ------------------------------------------------------------
+     PART 2. The three panels: [small label, emoji, name, intro, [bold start, rest] ...]
+     ------------------------------------------------------------ */
+  var PANES=[
+    ["Left panel","📂","Sources","This is where you decide what the notebook is allowed to know. Everything it tells you comes from the sources listed here.",
+      ["Start with one anchor document.","Add your most important document first. The notebook writes a short summary and suggests questions to ask."],
+      ["Use the checkboxes.","Every source has a checkbox. Untick the ones you want it to ignore for now. You never have to delete a source to focus on one."],
+      ["Open any source.","Tap a source name, or a numbered badge in the chat, to open the source and see the exact passage."]],
+    ["Center panel","💬","Chat","Ask questions here. The notebook answers from the sources that are ticked, and adds numbered badges that link to the passages it used.",
+      ["Tap the badges.","A summary can be confidently wrong. Tap a number to check that the notebook read your policy or contract the way you would."],
+      ["Notice what is missing.","If you ask about something your sources do not cover, the notebook should say so. That gap tells you where you need another source or your own judgment."],
+      ["Save what is useful.","When an answer is worth keeping, save it as a note so you can find it again."]],
+    ["Right panel","🎨","Studio","The Studio turns your sources into something you can share: audio, video, a mind map, or a document.",
+      ["Audio Overview.","Two AI hosts talk through your sources like a radio show. Choose Customize first to set the topic and the audience."],
+      ["Mind Map.","A branching picture of the main ideas across your sources. Tap a branch to explore it."],
+      ["Reports.","Study guides, briefing documents, FAQs, and timelines you can adapt into handouts. Read them before you share them."]]
+  ];
+  var panePicker=$("panePicker");
+  PANES.forEach(function(p,i){
+    var b=btn("pane",function(){showPane(i);});
+    b.appendChild(el("small",null,p[0])); b.appendChild(el("span",null,p[1])); b.appendChild(el("b",null,(i+1)+". "+p[2]));
+    panePicker.appendChild(b);
+  });
+  function showPane(i){
+    press(panePicker,i); var p=PANES[i], box=$("paneInfo"); box.textContent="";
+    box.appendChild(el("h3",null,p[1]+" "+p[2])); box.appendChild(el("p",null,p[3]));
+    var ul=el("ul");
+    p.slice(4).forEach(function(x){ var li=el("li"); li.appendChild(el("b",null,x[0]+" ")); li.appendChild(document.createTextNode(x[1])); ul.appendChild(li); });
+    box.appendChild(ul);
+  }
+
+  /* ------------------------------------------------------------
+     PART 3. Sample source sets: [button label, who it is for, goal, [sources], studio move]
+     ------------------------------------------------------------ */
+  var BUNDLES=[
+    ["🟠 Teacher path","New to Gemini Notebook, in any job.","Get comfortable with one small notebook.",
+      ["Anchor: one document you already know well, such as a handbook, a syllabus, or a procedure","One public web page on the same topic","One short YouTube video (5 to 10 minutes) that explains it"],
+      "Make a Mind Map, then ask three questions in the chat and tap every badge to see where the answers came from."],
+    ["🟢 Trainer path","You have tried it and want to go further, in any job.","Build a notebook someone else could learn from.",
+      ["Anchor: an official guideline or standard for your field, as a PDF","Your own procedure or plan, with names removed","The official web page of the agency or body that sets the rules","A video that shows the skill being done","A checklist of common mistakes, pasted in as copied text"],
+      "Customize a 5-minute Audio Overview for someone on their first day, and listen to it before you share it."],
+    ["🔵 Teammate path","You are confident with AI tools, in any job.","Use the notebook to question your sources, not only to summarize them.",
+      ["Anchor: a master policy, plan, or contract","An internal checklist or project plan, with names removed","A regulator's or standards body's web page","A recorded briefing, lecture, or public hearing","A recent report on your sector or region"],
+      "Ask: \"Where do these sources disagree, and what is missing?\" Then generate a briefing document and check its claims against the badges."],
+    ["🎒 No files handy?","Works on any phone or computer today.","Practice every feature without workplace files.",
+      ["Anchor: any handout from a course you have taken","A second handout or your own notes, pasted in as copied text","A public news or education article you care about","A short YouTube explainer on the same topic"],
+      "Make a Mind Map and see how the notebook connects a handout, an article, and a video."]
+  ];
+  var bundlePicker=$("bundlePicker");
+  BUNDLES.forEach(function(b,i){ var x=btn("pl",function(){showBundle(i);}); x.textContent=b[0]; bundlePicker.appendChild(x); });
+  function showBundle(i){
+    press(bundlePicker,i); var b=BUNDLES[i], out=$("bundleOut"); out.textContent="";
+    out.appendChild(el("h3",null,b[0])); out.appendChild(el("p","small",b[1]));
+    var g=el("p"); g.appendChild(el("b",null,"Goal: ")); g.appendChild(document.createTextNode(b[2])); out.appendChild(g);
+    var ol=el("ol"); b[3].forEach(function(s){ol.appendChild(el("li",null,s));}); out.appendChild(ol);
+    var m=el("div","lesson"); m.style.marginTop="8px"; m.appendChild(el("b",null,"🎨 Studio move to try: ")); m.appendChild(document.createTextNode(b[4])); out.appendChild(m);
+  }
+
+  /* ------------------------------------------------------------
+     PART 4. Generate straight away, or customize first.
+     ------------------------------------------------------------ */
+  var MODES={
+    plain:["A broad overview of all 60 pages","The two hosts spend 12 minutes on the history of the agency, the table of contents, and general definitions. The one section your new staff struggle with gets about 20 seconds.",false],
+    custom:["A focused 5-minute briefing for your audience","You chose Customize and wrote: \"Focus on Section 4, cold storage. Explain the three most common inspection mistakes for new kitchen staff.\" The hosts skip the background and spend the whole episode on situations your team will meet this week.",true]
+  };
+  var modePicker=$("modePicker");
+  Array.prototype.forEach.call(modePicker.children,function(b){ b.addEventListener("click",function(){showMode(b.dataset.mode);}); });
+  function showMode(m){
+    Array.prototype.forEach.call(modePicker.children,function(b){b.setAttribute("aria-pressed",b.dataset.mode===m?"true":"false");});
+    var d=MODES[m], out=$("modeOut"); out.textContent=""; out.className="result"+(d[2]?" good":"");
+    out.appendChild(el("h3",null,d[0])); out.appendChild(el("p",null,d[1]));
+  }
+  var PROMPTS=[
+    ["🎙️ Audio Overview · zoom in on one topic","Focus this Audio Overview only on [section or chapter] of my anchor document. Explain the steps using everyday situations a new [trainee, student, or staff member] would face in their first week. Skip the general background."],
+    ["📘 Study guide · for one role","Create a study guide focused on [topic]. Include a 5-question quiz built on realistic situations, with an answer key that says where in the source each answer comes from, and a plain-language glossary for [audience]."],
+    ["🎧 Before a meeting · connect two sources","Compare the official rules in my anchor document with the practical examples in my video source. List 3 concrete actions our team should take, and say which source each one comes from."]
+  ];
+  function copy(text){
+    var ok=false, ta=document.createElement("textarea");
+    ta.value=text; ta.setAttribute("readonly",""); ta.style.position="fixed"; ta.style.left="-9999px";
+    document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0,text.length);
+    try{ ok=document.execCommand("copy"); }catch(e){ ok=false; }
+    document.body.removeChild(ta);
+    if(!ok && navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text); ok=true; }
+    return ok;
+  }
+  PROMPTS.forEach(function(p){
+    var b=btn("pr",function(){
+      var ok=copy(p[1]); var u=b.querySelector("u"); b.classList.add("copied");
+      u.textContent= ok ? "Copied ✓" : "Select the text and copy it";
+      setTimeout(function(){ b.classList.remove("copied"); u.textContent="Tap to copy"; },2200);
+    });
+    b.appendChild(el("small",null,p[0])); b.appendChild(el("i",null,p[1])); b.appendChild(el("u",null,"Tap to copy"));
+    $("promptList").appendChild(b);
+  });
+
+  /* ------------------------------------------------------------
+     PART 5. Each question: [label, situation, [answer, is it the best one?, feedback] x2]
+     ------------------------------------------------------------ */
+  var QUIZ=[
+    ["Focus","Your notebook has 5 sources. Right now you want a study guide from only your anchor document, without losing the other 4. What do you do?",
+      ["Delete the other 4 sources and upload them again later.",false,"That works, but it is extra effort. You never need to delete sources to focus on one."],
+      ["Untick the other 4 checkboxes in the Sources panel.",true,"Yes. Only ticked sources are used, so unticking the others focuses the notebook on your anchor document."]],
+    ["Customize","You uploaded an 80-page training regulation and want a 5-minute Audio Overview about kitchen safety for new trainees only. What is your best move?",
+      ["Choose Customize and tell it to focus on kitchen safety for new trainees.",true,"Yes. Customizing lets you set the topic and the audience, so the hosts do not try to cover all 80 pages."],
+      ["Tap Generate and hope the hosts pick that chapter.",false,"Without directions, the hosts skim the whole document at a general level."]],
+    ["Gaps","You ask about a local permit fee that is not mentioned anywhere in your 4 sources. What should happen?",
+      ["It searches the web and gives you a figure without saying so.",false,"That is the habit of a general chatbot. A notebook is built to stay inside your sources."],
+      ["It tells you the fee is not in your sources.",true,"Yes, that is what it should do, and it shows you a gap to fill. If you ever get an answer with no badge, treat it as a guess and check it."]],
+    ["Mixing formats","Your team has a Word file, a Google Doc, a PDF, and a 12-minute YouTube training video. Can all four go in one notebook?",
+      ["Yes. They can all be added and compared in one notebook.",true,"Yes. You can mix documents, web links, and video transcripts, and ask questions across all of them."],
+      ["No. A notebook takes one file type only.",false,"Good news: you can mix file types in the same notebook."]]
+  ];
+  var tried={};
+  QUIZ.forEach(function(q,qi){
+    var card=el("div","qc"); card.appendChild(el("span","kicker",(qi+1)+" · "+q[0])); card.appendChild(el("p",null,q[1]));
+    var fb=el("div","fb hidden");
+    q.slice(2).forEach(function(o){
+      var b=btn("qo",function(){
+        b.classList.add(o[1]?"right":"tried");
+        fb.className="fb "+(o[1]?"ok":"no"); fb.textContent=(o[1]?"✅ ":"💡 Try the other one too. ")+o[2];
+        tried[qi]=true; var n=Object.keys(tried).length, badge=$("quizBadge");
+        badge.textContent= n===QUIZ.length ? "Tried all 4 ✓" : "Tried "+n+" of "+QUIZ.length; badge.classList.toggle("done",n===QUIZ.length);
+      });
+      b.textContent=o[0]; card.appendChild(b);
+    });
+    card.appendChild(fb); $("quizList").appendChild(card);
+  });
+
+  showScen(0); showPane(0); showBundle(0); showMode("custom");
+  
+})();
+</script>
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "bd52202e57cc448caf8023f1639ce27d"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

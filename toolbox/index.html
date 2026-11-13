@@ -178,7 +178,7 @@ footer strong{color:rgba(255,255,255,.85);font-family:'Nunito',sans-serif}
 </div></div>
 
 <header class="intro"><div class="wrap">
-  <nav class="setnav" aria-label="Pages in the AI Toolbox"><a href="./" aria-current="page">🧰 Toolbox</a><a href="skill-builder.html">🧩 Skill Builder</a><a href="then-and-now.html">🧭 Custom bots</a></nav>
+  <nav class="setnav" aria-label="Pages in the AI Toolbox"><a href="./" aria-current="page">🧰 Toolbox</a><a href="skill-builder.html">🧩 Skill Builder</a><a href="then-and-now.html">🧭 Custom bots</a><a href="notebook-guide.html">📓 Notebook guide</a></nav>
   <h1>AI can do more than <span>chat</span>. 🧰</h1>
   <p>Most people only ever type a question and read the answer. Today's AI tools have more inside them: they can read your documents, make pictures, build small apps, research for you, tutor you, and slow down to think. Try each one here first, with no account and no pressure. Then see where to find it in five popular tools.</p>
   <div class="chips">
@@ -243,6 +243,7 @@ footer strong{color:rgba(255,255,255,.85);font-family:'Nunito',sans-serif}
       <div class="actions" style="margin-top:0">
         <a class="btn btn-main" href="skill-builder.html">🧩 Skill Builder</a>
         <a class="btn btn-soft" href="then-and-now.html">🧭 Where did my custom bot go?</a>
+        <a class="btn btn-soft" href="notebook-guide.html">📓 Gemini Notebook Field Guide</a>
         <a class="btn btn-soft" href="../playground/">🎮 AI Playground</a>
       </div>
     </div>
@@ -286,6 +287,7 @@ footer strong{color:rgba(255,255,255,.85);font-family:'Nunito',sans-serif}
       plain:"You hand the AI a file, like a handbook, a spreadsheet, or a photo of a notice, and ask questions about it. It answers from your file instead of from its general memory.",
       job:"Keep private information out (names, grades, health, account numbers) unless your organization has approved the tool. Ask it to quote the sentence it used.",
       tip:["No upload button, or you hit the limit? Paste the text into the chat and add:","Answer only from the text I pasted. Quote the sentence you used. If the answer is not there, say so."],
+      more:["Want a tool built for this? It answers only from your files and shows where each claim came from.","📓 Try the Gemini Notebook Field Guide","notebook-guide.html"],
       names:[["Upload files, or Add from Drive","f"],["Add photos and files","f"],["Upload","f"],["Add files","f"],["Attach (reads the text in files)","f"]] },
     { id:"image", e:"🎨", need:"Make a picture", sub:"Create an image from my words",
       title:"Make a picture", feature:"Often called: create image",
@@ -356,6 +358,7 @@ footer strong{color:rgba(255,255,255,.85);font-family:'Nunito',sans-serif}
     SIMS[p.id](stage, function(){ markTried(p.id); });
     panel.appendChild(box("yourjob","Your job as the human:",p.job));
     var tip=el("div","freetip"); tip.appendChild(el("b",null,"Free-account tip: ")); tip.appendChild(document.createTextNode(p.tip[0])); tip.appendChild(el("code",null,p.tip[1])); panel.appendChild(tip);
+    if(p.more){ var mo=el("p"); mo.style.margin="0 0 12px"; mo.appendChild(document.createTextNode(p.more[0]+" ")); var ml=el("a",null,p.more[1]); ml.href=p.more[2]; ml.style.fontWeight="800"; mo.appendChild(ml); panel.appendChild(mo); }
     panel.appendChild(el("h3",null,"Where to find it"));
     var names=el("div","names");
     p.names.forEach(function(n,ti){ names.appendChild(nameRow(TOOL_ORDER[ti], n)); });
