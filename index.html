@@ -68,6 +68,22 @@ body { font-family: 'Nunito Sans', sans-serif; background: var(--light); color: 
 .cat-btn.active[data-cat="glossary"]   { color:var(--yellow); border-bottom-color:var(--yellow); filter: brightness(0.8); }
 .cat-btn.active[data-cat="podcasts"]   { color:var(--orange); border-bottom-color:var(--orange); }
 .cat-btn.active[data-cat="hcai"]       { color:var(--green);  border-bottom-color:var(--green); }
+.cat-btn.active[data-cat="prompts"]    { color:var(--purple); border-bottom-color:var(--purple); }
+
+/* DROPDOWN */
+.cat-dropdown { position:relative; }
+.cat-dropdown-btn { display:flex;align-items:center;gap:7px;padding:8px 16px;border:none;background:transparent;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;color:#888;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:all 0.18s; }
+.cat-dropdown-btn:hover { color:var(--ink); }
+.cat-dropdown-btn .icon { font-size:16px; }
+.cat-dropdown-btn .arrow { font-size:10px;margin-left:2px;transition:transform 0.2s; }
+.cat-dropdown.open .arrow { transform:rotate(180deg); }
+.cat-dropdown.has-active .cat-dropdown-btn { color:var(--purple);border-bottom-color:var(--purple); }
+.cat-dropdown-menu { position:absolute;top:100%;left:0;background:var(--white);border:1px solid var(--border);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.12);padding:8px 0;min-width:180px;z-index:200;display:none; }
+.cat-dropdown.open .cat-dropdown-menu { display:block; }
+.cat-dropdown-menu button { display:flex;align-items:center;gap:10px;width:100%;padding:10px 16px;border:none;background:transparent;font-family:'Nunito',sans-serif;font-weight:600;font-size:13px;color:#666;cursor:pointer;text-align:left;transition:all 0.15s; }
+.cat-dropdown-menu button:hover { background:var(--light);color:var(--ink); }
+.cat-dropdown-menu button.active { background:rgba(120,60,189,0.08);color:var(--purple); }
+.cat-dropdown-menu button .icon { font-size:15px; }
 
 /* HCAI */
 .hcai-wrap { margin-top: 8px; }
@@ -797,16 +813,21 @@ footer a { color:var(--teal);text-decoration:none; }
       <input type="text" id="search" placeholder="Search prompts…">
     </div>
     <button class="cat-btn active" data-cat="all"><span class="icon">🗂️</span> All</button>
-    <button class="cat-btn" data-cat="tone"><span class="icon">🎭</span> Tone</button>
-    <button class="cat-btn" data-cat="decision"><span class="icon">🧭</span> Decisions</button>
-    <button class="cat-btn" data-cat="clarity"><span class="icon">💡</span> Clarity</button>
-    <button class="cat-btn" data-cat="creative"><span class="icon">🎨</span> Creative</button>
-    <button class="cat-btn" data-cat="framework"><span class="icon">🏗️</span> Frameworks</button>
+    <div class="cat-dropdown" id="promptDropdown">
+      <button class="cat-dropdown-btn"><span class="icon">💬</span> Prompt Ideas <span class="arrow">▼</span></button>
+      <div class="cat-dropdown-menu">
+        <button data-cat="tone"><span class="icon">🎭</span> Tone</button>
+        <button data-cat="decision"><span class="icon">🧭</span> Decisions</button>
+        <button data-cat="clarity"><span class="icon">💡</span> Clarity</button>
+        <button data-cat="creative"><span class="icon">🎨</span> Creative</button>
+        <button data-cat="framework"><span class="icon">🏗️</span> Frameworks</button>
+      </div>
+    </div>
+    <button class="cat-btn" data-cat="podcasts"><span class="icon">🎙️</span> Podcasts & YouTube</button>
     <button class="cat-btn" data-cat="portable"><span class="icon">🧳</span> Portable AI</button>
     <button class="cat-btn" data-cat="ailiteracy"><span class="icon">🧠</span> AI Literacy</button>
-    <button class="cat-btn" data-cat="glossary"><span class="icon">📖</span> Glossary</button>
-    <button class="cat-btn" data-cat="podcasts"><span class="icon">🎙️</span> Podcasts & YouTube</button>
     <button class="cat-btn" data-cat="hcai"><span class="icon">🌱</span> HCAI</button>
+    <button class="cat-btn" data-cat="glossary"><span class="icon">📖</span> Glossary</button>
   </div>
 </div>
 
@@ -1990,6 +2011,8 @@ function renderHCAI() {
 document.querySelectorAll('.cat-btn').forEach(btn=>{
   btn.addEventListener('click',function(){
     document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.cat-dropdown').forEach(d=>d.classList.remove('has-active'));
+    document.querySelectorAll('.cat-dropdown-menu button').forEach(b=>b.classList.remove('active'));
     this.classList.add('active');
     activeFilter=this.dataset.cat;
     if(activeFilter==='ailiteracy'){
@@ -2002,6 +2025,33 @@ document.querySelectorAll('.cat-btn').forEach(btn=>{
     if(activeFilter==='hcai'){ renderHCAI(); return; }
     render();
   });
+});
+
+// Dropdown handling
+const dropdown = document.getElementById('promptDropdown');
+const dropdownBtn = dropdown.querySelector('.cat-dropdown-btn');
+const dropdownMenu = dropdown.querySelector('.cat-dropdown-menu');
+
+dropdownBtn.addEventListener('click', function(e) {
+  e.stopPropagation();
+  dropdown.classList.toggle('open');
+});
+
+dropdownMenu.querySelectorAll('button').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.cat-dropdown-menu button').forEach(b=>b.classList.remove('active'));
+    this.classList.add('active');
+    dropdown.classList.add('has-active');
+    dropdown.classList.remove('open');
+    activeFilter = this.dataset.cat;
+    render();
+  });
+});
+
+document.addEventListener('click', function() {
+  dropdown.classList.remove('open');
 });
 document.getElementById('search').addEventListener('input',function(){
   searchTerm=this.value.toLowerCase().trim();render();
