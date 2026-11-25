@@ -462,6 +462,39 @@ h3 { font-size: 1.1rem; font-weight: 600; }
   font-weight: bold;
 }
 
+/* Region Toggle */
+.region-toggle {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+.region-toggle a {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 2px solid var(--border);
+  color: var(--text-muted);
+  transition: all 0.2s;
+}
+.region-toggle a:first-child {
+  border-radius: 8px 0 0 8px;
+  border-right: 1px solid var(--border);
+}
+.region-toggle a:last-child {
+  border-radius: 0 8px 8px 0;
+  border-left: 1px solid var(--border);
+}
+.region-toggle a.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+.region-toggle a:hover:not(.active) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
 @media (max-width: 600px) {
   .scenario-body { padding: 1rem; }
   .score-bar { gap: 1rem; }
@@ -473,6 +506,11 @@ h3 { font-size: 1.1rem; font-weight: 600; }
   <div class="hero">
     <h1><span class="emoji">🎮</span> Human-in-the-Loop Simulator</h1>
     <p>Practice making decisions that keep you in control while working with AI</p>
+  </div>
+
+  <div class="region-toggle">
+    <a href="human-in-the-loop-simulator.html" class="active">🇺🇸 US</a>
+    <a href="human-in-the-loop-simulator-ph.html">🇵🇭 Philippines</a>
   </div>
 
   <!-- Intro -->

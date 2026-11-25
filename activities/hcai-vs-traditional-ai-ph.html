@@ -1,0 +1,1148 @@
+<title>HCAI vs System-Centered AI</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap">
+<style>
+:root {
+  --bg: #FAFAFA;
+  --surface: #FFFFFF;
+  --text: #1a1a2e;
+  --text-muted: #64648c;
+  --accent: #2563eb;
+  --accent-light: #dbeafe;
+  --human: #059669;
+  --human-light: #d1fae5;
+  --traditional: #9333ea;
+  --traditional-light: #f3e8ff;
+  --border: #e5e5ed;
+  --radius: 12px;
+  --danger: #ef4444;
+  --danger-light: #fee2e2;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f0f1a;
+    --surface: #1a1a2e;
+    --text: #f0f0f5;
+    --text-muted: #a0a0b8;
+    --accent: #60a5fa;
+    --accent-light: #1e3a5f;
+    --human: #34d399;
+    --human-light: #064e3b;
+    --traditional: #c084fc;
+    --traditional-light: #3b0764;
+    --border: #2a2a40;
+    --danger: #f87171;
+    --danger-light: #7f1d1d;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f0f1a;
+  --surface: #1a1a2e;
+  --text: #f0f0f5;
+  --text-muted: #a0a0b8;
+  --accent: #60a5fa;
+  --accent-light: #1e3a5f;
+  --human: #34d399;
+  --human-light: #064e3b;
+  --traditional: #c084fc;
+  --traditional-light: #3b0764;
+  --border: #2a2a40;
+  --danger: #f87171;
+  --danger-light: #7f1d1d;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; text-wrap: balance; }
+h1 { font-size: clamp(1.75rem, 5vw, 2.5rem); font-weight: 700; }
+h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; }
+h3 { font-size: 1.1rem; font-weight: 600; }
+
+.container { max-width: 900px; margin: 0 auto; padding-block: 2rem; }
+
+.hero {
+  text-align: center;
+  padding: 3rem 1rem;
+  margin-bottom: 2rem;
+}
+.hero p { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 1rem auto 0; }
+
+.progress-bar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
+}
+.progress-step {
+  flex: 1;
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  transition: background 0.3s;
+}
+.progress-step.active { background: var(--accent); }
+.progress-step.complete { background: var(--human); }
+
+.section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.concept-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+.concept-card {
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  border: 2px solid;
+}
+.concept-card.human { background: var(--human-light); border-color: var(--human); }
+.concept-card.traditional { background: var(--traditional-light); border-color: var(--traditional); }
+.concept-card h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+.concept-card.human h3 { color: var(--human); }
+.concept-card.traditional h3 { color: var(--traditional); }
+.concept-card ul { list-style: none; padding: 0; font-size: 0.95rem; }
+.concept-card li {
+  padding: 0.4rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+}
+.concept-card li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  opacity: 0.6;
+}
+
+/* Coordinate Plane */
+.coordinate-plane {
+  margin: 2rem 0;
+  display: flex;
+  justify-content: center;
+}
+.plane-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.y-axis-label {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-weight: 700;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+.plane-main {
+  display: flex;
+  flex-direction: column;
+}
+.plane-row {
+  display: flex;
+  align-items: stretch;
+}
+.y-labels-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding-right: 0.75rem;
+  width: 50px;
+}
+.y-label {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  height: 120px;
+}
+.plane-cells {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: var(--border);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.plane-cell {
+  background: var(--surface);
+  padding: 1.25rem 1rem;
+  text-align: center;
+  width: 150px;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.plane-cell.highlight {
+  background: var(--human-light);
+  border: 3px solid var(--human);
+}
+.cell-title {
+  font-weight: 600;
+  font-family: 'Space Grotesk', sans-serif;
+  margin-bottom: 0.25rem;
+  font-size: 0.95rem;
+}
+.cell-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+.plane-cell.highlight .cell-desc { color: var(--text); }
+.x-row {
+  display: flex;
+  margin-left: 50px;
+}
+.x-labels {
+  display: flex;
+  width: 304px;
+  padding-top: 0.5rem;
+}
+.x-label {
+  flex: 1;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-align: center;
+}
+.x-axis-label {
+  font-weight: 700;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  text-align: center;
+  padding-top: 0.5rem;
+  margin-left: 50px;
+  text-transform: uppercase;
+}
+@media (max-width: 500px) {
+  .plane-cell { width: 120px; padding: 1rem 0.75rem; min-height: 100px; }
+  .cell-title { font-size: 0.85rem; }
+  .cell-desc { font-size: 0.75rem; }
+  .x-labels { width: 244px; }
+}
+
+/* Case Studies */
+.case-study {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin: 1.5rem 0;
+  overflow: hidden;
+}
+.case-header {
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+.case-header.human { background: var(--human-light); }
+.case-header.traditional { background: var(--traditional-light); }
+.case-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+.case-header.human .case-icon { background: var(--human); color: white; }
+.case-header.traditional .case-icon { background: var(--traditional); color: white; }
+.case-title { font-weight: 600; font-family: 'Space Grotesk', sans-serif; }
+.case-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+}
+.case-header.human .case-label { background: var(--human); color: white; }
+.case-header.traditional .case-label { background: var(--traditional); color: white; }
+.case-body { padding: 1.5rem; }
+.case-scenario {
+  font-style: italic;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  padding-left: 1rem;
+  border-left: 3px solid var(--border);
+}
+.case-analysis h4 {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+.case-analysis ul { margin: 0; padding-left: 1.25rem; }
+.case-analysis li { margin-bottom: 0.5rem; font-size: 0.95rem; }
+.case-takeaway {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--surface);
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+.case-takeaway strong { color: var(--accent); }
+
+/* Quiz */
+.quiz-question {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.quiz-num {
+  display: inline-block;
+  background: var(--accent);
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 28px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-right: 0.75rem;
+}
+.quiz-text { font-weight: 500; margin-bottom: 1rem; display: inline; }
+.quiz-options { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem; }
+.quiz-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.quiz-option:hover { border-color: var(--accent); }
+.quiz-option.selected { border-color: var(--accent); background: var(--accent-light); }
+.quiz-option.correct { border-color: var(--human); background: var(--human-light); }
+.quiz-option.incorrect { border-color: var(--danger); background: var(--danger-light); }
+.quiz-option.disabled { pointer-events: none; }
+.quiz-radio {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.quiz-option.selected .quiz-radio { border-color: var(--accent); background: var(--accent); }
+.quiz-option.correct .quiz-radio { border-color: var(--human); background: var(--human); }
+.quiz-option.incorrect .quiz-radio { border-color: var(--danger); background: var(--danger); }
+.quiz-radio::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
+  display: none;
+}
+.quiz-option.selected .quiz-radio::after,
+.quiz-option.correct .quiz-radio::after,
+.quiz-option.incorrect .quiz-radio::after { display: block; }
+.quiz-feedback {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  display: none;
+}
+.quiz-feedback.show { display: block; }
+.quiz-feedback.correct { background: var(--human-light); border: 1px solid var(--human); }
+.quiz-feedback.incorrect { background: var(--danger-light); border: 1px solid var(--danger); }
+
+.quiz-results {
+  text-align: center;
+  padding: 2rem;
+  background: var(--bg);
+  border-radius: var(--radius);
+  margin-top: 1.5rem;
+}
+.quiz-score {
+  font-size: 3rem;
+  font-weight: 700;
+  font-family: 'Space Grotesk', sans-serif;
+  color: var(--human);
+}
+.quiz-score-label { color: var(--text-muted); margin-bottom: 1rem; }
+
+.reflection-prompt {
+  background: var(--accent-light);
+  border-left: 4px solid var(--accent);
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+  border-radius: 0 8px 8px 0;
+}
+.reflection-prompt p { margin: 0; font-weight: 500; }
+.answer-box {
+  width: 100%;
+  min-height: 120px;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 1rem;
+  background: var(--surface);
+  color: var(--text);
+  resize: vertical;
+  margin-top: 0.75rem;
+}
+.answer-box:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-light);
+}
+
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+.nav-btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.nav-btn.secondary {
+  background: transparent;
+  border: 2px solid var(--border);
+  color: var(--text);
+}
+.nav-btn.secondary:hover { border-color: var(--accent); }
+.nav-btn.primary {
+  background: var(--accent);
+  border: none;
+  color: white;
+}
+.nav-btn.primary:hover { transform: translateY(-2px); }
+
+.check-btn {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  margin: 1.5rem auto 0;
+  padding: 1rem 2rem;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.check-btn:hover { transform: translateY(-2px); }
+
+.step { display: none; }
+.step.active { display: block; }
+
+.emoji { font-size: 1.25em; }
+
+.tip-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+.tip-box strong { color: var(--accent); }
+
+.completion {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+.completion .emoji { font-size: 4rem; display: block; margin-bottom: 1rem; }
+.completion h2 { color: var(--human); margin-bottom: 1rem; }
+
+/* Region Toggle */
+.region-toggle {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+.region-toggle a {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 2px solid var(--border);
+  color: var(--text-muted);
+  transition: all 0.2s;
+}
+.region-toggle a:first-child {
+  border-radius: 8px 0 0 8px;
+  border-right: 1px solid var(--border);
+}
+.region-toggle a:last-child {
+  border-radius: 0 8px 8px 0;
+  border-left: 1px solid var(--border);
+}
+.region-toggle a.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+.region-toggle a:hover:not(.active) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+@media (max-width: 600px) {
+  .section { padding: 1.25rem; }
+  .matrix { font-size: 0.9rem; }
+  .matrix-cell { padding: 0.75rem; }
+  .case-header { flex-direction: column; text-align: center; gap: 0.5rem; }
+}
+</style>
+
+<div class="container">
+  <div class="hero">
+    <h1><span class="emoji">🤝</span> HCAI vs System-Centered AI</h1>
+    <p>Discover the difference between AI that replaces humans and AI that empowers them</p>
+  </div>
+
+  <div class="region-toggle">
+    <a href="hcai-vs-traditional-ai.html">🇺🇸 US</a>
+    <a href="hcai-vs-traditional-ai-ph.html" class="active">🇵🇭 Philippines</a>
+  </div>
+
+  <div class="progress-bar">
+    <div class="progress-step active" id="prog-1"></div>
+    <div class="progress-step" id="prog-2"></div>
+    <div class="progress-step" id="prog-3"></div>
+    <div class="progress-step" id="prog-4"></div>
+    <div class="progress-step" id="prog-5"></div>
+  </div>
+
+  <!-- Step 1: Introduction -->
+  <div class="step active" id="step-1">
+    <section class="section">
+      <h2>What Makes AI "Human-Centered"?</h2>
+      <p>Not all AI is designed the same way. The difference comes down to a fundamental question:</p>
+
+      <div class="concept-grid">
+        <div class="concept-card traditional">
+          <h3><span class="emoji">🤖</span> System-Centered (Traditional) AI</h3>
+          <ul>
+            <li>AI makes decisions autonomously</li>
+            <li>Humans adapt to how AI works</li>
+            <li>Goal: Replace human effort</li>
+            <li>Success = efficiency gains</li>
+          </ul>
+        </div>
+        <div class="concept-card human">
+          <h3><span class="emoji">🤝</span> Human-Centered AI (HCAI)</h3>
+          <ul>
+            <li>AI supports human decision-making</li>
+            <li>AI adapts to how humans work</li>
+            <li>Goal: Amplify human capability</li>
+            <li>Success = human empowerment</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tip-box">
+        <strong>Key Insight:</strong> HCAI isn't about limiting AI's power. It's about ensuring humans remain in control of important decisions while AI handles the heavy lifting.
+      </div>
+
+      <div class="nav-buttons">
+        <div></div>
+        <button class="nav-btn primary" onclick="goToStep(2)">Continue →</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- Step 2: Shneiderman's Framework -->
+  <div class="step" id="step-2">
+    <section class="section">
+      <h2>The HCAI Framework</h2>
+      <p>Computer scientist Ben Shneiderman proposed a way to think about where AI systems fall on two dimensions:</p>
+
+      <div class="coordinate-plane">
+        <div class="plane-wrapper">
+          <div class="y-axis-label">Automation</div>
+          <div class="plane-main">
+            <div class="plane-row">
+              <div class="y-labels-col">
+                <div class="y-label">High</div>
+                <div class="y-label">Low</div>
+              </div>
+              <div class="plane-cells">
+                <div class="plane-cell">
+                  <div class="cell-title">Autonomous AI</div>
+                  <p class="cell-desc">Self-driving cars (no human input)</p>
+                </div>
+                <div class="plane-cell highlight">
+                  <div class="cell-title">🎯 HCAI Sweet Spot</div>
+                  <p class="cell-desc">Powerful AI + Human oversight</p>
+                </div>
+                <div class="plane-cell">
+                  <div class="cell-title">Manual Work</div>
+                  <p class="cell-desc">Humans do everything</p>
+                </div>
+                <div class="plane-cell">
+                  <div class="cell-title">Simple Tools</div>
+                  <p class="cell-desc">Calculator, spell-check</p>
+                </div>
+              </div>
+            </div>
+            <div class="x-row">
+              <div class="x-labels">
+                <div class="x-label">Low</div>
+                <div class="x-label">High</div>
+              </div>
+            </div>
+            <div class="x-axis-label">Human Control</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reflection-prompt">
+        <p>🤔 <strong>Quick Check:</strong> Think about an AI tool you use regularly. Where would it fall on this matrix? Consider: Does it give you control over final decisions?</p>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="nav-btn secondary" onclick="goToStep(1)">← Back</button>
+        <button class="nav-btn primary" onclick="goToStep(3)">Continue →</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- Step 3: Case Studies -->
+  <div class="step" id="step-3">
+    <section class="section">
+      <h2>Seeing the Difference in Action</h2>
+      <p>Let's examine four real-world scenarios to understand what makes an AI approach human-centered or not.</p>
+
+      <!-- Case Study 1: System-Centered -->
+      <div class="case-study">
+        <div class="case-header traditional">
+          <div class="case-icon">🏦</div>
+          <div>
+            <div class="case-title">Automated Pag-IBIG Loan Processing</div>
+            <span class="case-label">System-Centered (Traditional) AI</span>
+          </div>
+        </div>
+        <div class="case-body">
+          <div class="case-scenario">
+            "A lending institution uses AI to automatically approve or reject housing loan applications. The AI analyzes contribution history, income documents, and payment patterns, then makes final decisions with no human review. OFWs and workers who are rejected receive a generic SMS denial with no explanation."
+          </div>
+          <div class="case-analysis">
+            <h4>Why This Is System-Centered AI</h4>
+            <ul>
+              <li><strong>No human oversight:</strong> The AI makes final decisions without any human review, even for hardworking OFWs with irregular income patterns</li>
+              <li><strong>No transparency:</strong> Applicants can't understand why they were rejected or how to improve their application</li>
+              <li><strong>No appeal process:</strong> There's no way to explain special circumstances to a human loan officer</li>
+              <li><strong>Efficiency over empowerment:</strong> The goal is faster processing, not helping Filipinos achieve homeownership</li>
+            </ul>
+          </div>
+          <div class="case-takeaway">
+            <strong>The Problem:</strong> When AI makes high-stakes decisions autonomously, hardworking Filipinos lose agency over their dreams of owning a home.
+          </div>
+        </div>
+      </div>
+
+      <!-- Case Study 2: System-Centered (Subtle) -->
+      <div class="case-study">
+        <div class="case-header traditional">
+          <div class="case-icon">📱</div>
+          <div>
+            <div class="case-title">Social Media "For You" Feed</div>
+            <span class="case-label">System-Centered (Traditional) AI</span>
+          </div>
+        </div>
+        <div class="case-body">
+          <div class="case-scenario">
+            "You open your favorite social media app and scroll through posts the algorithm selected for you. The AI learned that you spend more time watching outrage-inducing content and emotionally charged videos, so it shows you more of that. You intended to check in for 5 minutes but an hour has passed."
+          </div>
+          <div class="case-analysis">
+            <h4>Why This Is System-Centered AI</h4>
+            <ul>
+              <li><strong>Optimized for the platform, not you:</strong> The goal is maximizing your time on the app (engagement), not your wellbeing or what you actually value</li>
+              <li><strong>No meaningful control:</strong> You can't tell the AI "show me things that make me feel good" or "help me spend less time here"</li>
+              <li><strong>Exploits psychology:</strong> The system uses your emotional responses against you, not to help you</li>
+              <li><strong>Hidden from view:</strong> Most users don't even realize an AI is making decisions about what they see</li>
+            </ul>
+          </div>
+          <div class="case-takeaway">
+            <strong>The Surprise:</strong> You use this AI every day. It's powerful, but it's designed to serve the company's goals (ad revenue, engagement), not yours.
+          </div>
+        </div>
+      </div>
+
+      <!-- Case Study 2: HCAI -->
+      <div class="case-study">
+        <div class="case-header human">
+          <div class="case-icon">✍️</div>
+          <div>
+            <div class="case-title">AI-Assisted Teacher Feedback</div>
+            <span class="case-label">Human-Centered AI</span>
+          </div>
+        </div>
+        <div class="case-body">
+          <div class="case-scenario">
+            "A DepEd teacher with 50 students per class uses AI to help draft feedback on student compositions. The AI suggests comments in both English and Filipino, identifies areas for improvement, but the teacher reviews each suggestion, adjusts the tone for each student's situation, and adds encouraging personal notes before returning the work."
+          </div>
+          <div class="case-analysis">
+            <h4>Why This Is Human-Centered AI</h4>
+            <ul>
+              <li><strong>AI as assistant:</strong> The AI does heavy lifting (initial analysis) but doesn't make final decisions</li>
+              <li><strong>Human judgment preserved:</strong> The teacher knows which students need extra encouragement and adjusts feedback accordingly</li>
+              <li><strong>Control remains with the teacher:</strong> Every piece of feedback is reviewed and approved before reaching students</li>
+              <li><strong>Amplifies capability:</strong> With large class sizes, the teacher can give meaningful feedback to all students, not just a few</li>
+            </ul>
+          </div>
+          <div class="case-takeaway">
+            <strong>The Benefit:</strong> The teacher saves time while maintaining the caring relationship that Filipino education values.
+          </div>
+        </div>
+      </div>
+
+      <!-- Case Study 3: HCAI -->
+      <div class="case-study">
+        <div class="case-header human">
+          <div class="case-icon">🏥</div>
+          <div>
+            <div class="case-title">Public Hospital Diagnosis Support</div>
+            <span class="case-label">Human-Centered AI</span>
+          </div>
+        </div>
+        <div class="case-body">
+          <div class="case-scenario">
+            "A provincial hospital uses AI to analyze chest X-rays and TB screenings. The AI highlights areas of concern and flags priority cases, but the doctor reviews every result. With hundreds of patients daily, the AI helps the doctor focus attention where it's needed most, while the doctor adds clinical judgment and patient context."
+          </div>
+          <div class="case-analysis">
+            <h4>Why This Is Human-Centered AI</h4>
+            <ul>
+              <li><strong>AI catches what overworked doctors might miss:</strong> The system helps manage high patient volumes in public hospitals</li>
+              <li><strong>Doctor remains in control:</strong> Final diagnosis always comes from a qualified Filipino physician</li>
+              <li><strong>Context matters:</strong> The doctor considers patient history, symptoms, and conversations with the pasyente</li>
+              <li><strong>Accountability is clear:</strong> A human doctor is responsible for the decision, not an algorithm</li>
+            </ul>
+          </div>
+          <div class="case-takeaway">
+            <strong>The Benefit:</strong> Better healthcare outcomes through human-AI collaboration, especially important in underserved areas.
+          </div>
+        </div>
+      </div>
+
+      <div class="tip-box">
+        <strong>Pattern to Notice:</strong> In HCAI systems, humans make the final call on decisions that affect people's lives. AI handles analysis and suggestions; humans provide judgment, context, and accountability.
+      </div>
+
+      <div class="nav-buttons">
+        <button class="nav-btn secondary" onclick="goToStep(2)">← Back</button>
+        <button class="nav-btn primary" onclick="goToStep(4)">Continue →</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- Step 4: Reflection -->
+  <div class="step" id="step-4">
+    <section class="section">
+      <h2>Reflect & Apply</h2>
+      <p>Apply what you've learned to identify HCAI approaches in real scenarios.</p>
+
+      <div class="quiz-question" data-correct="c" style="margin-top: 1.5rem;">
+        <span class="quiz-num">1</span>
+        <span class="quiz-text">A TESDA assessment center uses AI to grade skills tests with no explanation. What would make it more human-centered?</span>
+        <div class="quiz-options">
+          <div class="quiz-option" data-value="a" onclick="selectOption(this)">
+            <div class="quiz-radio"></div>
+            <span>Make the AI grade faster</span>
+          </div>
+          <div class="quiz-option" data-value="b" onclick="selectOption(this)">
+            <div class="quiz-radio"></div>
+            <span>Remove the AI and have assessors grade everything manually</span>
+          </div>
+          <div class="quiz-option" data-value="c" onclick="selectOption(this)">
+            <div class="quiz-radio"></div>
+            <span>Show reasoning behind the score and let assessors override it</span>
+          </div>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question" data-correct="b">
+        <span class="quiz-num">2</span>
+        <span class="quiz-text">A BPO company is choosing an AI tool for customer service agents. Which feature best reflects HCAI principles?</span>
+        <div class="quiz-options">
+          <div class="quiz-option" data-value="a" onclick="selectOption(this)">
+            <div class="quiz-radio"></div>
+            <span>It automatically sends responses to customers without agent review</span>
+          </div>
+          <div class="quiz-option" data-value="b" onclick="selectOption(this)">
+            <div class="quiz-radio"></div>
+            <span>It suggests responses that agents can edit, accept, or reject</span>
+          </div>
+          <div class="quiz-option" data-value="c" onclick="selectOption(this)">
+            <div class="quiz-radio"></div>
+            <span>It rewrites agent responses to match a script exactly</span>
+          </div>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question" data-correct="a">
+        <span class="quiz-num">3</span>
+        <span class="quiz-text">An OFW recruitment agency uses AI to automatically reject applicants. How would you redesign it using HCAI?</span>
+        <div class="quiz-options">
+          <div class="quiz-option" data-value="a" onclick="selectOption(this)">
+            <div class="quiz-radio"></div>
+            <span>Have AI flag concerns but let recruiters make final decisions</span>
+          </div>
+          <div class="quiz-option" data-value="b" onclick="selectOption(this)">
+            <div class="quiz-radio"></div>
+            <span>Train the AI on more data so it rejects fewer applicants</span>
+          </div>
+          <div class="quiz-option" data-value="c" onclick="selectOption(this)">
+            <div class="quiz-radio"></div>
+            <span>Speed up the rejection process to save time</span>
+          </div>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <button class="check-btn" onclick="checkReflection()">Check My Answers</button>
+
+      <div class="quiz-results" id="reflectionResults" style="display: none;">
+        <div class="quiz-score" id="reflectionScore">0/3</div>
+        <div class="quiz-score-label">Questions Correct</div>
+        <p id="reflectionMessage" style="margin-top: 1rem;"></p>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="nav-btn secondary" onclick="goToStep(3)">← Back</button>
+        <button class="nav-btn primary" onclick="goToStep(5)">Continue to Final Quiz →</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- Step 5: Quiz -->
+  <div class="step" id="step-5">
+    <section class="section">
+      <h2>Check Your Understanding</h2>
+      <p>Answer these questions to see how well you understand the difference between HCAI and system-centered AI.</p>
+
+      <div class="quiz-question" data-correct="b">
+        <span class="quiz-num">1</span>
+        <span class="quiz-text">An AI system automatically schedules all employee meetings based on calendar availability, with no option to decline or suggest alternatives. This is an example of:</span>
+        <div class="quiz-options">
+          <div class="quiz-option" data-value="a" onclick="selectOption(this)">
+            <div class="quiz-radio"></div>
+            <span>Human-Centered AI because it saves time</span>
+          </div>
+          <div class="quiz-option" data-value="b" onclick="selectOption(this)">
+            <div class="quiz-radio"></div>
+            <span>System-centered AI because humans have no control over the decisions</span>
+          </div>
+          <div class="quiz-option" data-value="c" onclick="selectOption(this)">
+            <div class="quiz-radio"></div>
+            <span>Human-Centered AI because it uses calendar data</span>
+          </div>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question" data-correct="c">
+        <span class="quiz-num">2</span>
+        <span class="quiz-text">What is the "sweet spot" in Shneiderman's HCAI framework?</span>
+        <div class="quiz-options">
+          <div class="quiz-option" data-value="a" onclick="selectOption(this)">
+            <div class="quiz-radio"></div>
+            <span>Low automation with low human control</span>
+          </div>
+          <div class="quiz-option" data-value="b" onclick="selectOption(this)">
+            <div class="quiz-radio"></div>
+            <span>High automation with low human control</span>
+          </div>
+          <div class="quiz-option" data-value="c" onclick="selectOption(this)">
+            <div class="quiz-radio"></div>
+            <span>High automation with high human control</span>
+          </div>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question" data-correct="a">
+        <span class="quiz-num">3</span>
+        <span class="quiz-text">A hiring manager uses AI to screen resumes and rank candidates, but reviews all flagged candidates personally before making interview decisions. This approach is:</span>
+        <div class="quiz-options">
+          <div class="quiz-option" data-value="a" onclick="selectOption(this)">
+            <div class="quiz-radio"></div>
+            <span>Human-Centered because the human makes final decisions on who to interview</span>
+          </div>
+          <div class="quiz-option" data-value="b" onclick="selectOption(this)">
+            <div class="quiz-radio"></div>
+            <span>System-centered because AI is doing the initial screening</span>
+          </div>
+          <div class="quiz-option" data-value="c" onclick="selectOption(this)">
+            <div class="quiz-radio"></div>
+            <span>Neither, because hiring should never involve AI</span>
+          </div>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question" data-correct="b">
+        <span class="quiz-num">4</span>
+        <span class="quiz-text">The main goal of Human-Centered AI is to:</span>
+        <div class="quiz-options">
+          <div class="quiz-option" data-value="a" onclick="selectOption(this)">
+            <div class="quiz-radio"></div>
+            <span>Make AI less powerful to protect humans</span>
+          </div>
+          <div class="quiz-option" data-value="b" onclick="selectOption(this)">
+            <div class="quiz-radio"></div>
+            <span>Amplify human capability while keeping humans in control</span>
+          </div>
+          <div class="quiz-option" data-value="c" onclick="selectOption(this)">
+            <div class="quiz-radio"></div>
+            <span>Replace human workers with more efficient AI systems</span>
+          </div>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <button class="check-btn" onclick="checkQuiz()">Check My Answers</button>
+
+      <div class="quiz-results" id="quizResults" style="display: none;">
+        <div class="quiz-score" id="quizScore">0/4</div>
+        <div class="quiz-score-label">Questions Correct</div>
+        <p id="quizMessage" style="margin-top: 1rem;"></p>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="nav-btn secondary" onclick="goToStep(4)">← Back</button>
+        <button class="nav-btn primary" onclick="complete()">Complete Activity ✓</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- Completion -->
+  <div class="step" id="step-6">
+    <section class="section completion">
+      <span class="emoji">🎉</span>
+      <h2>Activity Complete!</h2>
+      <p>You now understand the key difference between system-centered AI and Human-Centered AI.</p>
+      <p style="margin-top: 1rem; color: var(--text-muted);">The HCAI approach keeps humans empowered while leveraging AI's capabilities. As you work with AI tools, ask yourself: "Am I in control of the important decisions?"</p>
+
+      <div style="margin-top: 2rem;">
+        <button class="nav-btn primary" onclick="restart()">Start Over</button>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+let currentStep = 1;
+
+function goToStep(step) {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step-' + step).classList.add('active');
+
+  document.querySelectorAll('.progress-step').forEach((p, i) => {
+    p.classList.remove('active', 'complete');
+    if (i + 1 < step) p.classList.add('complete');
+    if (i + 1 === step) p.classList.add('active');
+  });
+
+  currentStep = step;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function complete() {
+  goToStep(6);
+  document.querySelectorAll('.progress-step').forEach(p => p.classList.add('complete'));
+}
+
+function restart() {
+  document.querySelectorAll('.quiz-option').forEach(opt => {
+    opt.classList.remove('selected', 'correct', 'incorrect', 'disabled');
+  });
+  document.querySelectorAll('.quiz-feedback').forEach(fb => {
+    fb.classList.remove('show', 'correct', 'incorrect');
+    fb.textContent = '';
+  });
+  document.getElementById('quizResults').style.display = 'none';
+  document.getElementById('reflectionResults').style.display = 'none';
+  goToStep(1);
+}
+
+function selectOption(option) {
+  if (option.classList.contains('disabled')) return;
+
+  const question = option.closest('.quiz-question');
+  question.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('selected'));
+  option.classList.add('selected');
+}
+
+function checkReflection() {
+  const container = document.getElementById('step-4');
+  const questions = container.querySelectorAll('.quiz-question');
+  let correct = 0;
+
+  const feedbackText = {
+    1: { correct: "Exactly! Transparency and human override are key HCAI features.", incorrect: "Not quite. HCAI means giving humans insight and control, not just speed." },
+    2: { correct: "Yes! Suggestions with human control is the HCAI sweet spot.", incorrect: "Remember: HCAI keeps humans in control of final decisions." },
+    3: { correct: "Right! Human oversight on high-stakes decisions is essential.", incorrect: "HCAI is about human control, not just improving the AI's accuracy." }
+  };
+
+  questions.forEach((q, index) => {
+    const correctAnswer = q.dataset.correct;
+    const selected = q.querySelector('.quiz-option.selected');
+    const feedback = q.querySelector('.quiz-feedback');
+    const qNum = index + 1;
+
+    q.querySelectorAll('.quiz-option').forEach(opt => opt.classList.add('disabled'));
+
+    if (selected) {
+      const selectedValue = selected.dataset.value;
+      if (selectedValue === correctAnswer) {
+        correct++;
+        selected.classList.add('correct');
+        feedback.textContent = feedbackText[qNum].correct;
+        feedback.classList.add('show', 'correct');
+      } else {
+        selected.classList.add('incorrect');
+        q.querySelector(`[data-value="${correctAnswer}"]`).classList.add('correct');
+        feedback.textContent = feedbackText[qNum].incorrect;
+        feedback.classList.add('show', 'incorrect');
+      }
+    } else {
+      q.querySelector(`[data-value="${correctAnswer}"]`).classList.add('correct');
+      feedback.textContent = "You didn't select an answer. The correct answer is highlighted.";
+      feedback.classList.add('show', 'incorrect');
+    }
+  });
+
+  const results = document.getElementById('reflectionResults');
+  const score = document.getElementById('reflectionScore');
+  const message = document.getElementById('reflectionMessage');
+
+  score.textContent = correct + '/3';
+  if (correct === 3) {
+    message.textContent = "Perfect! You're ready for the final quiz.";
+  } else if (correct >= 2) {
+    message.textContent = "Good job! Review the feedback above, then continue.";
+  } else {
+    message.textContent = "Review the case studies and feedback above before continuing.";
+  }
+  results.style.display = 'block';
+}
+
+function checkQuiz() {
+  const container = document.getElementById('step-5');
+  const questions = container.querySelectorAll('.quiz-question');
+  let correct = 0;
+
+  const feedbackText = {
+    '1': {
+      correct: 'Correct! When humans have no control over AI decisions, even for something like scheduling, it removes their agency.',
+      incorrect: 'Not quite. Even though it saves time, the lack of human control makes this system-centered AI. HCAI would let people review or modify the schedule.'
+    },
+    '2': {
+      correct: 'Correct! The HCAI sweet spot combines powerful AI capabilities with meaningful human oversight.',
+      incorrect: 'Not quite. The sweet spot is high automation WITH high human control, getting the best of both worlds.'
+    },
+    '3': {
+      correct: 'Correct! Using AI to assist while keeping humans in the decision-making seat is the essence of HCAI.',
+      incorrect: 'Not quite. Using AI for initial screening is fine as long as humans make the final decisions. That\'s HCAI in action.'
+    },
+    '4': {
+      correct: 'Correct! HCAI is about empowerment, not limitation. AI should make humans more capable, not replace them.',
+      incorrect: 'Not quite. HCAI isn\'t about limiting AI or replacing humans. It\'s about amplifying human capability while keeping humans in control.'
+    }
+  };
+
+  questions.forEach((q, index) => {
+    const correctAnswer = q.dataset.correct;
+    const selected = q.querySelector('.quiz-option.selected');
+    const feedback = q.querySelector('.quiz-feedback');
+    const qNum = index + 1;
+
+    q.querySelectorAll('.quiz-option').forEach(opt => opt.classList.add('disabled'));
+
+    if (selected) {
+      const selectedValue = selected.dataset.value;
+      if (selectedValue === correctAnswer) {
+        correct++;
+        selected.classList.add('correct');
+        feedback.classList.add('show', 'correct');
+        feedback.innerHTML = '✓ ' + feedbackText[qNum].correct;
+      } else {
+        selected.classList.add('incorrect');
+        q.querySelector(`[data-value="${correctAnswer}"]`).classList.add('correct');
+        feedback.classList.add('show', 'incorrect');
+        feedback.innerHTML = '✗ ' + feedbackText[qNum].incorrect;
+      }
+    } else {
+      q.querySelector(`[data-value="${correctAnswer}"]`).classList.add('correct');
+      feedback.classList.add('show', 'incorrect');
+      feedback.innerHTML = '✗ No answer selected. ' + feedbackText[qNum].incorrect;
+    }
+  });
+
+  const results = document.getElementById('quizResults');
+  const score = document.getElementById('quizScore');
+  const message = document.getElementById('quizMessage');
+
+  score.textContent = correct + '/4';
+
+  if (correct === 4) {
+    message.textContent = 'Excellent! You have a solid understanding of Human-Centered AI principles.';
+    score.style.color = 'var(--human)';
+  } else if (correct >= 2) {
+    message.textContent = 'Good effort! Review the feedback above to strengthen your understanding.';
+    score.style.color = 'var(--accent)';
+  } else {
+    message.textContent = 'Take another look at the case studies and try again.';
+    score.style.color = 'var(--traditional)';
+  }
+
+  results.style.display = 'block';
+  results.scrollIntoView({ behavior: 'smooth' });
+}
+</script>
