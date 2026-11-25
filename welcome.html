@@ -472,6 +472,87 @@ body {
   text-decoration: underline;
 }
 
+.footer-qr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.footer-qr img {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+}
+
+.footer-qr span {
+  font-size: 11px;
+  color: #999;
+  margin-top: 8px;
+}
+
+/* FLOATING QR */
+.qr-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+}
+
+.qr-float-btn {
+  width: 48px;
+  height: 48px;
+  background: var(--navy);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(27,58,107,0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.qr-float-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(27,58,107,0.4);
+}
+
+.qr-float-btn svg {
+  color: white;
+}
+
+.qr-popup {
+  position: absolute;
+  bottom: 56px;
+  right: 0;
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  display: none;
+  text-align: center;
+}
+
+.qr-popup.show {
+  display: block;
+}
+
+.qr-popup img {
+  width: 140px;
+  height: 140px;
+  border-radius: 8px;
+}
+
+.qr-popup p {
+  font-size: 11px;
+  color: #666;
+  margin-top: 8px;
+  font-family: 'Nunito', sans-serif;
+}
+
 /* MOBILE TWEAKS */
 @media (max-width: 600px) {
   .hero { padding: 36px 20px 44px; }
@@ -643,7 +724,30 @@ body {
 <footer class="footer">
   <p>An independent, free resource by <strong>Jeffery Heil</strong></p>
   <p>Used in <a href="https://globallearningaccess.com/home" target="_blank">Global Learning Access</a> trainings</p>
+  <div class="footer-qr">
+    <img src="qr-code.png" alt="QR Code to this page">
+    <span>Scan to open on your phone</span>
+  </div>
 </footer>
+
+<!-- Floating QR Button -->
+<div class="qr-float">
+  <button class="qr-float-btn" onclick="document.querySelector('.qr-popup').classList.toggle('show')" aria-label="Show QR Code">
+    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <rect x="3" y="3" width="7" height="7" rx="1"/>
+      <rect x="14" y="3" width="7" height="7" rx="1"/>
+      <rect x="3" y="14" width="7" height="7" rx="1"/>
+      <rect x="14" y="14" width="3" height="3"/>
+      <rect x="18" y="14" width="3" height="3"/>
+      <rect x="14" y="18" width="3" height="3"/>
+      <rect x="18" y="18" width="3" height="3"/>
+    </svg>
+  </button>
+  <div class="qr-popup">
+    <img src="qr-code.png" alt="QR Code">
+    <p>Scan to open on mobile</p>
+  </div>
+</div>
 
 </body>
 </html>
