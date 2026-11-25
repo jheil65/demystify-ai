@@ -790,17 +790,10 @@ footer a { color:var(--teal);text-decoration:none; }
     <div class="hero-pill"><span class="dot"></span><span>Jeffery Heil · AI Literacy</span></div>
     <h1>Demystifying AI <span class="accent">for All</span><br><span style="font-size:clamp(1.1rem,3vw,1.8rem);font-weight:700;color:var(--teal);">Human-Centered & Equity-Driven <span class="accent2">✨</span></span></h1>
     <p class="hero-sub">Prompts, frameworks, AI literacy resources, and a glossary — for educators, trainers, and anyone new to AI. Curated by Jeffery Heil, educational technologist and human-centered AI advocate.</p>
-    <div class="hero-stats">
-      <div class="stat-chip"><div class="num">20+</div><div class="lbl">Techniques</div></div>
-      <div class="stat-chip"><div class="num">6</div><div class="lbl">Frameworks</div></div>
-      <div class="stat-chip"><div class="num">50+</div><div class="lbl">Glossary Terms</div></div>
-      <div class="stat-chip"><div class="num">9</div><div class="lbl">Podcasts</div></div>
-      <div class="stat-chip"><div class="num">HCAI</div><div class="lbl">Deep Dive</div></div>
-      <div class="stat-chip"><div class="num">9</div><div class="lbl">Resources</div></div>
-    </div>
     <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;">
-      <a href="toolbox/" style="display:inline-flex;align-items:center;gap:8px;background:var(--pink);color:#fff;text-decoration:none;font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;padding:12px 24px;border-radius:40px;box-shadow:0 6px 18px rgba(239,63,169,0.35);">🧰 Open the AI Toolbox →</a>
-      <a href="playground/" style="display:inline-flex;align-items:center;gap:8px;background:var(--yellow);color:var(--navy);text-decoration:none;font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;padding:12px 24px;border-radius:40px;box-shadow:0 6px 18px rgba(0,0,0,0.25);">🎮 Try the AI Playground →</a>
+      <a href="toolbox/" style="display:inline-flex;align-items:center;gap:8px;background:var(--pink);color:#fff;text-decoration:none;font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;padding:12px 24px;border-radius:40px;box-shadow:0 6px 18px rgba(239,63,169,0.35);">🧰 AI Toolbox →</a>
+      <a href="activities/" style="display:inline-flex;align-items:center;gap:8px;background:var(--green);color:#fff;text-decoration:none;font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;padding:12px 24px;border-radius:40px;box-shadow:0 6px 18px rgba(6,214,160,0.35);">🎯 Activities →</a>
+      <a href="playground/" style="display:inline-flex;align-items:center;gap:8px;background:var(--yellow);color:var(--navy);text-decoration:none;font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;padding:12px 24px;border-radius:40px;box-shadow:0 6px 18px rgba(0,0,0,0.25);">🎮 AI Playground →</a>
       <a href="spark-intro/" style="display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--navy);text-decoration:none;font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;padding:12px 24px;border-radius:40px;box-shadow:0 6px 18px rgba(0,0,0,0.25);">⚡ SPARK AI Express →</a>
     </div>
   </div>
@@ -812,10 +805,10 @@ footer a { color:var(--teal);text-decoration:none; }
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       <input type="text" id="search" placeholder="Search prompts…">
     </div>
-    <button class="cat-btn active" data-cat="all"><span class="icon">🗂️</span> All</button>
     <div class="cat-dropdown" id="promptDropdown">
       <button class="cat-dropdown-btn"><span class="icon">💬</span> Prompt Ideas <span class="arrow">▼</span></button>
       <div class="cat-dropdown-menu">
+        <button data-cat="all" class="active"><span class="icon">🗂️</span> All Prompts</button>
         <button data-cat="tone"><span class="icon">🎭</span> Tone</button>
         <button data-cat="decision"><span class="icon">🧭</span> Decisions</button>
         <button data-cat="clarity"><span class="icon">💡</span> Clarity</button>
@@ -2013,6 +2006,7 @@ document.querySelectorAll('.cat-btn').forEach(btn=>{
     document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
     document.querySelectorAll('.cat-dropdown').forEach(d=>d.classList.remove('has-active'));
     document.querySelectorAll('.cat-dropdown-menu button').forEach(b=>b.classList.remove('active'));
+    dropdown.classList.remove('open');
     this.classList.add('active');
     activeFilter=this.dataset.cat;
     if(activeFilter==='ailiteracy'){
