@@ -66,10 +66,10 @@ body { font-family: 'Nunito Sans', sans-serif; background: var(--light); color: 
 .cat-btn.active[data-cat="creative"]  { color:var(--orange);border-bottom-color:var(--orange); }
 .cat-btn.active[data-cat="framework"]  { color:var(--blue);   border-bottom-color:var(--blue); }
 .cat-btn.active[data-cat="portable"]   { color:var(--navy);   border-bottom-color:var(--navy); }
-.cat-btn.active[data-cat="ailiteracy"] { color:var(--green);  border-bottom-color:var(--green); }
+.cat-btn.active[data-cat="ailiteracy"] { color:var(--navy);  border-bottom-color:var(--navy); }
 .cat-btn.active[data-cat="glossary"]   { color:var(--yellow); border-bottom-color:var(--yellow); filter: brightness(0.8); }
 .cat-btn.active[data-cat="podcasts"]   { color:var(--orange); border-bottom-color:var(--orange); }
-.cat-btn.active[data-cat="hcai"]       { color:var(--green);  border-bottom-color:var(--green); }
+.cat-btn.active[data-cat="hcai"]       { color:var(--navy);  border-bottom-color:var(--navy); }
 .cat-btn.active[data-cat="prompts"]    { color:var(--purple); border-bottom-color:var(--purple); }
 
 /* DROPDOWN */
@@ -91,26 +91,26 @@ body { font-family: 'Nunito Sans', sans-serif; background: var(--light); color: 
 .hcai-wrap { margin-top: 8px; }
 
 .hcai-hero {
-  background: linear-gradient(135deg, #064e3b 0%, #065f46 40%, #047857 100%);
+  background: linear-gradient(135deg, #1B3A6B 0%, #2a4a7a 40%, #3b5998 100%);
   border-radius: 20px; padding: 40px; margin-bottom: 28px;
   color: white; position: relative; overflow: hidden;
 }
-.hcai-hero::before { content:'🌱'; position:absolute; font-size:140px; right:-10px; top:-20px; opacity:0.08; }
+.hcai-hero::before { content:'🌍'; position:absolute; font-size:140px; right:-10px; top:-20px; opacity:0.08; }
 .hcai-hero .hcai-badge {
   display:inline-flex; align-items:center; gap:6px;
-  background:rgba(52,211,153,0.2); border:1px solid rgba(52,211,153,0.4);
+  background:rgba(255,217,61,0.2); border:1px solid rgba(255,217,61,0.4);
   border-radius:20px; padding:4px 14px; margin-bottom:16px;
   font-family:'Nunito',sans-serif; font-weight:700; font-size:11px;
-  color:#6ee7b7; text-transform:uppercase; letter-spacing:0.08em;
+  color:var(--yellow); text-transform:uppercase; letter-spacing:0.08em;
 }
 .hcai-hero h2 { font-family:'Nunito',sans-serif; font-weight:900; font-size:clamp(1.5rem,3.5vw,2.2rem); color:white; margin-bottom:6px; line-height:1.2; }
 .hcai-hero .hcai-sub { color:rgba(255,255,255,0.65); font-size:14px; line-height:1.7; max-width:680px; margin-bottom:24px; }
 .hcai-def-box {
   background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
-  border-left: 4px solid #6ee7b7; border-radius: 0 12px 12px 0;
+  border-left: 4px solid var(--yellow); border-radius: 0 12px 12px 0;
   padding: 20px 24px; margin-bottom: 20px;
 }
-.hcai-def-label { font-family:'Nunito',sans-serif; font-weight:700; font-size:11px; text-transform:uppercase; letter-spacing:0.1em; color:#6ee7b7; margin-bottom:8px; }
+.hcai-def-label { font-family:'Nunito',sans-serif; font-weight:700; font-size:11px; text-transform:uppercase; letter-spacing:0.1em; color:var(--yellow); margin-bottom:8px; }
 .hcai-def-text { font-family:'Nunito',sans-serif; font-weight:800; font-size:clamp(1.1rem,2.5vw,1.5rem); color:white; line-height:1.4; }
 .hcai-def-source { font-size:12px; color:rgba(255,255,255,0.5); margin-top:8px; font-style:italic; }
 
@@ -119,7 +119,7 @@ body { font-family: 'Nunito Sans', sans-serif; background: var(--light); color: 
   border-radius: 12px; padding: 18px 22px;
 }
 .hcai-question-box p { color:rgba(255,255,255,0.75); font-size:13.5px; line-height:1.7; }
-.hcai-question-box strong { color:#6ee7b7; font-family:'Nunito',sans-serif; }
+.hcai-question-box strong { color:var(--yellow); font-family:'Nunito',sans-serif; }
 
 /* H-AI-H engine */
 .haih-section {
@@ -139,12 +139,12 @@ body { font-family: 'Nunito Sans', sans-serif; background: var(--light); color: 
 .haih-node .hn-items li { font-size:12px; color:#555; line-height:1.6; padding:3px 0; display:flex; gap:6px; }
 .haih-node .hn-items li::before { content:'→'; color:#aaa; flex-shrink:0; }
 
-.haih-node.human-in  { background:rgba(46,117,182,0.08); border:2px solid rgba(46,117,182,0.2); }
-.haih-node.human-in .hn-title  { color:var(--blue); }
-.haih-node.ai-mid    { background:rgba(120,60,189,0.08); border:2px solid rgba(120,60,189,0.2); }
-.haih-node.ai-mid .hn-title    { color:var(--purple); }
-.haih-node.human-out { background:rgba(6,214,160,0.08); border:2px solid rgba(6,214,160,0.2); }
-.haih-node.human-out .hn-title { color:#059669; }
+.haih-node.human-in  { background:rgba(27,58,107,0.08); border:2px solid rgba(27,58,107,0.2); }
+.haih-node.human-in .hn-title  { color:var(--navy); }
+.haih-node.ai-mid    { background:rgba(91,155,213,0.08); border:2px solid rgba(91,155,213,0.2); }
+.haih-node.ai-mid .hn-title    { color:var(--powder); }
+.haih-node.human-out { background:rgba(255,217,61,0.12); border:2px solid rgba(255,217,61,0.3); }
+.haih-node.human-out .hn-title { color:#b8860b; }
 
 .haih-tagline {
   text-align:center; margin-top:20px; padding:14px;
@@ -158,16 +158,16 @@ body { font-family: 'Nunito Sans', sans-serif; background: var(--light); color: 
 .cog-card {
   border-radius:16px; padding:24px; border:2px solid transparent;
 }
-.cog-card.hot { background:rgba(239,63,169,0.06); border-color:rgba(239,63,169,0.2); }
-.cog-card.cold { background:rgba(120,60,189,0.06); border-color:rgba(120,60,189,0.2); }
+.cog-card.hot { background:rgba(255,217,61,0.08); border-color:rgba(255,217,61,0.3); }
+.cog-card.cold { background:rgba(91,155,213,0.08); border-color:rgba(91,155,213,0.25); }
 .cog-card .cc-header { display:flex; align-items:center; gap:10px; margin-bottom:14px; }
 .cog-card .cc-icon { font-size:28px; }
 .cog-card .cc-title { font-family:'Nunito',sans-serif; font-weight:900; font-size:1rem; }
-.cog-card.hot .cc-title { color:var(--pink); }
-.cog-card.cold .cc-title { color:var(--purple); }
+.cog-card.hot .cc-title { color:#b8860b; }
+.cog-card.cold .cc-title { color:var(--powder); }
 .cog-card .cc-who { font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; }
-.cog-card.hot .cc-who { color:var(--pink); }
-.cog-card.cold .cc-who { color:var(--purple); }
+.cog-card.hot .cc-who { color:#b8860b; }
+.cog-card.cold .cc-who { color:var(--powder); }
 .cog-card ul { list-style:none; }
 .cog-card ul li { font-size:13px; color:#444; line-height:1.65; padding:4px 0; display:flex; gap:8px; }
 .cog-card.hot  ul li::before { content:'🔥'; font-size:12px; }
@@ -181,12 +181,12 @@ body { font-family: 'Nunito Sans', sans-serif; background: var(--light); color: 
   position:relative; overflow:hidden;
 }
 .principle-card::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; }
-.principle-card:nth-child(1)::before { background:var(--green); }
-.principle-card:nth-child(2)::before { background:var(--blue); }
-.principle-card:nth-child(3)::before { background:var(--purple); }
-.principle-card:nth-child(4)::before { background:var(--pink); }
-.principle-card:nth-child(5)::before { background:var(--orange); }
-.principle-card:nth-child(6)::before { background:var(--teal); }
+.principle-card:nth-child(1)::before { background:var(--navy); }
+.principle-card:nth-child(2)::before { background:var(--powder); }
+.principle-card:nth-child(3)::before { background:var(--yellow); }
+.principle-card:nth-child(4)::before { background:var(--navy); }
+.principle-card:nth-child(5)::before { background:var(--powder); }
+.principle-card:nth-child(6)::before { background:var(--yellow); }
 .principle-card:hover { transform:translateY(-3px); box-shadow:0 8px 24px rgba(0,0,0,0.09); }
 .principle-card .pc-icon { font-size:26px; margin-bottom:10px; }
 .principle-card .pc-title { font-family:'Nunito',sans-serif; font-weight:900; font-size:14px; color:var(--navy); margin-bottom:6px; }
@@ -221,7 +221,7 @@ body { font-family: 'Nunito Sans', sans-serif; background: var(--light); color: 
   background:var(--light); border:1.5px solid var(--border);
   border-radius:12px; padding:16px;
 }
-.hcai-prompt-card .hpp-scenario { font-family:'Nunito',sans-serif; font-weight:800; font-size:12px; color:#059669; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; }
+.hcai-prompt-card .hpp-scenario { font-family:'Nunito',sans-serif; font-weight:800; font-size:12px; color:var(--navy); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; }
 .hcai-prompt-card .hpp-prompt { font-family:'Nunito Sans',monospace; font-size:12px; color:#333; line-height:1.65; margin-bottom:10px; }
 .hcai-copy-btn {
   display:inline-flex; align-items:center; gap:5px;
@@ -230,8 +230,8 @@ body { font-family: 'Nunito Sans', sans-serif; background: var(--light); color: 
   cursor:pointer; transition:all 0.18s; background:var(--white);
   color:#666; box-shadow:0 1px 4px rgba(0,0,0,0.1);
 }
-.hcai-copy-btn:hover { background:#059669; color:white; }
-.hcai-copy-btn.copied { background:var(--green); color:white; }
+.hcai-copy-btn:hover { background:var(--navy); color:white; }
+.hcai-copy-btn.copied { background:var(--navy); color:white; }
 
 @media(max-width:640px){
   .haih-grid { grid-template-columns:1fr; }
@@ -531,9 +531,9 @@ body { font-family: 'Nunito Sans', sans-serif; background: var(--light); color: 
   margin-bottom: 2px;
 }
 
-.ailiteracy-bg    { background: rgba(6,214,160,0.12); }
-.ailiteracy-badge { background: rgba(6,214,160,0.12); color: #059669; }
-.si-ailiteracy    { background: rgba(6,214,160,0.15); }
+.ailiteracy-bg    { background: rgba(27,58,107,0.08); }
+.ailiteracy-badge { background: rgba(27,58,107,0.12); color: var(--navy); }
+.si-ailiteracy    { background: rgba(27,58,107,0.12); }
 
 /* GLOSSARY */
 .glossary-controls {
@@ -583,24 +583,24 @@ body { font-family: 'Nunito Sans', sans-serif; background: var(--light); color: 
   text-transform: uppercase; letter-spacing: 0.1em;
   padding: 2px 8px; border-radius: 8px; display: inline-block; margin-top: 3px;
 }
-.tier-foundation { background: rgba(6,214,160,0.12); color: #059669; }
-.tier-practical   { background: rgba(46,117,182,0.12); color: var(--blue); }
-.tier-critical    { background: rgba(239,63,169,0.12); color: var(--pink); }
+.tier-foundation { background: rgba(91,155,213,0.12); color: var(--powder); }
+.tier-practical   { background: rgba(27,58,107,0.12); color: var(--navy); }
+.tier-critical    { background: rgba(255,217,61,0.2); color: #b8860b; }
 
 .g-def { font-size: 13px; color: #444; line-height: 1.65; margin-bottom: 10px; }
 .g-context {
-  background: var(--light); border-left: 3px solid var(--teal);
+  background: var(--light); border-left: 3px solid var(--powder);
   border-radius: 0 8px 8px 0; padding: 10px 12px;
   font-size: 12px; color: #555; line-height: 1.6; font-style: italic;
   margin-bottom: 10px;
 }
 .g-context strong { font-style: normal; color: var(--navy); font-weight: 700; }
 .g-prompt-tip {
-  background: rgba(120,60,189,0.06); border: 1px solid rgba(120,60,189,0.2);
+  background: rgba(27,58,107,0.06); border: 1px solid rgba(27,58,107,0.2);
   border-radius: 8px; padding: 9px 12px;
-  font-size: 11.5px; color: var(--purple); line-height: 1.55;
+  font-size: 11.5px; color: var(--navy); line-height: 1.55;
 }
-.g-prompt-tip strong { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 3px; color: var(--purple); }
+.g-prompt-tip strong { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 3px; color: var(--navy); }
 
 .provenance-hero {
   background: linear-gradient(135deg, #1a0a3a 0%, #3a1a6e 50%, #1B3A6B 100%);
@@ -610,10 +610,10 @@ body { font-family: 'Nunito Sans', sans-serif; background: var(--light); color: 
 .provenance-hero::before { content:'🔍'; position:absolute; font-size:120px; right:-5px; top:-10px; opacity:0.08; }
 .provenance-hero .ph-badge {
   display: inline-flex; align-items: center; gap: 6px;
-  background: rgba(239,63,169,0.2); border: 1px solid rgba(239,63,169,0.4);
+  background: rgba(255,217,61,0.2); border: 1px solid rgba(255,217,61,0.4);
   border-radius: 20px; padding: 4px 14px; margin-bottom: 14px;
   font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 11px;
-  color: var(--pink); text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--yellow); text-transform: uppercase; letter-spacing: 0.08em;
 }
 .provenance-hero h2 { font-family:'Nunito',sans-serif; font-weight:900; font-size:clamp(1.4rem,3vw,2rem); color:white; margin-bottom:10px; }
 .provenance-hero p { color:rgba(255,255,255,0.7); font-size:14px; line-height:1.7; max-width:620px; margin-bottom:24px; }
@@ -637,7 +637,7 @@ body { font-family: 'Nunito Sans', sans-serif; background: var(--light); color: 
   background: var(--light); border: 1.5px solid var(--border);
   border-radius: 12px; padding: 16px;
 }
-.prov-prompt-card .pp-scenario { font-family:'Nunito',sans-serif; font-weight:800; font-size:12px; color:var(--purple); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; }
+.prov-prompt-card .pp-scenario { font-family:'Nunito',sans-serif; font-weight:800; font-size:12px; color:var(--navy); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; }
 .prov-prompt-card .pp-prompt { font-family:'Nunito Sans',monospace; font-size:12px; color:#333; line-height:1.65; margin-bottom:10px; }
 .prov-copy-btn {
   display:inline-flex; align-items:center; gap:5px;
@@ -646,8 +646,8 @@ body { font-family: 'Nunito Sans', sans-serif; background: var(--light); color: 
   cursor:pointer; transition:all 0.18s; background:var(--white);
   color:#666; box-shadow:0 1px 4px rgba(0,0,0,0.1);
 }
-.prov-copy-btn:hover { background:var(--purple); color:white; }
-.prov-copy-btn.copied { background:var(--green); color:white; }
+.prov-copy-btn:hover { background:var(--navy); color:white; }
+.prov-copy-btn.copied { background:var(--navy); color:white; }
 
 .glossary-letter-jump { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:20px; }
 .letter-chip {
@@ -1745,8 +1745,8 @@ function renderHCAI() {
         <div>
           <div style="font-family:'Nunito',sans-serif;font-weight:900;font-size:1rem;color:var(--navy);margin-bottom:8px">Shneiderman's Two-Dimensional Framework</div>
           <div style="font-size:13px;color:#444;line-height:1.7;margin-bottom:12px">The key insight: it is possible — and desirable — to have <strong>both high levels of human control AND high levels of automation</strong>. These are not opposites. The goal is finding the right division of labor between human and AI capability.</div>
-          <div style="background:rgba(6,214,160,0.08);border:1.5px solid rgba(6,214,160,0.25);border-radius:10px;padding:12px 14px;font-size:12px;color:#333;line-height:1.6">
-            <strong style="color:#059669;font-family:'Nunito',sans-serif">The goal is not to replace people, but to empower them</strong> — making design choices that give humans control over technology. AI as a powerful tool in skilled human hands, not an autonomous decision-maker.
+          <div style="background:rgba(255,217,61,0.12);border:1.5px solid rgba(255,217,61,0.35);border-radius:10px;padding:12px 14px;font-size:12px;color:#333;line-height:1.6">
+            <strong style="color:#b8860b;font-family:'Nunito',sans-serif">The goal is not to replace people, but to empower them</strong> — making design choices that give humans control over technology. AI as a powerful tool in skilled human hands, not an autonomous decision-maker.
           </div>
         </div>
       </div>
@@ -1754,7 +1754,7 @@ function renderHCAI() {
 
     <!-- H-AI-H ENGINE -->
     <div class="section-header">
-      <div class="section-icon" style="background:rgba(120,60,189,0.12)">⚙️</div>
+      <div class="section-icon" style="background:rgba(91,155,213,0.12)">⚙️</div>
       <span class="section-title">The H-AI-H Engine</span>
     </div>
     <div class="haih-section">
@@ -1927,7 +1927,7 @@ function renderHCAI() {
 
     <!-- RESOURCES -->
     <div class="section-header">
-      <div class="section-icon" style="background:rgba(6,214,160,0.12)">📚</div>
+      <div class="section-icon" style="background:rgba(27,58,107,0.12)">📚</div>
       <span class="section-title">Go Deeper — HCAI Resources</span>
     </div>
     <div class="resources-grid">
