@@ -8,18 +8,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Nunito+Sans:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --pink: #EF3FA9;
-  --purple: #783CBD;
-  --teal: #22D3C5;
   --navy: #1B3A6B;
-  --blue: #2E75B6;
+  --powder: #5B9BD5;
   --yellow: #FFD93D;
-  --orange: #FF6B35;
-  --green: #06D6A0;
-  --ink: #1A1A2E;
-  --light: #F7F8FC;
+  --ink: #374151;
+  --light: #F8F9FA;
   --white: #FFFFFF;
-  --border: #E4E9F2;
+  --border: #E5E7EB;
+  /* Legacy mappings */
+  --pink: #1B3A6B;
+  --purple: #1B3A6B;
+  --teal: #5B9BD5;
+  --blue: #5B9BD5;
+  --green: #1B3A6B;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -137,7 +138,7 @@ body {
 .hero-author-icon {
   width: 40px;
   height: 40px;
-  background: linear-gradient(135deg, var(--teal), var(--green));
+  background: linear-gradient(135deg, var(--powder), var(--navy));
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -215,9 +216,9 @@ body {
   border-color: transparent;
 }
 
-.pathway-card.toolbox:hover { border-color: var(--blue); }
-.pathway-card.activities:hover { border-color: var(--pink); }
-.pathway-card.explore:hover { border-color: var(--green); }
+.pathway-card.toolbox:hover { border-color: var(--powder); }
+.pathway-card.activities:hover { border-color: var(--yellow); }
+.pathway-card.explore:hover { border-color: var(--navy); }
 
 .pathway-icon {
   width: 64px;
@@ -230,9 +231,9 @@ body {
   margin: 0 auto 16px;
 }
 
-.pathway-card.toolbox .pathway-icon { background: linear-gradient(135deg, #e0f2fe, #bae6fd); }
-.pathway-card.activities .pathway-icon { background: linear-gradient(135deg, #fce7f3, #fbcfe8); }
-.pathway-card.explore .pathway-icon { background: linear-gradient(135deg, #d1fae5, #a7f3d0); }
+.pathway-card.toolbox .pathway-icon { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+.pathway-card.activities .pathway-icon { background: linear-gradient(135deg, #fef3c7, #fde68a); }
+.pathway-card.explore .pathway-icon { background: linear-gradient(135deg, #e0e7ff, #c7d2fe); }
 
 .pathway-card h3 {
   font-family: 'Nunito', sans-serif;
@@ -260,9 +261,9 @@ body {
   letter-spacing: 0.05em;
 }
 
-.pathway-card.toolbox .pathway-cta { color: var(--blue); }
-.pathway-card.activities .pathway-cta { color: var(--pink); }
-.pathway-card.explore .pathway-cta { color: var(--green); }
+.pathway-card.toolbox .pathway-cta { color: var(--navy); }
+.pathway-card.activities .pathway-cta { color: var(--navy); }
+.pathway-card.explore .pathway-cta { color: var(--navy); }
 
 /* WHAT'S HERE GRID */
 .features {
@@ -283,7 +284,7 @@ body {
 }
 
 .feature:hover {
-  border-color: var(--teal);
+  border-color: var(--powder);
   box-shadow: 0 4px 16px rgba(0,0,0,0.06);
 }
 
@@ -308,7 +309,7 @@ body {
 
 /* MISSION BOX */
 .mission {
-  background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+  background: linear-gradient(135deg, #1B3A6B 0%, #2a4a7a 100%);
   border-radius: 20px;
   padding: 36px 28px;
   text-align: center;
@@ -318,7 +319,7 @@ body {
 }
 
 .mission::before {
-  content: '🌱';
+  content: '🌍';
   position: absolute;
   font-size: 120px;
   right: -20px;
@@ -328,14 +329,14 @@ body {
 
 .mission-label {
   display: inline-block;
-  background: rgba(110, 231, 183, 0.2);
-  border: 1px solid rgba(110, 231, 183, 0.3);
+  background: rgba(255, 217, 61, 0.2);
+  border: 1px solid rgba(255, 217, 61, 0.4);
   border-radius: 20px;
   padding: 4px 14px;
   font-family: 'Nunito', sans-serif;
   font-weight: 700;
   font-size: 11px;
-  color: #6ee7b7;
+  color: var(--yellow);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   margin-bottom: 16px;
@@ -380,7 +381,7 @@ body {
 }
 
 .next-step:hover {
-  border-color: var(--purple);
+  border-color: var(--powder);
   box-shadow: 0 4px 16px rgba(0,0,0,0.06);
 }
 
@@ -388,7 +389,7 @@ body {
   width: 44px;
   height: 44px;
   border-radius: 10px;
-  background: linear-gradient(135deg, #f3e8ff, #e9d5ff);
+  background: linear-gradient(135deg, #dbeafe, #bfdbfe);
   display: flex;
   align-items: center;
   justify-content: center;

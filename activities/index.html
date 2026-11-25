@@ -8,18 +8,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Nunito+Sans:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --pink: #EF3FA9;
-  --purple: #783CBD;
-  --teal: #22D3C5;
   --navy: #1B3A6B;
-  --blue: #2E75B6;
+  --powder: #5B9BD5;
   --yellow: #FFD93D;
-  --orange: #FF6B35;
-  --green: #06D6A0;
-  --ink: #1A1A2E;
-  --light: #F7F8FC;
+  --ink: #374151;
+  --light: #F8F9FA;
   --white: #FFFFFF;
-  --border: #E4E9F2;
+  --border: #E5E7EB;
+  /* Legacy */
+  --pink: #1B3A6B;
+  --blue: #5B9BD5;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -58,7 +56,7 @@ body {
 
 /* HERO */
 .hero {
-  background: linear-gradient(135deg, #be185d 0%, #db2777 50%, #ec4899 100%);
+  background: linear-gradient(135deg, #1B3A6B 0%, #2a4a7a 50%, #3b5998 100%);
   padding: 48px 24px;
   text-align: center;
   position: relative;
@@ -120,7 +118,7 @@ body {
 
 .section-label {
   display: inline-block;
-  background: var(--pink);
+  background: var(--navy);
   color: white;
   font-family: 'Nunito', sans-serif;
   font-weight: 700;
@@ -165,13 +163,13 @@ body {
 }
 
 .activity-card:hover {
-  border-color: var(--pink);
+  border-color: var(--powder);
   box-shadow: 0 8px 32px rgba(0,0,0,0.08);
   transform: translateY(-2px);
 }
 
 .activity-header {
-  background: linear-gradient(135deg, #fce7f3, #fbcfe8);
+  background: linear-gradient(135deg, #dbeafe, #bfdbfe);
   padding: 20px 24px;
   display: flex;
   align-items: center;
