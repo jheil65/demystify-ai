@@ -6,8 +6,16 @@
 <title>Demystifying AI for All: Human-Centered & Equity-Driven | by Jeffery Heil</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌍</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Nunito+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;700&family=Hanken+Grotesk:wght@400;500;700&display=swap">
 <style>
 :root {
+  /* demystify-site-style tokens */
+  --cream: #EFE3CC;
+  --cream-light: #F7EEDD;
+  --charcoal: #26262A;
+  --coral: #E8452C;
+  --red-text: #B5321E;
+  --coral-light: #F0705A;
   --navy:   #1B3A6B;
   --powder: #5B9BD5;
   --yellow: #FFD93D;
@@ -26,66 +34,51 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Nunito Sans', sans-serif; background: var(--light); color: var(--ink); overflow-x: hidden; }
 
-/* HERO */
-.hero { background: var(--navy); position: relative; overflow: hidden; padding: 56px 32px 64px; }
-.hero-bubbles span { position: absolute; border-radius: 50%; opacity: 0.12; animation: float 6s ease-in-out infinite; }
-.hero-bubbles span:nth-child(1) { width:180px;height:180px;background:var(--pink);   top:-40px;  right:8%;  animation-delay:0s; }
-.hero-bubbles span:nth-child(2) { width:120px;height:120px;background:var(--teal);   bottom:-20px;left:5%; animation-delay:1.5s; }
-.hero-bubbles span:nth-child(3) { width:80px; height:80px; background:var(--yellow); top:30%;   right:20%; animation-delay:3s; }
-.hero-bubbles span:nth-child(4) { width:60px; height:60px; background:var(--purple); top:20%;   left:30%;  animation-delay:2s; }
-@keyframes float { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-18px) scale(1.05)} }
+/* SITE NAV + HERO + TAB BAR (demystify-site-style) */
+.site-nav, .hero, .cat-strip { font-family:'Hanken Grotesk',Arial,sans-serif; color:var(--charcoal); }
+.site-nav a:focus-visible, .hero a:focus-visible, .cat-strip a:focus-visible, .cat-strip button:focus-visible, #search:focus-visible { outline:3px solid var(--charcoal); outline-offset:3px; }
 
-.hero-inner { max-width:1100px; margin:0 auto; position:relative; z-index:1; }
-.hero-pill { display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); border-radius:40px; padding:6px 16px 6px 10px; margin-bottom:20px; }
-.hero-pill .dot { width:8px;height:8px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite; }
-@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
-.hero-pill span { color:rgba(255,255,255,0.8);font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;font-family:'Nunito',sans-serif; }
-.hero h1 { font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(2.2rem,6vw,3.8rem);color:var(--white);line-height:1.1;margin-bottom:16px; }
-.hero h1 .accent { color:var(--yellow); }
-.hero h1 .accent2 { color:var(--teal); }
-.hero-sub { color:rgba(255,255,255,0.65);font-size:1.05rem;font-weight:300;max-width:540px;line-height:1.7;margin-bottom:32px; }
-.hero-stats { display:flex;gap:20px;flex-wrap:wrap; }
-.stat-chip { background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:12px;padding:10px 18px;text-align:center; }
-.stat-chip .num { font-family:'Nunito',sans-serif;font-weight:900;font-size:1.6rem;color:var(--yellow);line-height:1; }
-.stat-chip .lbl { font-size:11px;color:rgba(255,255,255,0.55);font-weight:600;text-transform:uppercase;letter-spacing:0.08em;margin-top:2px; }
+.site-nav { background:var(--cream); padding:28px 56px 0; }
+.site-nav-inner { max-width:1168px; margin:0 auto; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:4px 32px; border-bottom:2px solid var(--charcoal); padding-bottom:12px; }
+.site-nav .wordmark { font-family:'Zilla Slab',Georgia,serif; font-weight:700; font-size:24px; color:var(--charcoal); text-decoration:none; padding:10px 0; }
+.site-nav-links { display:flex; flex-wrap:wrap; gap:0 28px; }
+.site-nav-links a { font-weight:500; font-size:16px; color:var(--charcoal); text-decoration:none; padding:12px 0; }
+.site-nav a:hover { text-decoration:underline; }
 
-/* NAV */
-.cat-strip { background:var(--white);border-bottom:2px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(0,0,0,0.07); }
-.cat-strip-inner { max-width:1100px;margin:0 auto;padding:8px 24px;display:flex;align-items:center;gap:4px;flex-wrap:wrap; }
-.search-wrap { position:relative;margin-right:8px;flex-shrink:0;margin-bottom:4px; }
-.search-wrap svg { position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#aab;pointer-events:none; }
-#search { padding:10px 12px 10px 38px;border:2px solid var(--border);border-radius:40px;font-family:'Nunito Sans',sans-serif;font-size:13.5px;width:200px;outline:none;transition:all 0.2s;background:var(--light); }
-#search:focus { border-color:var(--pink);width:240px;background:#fff; }
-.cat-btn { display:flex;align-items:center;gap:7px;padding:8px 16px;border:none;background:transparent;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;color:#888;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:all 0.18s;margin-bottom:0; }
-.cat-btn:hover { color:var(--ink); }
-.cat-btn .icon { font-size:16px; }
-.cat-btn.active[data-cat="all"]       { color:var(--navy);  border-bottom-color:var(--navy); }
-.cat-btn.active[data-cat="tone"]      { color:var(--pink);  border-bottom-color:var(--pink); }
-.cat-btn.active[data-cat="decision"]  { color:var(--purple);border-bottom-color:var(--purple); }
-.cat-btn.active[data-cat="clarity"]   { color:#0ab8b0;      border-bottom-color:var(--teal); }
-.cat-btn.active[data-cat="creative"]  { color:var(--orange);border-bottom-color:var(--orange); }
-.cat-btn.active[data-cat="framework"]  { color:var(--blue);   border-bottom-color:var(--blue); }
-.cat-btn.active[data-cat="portable"]   { color:var(--navy);   border-bottom-color:var(--navy); }
-.cat-btn.active[data-cat="ailiteracy"] { color:var(--navy);  border-bottom-color:var(--navy); }
-.cat-btn.active[data-cat="glossary"]   { color:var(--yellow); border-bottom-color:var(--yellow); filter: brightness(0.8); }
-.cat-btn.active[data-cat="podcasts"]   { color:var(--orange); border-bottom-color:var(--orange); }
-.cat-btn.active[data-cat="hcai"]       { color:var(--navy);  border-bottom-color:var(--navy); }
-.cat-btn.active[data-cat="prompts"]    { color:var(--purple); border-bottom-color:var(--purple); }
+.hero { background:var(--cream); padding:44px 56px 56px; }
+.hero-inner { max-width:1168px; margin:0 auto; display:flex; flex-wrap:wrap; gap:48px; align-items:stretch; }
+.hero-text { flex:999 1 520px; min-width:0; display:flex; flex-direction:column; gap:22px; align-items:flex-start; }
+.hero-eyebrow { font-weight:700; font-size:14px; letter-spacing:0.2em; text-transform:uppercase; color:var(--red-text); }
+.hero h1 { font-family:'Zilla Slab',Georgia,serif; font-weight:700; font-size:clamp(2.75rem,7.2vw,5.75rem); line-height:0.98; letter-spacing:-0.01em; color:var(--charcoal); text-wrap:balance; }
+.hero-sub { font-size:clamp(1.0625rem,2.2vw,1.25rem); line-height:1.5; max-width:34em; }
+.hero-actions { display:flex; flex-wrap:wrap; gap:14px 20px; align-items:center; }
+.hero-btn { display:inline-block; background:var(--charcoal); color:var(--cream); font-weight:700; font-size:17px; padding:15px 26px; text-decoration:none; }
+.hero-btn:hover { text-decoration:underline; }
+.hero-byline { font-size:16px; }
+.poster { flex:1 1 320px; min-height:340px; background:var(--coral); position:relative; overflow:hidden; display:flex; align-items:flex-end; padding:20px 24px; }
+.poster::before { content:''; position:absolute; left:0; right:0; top:0; height:55%; background-image:radial-gradient(#26262A 22%, transparent 24%); background-size:14px 14px; opacity:0.85; }
+.poster span { position:relative; font-family:'Zilla Slab',Georgia,serif; font-weight:700; font-size:clamp(150px,20vw,220px); line-height:0.8; color:var(--cream); }
+
+/* TAB BAR */
+.cat-strip { background:var(--cream-light); border-top:2px solid var(--charcoal); border-bottom:2px solid var(--charcoal); position:sticky; top:0; z-index:100; }
+.cat-strip-inner { max-width:1280px; margin:0 auto; padding:6px 56px; display:flex; align-items:center; gap:0 4px; flex-wrap:wrap; }
+.search-wrap { position:relative; margin:4px 12px 4px 0; flex-shrink:0; }
+.search-wrap svg { position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--charcoal); pointer-events:none; }
+#search { padding:10px 12px 10px 38px; border:2px solid var(--charcoal); border-radius:0; font-family:'Hanken Grotesk',Arial,sans-serif; font-size:16px; width:210px; max-width:100%; background:var(--cream); color:var(--charcoal); }
+#search::placeholder { color:var(--charcoal); opacity:0.7; }
+.cat-btn, .cat-dropdown-btn { display:flex; align-items:center; gap:7px; padding:10px 12px; border:none; background:transparent; font-family:'Hanken Grotesk',Arial,sans-serif; font-weight:500; font-size:16px; color:var(--charcoal); cursor:pointer; white-space:nowrap; border-bottom:3px solid transparent; }
+.cat-btn:hover, .cat-dropdown-btn:hover { text-decoration:underline; }
+.cat-btn.active, .cat-dropdown.has-active .cat-dropdown-btn { font-weight:700; border-bottom-color:var(--charcoal); }
 
 /* DROPDOWN */
 .cat-dropdown { position:relative; }
-.cat-dropdown-btn { display:flex;align-items:center;gap:7px;padding:8px 16px;border:none;background:transparent;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;color:#888;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:all 0.18s; }
-.cat-dropdown-btn:hover { color:var(--ink); }
-.cat-dropdown-btn .icon { font-size:16px; }
-.cat-dropdown-btn .arrow { font-size:10px;margin-left:2px;transition:transform 0.2s; }
+.cat-dropdown-btn .arrow { font-size:10px; margin-left:2px; }
 .cat-dropdown.open .arrow { transform:rotate(180deg); }
-.cat-dropdown.has-active .cat-dropdown-btn { color:var(--purple);border-bottom-color:var(--purple); }
-.cat-dropdown-menu { position:absolute;top:100%;left:0;background:var(--white);border:1px solid var(--border);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.12);padding:8px 0;min-width:180px;z-index:200;display:none; }
+.cat-dropdown-menu { position:absolute; top:100%; left:0; background:var(--cream-light); border:2px solid var(--charcoal); padding:6px 0; min-width:190px; z-index:200; display:none; }
 .cat-dropdown.open .cat-dropdown-menu { display:block; }
-.cat-dropdown-menu button { display:flex;align-items:center;gap:10px;width:100%;padding:10px 16px;border:none;background:transparent;font-family:'Nunito',sans-serif;font-weight:600;font-size:13px;color:#666;cursor:pointer;text-align:left;transition:all 0.15s; }
-.cat-dropdown-menu button:hover { background:var(--light);color:var(--ink); }
-.cat-dropdown-menu button.active { background:rgba(120,60,189,0.08);color:var(--purple); }
-.cat-dropdown-menu button .icon { font-size:15px; }
+.cat-dropdown-menu button { display:block; width:100%; padding:11px 16px; border:none; background:transparent; font-family:'Hanken Grotesk',Arial,sans-serif; font-weight:500; font-size:16px; color:var(--charcoal); cursor:pointer; text-align:left; }
+.cat-dropdown-menu button:hover { background:var(--cream); }
+.cat-dropdown-menu button.active { background:var(--charcoal); color:var(--cream); }
 
 /* HCAI */
 .hcai-wrap { margin-top: 8px; }
@@ -776,7 +769,13 @@ footer strong { color:rgba(255,255,255,0.85);font-weight:700;font-family:'Nunito
 footer a { color:var(--teal);text-decoration:none; }
 
 @media(max-width:600px){
-  .hero{padding:40px 20px 48px}
+  .site-nav{padding:16px 20px 0}
+  .site-nav-links{gap:0 20px}
+  .hero{padding:28px 20px 40px}
+  .hero-inner{gap:32px}
+  .poster{min-height:220px}
+  .cat-strip-inner{padding:6px 12px}
+  .cat-btn,.cat-dropdown-btn{padding:10px 8px}
   main{padding:24px 16px 60px}
   .cards-grid{grid-template-columns:1fr}
   .resources-grid{grid-template-columns:1fr}
@@ -786,44 +785,56 @@ footer a { color:var(--teal);text-decoration:none; }
 </head>
 <body>
 
-<header class="hero">
-  <div class="hero-bubbles"><span></span><span></span><span></span><span></span></div>
-  <div class="hero-inner">
-    <div class="hero-pill"><span class="dot"></span><span>Jeffery Heil · AI Literacy</span></div>
-    <h1>Demystifying AI <span class="accent">for All</span><br><span style="font-size:clamp(1.1rem,3vw,1.8rem);font-weight:700;color:var(--powder);">Human-Centered & Equity-Driven ✨</span></h1>
-    <p class="hero-sub">Prompts, frameworks, AI literacy resources, and a glossary — for educators, trainers, and anyone new to AI. Curated by Jeffery Heil, educational technologist and human-centered AI advocate.</p>
-    <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;">
-      <a href="toolbox/" style="display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--navy);text-decoration:none;font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;padding:12px 24px;border-radius:40px;box-shadow:0 6px 18px rgba(255,255,255,0.3);">🧰 AI Toolbox →</a>
-      <a href="activities/" style="display:inline-flex;align-items:center;gap:8px;background:var(--yellow);color:var(--navy);text-decoration:none;font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;padding:12px 24px;border-radius:40px;box-shadow:0 6px 18px rgba(255,217,61,0.4);">🎯 Activities →</a>
-      <a href="playground/" style="display:inline-flex;align-items:center;gap:8px;background:var(--powder);color:#fff;text-decoration:none;font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;padding:12px 24px;border-radius:40px;box-shadow:0 6px 18px rgba(91,155,213,0.35);">🎮 AI Playground →</a>
-      <a href="spark-intro/" style="display:inline-flex;align-items:center;gap:8px;background:#fff;border:2px solid var(--navy);color:var(--navy);text-decoration:none;font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;padding:10px 22px;border-radius:40px;box-shadow:0 4px 12px rgba(0,0,0,0.1);">⚡ SPARK AI Express →</a>
+<nav class="site-nav" aria-label="Site">
+  <div class="site-nav-inner">
+    <a class="wordmark" href="./">Demystifying AI</a>
+    <div class="site-nav-links">
+      <a href="toolbox/">AI Toolbox</a>
+      <a href="activities/">Activities</a>
+      <a href="playground/">AI Playground</a>
+      <a href="spark-intro/">SPARK AI Express</a>
     </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-eyebrow">Human-Centered &amp; Equity-Driven</div>
+      <h1>Demystifying AI for All</h1>
+      <p class="hero-sub">Prompts, frameworks, AI literacy resources, and a glossary for educators, trainers, and anyone new to AI. Curated by Jeffery Heil, educational technologist and human-centered AI advocate.</p>
+      <div class="hero-actions">
+        <a class="hero-btn" href="toolbox/">Open the AI Toolbox</a>
+        <span class="hero-byline">Jeffery Heil · AI Literacy</span>
+      </div>
+    </div>
+    <div class="poster" aria-hidden="true"><span>AI</span></div>
   </div>
 </header>
 
 <div class="cat-strip">
   <div class="cat-strip-inner">
-    <a href="welcome.html" class="cat-btn" style="text-decoration:none;"><span class="icon">🏠</span> Home</a>
+    <a href="welcome.html" class="cat-btn" style="text-decoration:none;">Home</a>
     <div class="search-wrap">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       <input type="text" id="search" placeholder="Search prompts…">
     </div>
     <div class="cat-dropdown" id="promptDropdown">
-      <button class="cat-dropdown-btn"><span class="icon">💬</span> Prompt Ideas <span class="arrow">▼</span></button>
+      <button class="cat-dropdown-btn">Prompt Ideas <span class="arrow">▼</span></button>
       <div class="cat-dropdown-menu">
-        <button data-cat="all" class="active"><span class="icon">🗂️</span> All Prompts</button>
-        <button data-cat="tone"><span class="icon">🎭</span> Tone</button>
-        <button data-cat="decision"><span class="icon">🧭</span> Decisions</button>
-        <button data-cat="clarity"><span class="icon">💡</span> Clarity</button>
-        <button data-cat="creative"><span class="icon">🎨</span> Creative</button>
-        <button data-cat="framework"><span class="icon">🏗️</span> Frameworks</button>
+        <button data-cat="all" class="active">All Prompts</button>
+        <button data-cat="tone">Tone</button>
+        <button data-cat="decision">Decisions</button>
+        <button data-cat="clarity">Clarity</button>
+        <button data-cat="creative">Creative</button>
+        <button data-cat="framework">Frameworks</button>
       </div>
     </div>
-    <button class="cat-btn" data-cat="podcasts"><span class="icon">🎙️</span> Podcasts & YouTube</button>
-    <button class="cat-btn" data-cat="portable"><span class="icon">🧳</span> Portable AI</button>
-    <button class="cat-btn" data-cat="ailiteracy"><span class="icon">🧠</span> AI Literacy</button>
-    <button class="cat-btn" data-cat="hcai"><span class="icon">🌱</span> HCAI</button>
-    <button class="cat-btn" data-cat="glossary"><span class="icon">📖</span> Glossary</button>
+    <button class="cat-btn" data-cat="podcasts">Podcasts & YouTube</button>
+    <button class="cat-btn" data-cat="portable">Portable AI</button>
+    <button class="cat-btn" data-cat="ailiteracy">AI Literacy</button>
+    <button class="cat-btn" data-cat="hcai">HCAI</button>
+    <button class="cat-btn" data-cat="glossary">Glossary</button>
   </div>
 </div>
 
