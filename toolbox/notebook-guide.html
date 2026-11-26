@@ -6,183 +6,365 @@
 <title>Gemini Notebook Field Guide · Demystifying AI for All</title>
 <meta name="description" content="A hands-on beginner's guide to Gemini Notebook (formerly NotebookLM): see how answering from your own sources differs from a general chatbot, tour the three panels, and learn what to upload. Free, no login.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📓</text></svg>">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;700&family=Hanken+Grotesk:wght@400;500;700&display=swap">
 <style>
-:root{--body:'Nunito Sans',sans-serif;--head:'Nunito',sans-serif;--bg:#F7F8FC;--brand:#1B3A6B;--brand2:#783CBD;--ink:#1B3A6B;--pink:#EF3FA9;--teal:#22D3C5;--line:#E4E9F2;--soft:#F7F8FC;--link:#2E75B6}
-.topbar{background:#1B3A6B;color:#fff;padding:14px 0}
-.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.topbar a{color:rgba(255,255,255,.85);text-decoration:none;font-family:'Nunito',sans-serif;font-weight:700;font-size:14px}
-.topbar a:hover{color:#FFD93D}
-.tag{font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#22D3C5;text-align:right}
-.intro{background:#1B3A6B;color:#fff;padding:8px 0 52px;position:relative;overflow:hidden}
-.intro::after{content:'';position:absolute;width:220px;height:220px;border-radius:50%;background:#22D3C5;opacity:.12;right:-60px;top:-40px}
-.intro h1{font-weight:900;font-size:clamp(2rem,7vw,2.9rem);line-height:1.1;margin:14px 0 10px;position:relative;z-index:1}
-.intro h1 span{color:#FFD93D}
-.intro p{color:rgba(255,255,255,.82);max-width:640px;position:relative;z-index:1}
-.intro .chips{position:relative;z-index:1}
-.setnav{display:flex;gap:6px;overflow-x:auto;padding:12px 0 2px;position:relative;z-index:1}
-.setnav a{flex:0 0 auto;font-family:'Nunito',sans-serif;font-weight:800;font-size:12.5px;color:rgba(255,255,255,.88);border:1px solid rgba(255,255,255,.28);border-radius:40px;padding:6px 10px;text-decoration:none;white-space:nowrap}
-.setnav a:hover{border-color:#FFD93D;color:#FFD93D}
-.setnav a[aria-current="page"]{background:#FFD93D;color:#1B3A6B;border-color:#FFD93D}
-.steps{display:flex;gap:6px;margin:-26px 0 14px;position:relative;z-index:2;overflow-x:auto;padding-bottom:4px}
-.steps a{flex:1 0 auto;text-align:center;background:#fff;border:1px solid var(--line);border-radius:40px;padding:9px 14px;font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;color:#1B3A6B;text-decoration:none;box-shadow:0 6px 18px rgba(27,58,107,.08);white-space:nowrap}
-.steps a:hover{border-color:#22D3C5}
-footer{background:#1B3A6B;color:rgba(255,255,255,.55);text-align:center;padding:24px 16px;font-size:13px}
-footer a{color:#22D3C5;text-decoration:none}
-footer strong{color:rgba(255,255,255,.85);font-family:'Nunito',sans-serif}
-
+:root{
+  /* demystify-site-style tokens */
+  --cream:#EFE3CC;--cream-light:#F7EEDD;--charcoal:#26262A;--coral:#E8452C;--red-text:#B5321E;--coral-light:#F0705A;
+  --display:'Zilla Slab',Georgia,serif;--body:'Hanken Grotesk',Arial,sans-serif;
+  --mono:ui-monospace,Menlo,Consolas,monospace;
+}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--body);background:var(--bg);color:#1f1b2e;line-height:1.6;font-size:17px}
-a{color:var(--link)}
-.wrap{max-width:860px;margin:0 auto;padding:0 16px}
-h1,h2,h3,.hd{font-family:var(--head)}
-.card{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 8px 26px rgba(40,30,90,.07);padding:24px;margin:0 0 20px;border-top:6px solid var(--c,var(--brand));scroll-margin-top:12px}
-.kicker{font-family:var(--head);font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--c,var(--brand2))}
-.card h2{font-weight:900;font-size:1.4rem;line-height:1.22;margin:2px 0 8px;color:var(--ink)}
-.card h3{font-weight:800;font-size:1.05rem;margin:0 0 6px;color:var(--ink)}
-.lead{color:#565170;margin-bottom:14px}
-.small{font-size:14px;color:#565170}
+body{font-family:var(--body);background:var(--cream);color:var(--charcoal);font-size:16px;line-height:1.5;min-height:100vh}
+a{color:var(--charcoal)}
+button{font-family:var(--body)}
+button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var(--charcoal);outline-offset:3px}
+.cta a:focus-visible,.yourjob a:focus-visible{outline-color:var(--cream)}
+.wrap{max-width:800px;margin:0 auto;padding:0 20px}
 .hidden{display:none!important}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
-.chip{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.26);border-radius:40px;padding:5px 14px;font-size:13px;font-weight:700}
-.btn{font-family:var(--head);font-weight:800;font-size:16px;border:none;border-radius:40px;padding:12px 24px;cursor:pointer;text-decoration:none;display:inline-block}
-.btn:hover{filter:brightness(1.07)}
-.btn-main{background:var(--pink);color:#fff}
-.btn-alt{background:var(--brand);color:#fff}
-.btn-soft{background:var(--soft);color:var(--ink);border:2px solid var(--line)}
-.btn[disabled]{opacity:.45;cursor:default}
-.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;align-items:center}
-button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #ffd93d;outline-offset:2px}
-.sim-note{font-size:13px;color:#565170;margin-top:10px}
-.lesson{margin-top:14px;background:#e8fbf6;border-left:5px solid #06d6a0;border-radius:12px;padding:13px 15px}
-.caution{margin-top:14px;background:#fff1ea;border-left:5px solid #ff6b35;border-radius:12px;padding:13px 15px}
-.tipbox{background:#fff8db;border-left:5px solid #e8c400;border-radius:12px;padding:13px 15px}
-.job{background:#fde7f4;border-left:5px solid var(--pink);border-radius:12px;padding:13px 15px}
-.lesson b,.caution b,.tipbox b,.job b{font-family:var(--head)}
 
-/* pickers */
-.pick3{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-bottom:14px}
-.pk{text-align:left;font-family:var(--body);font-size:15px;background:#fff;border:2px solid var(--line);border-radius:16px;padding:13px 14px;cursor:pointer;color:#1f1b2e}
-.pk:hover{border-color:var(--brand2)}
-.pk small{display:block;font-family:var(--head);font-weight:800;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--brand2)}
-.pk b{display:block;font-family:var(--head);font-weight:900;font-size:16px;line-height:1.25;margin:2px 0}
-.pk span{display:block;font-size:13.5px;color:#565170;line-height:1.35}
-.pk[aria-pressed="true"]{border-color:var(--brand);background:var(--brand);color:#fff}
-.pk[aria-pressed="true"] small{color:#ffd93d}
-.pk[aria-pressed="true"] span{color:rgba(255,255,255,.86)}
-.pills{display:flex;flex-wrap:wrap;gap:8px}
-.pl{font-family:var(--head);font-weight:800;font-size:14px;background:#fff;border:2px solid var(--line);border-radius:40px;padding:8px 14px;cursor:pointer;color:#1f1b2e}
-.pl:hover{border-color:var(--brand2)}
-.pl[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:#fff}
+/* site nav */
+.site-nav{padding:28px 56px 0}
+.site-nav-inner{max-width:1168px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 32px;border-bottom:2px solid var(--charcoal);padding-bottom:12px}
+.wordmark{font-family:var(--display);font-weight:700;font-size:24px;text-decoration:none;padding:10px 0}
+.site-nav-links{display:flex;flex-wrap:wrap;gap:0 28px}
+.site-nav-links a{font-weight:500;font-size:16px;text-decoration:none;padding:12px 0}
+.site-nav a:hover{text-decoration:underline}
+.site-nav-links a[aria-current="page"]{font-weight:700;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
 
-/* part 1 */
-.asked{background:var(--ink);color:#fff;border-radius:16px;padding:14px 16px;margin-bottom:14px}
-.asked small{display:block;font-family:var(--head);font-weight:800;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--teal)}
-.asked p{font-family:var(--head);font-weight:800;font-size:1.05rem;line-height:1.35}
-.duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:14px}
-.side{border-radius:16px;padding:16px;border:2px solid}
-.side.gen{background:#fff6f4;border-color:#f6c9bf}
-.side.nb{background:#eefbf9;border-color:var(--teal)}
-.side .who{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;align-items:center;margin-bottom:10px}
-.tagp{font-family:var(--head);font-weight:800;font-size:13px;border-radius:40px;padding:4px 12px}
-.gen .tagp{background:#fbdcd5;color:#7a2413}
-.nb .tagp{background:var(--brand2);color:#fff}
-.side .meta{font-family:var(--head);font-weight:800;font-size:12px}
-.gen .meta{color:#9a3412}.nb .meta{color:var(--brand2)}
-.ans{background:#fff;border-radius:12px;padding:13px 14px;border:1px solid var(--line)}
-.cite{font-family:var(--head);font-weight:900;font-size:12.5px;background:var(--brand2);color:#fff;border:none;border-radius:8px;padding:2px 9px;margin:0 2px;cursor:pointer;vertical-align:baseline}
-.cite:hover,.cite[aria-pressed="true"]{background:var(--pink)}
-.risk{margin-top:10px;background:#fbdcd5;color:#5f1d10;border-radius:12px;padding:11px 13px;font-size:15px}
-.risk b{font-family:var(--head);display:block}
-.proof{margin-top:10px;background:#f1eafb;border:2px solid #cdb8ea;border-radius:12px;padding:12px 13px;font-size:15px}
-.proof .src{font-family:var(--head);font-weight:800;color:var(--brand2);display:block;margin-bottom:6px}
-.proof .quote{background:#fff;border-radius:10px;padding:10px 12px;font-style:italic;border:1px solid #e3d6f5}
-details.more{background:var(--soft);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:16px}
-details.more summary{cursor:pointer;font-family:var(--head);font-weight:800;color:var(--ink)}
-.cmp{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-top:12px}
-.cmp div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;font-size:14.5px}
-.cmp b{display:block;font-family:var(--head);font-size:15.5px;color:var(--ink)}
-.cmp em{font-style:normal;display:inline-block;font-family:var(--head);font-weight:800;font-size:11px;border-radius:20px;padding:1px 9px;margin-bottom:4px;background:#f1eafb;color:#5b2a9a}
-.cmp .free em{background:#e8fbf6;color:#047857}
+/* page header */
+.intro{padding:36px 0 32px}
+.tag{display:block;font-weight:700;font-size:14px;letter-spacing:.2em;text-transform:uppercase;color:var(--red-text);margin-bottom:14px}
+.intro h1{font-family:var(--display);font-weight:700;font-size:clamp(2.5rem,7vw,4rem);line-height:1;letter-spacing:-.01em;text-wrap:balance;margin-bottom:18px}
+.intro h1 span{color:var(--coral)}
+.intro p{font-size:clamp(1.0625rem,2.2vw,1.25rem);max-width:34em}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.chip{border:2px solid var(--charcoal);padding:5px 12px;font-size:16px;font-weight:500}
+.setnav{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.setnav a{font-weight:700;font-size:16px;border:2px solid var(--charcoal);background:var(--cream-light);padding:9px 14px;text-decoration:none}
+.setnav a:hover{text-decoration:underline}
+.setnav a[aria-current="page"]{background:var(--charcoal);color:var(--cream)}
 
-/* part 2 */
-.screen{display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:8px;background:var(--ink);border-radius:16px;padding:10px;margin-bottom:14px}
-.pane{font-family:var(--head);text-align:left;background:#fff;border:3px solid transparent;border-radius:10px;padding:12px 10px;cursor:pointer;color:#1f1b2e;min-height:118px}
-.pane small{display:block;font-weight:800;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:#565170}
-.pane b{display:block;font-weight:900;font-size:15px;line-height:1.2;margin:4px 0}
-.pane span{display:block;font-size:20px}
-.pane[aria-pressed="true"]{border-color:var(--pink);background:#fde7f4}
-.pinfo{background:var(--soft);border-radius:16px;padding:16px}
-.pinfo ul{list-style:none;display:grid;gap:8px;margin-top:10px}
-.pinfo li{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 13px;font-size:15px}
-.pinfo li b{font-family:var(--head)}
+/* cards */
+.card{background:var(--cream-light);border:2px solid var(--charcoal);padding:28px;margin:0 0 24px;scroll-margin-top:12px}
+.kicker{display:block;font-weight:700;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--red-text);margin-bottom:8px}
+.card h2{font-family:var(--display);font-weight:700;font-size:clamp(1.75rem,4.5vw,2.25rem);line-height:1.1;margin:0 0 10px;text-wrap:balance}
+.card h3{font-family:var(--display);font-weight:700;font-size:1.375rem;line-height:1.15;margin:0 0 8px}
+.card h4{font-weight:700;font-size:16px}
+.lead{margin-bottom:16px}
+.small{font-size:16px}
 
-/* part 3 */
-.grid6{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin-bottom:16px}
-.fmt{background:var(--soft);border-radius:14px;padding:13px 14px;font-size:14.5px}
-.fmt b{display:block;font-family:var(--head);font-size:15.5px;color:var(--ink)}
-.bundle{background:var(--soft);border:2px solid var(--line);border-radius:16px;padding:16px;margin-bottom:16px}
-.bundle .out{background:#fff;border-radius:14px;padding:14px;margin-top:12px;border:1px solid var(--line)}
-.bundle ol{padding-left:22px;margin:8px 0;display:grid;gap:5px;font-size:15px}
-.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px}
+.btn{font-family:var(--body);font-weight:700;font-size:17px;border:2px solid var(--charcoal);border-radius:0;padding:13px 24px;cursor:pointer;text-decoration:none;display:inline-block}
+.btn:hover{text-decoration:underline}
+.btn-main,.btn-alt{background:var(--charcoal);color:var(--cream)}
+.btn-soft{background:var(--cream-light);color:var(--charcoal)}
+.btn[disabled]{opacity:.5;cursor:default;text-decoration:none}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
 
-/* part 4 */
-.result{border-radius:16px;padding:16px;margin-top:12px;border:2px solid var(--line);background:var(--soft)}
-.result.good{border-color:var(--pink);background:#fde7f4}
-.prompts{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin-top:10px}
-.pr{text-align:left;font-family:var(--body);font-size:14.5px;background:var(--soft);border:2px solid var(--line);border-radius:14px;padding:13px;cursor:pointer;color:#1f1b2e}
-.pr:hover{border-color:var(--brand2)}
-.pr small{display:block;font-family:var(--head);font-weight:800;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--brand2);margin-bottom:5px}
-.pr i{display:block}
-.pr u{display:inline-block;margin-top:8px;text-decoration:none;font-family:var(--head);font-weight:800;font-size:13px;color:var(--brand2)}
-.pr.copied u{color:#047857}
+/* power picker */
+.needs{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
+.need{position:relative;text-align:left;font-family:var(--body);background:var(--cream);border:2px solid var(--charcoal);border-radius:0;padding:14px;cursor:pointer;color:var(--charcoal);display:block}
+.need:hover b{text-decoration:underline}
+.need .e{display:none}
+.need b{display:block;font-family:var(--display);font-weight:700;font-size:20px;line-height:1.15}
+.need span.s{display:block;font-size:16px;margin-top:4px;line-height:1.35}
+.need[aria-pressed="true"]{background:var(--charcoal);color:var(--cream)}
+.need.done{padding-bottom:40px}
+.need.done::after{content:'\2713  tried';position:absolute;bottom:10px;left:14px;font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.meter{display:flex;align-items:center;gap:12px;margin:16px 0 0;font-weight:700;font-size:16px}
+.meter .track{flex:1;height:12px;background:var(--cream);border:2px solid var(--charcoal);overflow:hidden}
+.meter .fill{display:block;height:100%;width:0;background:var(--charcoal);transition:width .4s}
+.alldone{margin-top:16px;background:var(--cream);border:2px solid var(--charcoal);padding:16px 18px}
 
-/* part 5 */
-.quiz{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:12px}
-.qc{background:var(--soft);border-radius:16px;padding:16px}
-.qc p{font-family:var(--head);font-weight:800;margin:4px 0 10px;line-height:1.35}
-.qo{display:block;width:100%;text-align:left;font-family:var(--body);font-size:15px;background:#fff;border:2px solid var(--line);border-radius:12px;padding:11px 12px;margin-bottom:8px;cursor:pointer;color:#1f1b2e}
-.qo:hover{border-color:var(--brand2)}
-.qo.right{border-color:#06d6a0;background:#e8fbf6}
-.qo.tried{border-color:#e8c400;background:#fff8db}
-.fb{border-radius:12px;padding:11px 13px;font-size:14.5px;font-weight:600}
-.fb.ok{background:#e8fbf6;color:#065f46}.fb.no{background:#fff8db;color:#6b5300}
-.badge{font-family:var(--head);font-weight:800;font-size:13px;background:var(--soft);border:1px solid var(--line);border-radius:40px;padding:4px 12px;white-space:nowrap}
-.badge.done{background:#e8fbf6;border-color:#06d6a0;color:#047857}
+/* power panel */
+.plain{background:var(--cream);padding:14px 16px;margin-bottom:16px}
+.try{border:2px dashed var(--charcoal);padding:18px;margin-bottom:16px}
+.try > .lab{font-weight:700;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--red-text);margin-bottom:10px;display:block}
+.sim-note{font-size:16px;margin-top:12px}
+.lesson{margin-top:14px;background:var(--cream);border:2px solid var(--charcoal);padding:14px 16px}
+.caution{margin-top:14px;background:var(--cream);border:2px solid var(--coral);padding:14px 16px}
+.yourjob{background:var(--charcoal);color:var(--cream);padding:16px 18px;margin-bottom:14px}
+.yourjob a{color:var(--cream)}
+.freetip{background:var(--cream);border:2px dashed var(--charcoal);padding:14px 16px;margin-bottom:14px}
+.freetip code{display:block;background:var(--cream-light);border:2px solid var(--charcoal);padding:10px 12px;margin-top:10px;font-family:var(--mono);font-size:15px;white-space:pre-wrap}
+.names{display:grid;gap:6px;margin-top:10px}
+.nrow{display:grid;grid-template-columns:96px 1fr;gap:10px;align-items:start;background:var(--cream);padding:10px 12px;font-size:16px}
+.badge{display:inline-block;font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;border:2px solid var(--charcoal);padding:1px 7px;margin-left:4px;vertical-align:middle;white-space:nowrap}
+.b-free{background:var(--charcoal);color:var(--cream)}
+.b-paid{background:var(--cream-light);color:var(--charcoal)}
+.b-check{background:var(--cream-light);color:var(--charcoal);border-style:dashed}
+.b-no{background:none;color:var(--charcoal);border-color:transparent;text-decoration:line-through}
 
-.ideas{display:grid;gap:10px;margin:12px 0}
-.idea{display:flex;gap:12px;align-items:flex-start;background:var(--soft);border-radius:14px;padding:14px}
-.idea .ico{font-size:24px;line-height:1}
-.idea b{font-family:var(--head);display:block}
-.cta{background:var(--ink);color:#fff;border-radius:16px;padding:18px;margin-top:14px}
-.cta h3{color:#fff}
-.cta p{color:rgba(255,255,255,.82);margin-bottom:12px}
-.sources{font-size:13.5px;color:#565170;margin:0 0 28px}
-.sources summary{cursor:pointer;font-family:var(--head);font-weight:800;color:var(--ink);padding:6px 0}
-.sources ul{padding-left:20px;margin-top:6px}
-.sources li{margin-bottom:5px}
-.checked{display:inline-block;background:#e8fbf6;color:#047857;font-family:var(--head);font-weight:800;font-size:12px;border-radius:20px;padding:3px 10px}
-@media (max-width:560px){.card{padding:18px}.screen{grid-template-columns:1fr}.pane{min-height:0}}
+/* shared sim bits */
+.opts{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.o,.pick,.m{font-family:var(--body);font-weight:700;font-size:16px;padding:11px 14px;border-radius:0;border:2px solid var(--charcoal);background:var(--cream-light);color:var(--charcoal);cursor:pointer;text-align:left}
+.o:hover,.pick:hover,.m:hover{text-decoration:underline}
+.o[aria-pressed="true"],.o.on,.pick[aria-pressed="true"]{background:var(--charcoal);color:var(--cream)}
+.o[disabled]{opacity:.5;cursor:default;text-decoration:none}
+.bubble{padding:12px 14px;margin:8px 0;max-width:92%}
+.bubble.me{background:var(--charcoal);color:var(--cream);margin-left:auto}
+.bubble.ai{background:var(--cream);border:2px solid var(--charcoal)}
+.bubble small{display:block;font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+.doc{background:var(--cream);border:2px solid var(--charcoal);padding:14px;font-size:16px;margin-bottom:10px}
+.doc h4{margin-bottom:6px}
+.doc span.hit{background:var(--coral-light);padding:0 2px}
+.scene{height:150px;display:flex;align-items:center;justify-content:center;gap:10px;font-size:54px;border:2px solid var(--charcoal);position:relative;overflow:hidden;background:var(--cream)}
+.scene .words{position:absolute;bottom:8px;left:0;right:0;text-align:center;font-weight:700;font-size:16px}
+.scene.photo{background:var(--cream-light)}
+.scene.cartoon{background:var(--coral);border-width:4px}
+.scene.paint{background-color:var(--cream);background-image:radial-gradient(#26262A 16%,transparent 18%);background-size:12px 12px}
+.scene.paint .words{background:var(--cream)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.two > div{background:var(--cream);padding:12px 14px;font-size:16px}
+.two h4{margin-bottom:4px}
+.two ul{padding-left:18px}
+.grp{font-weight:700;font-size:16px;margin-top:10px}
+.prompt,.think{background:var(--charcoal);color:var(--cream);padding:12px 14px;font-family:var(--mono);font-size:15px;margin:10px 0 0;white-space:pre-wrap}
+.think{margin:8px 0;white-space:normal}
+.think div{margin:3px 0}
+.think .fix{color:var(--coral-light)}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.preview{border:2px solid var(--charcoal);padding:14px;background:var(--cream);min-height:170px}
+.preview .ptitle{font-family:var(--display);font-weight:700;transition:font-size .2s}
+.preview .pq{background:var(--cream-light);padding:8px 10px;margin-top:8px;font-size:16px}
+.preview .pbtn{display:inline-block;margin-top:10px;padding:6px 16px;color:#fff;font-weight:700;font-size:15px}
+.preview .ptimer{float:right;font-weight:700;font-size:14px;background:var(--charcoal);color:var(--cream);padding:2px 10px}
+.log{display:grid;gap:6px;margin-top:10px}
+.log div{background:var(--cream);border:2px solid var(--charcoal);padding:10px 12px;font-size:16px}
+.log div.flag{border-color:var(--coral)}
+
+/* meet the five */
+.picker{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-bottom:16px}
+.pick{text-align:center;padding:12px 8px}
+.who{font-size:16px;margin-bottom:10px}
+.facts{display:grid;gap:8px;margin:12px 0}
+.fact{background:var(--cream);padding:12px 14px;font-size:16px}
+.fact .ico,.idea .ico{display:none}
+.legend{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:14px;font-size:15px}
+
+/* match game */
+.progress{display:flex;gap:6px;margin-bottom:16px}
+.progress span{flex:1;height:8px;background:var(--cream);border:2px solid var(--charcoal)}
+.progress span.done{background:var(--charcoal)}
+.progress span.now{background:var(--coral);border-color:var(--coral)}
+.q{font-family:var(--display);font-weight:700;font-size:1.375rem;line-height:1.25;background:var(--cream);padding:16px 18px;margin-bottom:14px}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.m{padding:12px 12px}
+.m[disabled]{cursor:default;text-decoration:none}
+.m.right{background:var(--charcoal);color:var(--cream)}
+.m.picked{border-color:var(--coral);background:var(--cream)}
+
+.big-ideas{display:grid;gap:0;margin:16px 0}
+.idea{border-top:2px solid var(--charcoal);padding:14px 0}
+.idea b{display:block;font-family:var(--display);font-weight:700;font-size:1.25rem;line-height:1.2;margin-bottom:4px}
+.talk{background:var(--cream);border:2px solid var(--charcoal);padding:18px;margin-top:8px}
+.cta{background:var(--charcoal);color:var(--cream);padding:22px;margin-top:18px}
+.cta p{margin-bottom:14px}
+.cta .btn{border-color:var(--cream)}
+.cta .btn-main{background:var(--cream);color:var(--charcoal)}
+.cta .btn-soft{background:none;color:var(--cream)}
+.sources{font-size:16px;margin:0 0 36px}
+.sources summary{cursor:pointer;font-weight:700;padding:6px 0}
+.sources ul{padding-left:20px;margin-top:8px}
+.sources li{margin-bottom:6px}
+.sources p{margin-top:8px}
+.checked{display:inline-block;font-weight:700;font-size:13px;letter-spacing:.06em;border:2px solid var(--charcoal);padding:2px 8px;margin-left:6px}
+footer{max-width:800px;margin:0 auto;padding:20px 20px 40px;font-size:16px}
+footer::before{content:'';display:block;border-top:2px solid var(--charcoal);margin-bottom:18px}
+footer a{color:var(--charcoal)}
+@media (max-width:600px){
+  .site-nav{padding:16px 20px 0}
+  .site-nav-links{gap:0 20px}
+  .intro{padding:26px 0 26px}
+  .card{padding:20px 18px}
+  .split,.two{grid-template-columns:1fr}
+  .nrow{grid-template-columns:84px 1fr}
+}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* ---- shared across the Toolbox family ---- */
+:root{
+  /* older color names still referenced by inline styles; all map to the palette */
+  --navy:var(--charcoal);--ink:var(--charcoal);--pink:var(--charcoal);--purple:var(--charcoal);--teal:var(--charcoal);
+  --blue:var(--charcoal);--green:var(--charcoal);--orange:var(--coral);--yellow:var(--cream);--light:var(--cream);
+  --white:var(--cream-light);--border:var(--charcoal);--muted:var(--charcoal);--brand:var(--charcoal);--brand2:var(--charcoal);
+  --line:var(--charcoal);--soft:var(--cream);--head:var(--body);
+}
+h1,h2,h3,.hd{font-family:var(--display)}
+.hd{font-weight:700}
+.steps{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
+.steps a{font-weight:700;font-size:16px;border:2px solid var(--charcoal);background:var(--cream-light);padding:8px 12px;text-decoration:none}
+.steps a:hover{text-decoration:underline}
+.ask{font-weight:700;margin:16px 0 10px}
+.seg{display:inline-flex;border:2px solid var(--charcoal);margin:16px 0 12px}
+.seg button{font-weight:700;font-size:16px;border:none;background:var(--cream-light);padding:10px 22px;cursor:pointer;color:var(--charcoal)}
+.seg button[aria-pressed="true"]{background:var(--charcoal);color:var(--cream)}
+.nametag{border:2px solid var(--charcoal)}
+.nametag .top{background:var(--charcoal);color:var(--cream);text-align:center;padding:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;font-size:13px}
+.nametag.then .top{background:var(--cream);color:var(--charcoal);border-bottom:2px solid var(--charcoal)}
+.nametag .body{padding:20px;text-align:center;background:var(--cream-light)}
+.nametag .name{font-family:var(--display);font-weight:700;font-size:clamp(1.75rem,6vw,2.5rem);line-height:1.1}
+.nametag.then .name{text-decoration:line-through;text-decoration-color:var(--coral);text-decoration-thickness:3px}
+.nametag.then .name.kept{text-decoration:none}
+.nametag .what{margin-top:10px;text-align:left}
+.task{background:var(--cream);border:2px dashed var(--charcoal);padding:12px 14px;margin-bottom:8px}
+.counters{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
+.counter{background:var(--cream);padding:12px 10px;text-align:center}
+.counter .n{font-family:var(--display);font-weight:700;font-size:1.875rem;line-height:1}
+.counter .l{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-top:6px}
+.walk{display:grid;gap:8px}
+.wstep{background:var(--cream);border:2px solid var(--charcoal);padding:13px 14px}
+.wstep .ico{display:none}
+.wstep b{display:block}
+.wstep.you{background:var(--charcoal);color:var(--cream)}
+.wstep small{display:inline-block;font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+.options{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.opt,.ch,.pl,.qo{font-family:var(--body);font-weight:700;font-size:16px;padding:12px 14px;border-radius:0;border:2px solid var(--charcoal);background:var(--cream-light);color:var(--charcoal);cursor:pointer;text-align:left}
+.opt:hover,.ch:hover,.pl:hover,.qo:hover{text-decoration:underline}
+.opt[disabled]{cursor:default;text-decoration:none}
+.opt.right,.qo.right,.ch[aria-pressed="true"],.pl[aria-pressed="true"]{background:var(--charcoal);color:var(--cream)}
+.opt.picked{border-color:var(--coral);background:var(--cream)}
+.tablewrap{overflow-x:auto;border:2px solid var(--charcoal);margin-top:16px}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:16px}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--charcoal);vertical-align:top}
+thead th{background:var(--charcoal);color:var(--cream);font-weight:700;font-size:14px;letter-spacing:.04em}
+tbody th{font-weight:700;background:var(--cream)}
+tbody tr:last-child th,tbody tr:last-child td{border-bottom:none}
+.examples{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.field{margin-bottom:14px}
+.field label{display:block;font-weight:700;margin-bottom:4px}
+.field .hint{font-size:15px;margin-bottom:6px}
+.field input,.field textarea{width:100%;font-family:var(--body);font-size:16px;color:var(--charcoal);border:2px solid var(--charcoal);border-radius:0;padding:11px 13px;background:var(--cream)}
+.field textarea{min-height:96px;resize:vertical}
+.field input:focus,.field textarea:focus{outline:3px solid var(--charcoal);outline-offset:2px}
+.out{margin-top:16px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tabs button{font-weight:700;font-size:15px;border:2px solid var(--charcoal);border-bottom:none;background:var(--cream-light);color:var(--charcoal);border-radius:0;padding:9px 14px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--charcoal);color:var(--cream)}
+pre{background:var(--charcoal);color:var(--cream);border-radius:0;padding:16px;font-family:var(--mono);font-size:15px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}
+.where,.note{font-size:16px;margin-top:8px}
+
+/* ---- Pack Your Toolkit ---- */
+.sv{position:relative}
+.sv .num{display:none}
+.sv .packed{display:none;font-family:var(--body);font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase;border:2px solid var(--charcoal);padding:2px 8px;margin-left:8px;vertical-align:middle}
+.sv.done .packed{display:inline-block}
+.go{display:inline-block;margin:2px 0 16px;font-weight:700;font-size:16px;background:var(--charcoal);color:var(--cream);text-decoration:none;padding:11px 18px}
+.go:hover{text-decoration:underline}
+.why,.plainbox{background:var(--cream);border:2px solid var(--charcoal);padding:13px 16px;margin-bottom:16px}
+.choices{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:4px}
+.choices.needs{display:flex;outline:3px dashed var(--coral);outline-offset:6px}
+.bar{position:sticky;top:0;z-index:5;background:var(--charcoal);color:var(--cream);padding:10px 0}
+.bar .wrap{display:flex;align-items:center;gap:12px;font-weight:700;font-size:16px}
+.bar .track{flex:1;height:10px;background:rgba(239,227,204,.25);overflow:hidden}
+.bar .fill{display:block;height:100%;width:0;background:var(--cream);transition:width .4s}
+.bar a{color:var(--cream);white-space:nowrap}
+.privacy{background:var(--charcoal);color:var(--cream);padding:13px 16px;margin-bottom:16px}
+.need-note{background:var(--cream);border:2px solid var(--coral);padding:10px 14px;font-weight:700;margin-top:6px}
+.todo{margin:0 0 14px 20px}
+.todo li{margin-bottom:4px}
+.todo a{font-weight:700}
+.map{display:grid;gap:8px;margin-top:10px}
+.stop{display:block;background:var(--cream);border:2px solid var(--charcoal);padding:12px 14px;text-decoration:none;color:var(--charcoal)}
+.stop:hover b{text-decoration:underline}
+.stop .e{display:none}
+.stop b{display:block;font-family:var(--display);font-weight:700;font-size:1.25rem;line-height:1.2;margin-bottom:2px}
+.stop em{font-style:normal;font-weight:700}
+
+/* ---- Gemini Notebook Field Guide ---- */
+.tipbox{background:var(--cream);border:2px dashed var(--charcoal);padding:13px 16px}
+.job{background:var(--charcoal);color:var(--cream);padding:14px 16px}
+.pick3{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-bottom:16px}
+.pk,.pr{text-align:left;font-family:var(--body);font-size:16px;background:var(--cream);border:2px solid var(--charcoal);border-radius:0;padding:13px 14px;cursor:pointer;color:var(--charcoal)}
+.pk:hover b,.pr:hover u{text-decoration:underline}
+.pk small,.pr small{display:block;font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--red-text);margin-bottom:4px}
+.pk b{display:block;font-family:var(--display);font-weight:700;font-size:20px;line-height:1.15;margin:2px 0}
+.pk span{display:block;line-height:1.35}
+.pk[aria-pressed="true"]{background:var(--charcoal);color:var(--cream)}
+.pk[aria-pressed="true"] small{color:var(--coral-light)}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.asked{background:var(--charcoal);color:var(--cream);padding:16px 18px;margin-bottom:16px}
+.asked small{display:block;font-weight:700;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--coral-light);margin-bottom:4px}
+.asked p{font-family:var(--display);font-weight:700;font-size:1.375rem;line-height:1.25}
+.duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:14px}
+.side{padding:16px;border:2px solid var(--charcoal);background:var(--cream)}
+.side.gen{border-style:dashed}
+.side .who{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;align-items:center;margin-bottom:10px}
+.tagp{font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;border:2px solid var(--charcoal);padding:3px 10px}
+.nb .tagp{background:var(--charcoal);color:var(--cream)}
+.side .meta{font-weight:700;font-size:14px}
+.ans{background:var(--cream-light);padding:13px 14px;border:2px solid var(--charcoal)}
+.cite{font-family:var(--body);font-weight:700;font-size:13px;background:var(--charcoal);color:var(--cream);border:2px solid var(--charcoal);border-radius:0;padding:1px 8px;margin:0 2px;cursor:pointer;vertical-align:baseline}
+.cite:hover,.cite[aria-pressed="true"]{background:var(--cream-light);color:var(--charcoal)}
+.risk{margin-top:10px;background:var(--cream);border:2px solid var(--coral);padding:11px 14px}
+.risk b{display:block}
+.proof{margin-top:10px;background:var(--cream);border:2px solid var(--charcoal);padding:12px 14px}
+.proof .src{font-weight:700;display:block;margin-bottom:6px}
+.proof .quote{background:var(--cream-light);padding:10px 12px;font-style:italic;border:2px solid var(--charcoal)}
+details.more{background:var(--cream);border:2px solid var(--charcoal);padding:14px 16px;margin-top:16px}
+details.more summary{cursor:pointer;font-weight:700}
+.cmp{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-top:12px}
+.cmp div{background:var(--cream-light);border:2px solid var(--charcoal);padding:12px}
+.cmp b{display:block;font-family:var(--display);font-weight:700;font-size:1.25rem;line-height:1.2}
+.cmp em{font-style:normal;display:inline-block;font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;border:2px solid var(--charcoal);padding:1px 7px;margin-bottom:6px}
+.cmp .free em{background:var(--charcoal);color:var(--cream)}
+.screen{display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:8px;background:var(--charcoal);padding:10px;margin-bottom:16px}
+.pane{font-family:var(--body);text-align:left;background:var(--cream-light);border:4px solid var(--cream-light);border-radius:0;padding:12px 10px;cursor:pointer;color:var(--charcoal);min-height:118px}
+.pane small{display:block;font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.pane b{display:block;font-family:var(--display);font-weight:700;font-size:18px;line-height:1.15;margin:4px 0}
+.pane span{display:none}
+.pane[aria-pressed="true"]{border-color:var(--coral);background:var(--cream)}
+.pinfo{background:var(--cream);padding:16px 18px}
+.pinfo ul{list-style:none;display:grid;gap:8px;margin-top:10px}
+.pinfo li{background:var(--cream-light);border:2px solid var(--charcoal);padding:11px 13px}
+.grid6{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin-bottom:16px}
+.fmt{background:var(--cream);padding:13px 14px}
+.fmt b{display:block;font-family:var(--display);font-weight:700;font-size:1.25rem;line-height:1.2;margin-bottom:2px}
+.bundle{background:var(--cream);border:2px solid var(--charcoal);padding:16px;margin-bottom:16px}
+.bundle .out{background:var(--cream-light);padding:14px;margin-top:12px;border:2px solid var(--charcoal)}
+.bundle ol{padding-left:22px;margin:8px 0;display:grid;gap:5px}
+.result{padding:16px;margin-top:12px;border:2px solid var(--charcoal);background:var(--cream)}
+.result.good{border-width:4px}
+.prompts{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin-top:10px}
+.pr i{display:block}
+.pr u{display:inline-block;margin-top:8px;font-weight:700;text-decoration:underline}
+.quiz{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:12px}
+.qc{background:var(--cream);padding:16px}
+.qc p{font-family:var(--display);font-weight:700;font-size:1.25rem;margin:4px 0 12px;line-height:1.25}
+.qo{display:block;width:100%;font-weight:500;margin-bottom:8px}
+.qo.tried{border-style:dashed;background:var(--cream)}
+.fb{padding:11px 13px;font-weight:700;border:2px solid var(--charcoal);background:var(--cream-light)}
+.fb.no{border-style:dashed}
+.ideas{display:grid;gap:10px;margin:12px 0}
+@media (max-width:600px){.screen{grid-template-columns:1fr}.counters{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
-<div class="topbar"><div class="wrap">
-  <a href="../">← Demystifying AI for All</a>
-  <span class="tag">Field Guide · Gemini Notebook</span>
-</div></div>
+<nav class="site-nav" aria-label="Site">
+  <div class="site-nav-inner">
+    <a class="wordmark" href="../">Demystifying AI</a>
+    <div class="site-nav-links">
+      <a href="../learn.html">Learn AI</a>
+      <a href="./" aria-current="page">AI Toolbox</a>
+      <a href="../activities/">Activities</a>
+      <a href="../playground/">AI Playground</a>
+      <a href="../spark-intro/">SPARK AI Express</a>
+    </div>
+  </div>
+</nav>
 
 <header class="intro"><div class="wrap">
-  <nav class="setnav" aria-label="Pages in the AI Toolbox"><a href="./">🧰 Toolbox</a><a href="skill-builder.html">🧩 Skill Builder</a><a href="then-and-now.html">🧭 Custom bots</a><a href="notebook-guide.html" aria-current="page">📓 Gemini Notebook Guide</a></nav>
-  <h1>A researcher that <span>shows its sources</span>. 📓</h1>
+  <span class="tag">Field Guide · Gemini Notebook</span>
+  <h1>A researcher that <span>shows its sources</span>. </h1>
   <p>Most AI chatbots answer from everything they have absorbed, and when they do not know, they can fill the gap with a confident guess. <strong>Gemini Notebook</strong> (formerly NotebookLM) works differently. It answers from the documents, links, and videos <strong>you</strong> choose, and it adds numbered badges so you can check where each claim came from.</p>
   <div class="chips">
-    <span class="chip">⏱ About 10 minutes</span>
-    <span class="chip">🙈 No login</span>
-    <span class="chip">🧪 Practice versions, not live AI</span>
-    <span class="chip">🇵🇭 Examples from Philippine workplaces</span>
+    <span class="chip">About 10 minutes</span>
+    <span class="chip">No login</span>
+    <span class="chip">Practice versions, not live AI</span>
+    <span class="chip">Examples from Philippine workplaces</span>
   </div>
+  <nav class="setnav" aria-label="Pages in the AI Toolbox"><a href="./">Toolbox</a><a href="skill-builder.html">Skill Builder</a><a href="then-and-now.html">Custom bots</a><a href="notebook-guide.html" aria-current="page">Gemini Notebook Guide</a></nav>
 </div></header>
 
 <main class="wrap">
@@ -193,17 +375,17 @@ details.more summary{cursor:pointer;font-family:var(--head);font-weight:800;colo
   <section class="card part" data-step="1" id="part-1" style="--c:var(--pink)" aria-labelledby="h-p1">
     <span class="kicker">Part 1 · See the difference</span>
     <h2 id="h-p1">Ask both the same question</h2>
-    <p class="lead">Pick one of three workplace questions. Compare how a general AI chatbot answers with how Gemini Notebook answers from your own documents. Then tap the purple <b>1</b> and <b>2</b> badges to see where each claim came from.</p>
+    <p class="lead">Pick one of three workplace questions. Compare how a general AI chatbot answers with how Gemini Notebook answers from your own documents. Then tap the dark <b>1</b> and <b>2</b> badges to see where each claim came from.</p>
     <div class="pick3" id="scenPicker" role="group" aria-label="Choose a question"></div>
     <div class="asked"><small>The question</small><p id="scenQ"></p></div>
     <div class="duo">
       <div class="side gen">
-        <div class="who"><span class="tagp">🎲 General AI chatbot</span><span class="meta">No sources shown</span></div>
+        <div class="who"><span class="tagp">General AI chatbot</span><span class="meta">No sources shown</span></div>
         <div class="ans" id="genAns"></div>
-        <div class="risk"><b>⚠️ Why this is risky for your work</b><span id="genRisk"></span></div>
+        <div class="risk"><b>Why this is risky for your work</b><span id="genRisk"></span></div>
       </div>
       <div class="side nb">
-        <div class="who"><span class="tagp">📓 Gemini Notebook</span><span class="meta">Answers from your sources</span></div>
+        <div class="who"><span class="tagp">Gemini Notebook</span><span class="meta">Answers from your sources</span></div>
         <div class="ans" id="nbAns"></div>
         <div class="proof" aria-live="polite"><span class="src" id="citSrc"></span><div class="quote" id="citQuote"></div></div>
       </div>
@@ -212,7 +394,7 @@ details.more summary{cursor:pointer;font-family:var(--head);font-weight:800;colo
     <div class="lesson"><b>Both answers sound confident. Only one can be checked.</b> The general answer may be perfectly reasonable, but it is about the world in general. The notebook answer is about your documents, and it shows you the passage so you can judge it yourself.</div>
     <div class="caution"><b>Grounded does not mean perfect.</b> In one 2025 study of questions about documents, a notebook tool still made a mistake in 13% of its answers, compared with 40% for general chatbots. Most mistakes were overconfident summaries, not invented facts. That is why the badges matter: tap them.</div>
     <details class="more">
-      <summary>🔄 Do ChatGPT, Claude, Copilot, or DeepSeek have something like this?</summary>
+      <summary>Do ChatGPT, Claude, Copilot, or DeepSeek have something like this?</summary>
       <div class="cmp">
         <div class="free"><em>Free with a Google account</em><b>Gemini Notebook</b>Up to 50 sources per notebook on the free plan. Includes a Studio that turns sources into audio, video, mind maps, and study guides. Heavy use is limited by a usage allowance that refills during the day.</div>
         <div class="free"><em>Free, up to 5 projects</em><b>Claude Projects</b>A project holds your files and standing instructions. Good for writing and analysis from your own material. No audio or mind map studio.</div>
@@ -233,16 +415,16 @@ details.more summary{cursor:pointer;font-family:var(--head);font-weight:800;colo
   </section>
 
   <section class="card part" data-step="3" id="part-3" style="--c:var(--teal)" aria-labelledby="h-p3">
-    <span class="kicker" style="color:#0E8F86">Part 3 · Choosing your sources</span>
+    <span class="kicker">Part 3 · Choosing your sources</span>
     <h2 id="h-p3">What can you put inside?</h2>
     <p class="lead">You do not need special file types. You can mix up to <b>50 sources</b> in one notebook on the free plan. The notebook is only as good as what you put in, so choosing sources is the most important decision you make.</p>
     <div class="grid6">
-      <div class="fmt"><b>📄 PDFs</b>Manuals, circulars, handbooks, reports. If a scanned PDF will not load, the text may be a picture. Try a text version.</div>
-      <div class="fmt"><b>📘 Word, PowerPoint, Excel</b>Word files upload directly. If a slide deck or spreadsheet will not load, save it as a PDF first, or paste the key table as copied text.</div>
-      <div class="fmt"><b>📗 Google Docs and Slides</b>Add them straight from your Google Drive.</div>
-      <div class="fmt"><b>🌐 Website links</b>Paste the address of a public page and the notebook reads its text. Some sites block this. If a link fails, copy the text in instead.</div>
+      <div class="fmt"><b>PDFs</b>Manuals, circulars, handbooks, reports. If a scanned PDF will not load, the text may be a picture. Try a text version.</div>
+      <div class="fmt"><b>Word, PowerPoint, Excel</b>Word files upload directly. If a slide deck or spreadsheet will not load, save it as a PDF first, or paste the key table as copied text.</div>
+      <div class="fmt"><b>Google Docs and Slides</b>Add them straight from your Google Drive.</div>
+      <div class="fmt"><b>Website links</b>Paste the address of a public page and the notebook reads its text. Some sites block this. If a link fails, copy the text in instead.</div>
       <div class="fmt"><b>▶️ YouTube videos</b>Paste the link to a public video that has captions. The notebook reads the transcript.</div>
-      <div class="fmt"><b>🎙️ Audio and copied text</b>Upload a recording and it is turned into text. You can also paste in notes or an email thread.</div>
+      <div class="fmt"><b>Audio and copied text</b>Upload a recording and it is turned into text. You can also paste in notes or an email thread.</div>
     </div>
     <div class="bundle">
       <span class="kicker">Start with one anchor document, then add more</span>
@@ -252,8 +434,8 @@ details.more summary{cursor:pointer;font-family:var(--head);font-weight:800;colo
       <div class="out" id="bundleOut" aria-live="polite"></div>
     </div>
     <div class="two">
-      <div class="tipbox"><b>🔑 Account tip: personal or work account?</b> School and company Google accounts often block sharing a notebook outside the organization. If you need a shareable link for a course, a personal Gmail account is the smoother choice. Or use your work account and submit screenshots.</div>
-      <div class="job"><b>🛡️ Before you upload anything.</b> Leave out personal data: student names with grades, customer phone numbers, ID numbers, health or pay records. Follow your organization's rules and your country's privacy law (in the Philippines, the Data Privacy Act, RA 10173), and respect who owns a source (the IP Code, RA 8293).</div>
+      <div class="tipbox"><b>Account tip: personal or work account?</b> School and company Google accounts often block sharing a notebook outside the organization. If you need a shareable link for a course, a personal Gmail account is the smoother choice. Or use your work account and submit screenshots.</div>
+      <div class="job"><b>Before you upload anything.</b> Leave out personal data: student names with grades, customer phone numbers, ID numbers, health or pay records. Follow your organization's rules and your country's privacy law (in the Philippines, the Data Privacy Act, RA 10173), and respect who owns a source (the IP Code, RA 8293).</div>
     </div>
   </section>
 
@@ -262,11 +444,11 @@ details.more summary{cursor:pointer;font-family:var(--head);font-weight:800;colo
     <h2 id="h-p4">Customize before you generate</h2>
     <p class="lead">Imagine you uploaded a 60-page manual. The Studio can turn it into an Audio Overview, a kind of podcast with two AI hosts. If you tap Generate straight away, it tries to cover all 60 pages. Compare what happens when you choose <b>Customize</b> first and say what you need.</p>
     <div class="pills" id="modePicker" role="group" aria-label="Choose how to generate">
-      <button type="button" class="pl" data-mode="plain" aria-pressed="false">😐 Tap Generate straight away</button>
-      <button type="button" class="pl" data-mode="custom" aria-pressed="true">🎯 Tap Customize first</button>
+      <button type="button" class="pl" data-mode="plain" aria-pressed="false">Tap Generate straight away</button>
+      <button type="button" class="pl" data-mode="custom" aria-pressed="true">Tap Customize first</button>
     </div>
     <div class="result" id="modeOut" aria-live="polite"></div>
-    <h3 style="margin-top:18px">📋 Three instructions to copy and adapt</h3>
+    <h3 style="margin-top:18px">Three instructions to copy and adapt</h3>
     <p class="small">Tap a card to copy it. Replace the parts in [brackets] with your own details.</p>
     <div class="prompts" id="promptList"></div>
     <div class="job" style="margin-top:14px"><b>Your job as the human:</b> you are the editor. Listen to or read what the Studio made before you share it. It can stress the wrong point, mispronounce local names, or sound more certain than your source is.</div>
@@ -283,20 +465,20 @@ details.more summary{cursor:pointer;font-family:var(--head);font-weight:800;colo
   </section>
 
   <section class="card part" data-step="6" id="part-6" style="--c:#ffd93d" aria-labelledby="h-p6">
-    <span class="kicker" style="color:var(--ink)">What to take with you</span>
+    <span class="kicker">What to take with you</span>
     <h2 id="h-p6">You choose the sources. You check the claims.</h2>
     <div class="ideas">
-      <div class="idea"><span class="ico">📚</span><div><b>The notebook only knows what you give it.</b>Good sources in, useful answers out. An outdated policy or a weak web page gives you confident answers about the wrong thing.</div></div>
-      <div class="idea"><span class="ico">🔢</span><div><b>Tap the citations that matter.</b>A numbered badge is an invitation to check, not proof. If an answer has no badge, treat it as a guess.</div></div>
-      <div class="idea"><span class="ico">🛡️</span><div><b>Keep people's private details out.</b>Remove names and personal data before you upload, even in a notebook only you can see.</div></div>
+      <div class="idea"><span class="ico"></span><div><b>The notebook only knows what you give it.</b>Good sources in, useful answers out. An outdated policy or a weak web page gives you confident answers about the wrong thing.</div></div>
+      <div class="idea"><span class="ico"></span><div><b>Tap the citations that matter.</b>A numbered badge is an invitation to check, not proof. If an answer has no badge, treat it as a guess.</div></div>
+      <div class="idea"><span class="ico"></span><div><b>Keep people's private details out.</b>Remove names and personal data before you upload, even in a notebook only you can see.</div></div>
     </div>
     <div class="cta">
       <h3>Ready to try it for real?</h3>
       <p>Open Gemini Notebook, add one document you know well, and ask it three questions. Tap every badge.</p>
       <div class="actions" style="margin-top:0">
         <a class="btn btn-main" href="https://notebook.google.com/" target="_blank" rel="noopener">Open Gemini Notebook ↗</a>
-        <a class="btn btn-soft" href="./">🧰 Back to the AI Toolbox</a>
-        <a class="btn btn-soft" href="skill-builder.html">🧩 Skill Builder</a>
+        <a class="btn btn-soft" href="./">Back to the AI Toolbox</a>
+        <a class="btn btn-soft" href="skill-builder.html">Skill Builder</a>
       </div>
     </div>
   </section>
@@ -336,22 +518,22 @@ details.more summary{cursor:pointer;font-family:var(--head);font-weight:800;colo
       general:"In many schools, performance tasks and lab work count for about 30% to 50% of a science grade, with the rest split between written work and exams. The number of tasks is usually up to the teacher. Check your school's guidelines to be sure.",
       risk:"Nothing here is false, and none of it is about your school. It gives a range where your documents give one number, and it cannot know your department's rule on how many tasks.",
       nb:["According to your grading guide, Performance Tasks count for ",{b:"40%"}," of the quarterly grade in Grade 8 Science, with 40% for Written Work and 20% for the Quarterly Assessment",{c:1},". Your department memo adds that each teacher must give at least ",{b:"two rubric-scored performance tasks"}," this quarter",{c:2},"."],
-      cites:{1:["📄 Source 1: School Grading Guide (sample document), page 3","For Science and Mathematics, quarterly grades are computed as follows: Written Work 40%, Performance Tasks 40%, Quarterly Assessment 20%."],
-             2:["📝 Source 2: Science Department Memo, Quarter 2 (sample document), section 2","All Grade 8 Science teachers shall give a minimum of two (2) rubric-scored performance tasks in Quarter 2, using locally available materials."]} },
+      cites:{1:["Source 1: School Grading Guide (sample document), page 3","For Science and Mathematics, quarterly grades are computed as follows: Written Work 40%, Performance Tasks 40%, Quarterly Assessment 20%."],
+             2:["Source 2: Science Department Memo, Quarter 2 (sample document), section 2","All Grade 8 Science teachers shall give a minimum of two (2) rubric-scored performance tasks in Quarter 2, using locally available materials."]} },
     { tag:"Training and hospitality", title:"Kitchen cold-chain procedure", ask:"How cold, and how often do we log it?",
       q:"What is our maximum cold-holding temperature, and how often must staff log it?",
       general:"Food safety guidelines generally recommend keeping chilled food at or below 4°C to 5°C and checking temperatures at least twice a day, usually at opening and closing.",
       risk:"A fair general answer, and it would get your team in trouble. Your own procedure requires a log every 2 hours and before every delivery. A general chatbot has never seen your procedure.",
       nb:["Your food safety handbook says chilled trays must be held at ",{b:"4°C or below"}," during storage and transport",{c:1},". Your kitchen procedure requires staff to record probe readings ",{b:"every 2 hours"},", and again 15 minutes before a delivery van leaves",{c:2},"."],
-      cites:{1:["📄 Source 1: Catering Food Safety Handbook (sample document), section 4.2","Chilled foods shall be kept at an internal temperature of 4°C or below during storage and transport."],
-             2:["📝 Source 2: Cold-Chain Procedure (sample document), rule 2B","The kitchen lead on duty must log tray temperatures every two (2) hours on Form CC-04 and 15 minutes before vehicle dispatch."]} },
+      cites:{1:["Source 1: Catering Food Safety Handbook (sample document), section 4.2","Chilled foods shall be kept at an internal temperature of 4°C or below during storage and transport."],
+             2:["Source 2: Cold-Chain Procedure (sample document), rule 2B","The kitchen lead on duty must log tray temperatures every two (2) hours on Form CC-04 and 15 minutes before vehicle dispatch."]} },
     { tag:"Small business", title:"Supplier contract", ask:"What if the delivery is 5 days late?",
       q:"What penalty applies if our packaging supplier delivers 5 business days late?",
       general:"Many supply contracts include a late-delivery penalty of around 0.5% to 1% of the order value per week of delay, often with exceptions for events like typhoons.",
       risk:"A reasonable guess about contracts in general. Your contract says something different: a 3-day grace period, then 2% per day. Acting on the general answer could cost you money or a supplier relationship.",
       nb:["Under clause 9.3 of your supplier agreement, a ",{b:"3-business-day grace period"}," applies first. From day 4, the buyer may deduct ",{b:"2% of the delayed order's value per day"},", so a 5-day delay means a 4% deduction",{c:1},". Delays caused by a port closure under Tropical Cyclone Wind Signal No. 2 or higher are exempt if the supplier sends written notice within 24 hours",{c:2},"."],
-      cites:{1:["📄 Source 1: Packaging Supplier Agreement (sample document), clause 9.3","Following a three (3) business day grace period, Buyer shall deduct two percent (2.0%) of the affected purchase order value for each subsequent day of delay."],
-             2:["📄 Source 1, a different passage: clause 11.1","Port closures under Tropical Cyclone Wind Signal No. 2 or higher shall suspend penalties, provided Supplier sends written notice within 24 hours."]} }
+      cites:{1:["Source 1: Packaging Supplier Agreement (sample document), clause 9.3","Following a three (3) business day grace period, Buyer shall deduct two percent (2.0%) of the affected purchase order value for each subsequent day of delay."],
+             2:["Source 1, a different passage: clause 11.1","Port closures under Tropical Cyclone Wind Signal No. 2 or higher shall suspend penalties, provided Supplier sends written notice within 24 hours."]} }
   ];
   var scenPicker=$("scenPicker"), curScen=0;
   SCEN.forEach(function(s,i){
@@ -420,7 +602,7 @@ details.more summary{cursor:pointer;font-family:var(--head);font-weight:800;colo
     ["🔵 Teammate path","You are confident with AI tools, in any job.","Use the notebook to question your sources, not only to summarize them.",
       ["Anchor: a master policy, plan, or contract","An internal checklist or project plan, with names removed","A regulator's or standards body's web page","A recorded briefing, lecture, or public hearing","A recent report on your sector or region"],
       "Ask: \"Where do these sources disagree, and what is missing?\" Then generate a briefing document and check its claims against the badges."],
-    ["🎒 No files handy?","Works on any phone or computer today.","Practice every feature without workplace files.",
+    ["No files handy?","Works on any phone or computer today.","Practice every feature without workplace files.",
       ["Anchor: any handout from a course you have taken","A second handout or your own notes, pasted in as copied text","A public news or education article you care about","A short YouTube explainer on the same topic"],
       "Make a Mind Map and see how the notebook connects a handout, an article, and a video."]
   ];
@@ -431,7 +613,7 @@ details.more summary{cursor:pointer;font-family:var(--head);font-weight:800;colo
     out.appendChild(el("h3",null,b[0])); out.appendChild(el("p","small",b[1]));
     var g=el("p"); g.appendChild(el("b",null,"Goal: ")); g.appendChild(document.createTextNode(b[2])); out.appendChild(g);
     var ol=el("ol"); b[3].forEach(function(s){ol.appendChild(el("li",null,s));}); out.appendChild(ol);
-    var m=el("div","lesson"); m.style.marginTop="8px"; m.appendChild(el("b",null,"🎨 Studio move to try: ")); m.appendChild(document.createTextNode(b[4])); out.appendChild(m);
+    var m=el("div","lesson"); m.style.marginTop="8px"; m.appendChild(el("b",null,"Studio move to try: ")); m.appendChild(document.createTextNode(b[4])); out.appendChild(m);
   }
 
   /* ------------------------------------------------------------
@@ -449,9 +631,9 @@ details.more summary{cursor:pointer;font-family:var(--head);font-weight:800;colo
     out.appendChild(el("h3",null,d[0])); out.appendChild(el("p",null,d[1]));
   }
   var PROMPTS=[
-    ["🎙️ Audio Overview · zoom in on one topic","Focus this Audio Overview only on [section or chapter] of my anchor document. Explain the steps using everyday situations a new [trainee, student, or staff member] would face in their first week. Skip the general background."],
-    ["📘 Study guide · for one role","Create a study guide focused on [topic]. Include a 5-question quiz built on realistic situations, with an answer key that says where in the source each answer comes from, and a plain-language glossary for [audience]."],
-    ["🎧 Before a meeting · connect two sources","Compare the official rules in my anchor document with the practical examples in my video source. List 3 concrete actions our team should take, and say which source each one comes from."]
+    ["Audio Overview · zoom in on one topic","Focus this Audio Overview only on [section or chapter] of my anchor document. Explain the steps using everyday situations a new [trainee, student, or staff member] would face in their first week. Skip the general background."],
+    ["Study guide · for one role","Create a study guide focused on [topic]. Include a 5-question quiz built on realistic situations, with an answer key that says where in the source each answer comes from, and a plain-language glossary for [audience]."],
+    ["Before a meeting · connect two sources","Compare the official rules in my anchor document with the practical examples in my video source. List 3 concrete actions our team should take, and say which source each one comes from."]
   ];
   function copy(text){
     var ok=false, ta=document.createElement("textarea");
@@ -496,7 +678,7 @@ details.more summary{cursor:pointer;font-family:var(--head);font-weight:800;colo
     q.slice(2).forEach(function(o){
       var b=btn("qo",function(){
         b.classList.add(o[1]?"right":"tried");
-        fb.className="fb "+(o[1]?"ok":"no"); fb.textContent=(o[1]?"✅ ":"💡 Try the other one too. ")+o[2];
+        fb.className="fb "+(o[1]?"ok":"no"); fb.textContent=(o[1]?"":"Try the other one too. ")+o[2];
         tried[qi]=true; var n=Object.keys(tried).length, badge=$("quizBadge");
         badge.textContent= n===QUIZ.length ? "Tried all 4 ✓" : "Tried "+n+" of "+QUIZ.length; badge.classList.toggle("done",n===QUIZ.length);
       });
