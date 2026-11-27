@@ -83,153 +83,94 @@ body { font-family: 'Nunito Sans', sans-serif; background: var(--cream); color: 
 .cat-dropdown-menu button:hover { background:var(--cream); }
 .cat-dropdown-menu button.active { background:var(--charcoal); color:var(--cream); }
 
-/* HCAI */
-.hcai-wrap { margin-top: 8px; }
+/* HCAI (demystify-site-style) */
+.hcai-wrap { margin-top:8px; font-family:'Hanken Grotesk',Arial,sans-serif; color:var(--charcoal); font-size:16px; line-height:1.5; }
+.hcai-wrap a:focus-visible, .hcai-wrap button:focus-visible { outline:3px solid var(--charcoal); outline-offset:3px; }
 
-.hcai-hero {
-  background: linear-gradient(135deg, #1B3A6B 0%, #2a4a7a 40%, #3b5998 100%);
-  border-radius: 20px; padding: 40px; margin-bottom: 28px;
-  color: white; position: relative; overflow: hidden;
+.hcai-hero { background:var(--charcoal); color:var(--cream); padding:40px; margin-bottom:48px; }
+.hcai-hero .hcai-badge, .hcai-def-label { font-weight:700; font-size:13px; text-transform:uppercase; letter-spacing:0.2em; color:var(--coral-light); margin-bottom:12px; }
+.hcai-hero h2 { font-family:'Zilla Slab',Georgia,serif; font-weight:700; font-size:clamp(2rem,5vw,3.25rem); line-height:1.05; margin-bottom:12px; text-wrap:balance; }
+.hcai-hero .hcai-sub { font-size:clamp(1.0625rem,2.2vw,1.25rem); max-width:36em; margin-bottom:28px; }
+.hcai-def-box { border-top:2px solid var(--cream); padding-top:22px; margin-bottom:26px; }
+.hcai-def-text { font-family:'Zilla Slab',Georgia,serif; font-weight:700; font-size:clamp(1.5rem,3.2vw,2.25rem); line-height:1.2; max-width:26em; text-wrap:balance; }
+.hcai-def-source { margin-top:12px; }
+.hcai-question-box { border-top:2px solid var(--cream); padding-top:20px; max-width:44em; }
+.hcai-question-box strong { font-weight:700; }
+@media(min-width:960px){
+  .hcai-hero { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); column-gap:56px; align-items:start; }
+  .hcai-hero > * { grid-column:1; }
+  .hcai-hero .hcai-sub { margin-bottom:24px; }
+  .hcai-def-box { grid-column:2; grid-row:1 / span 4; align-self:stretch; border-top:none; border-left:2px solid var(--cream); padding:4px 0 4px 48px; margin-bottom:0; display:flex; flex-direction:column; justify-content:center; }
+  .hcai-question-box { max-width:none; }
 }
-.hcai-hero::before { content:'🌍'; position:absolute; font-size:140px; right:-10px; top:-20px; opacity:0.08; }
-.hcai-hero .hcai-badge {
-  display:inline-flex; align-items:center; gap:6px;
-  background:rgba(255,217,61,0.2); border:1px solid rgba(255,217,61,0.4);
-  border-radius:20px; padding:4px 14px; margin-bottom:16px;
-  font-family:'Nunito',sans-serif; font-weight:700; font-size:11px;
-  color:var(--yellow); text-transform:uppercase; letter-spacing:0.08em;
-}
-.hcai-hero h2 { font-family:'Nunito',sans-serif; font-weight:900; font-size:clamp(1.5rem,3.5vw,2.2rem); color:white; margin-bottom:6px; line-height:1.2; }
-.hcai-hero .hcai-sub { color:rgba(255,255,255,0.65); font-size:14px; line-height:1.7; max-width:680px; margin-bottom:24px; }
-.hcai-def-box {
-  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
-  border-left: 4px solid var(--yellow); border-radius: 0 12px 12px 0;
-  padding: 20px 24px; margin-bottom: 20px;
-}
-.hcai-def-label { font-family:'Nunito',sans-serif; font-weight:700; font-size:11px; text-transform:uppercase; letter-spacing:0.1em; color:var(--yellow); margin-bottom:8px; }
-.hcai-def-text { font-family:'Nunito',sans-serif; font-weight:800; font-size:clamp(1.1rem,2.5vw,1.5rem); color:white; line-height:1.4; }
-.hcai-def-source { font-size:12px; color:rgba(255,255,255,0.5); margin-top:8px; font-style:italic; }
 
-.hcai-question-box {
-  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 12px; padding: 18px 22px;
-}
-.hcai-question-box p { color:rgba(255,255,255,0.75); font-size:13.5px; line-height:1.7; }
-.hcai-question-box strong { color:var(--yellow); font-family:'Nunito',sans-serif; }
+.shn-box { background:var(--cream-light); border:2px solid var(--charcoal); padding:28px; margin-bottom:48px; }
+.shn-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:28px 32px; }
+.shn-title { font-family:'Zilla Slab',Georgia,serif; font-weight:700; font-size:22px; line-height:1.15; margin-bottom:8px; }
+.shn-text { margin-bottom:14px; }
+.shn-note { background:var(--cream); padding:12px 14px; font-style:italic; }
+.shn-goal { background:var(--cream); border:2px solid var(--charcoal); padding:12px 14px; }
 
 /* H-AI-H engine */
-.haih-section {
-  background: var(--white); border: 2px solid var(--border);
-  border-radius: 20px; padding: 32px; margin-bottom: 28px;
-}
-.haih-section h3 { font-family:'Nunito',sans-serif; font-weight:900; font-size:1.2rem; color:var(--navy); margin-bottom:6px; }
-.haih-section .haih-sub { font-size:13px; color:var(--gray); margin-bottom:24px; line-height:1.6; }
-.haih-grid { display:grid; grid-template-columns:1fr auto 1fr auto 1fr; gap:0; align-items:start; }
-.haih-arrow { font-size:28px; color:#ccd; display:flex; align-items:center; padding-top:24px; }
-.haih-node {
-  border-radius: 16px; padding: 22px 18px; text-align: center;
-}
-.haih-node .hn-icon { font-size:32px; margin-bottom:10px; }
-.haih-node .hn-title { font-family:'Nunito',sans-serif; font-weight:900; font-size:13px; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px; }
-.haih-node .hn-items { list-style:none; text-align:left; }
-.haih-node .hn-items li { font-size:12px; color:#555; line-height:1.6; padding:3px 0; display:flex; gap:6px; }
-.haih-node .hn-items li::before { content:'→'; color:#aaa; flex-shrink:0; }
+.haih-section { background:var(--cream-light); border:2px solid var(--charcoal); padding:28px; margin-bottom:48px; }
+.haih-section h3 { font-family:'Zilla Slab',Georgia,serif; font-weight:700; font-size:clamp(1.375rem,3vw,1.75rem); line-height:1.15; margin-bottom:6px; }
+.haih-section .haih-sub { margin-bottom:22px; max-width:65ch; }
+.haih-grid { display:grid; grid-template-columns:1fr auto 1fr auto 1fr; gap:12px; align-items:stretch; }
+.haih-arrow { font-size:36px; font-weight:700; line-height:1; display:flex; align-items:center; color:var(--charcoal); }
+.haih-node { padding:0; border:3px solid var(--charcoal); background:var(--cream); }
+.haih-node.ai-mid { border-style:dashed; }
+.haih-node .hn-icon { display:none; }
+.haih-node .hn-title { font-family:'Zilla Slab',Georgia,serif; font-weight:700; font-size:20px; line-height:1.2; text-transform:uppercase; letter-spacing:0.05em; background:var(--coral); color:var(--cream); padding:16px 18px; text-align:center; text-wrap:balance; }
+.haih-node.ai-mid .hn-title { background:var(--charcoal); color:var(--cream); }
+.haih-node .hn-items { list-style:none; padding:14px 18px 18px; }
+.haih-node .hn-items li { padding:4px 0; display:flex; gap:8px; font-weight:500; font-size:17px; }
+.haih-node .hn-items li::before { content:'\2192'; flex-shrink:0; font-weight:700; }
+.haih-tagline { margin-top:22px; padding-top:16px; border-top:2px solid var(--charcoal); font-family:'Zilla Slab',Georgia,serif; font-weight:700; font-size:clamp(1.25rem,2.6vw,1.5rem); line-height:1.25; }
 
-.haih-node.human-in  { background:rgba(27,58,107,0.08); border:2px solid rgba(27,58,107,0.2); }
-.haih-node.human-in .hn-title  { color:var(--navy); }
-.haih-node.ai-mid    { background:rgba(91,155,213,0.08); border:2px solid rgba(91,155,213,0.2); }
-.haih-node.ai-mid .hn-title    { color:var(--powder); }
-.haih-node.human-out { background:rgba(255,217,61,0.12); border:2px solid rgba(255,217,61,0.3); }
-.haih-node.human-out .hn-title { color:#b8860b; }
-
-.haih-tagline {
-  text-align:center; margin-top:20px; padding:14px;
-  background:var(--light); border-radius:10px;
-  font-family:'Nunito',sans-serif; font-weight:800; font-size:14px; color:var(--navy);
-  font-style:italic;
-}
-
-/* Hot/Cold cognition */
-.cog-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:28px; }
-.cog-card {
-  border-radius:16px; padding:24px; border:2px solid transparent;
-}
-.cog-card.hot { background:rgba(255,217,61,0.08); border-color:rgba(255,217,61,0.3); }
-.cog-card.cold { background:rgba(91,155,213,0.08); border-color:rgba(91,155,213,0.25); }
-.cog-card .cc-header { display:flex; align-items:center; gap:10px; margin-bottom:14px; }
-.cog-card .cc-icon { font-size:28px; }
-.cog-card .cc-title { font-family:'Nunito',sans-serif; font-weight:900; font-size:1rem; }
-.cog-card.hot .cc-title { color:#b8860b; }
-.cog-card.cold .cc-title { color:var(--powder); }
-.cog-card .cc-who { font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; }
-.cog-card.hot .cc-who { color:#b8860b; }
-.cog-card.cold .cc-who { color:var(--powder); }
+/* Hot and cold cognition */
+.cog-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:48px; }
+.cog-card { padding:24px; border:2px solid var(--charcoal); background:var(--cream-light); }
+.cog-card.hot { background:var(--charcoal); color:var(--cream); }
+.cog-card .cc-header { margin-bottom:14px; }
+.cog-card .cc-icon { display:none; }
+.cog-card .cc-title { font-family:'Zilla Slab',Georgia,serif; font-weight:700; font-size:24px; line-height:1.15; }
+.cog-card .cc-who { font-weight:700; font-size:13px; text-transform:uppercase; letter-spacing:0.2em; color:var(--red-text); margin-top:6px; }
+.cog-card.hot .cc-who { color:var(--coral-light); }
 .cog-card ul { list-style:none; }
-.cog-card ul li { font-size:13px; color:#444; line-height:1.65; padding:4px 0; display:flex; gap:8px; }
-.cog-card.hot  ul li::before { content:'🔥'; font-size:12px; }
-.cog-card.cold ul li::before { content:'🧊'; font-size:12px; }
+.cog-card ul li { padding:5px 0; display:flex; gap:8px; }
+.cog-card ul li::before { content:'\2192'; flex-shrink:0; }
 
 /* Principles */
-.hcai-principles-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:16px; margin-bottom:28px; }
-.principle-card {
-  background:var(--white); border:2px solid var(--border);
-  border-radius:16px; padding:20px; transition:all 0.2s;
-  position:relative; overflow:hidden;
-}
-.principle-card::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; }
-.principle-card:nth-child(1)::before { background:var(--navy); }
-.principle-card:nth-child(2)::before { background:var(--powder); }
-.principle-card:nth-child(3)::before { background:var(--yellow); }
-.principle-card:nth-child(4)::before { background:var(--navy); }
-.principle-card:nth-child(5)::before { background:var(--powder); }
-.principle-card:nth-child(6)::before { background:var(--yellow); }
-.principle-card:hover { transform:translateY(-3px); box-shadow:0 8px 24px rgba(0,0,0,0.09); }
-.principle-card .pc-icon { font-size:26px; margin-bottom:10px; }
-.principle-card .pc-title { font-family:'Nunito',sans-serif; font-weight:900; font-size:14px; color:var(--navy); margin-bottom:6px; }
-.principle-card .pc-desc { font-size:12.5px; color:#555; line-height:1.65; }
-.principle-card .pc-example { margin-top:10px; background:var(--light); border-radius:8px; padding:9px 11px; font-size:11.5px; color:#666; line-height:1.55; font-style:italic; }
+.hcai-principles-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:24px; margin-bottom:48px; }
+.principle-card { background:var(--cream-light); border:2px solid var(--charcoal); padding:22px; display:flex; flex-direction:column; }
+.principle-card .pc-icon { display:none; }
+.principle-card .pc-title { font-family:'Zilla Slab',Georgia,serif; font-weight:700; font-size:22px; line-height:1.15; margin-bottom:8px; }
+.principle-card .pc-example { margin-top:14px; background:var(--cream); padding:10px 12px; font-style:italic; }
 
 /* Tension box */
-.tension-box {
-  background: linear-gradient(135deg, #1a1a2e 0%, #2d1b4e 100%);
-  border-radius:20px; padding:32px; margin-bottom:28px; color:white; position:relative; overflow:hidden;
-}
-.tension-box::before { content:'⚠️'; position:absolute; font-size:120px; right:-10px; top:-20px; opacity:0.07; }
-.tension-box h3 { font-family:'Nunito',sans-serif; font-weight:900; font-size:1.2rem; color:var(--yellow); margin-bottom:10px; }
-.tension-box p { color:rgba(255,255,255,0.75); font-size:13.5px; line-height:1.75; margin-bottom:16px; max-width:700px; }
-.tension-examples { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-.tension-ex {
-  background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12);
-  border-radius:10px; padding:14px;
-}
-.tension-ex .te-label { font-family:'Nunito',sans-serif; font-weight:800; font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:var(--yellow); margin-bottom:5px; }
-.tension-ex .te-text { font-size:12.5px; color:rgba(255,255,255,0.7); line-height:1.55; }
+.tension-box { background:var(--cream-light); border:4px solid var(--charcoal); padding:30px; margin-bottom:48px; }
+.tension-box h3 { font-family:'Zilla Slab',Georgia,serif; font-weight:700; font-size:clamp(1.5rem,3.4vw,2rem); line-height:1.15; margin-bottom:12px; text-wrap:balance; }
+.tension-box p { margin-bottom:18px; max-width:65ch; }
+.tension-examples { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.tension-ex { background:var(--cream); padding:14px 16px; }
+.tension-ex .te-label { font-weight:700; font-size:13px; text-transform:uppercase; letter-spacing:0.2em; color:var(--red-text); margin-bottom:6px; }
 
 /* HCAI prompt box */
-.hcai-prompt-box {
-  background:var(--white); border:2px solid var(--border);
-  border-radius:20px; padding:28px; margin-bottom:28px;
-}
-.hcai-prompt-box h3 { font-family:'Nunito',sans-serif; font-weight:900; font-size:1.1rem; color:var(--navy); margin-bottom:6px; }
-.hcai-prompt-box p { font-size:13px; color:var(--gray); margin-bottom:20px; }
-.hcai-prompt-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:14px; }
-.hcai-prompt-card {
-  background:var(--light); border:1.5px solid var(--border);
-  border-radius:12px; padding:16px;
-}
-.hcai-prompt-card .hpp-scenario { font-family:'Nunito',sans-serif; font-weight:800; font-size:12px; color:var(--navy); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; }
-.hcai-prompt-card .hpp-prompt { font-family:'Nunito Sans',monospace; font-size:12px; color:#333; line-height:1.65; margin-bottom:10px; }
-.hcai-copy-btn {
-  display:inline-flex; align-items:center; gap:5px;
-  padding:5px 12px; border-radius:8px; border:none;
-  font-family:'Nunito',sans-serif; font-weight:700; font-size:11px;
-  cursor:pointer; transition:all 0.18s; background:var(--white);
-  color:#666; box-shadow:0 1px 4px rgba(0,0,0,0.1);
-}
-.hcai-copy-btn:hover { background:var(--navy); color:white; }
-.hcai-copy-btn.copied { background:var(--navy); color:white; }
+.hcai-prompt-box { background:var(--cream-light); border:2px solid var(--charcoal); padding:28px; margin-bottom:48px; }
+.hcai-prompt-box h3 { font-family:'Zilla Slab',Georgia,serif; font-weight:700; font-size:clamp(1.375rem,3vw,1.75rem); line-height:1.15; margin-bottom:6px; }
+.hcai-prompt-box p { margin-bottom:20px; }
+.hcai-prompt-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px; }
+.hcai-prompt-card { background:var(--cream); border:2px solid var(--charcoal); padding:16px; display:flex; flex-direction:column; align-items:flex-start; }
+.hcai-prompt-card .hpp-scenario { font-weight:700; font-size:13px; color:var(--red-text); text-transform:uppercase; letter-spacing:0.2em; margin-bottom:8px; }
+.hcai-prompt-card .hpp-prompt { margin-bottom:14px; }
+.hcai-copy-btn { margin-top:auto; display:inline-flex; align-items:center; gap:6px; padding:9px 14px; border:2px solid var(--charcoal); border-radius:0; font-family:'Hanken Grotesk',Arial,sans-serif; font-weight:700; font-size:15px; cursor:pointer; background:var(--cream-light); color:var(--charcoal); }
+.hcai-copy-btn:hover { text-decoration:underline; }
+.hcai-copy-btn.copied { background:var(--charcoal); color:var(--cream); }
 
-@media(max-width:640px){
+@media(max-width:720px){
+  .hcai-hero { padding:26px 22px; }
+  .shn-box, .haih-section, .hcai-prompt-box { padding:20px 18px; }
+  .tension-box { padding:22px 18px; }
   .haih-grid { grid-template-columns:1fr; }
   .haih-arrow { display:none; }
   .cog-grid { grid-template-columns:1fr; }
@@ -1520,12 +1461,12 @@ function renderHCAI() {
   wrap.innerHTML = `
     <!-- HERO -->
     <div class="hcai-hero">
-      <div class="hcai-badge">🌱 The Philosophy Behind This Site</div>
+      <div class="hcai-badge">The Philosophy Behind This Site</div>
       <h2>Human-Centered AI (HCAI)</h2>
       <p class="hcai-sub">The idea that AI should serve human values, amplify human capability, and remain under meaningful human control, not replace human judgment, creativity, or connection. It's not anti-technology. It's pro-human.</p>
 
       <div class="hcai-def-box">
-        <div class="hcai-def-label">📖 My Working Definition</div>
+        <div class="hcai-def-label">My Working Definition</div>
         <div class="hcai-def-text">"Human-Centered AI: the use of AI to assist human learning, not replace human thinking."</div>
         <div class="hcai-def-source">Jeffery Heil · <em>Won't Get Fooled AgAIn</em> keynote, 2026</div>
       </div>
@@ -1537,21 +1478,21 @@ function renderHCAI() {
 
     <!-- ACADEMIC FOUNDATION -->
     <div class="section-header">
-      <div class="section-icon si-ailiteracy">📚</div>
+      <div class="section-icon si-ailiteracy"></div>
       <span class="section-title">The Academic Foundation</span>
     </div>
-    <div style="background:var(--white);border:2px solid var(--border);border-radius:20px;padding:28px;margin-bottom:28px">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+    <div class="shn-box">
+      <div class="shn-grid">
         <div>
-          <div style="font-family:'Nunito',sans-serif;font-weight:900;font-size:1rem;color:var(--navy);margin-bottom:8px">Ben Shneiderman (2020): The Foundational Definition</div>
-          <div style="font-size:13px;color:#444;line-height:1.7;margin-bottom:12px">HCAI is a direction for designing AI systems that <strong>support human self-efficacy, promote creativity, clarify responsibility, and facilitate social participation</strong>, while encouraging consideration of privacy, security, environmental protection, social justice, and human rights.</div>
-          <div style="background:var(--light);border-left:3px solid var(--green);border-radius:0 8px 8px 0;padding:10px 14px;font-size:12.5px;color:#555;font-style:italic">Shneiderman calls this "a second Copernican Revolution", putting humans at the center of systems design thinking, reversing the current emphasis on algorithms and AI methods.</div>
+          <div class="shn-title">Ben Shneiderman (2020): The Foundational Definition</div>
+          <div class="shn-text">HCAI is a direction for designing AI systems that <strong>support human self-efficacy, promote creativity, clarify responsibility, and facilitate social participation</strong>, while encouraging consideration of privacy, security, environmental protection, social justice, and human rights.</div>
+          <div class="shn-note">Shneiderman calls this "a second Copernican Revolution", putting humans at the center of systems design thinking, reversing the current emphasis on algorithms and AI methods.</div>
         </div>
         <div>
-          <div style="font-family:'Nunito',sans-serif;font-weight:900;font-size:1rem;color:var(--navy);margin-bottom:8px">Shneiderman's Two-Dimensional Framework</div>
-          <div style="font-size:13px;color:#444;line-height:1.7;margin-bottom:12px">The key insight: it is possible, and desirable, to have <strong>both high levels of human control AND high levels of automation</strong>. These are not opposites. The goal is finding the right division of labor between human and AI capability.</div>
-          <div style="background:rgba(255,217,61,0.12);border:1.5px solid rgba(255,217,61,0.35);border-radius:10px;padding:12px 14px;font-size:12px;color:#333;line-height:1.6">
-            <strong style="color:#b8860b;font-family:'Nunito',sans-serif">The goal is not to replace people, but to empower them</strong>, making design choices that give humans control over technology. AI as a powerful tool in skilled human hands, not an autonomous decision-maker.
+          <div class="shn-title">Shneiderman's Two-Dimensional Framework</div>
+          <div class="shn-text">The key insight: it is possible, and desirable, to have <strong>both high levels of human control AND high levels of automation</strong>. These are not opposites. The goal is finding the right division of labor between human and AI capability.</div>
+          <div class="shn-goal">
+            <strong>The goal is not to replace people, but to empower them</strong>, making design choices that give humans control over technology. AI as a powerful tool in skilled human hands, not an autonomous decision-maker.
           </div>
         </div>
       </div>
@@ -1559,7 +1500,7 @@ function renderHCAI() {
 
     <!-- H-AI-H ENGINE -->
     <div class="section-header">
-      <div class="section-icon" style="background:rgba(91,155,213,0.12)">⚙️</div>
+      <div class="section-icon" style="background:rgba(91,155,213,0.12)"></div>
       <span class="section-title">The H-AI-H Engine</span>
     </div>
     <div class="haih-section">
@@ -1567,7 +1508,7 @@ function renderHCAI() {
       <p class="haih-sub">From the <em>Won't Get Fooled AgAIn</em> keynote, a practical framework for keeping humans in control of the learning process. AI is the middle of the process, never the beginning or the end.</p>
       <div class="haih-grid">
         <div class="haih-node human-in">
-          <div class="hn-icon">🧑‍🏫</div>
+          <div class="hn-icon"></div>
           <div class="hn-title">Human (Input)<br>Inquiry & Framing</div>
           <ul class="hn-items">
             <li>Curiosity & critical framing</li>
@@ -1578,8 +1519,8 @@ function renderHCAI() {
         </div>
         <div class="haih-arrow">→</div>
         <div class="haih-node ai-mid">
-          <div class="hn-icon">⚙️</div>
-          <div class="hn-title">AI Augmentation<br>(Process)</div>
+          <div class="hn-icon"></div>
+          <div class="hn-title">AI (Process)<br>Augmentation</div>
           <ul class="hn-items">
             <li>Data sorting & pattern recognition</li>
             <li>Grammar checks & editing</li>
@@ -1589,7 +1530,7 @@ function renderHCAI() {
         </div>
         <div class="haih-arrow">→</div>
         <div class="haih-node human-out">
-          <div class="hn-icon">🎓</div>
+          <div class="hn-icon"></div>
           <div class="hn-title">Human (Output)<br>Judgment & Reflection</div>
           <ul class="hn-items">
             <li>Ethics & contextualization</li>
@@ -1604,13 +1545,13 @@ function renderHCAI() {
 
     <!-- HOT/COLD COGNITION -->
     <div class="section-header">
-      <div class="section-icon" style="background:rgba(239,63,169,0.1)">🧠</div>
+      <div class="section-icon" style="background:rgba(239,63,169,0.1)"></div>
       <span class="section-title">Hot & Cold Cognition: The Division of Labor</span>
     </div>
     <div class="cog-grid">
       <div class="cog-card hot">
         <div class="cc-header">
-          <div class="cc-icon">🔥</div>
+          <div class="cc-icon"></div>
           <div>
             <div class="cc-title">Hot Cognition</div>
             <div class="cc-who">Humans do this</div>
@@ -1627,7 +1568,7 @@ function renderHCAI() {
       </div>
       <div class="cog-card cold">
         <div class="cc-header">
-          <div class="cc-icon">🧊</div>
+          <div class="cc-icon"></div>
           <div>
             <div class="cc-title">Cold Cognition</div>
             <div class="cc-who">AI assists with this</div>
@@ -1646,42 +1587,42 @@ function renderHCAI() {
 
     <!-- PRINCIPLES -->
     <div class="section-header">
-      <div class="section-icon" style="background:rgba(46,117,182,0.1)">✅</div>
+      <div class="section-icon" style="background:rgba(46,117,182,0.1)"></div>
       <span class="section-title">HCAI in Practice: Six Core Principles</span>
     </div>
     <div class="hcai-principles-grid">
       <div class="principle-card">
-        <div class="pc-icon">🤝</div>
+        <div class="pc-icon"></div>
         <div class="pc-title">Augmentation, Not Replacement</div>
         <div class="pc-desc">AI should amplify what humans can do, not substitute for human judgment, creativity, or connection. The goal is empowerment, not automation of thinking.</div>
         <div class="pc-example">A teacher using AI to generate lesson plan options, then applying their knowledge of their specific students to choose and adapt.</div>
       </div>
       <div class="principle-card">
-        <div class="pc-icon">🪟</div>
+        <div class="pc-icon"></div>
         <div class="pc-title">Transparency & Explainability</div>
         <div class="pc-desc">People affected by AI decisions have a right to understand how those decisions were made. Black boxes in high-stakes contexts (education, healthcare, hiring) are a human rights issue.</div>
         <div class="pc-example">An AI grading tool that shows students why it scored their work the way it did, not just a number.</div>
       </div>
       <div class="principle-card">
-        <div class="pc-icon">⚖️</div>
+        <div class="pc-icon"></div>
         <div class="pc-title">Accountability & Governance</div>
         <div class="pc-desc">Humans, not algorithms, must remain responsible for consequential decisions. Clear lines of accountability must exist at every level: developer, deployer, and user.</div>
         <div class="pc-example">A school district that requires human review before any AI recommendation affects a student's academic pathway.</div>
       </div>
       <div class="principle-card">
-        <div class="pc-icon">🌍</div>
+        <div class="pc-icon"></div>
         <div class="pc-title">Equity & Inclusion by Design</div>
         <div class="pc-desc">HCAI requires asking from the start: who benefits? Who is left out? AI built mostly on Western, English-language data will perform worse for communities it doesn't represent.</div>
         <div class="pc-example">Designing AI tools for Filipino TESDA learners with offline modes, Tagalog support, and low-bandwidth options, not as an afterthought.</div>
       </div>
       <div class="principle-card">
-        <div class="pc-icon">🔐</div>
+        <div class="pc-icon"></div>
         <div class="pc-title">Privacy & Dignity</div>
         <div class="pc-desc">Data collected from people, including students, should be used in ways they understand and consent to. Human dignity is not a feature to be optimized around.</div>
         <div class="pc-example">A classroom AI tool that does not retain student conversations or use them to train future models without explicit institutional consent.</div>
       </div>
       <div class="principle-card">
-        <div class="pc-icon">🌱</div>
+        <div class="pc-icon"></div>
         <div class="pc-title">Human Agency & Self-Efficacy</div>
         <div class="pc-desc">AI should strengthen people's belief in their own capabilities, not create dependency. The best AI interaction leaves the human more capable, not less.</div>
         <div class="pc-example">A student who uses AI to get feedback on their writing, then rewrites it themselves, building skill, not bypassing it.</div>
@@ -1690,7 +1631,7 @@ function renderHCAI() {
 
     <!-- THE HONEST TENSION -->
     <div class="tension-box">
-      <h3>⚠️ The Honest Tension: HCAI as Aspiration vs. Reality</h3>
+      <h3>The Honest Tension: HCAI as Aspiration vs. Reality</h3>
       <p>Human-Centered AI is a design philosophy and an ethical commitment, but it is not yet the default. Most AI is built to optimize for engagement, profit, or efficiency, not human flourishing. Understanding this gap is itself a form of AI literacy.</p>
       <div class="tension-examples">
         <div class="tension-ex">
@@ -1714,8 +1655,8 @@ function renderHCAI() {
 
     <!-- HCAI PROMPTS -->
     <div class="hcai-prompt-box">
-      <h3>🛠️ HCAI Prompts: Keep Yourself in the Driver's Seat</h3>
-      <p style="color:#888;font-size:13px;margin-bottom:20px">Use these prompts to bring a human-centered lens to any AI interaction. Copy and adapt freely.</p>
+      <h3>HCAI Prompts: Keep Yourself in the Driver's Seat</h3>
+      <p>Use these prompts to bring a human-centered lens to any AI interaction. Copy and adapt freely.</p>
       <div class="hcai-prompt-grid">
         ${HCAI_PROMPTS.map(p => `
           <div class="hcai-prompt-card">
@@ -1732,54 +1673,54 @@ function renderHCAI() {
 
     <!-- RESOURCES -->
     <div class="section-header">
-      <div class="section-icon" style="background:rgba(27,58,107,0.12)">📚</div>
+      <div class="section-icon" style="background:rgba(27,58,107,0.12)"></div>
       <span class="section-title">Go Deeper: HCAI Resources</span>
     </div>
     <div class="resources-grid">
       <div class="resource-card">
-        <div class="r-icon">📗</div>
+        <div class="r-icon"></div>
         <div class="r-type">Foundational Book</div>
         <div class="r-name">Human-Centered AI: Ben Shneiderman</div>
         <div class="r-desc">The definitive book on HCAI. An optimistic realist's guide to AI that augments human lives. Covers design, governance, and what reliable, safe, and trustworthy AI actually looks like. Oxford University Press, 2022.</div>
         <a href="https://global.oup.com/academic/product/human-centered-ai-9780192845290" target="_blank">View Book →</a>
       </div>
       <div class="resource-card">
-        <div class="r-icon">🏛️</div>
+        <div class="r-icon"></div>
         <div class="r-type">Leading Institute</div>
         <div class="r-name">Stanford HAI: Institute for Human-Centered AI</div>
         <div class="r-desc">Stanford's interdisciplinary institute advancing HCAI research, education, and policy. Their annual AI Index Report is the most comprehensive data-driven view of AI's societal impact available.</div>
         <a href="https://hai.stanford.edu" target="_blank">Visit Stanford HAI →</a>
       </div>
       <div class="resource-card">
-        <div class="r-icon">📊</div>
+        <div class="r-icon"></div>
         <div class="r-type">Annual Report</div>
         <div class="r-name">Stanford AI Index Report 2025</div>
         <div class="r-desc">The most comprehensive annual report on AI's technical progress, economic influence, and societal impact. Trusted by policymakers, researchers, and educators globally.</div>
         <a href="https://hai.stanford.edu/ai-index/2025-ai-index-report" target="_blank">Read Report →</a>
       </div>
       <div class="resource-card">
-        <div class="r-icon">⚡</div>
+        <div class="r-icon"></div>
         <div class="r-type">Research Paper</div>
         <div class="r-name">Shneiderman: Three Fresh Ideas (2020)</div>
         <div class="r-desc">The foundational academic paper introducing the HCAI framework. Open access. Proposes the two-dimensional model of human control + automation and a three-level governance structure.</div>
         <a href="https://aisel.aisnet.org/thci/vol12/iss3/1/" target="_blank">Read Paper →</a>
       </div>
       <div class="resource-card">
-        <div class="r-icon">🚨</div>
+        <div class="r-icon"></div>
         <div class="r-type">Accountability Tool</div>
         <div class="r-name">The AI Incident Database</div>
         <div class="r-desc">A living record of AI failures and harms. Essential reading for understanding why HCAI principles matter in practice, and what happens when they're ignored.</div>
         <a href="https://incidentdatabase.ai" target="_blank">Explore →</a>
       </div>
       <div class="resource-card">
-        <div class="r-icon">🎓</div>
+        <div class="r-icon"></div>
         <div class="r-type">Education Research</div>
         <div class="r-name">Stanford Teaching Commons: AI Literacy</div>
         <div class="r-desc">Four-domain AI literacy framework (Functional, Ethical, Rhetorical, Pedagogical) with human-centered values at the center. Developed specifically for educators.</div>
         <a href="https://teachingcommons.stanford.edu/teaching-guides/artificial-intelligence-teaching-guide/understanding-ai-literacy" target="_blank">Visit →</a>
       </div>
       <div class="resource-card">
-  <div class="resource-icon">📰</div>
+  <div class="resource-icon"></div>
   <div class="resource-label">Harvard Business Review</div>
   <h3 class="resource-title">Why AI Works Best When It Works with Humans</h3>
   <p class="resource-desc">
@@ -1798,7 +1739,7 @@ function renderHCAI() {
     btn.addEventListener('click', function() {
       const text = decodeURIComponent(this.dataset.prompt);
       navigator.clipboard.writeText(text).then(() => {
-        this.innerHTML = '✅ Copied!';
+        this.innerHTML = 'Copied!';
         this.classList.add('copied');
         setTimeout(() => {
           this.innerHTML = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy';
