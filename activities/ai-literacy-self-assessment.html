@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Literacy Self-Assessment · Demystifying AI for All</title>
+<meta name="description" content="Seventeen short situations, one for each of Long and Magerko's AI literacy competencies. See where you stand, find your blind spots, and get a place to start. Free, no login, nothing saved.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌍</text></svg>">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;700&family=Hanken+Grotesk:wght@400;500;700&display=swap">
+<style>
+:root{--cream:#EFE3CC;--cream-light:#F7EEDD;--charcoal:#26262A;--coral:#E8452C;--red-text:#B5321E;--coral-light:#F0705A}
+*{box-sizing:border-box;margin:0}
+body{background:var(--cream);color:var(--charcoal);font-family:'Hanken Grotesk',Arial,sans-serif;font-size:17px;line-height:1.55;padding:0 16px}
+h1,h2,h3{font-family:'Zilla Slab',Georgia,serif;font-weight:700;text-wrap:balance}
+h1{font-size:clamp(2.25rem,6vw,3.75rem);line-height:1.02;letter-spacing:-.01em}
+h2{font-size:clamp(1.5rem,3.6vw,2rem);line-height:1.15;margin-bottom:.75rem}
+h2:focus{outline:none}
+a{color:var(--charcoal)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--charcoal);outline-offset:3px}
+.container{max-width:900px;margin:0 auto;padding-block:2rem}
+.hero{padding:2rem 0 1rem;margin-bottom:1rem}
+.hero p{margin-top:1rem;font-size:clamp(1.0625rem,2.2vw,1.25rem);max-width:34em}
+.eyebrow{display:block;font-size:13px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--red-text);margin-bottom:8px}
+.region-toggle{display:flex;margin-bottom:1.5rem}
+.region-toggle a{font-size:16px;font-weight:700;text-decoration:none;border:2px solid var(--charcoal);background:var(--cream-light);padding:9px 14px}
+.region-toggle a:first-child{border-right-width:1px}.region-toggle a:last-child{border-left-width:1px}
+.region-toggle a.active{background:var(--charcoal);color:var(--cream)}
+.region-toggle a:hover:not(.active){text-decoration:underline}
+.progress{display:flex;gap:.5rem;margin-bottom:1.5rem}
+.progress span{flex:1;height:10px;background:var(--cream-light);border:2px solid var(--charcoal)}
+.progress span.now{background:var(--coral);border-color:var(--coral)}
+.progress span.past{background:var(--charcoal)}
+.panel{background:var(--cream-light);border:2px solid var(--charcoal);padding:2rem}
+.panel>p{max-width:40em}
+.checks{list-style:none;padding:0;margin:1.5rem 0;display:grid;grid-template-columns:1fr 1fr;gap:0 2rem}
+.checks li{border-top:2px solid var(--charcoal);padding:14px 0 18px}
+.checks b{display:block;font-family:'Zilla Slab',Georgia,serif;font-size:22px;line-height:1.2;margin-bottom:4px}
+.note{border:2px dashed var(--charcoal);background:var(--cream);padding:1rem 1.25rem;margin:1.25rem 0;font-size:16px}
+.btn{font-family:inherit;font-size:17px;font-weight:700;padding:12px 22px;border:2px solid var(--charcoal);cursor:pointer;background:var(--charcoal);color:var(--cream);text-decoration:none;display:inline-block}
+.btn.soft{background:var(--cream-light);color:var(--charcoal)}
+.btn:hover{text-decoration:underline}
+.btn[aria-disabled="true"]{background:var(--cream);color:var(--charcoal);border-style:dashed;cursor:default;text-decoration:none}
+.actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:1.5rem}
+.actions .hint{font-size:16px}
+.round-head{background:var(--charcoal);color:var(--cream);padding:1rem 2rem;margin:-2rem -2rem 1.5rem;display:flex;flex-wrap:wrap;gap:4px 16px;align-items:baseline;justify-content:space-between}
+.round-head b{font-family:'Zilla Slab',Georgia,serif;font-size:22px}
+.round-head span{font-size:13px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--coral-light)}
+.asked{background:var(--cream);padding:1rem 1.25rem;margin-bottom:1rem}
+.asked p{font-weight:500}
+.source{border-left:3px solid var(--charcoal);padding-left:1rem;margin:0 0 1.25rem;font-style:italic}
+.source .eyebrow{font-style:normal}
+.line{border:2px solid var(--charcoal);background:var(--cream-light);padding:1rem 1.25rem;margin-top:12px}
+.line>p{font-size:18px;font-weight:500;margin-bottom:12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-family:inherit;font-size:16px;font-weight:500;color:var(--charcoal);background:var(--cream-light);border:2px solid var(--charcoal);padding:8px 12px;cursor:pointer;min-height:44px}
+.chip:hover{text-decoration:underline}
+.chip[aria-pressed="true"]{background:var(--charcoal);color:var(--cream);font-weight:700}
+.chip:disabled{cursor:default;text-decoration:none}
+.chip:disabled:not([aria-pressed="true"]){border-style:dashed;opacity:.75}
+.chip.answer:disabled{border:3px solid var(--charcoal);border-style:solid;opacity:1;font-weight:700}
+.fb{margin-top:12px;padding:12px 14px;font-size:16px;border:2px solid var(--charcoal);background:var(--cream)}
+.fb b{display:block}
+.fb.miss{border:3px solid var(--red-text)}.fb.miss b{color:var(--red-text)}
+.fb.alarm{border-style:dashed}
+.round-sum{margin-top:1.5rem;font-weight:700;font-size:18px}
+.done{background:var(--coral);padding:2.5rem 2rem}
+.done h2{font-size:clamp(2.25rem,7vw,4rem);line-height:1;color:var(--cream);margin-bottom:.5rem}
+.done .big{font-family:'Zilla Slab',Georgia,serif;font-weight:700;color:var(--cream);font-size:clamp(4rem,14vw,7rem);line-height:1}
+.done>p{font-weight:500;max-width:36em}
+.done .box{background:var(--cream-light);border:2px solid var(--charcoal);padding:1.25rem 1.5rem;margin-top:1.5rem}
+.done .box ul{margin:.5rem 0 0;padding-left:1.25rem}
+.done .box li{margin-bottom:.25rem}
+.stats{display:flex;flex-wrap:wrap;gap:8px 2.5rem}
+.stats div b{display:block;font-family:'Zilla Slab',Georgia,serif;font-size:28px;line-height:1.1}
+.stats div span{font-size:13px;text-transform:uppercase;letter-spacing:.14em;font-weight:700}
+.step{display:none}.step.active{display:block}
+@media (max-width:600px){.container{padding-block:1rem}.panel{padding:1.25rem}.round-head{margin:-1.25rem -1.25rem 1.25rem;padding:1rem 1.25rem}.checks{grid-template-columns:1fr}.done{padding:2rem 1.25rem}.chip{flex:1 1 45%}.line{padding:1rem}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+.q-s{font-size:19px;font-weight:500;line-height:1.45;max-width:38em;margin-bottom:1.25rem}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{font-family:inherit;font-size:17px;line-height:1.45;text-align:left;color:var(--charcoal);background:var(--cream-light);border:2px solid var(--charcoal);padding:12px 14px;cursor:pointer;display:flex;gap:12px;align-items:flex-start}
+.opt:hover{text-decoration:underline}
+.opt .l{flex:none;width:28px;height:28px;background:var(--charcoal);color:var(--cream);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:15px}
+.opt[aria-pressed="true"]{background:var(--charcoal);color:var(--cream)}
+.opt[aria-pressed="true"] .l{background:var(--cream);color:var(--charcoal)}
+.opt:disabled{cursor:default;text-decoration:none}
+.opt.right:disabled{background:var(--charcoal);color:var(--cream);border-color:var(--charcoal)}
+.opt.right:disabled .l{background:var(--cream);color:var(--charcoal)}
+.opt.wrong:disabled{background:var(--cream);color:var(--charcoal);border:3px solid var(--red-text)}
+.opt.wrong:disabled .l{background:var(--red-text);color:var(--cream)}
+.opt.other:disabled{border-style:dashed;opacity:.8}
+.sure{margin-top:1.5rem}
+.sure p{font-weight:700;margin-bottom:8px}
+.fbk{margin-top:1.25rem;padding:1rem 1.25rem;border:2px solid var(--charcoal);background:var(--cream);font-size:16px}
+.fbk b{display:block;margin-bottom:4px}
+.fbk.miss{border:3px solid var(--red-text)}.fbk.miss b{color:var(--red-text)}
+.fbk .cal{display:block;margin-top:8px;font-weight:700}
+.rows{list-style:none;padding:0;margin:.75rem 0 0}
+.rows li{border-top:2px solid var(--charcoal);padding:10px 0;display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 16px}
+.rows li b{font-family:'Zilla Slab',Georgia,serif;font-size:20px}
+.rows li.start b::after{content:'Start here';display:block;font-family:'Hanken Grotesk',Arial,sans-serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--red-text);margin-top:2px}
+.done .box ul.rows{padding-left:0}.done .box ul.rows li{margin-bottom:0}
+.done .box h3{font-size:22px;margin-bottom:.25rem}
+.done .box p{margin-top:.5rem}
+.done .box ul.plain{margin:.5rem 0 0;padding-left:1.25rem}
+.site-nav{padding:28px 40px 0;font-family:'Hanken Grotesk',Arial,sans-serif}
+.site-nav-inner{max-width:1168px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 32px;border-bottom:2px solid var(--charcoal);padding-bottom:12px}
+.wordmark{font-family:'Zilla Slab',Georgia,serif;font-weight:700;font-size:24px;text-decoration:none;padding:10px 0;color:var(--charcoal)}
+.site-nav-links{display:flex;flex-wrap:wrap;gap:0 28px}
+.site-nav-links a{font-weight:500;font-size:16px;text-decoration:none;padding:12px 0;color:var(--charcoal)}
+.site-nav a:hover{text-decoration:underline}
+.site-nav-links a[aria-current="page"]{font-weight:700;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
+.site-footer{max-width:900px;margin:0 auto;padding:8px 0 40px;font-size:16px;line-height:1.5}
+.site-footer::before{content:'';display:block;border-top:2px solid var(--charcoal);margin-bottom:18px}
+.site-footer p{margin:0 0 4px;max-width:75ch}
+.site-footer a{color:var(--charcoal)}
+@media (max-width:600px){.site-nav{padding:16px 4px 0}.site-nav-links{gap:0 20px}}
+h1 .accent{color:var(--coral)}
+</style>
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Site">
+  <div class="site-nav-inner">
+    <a class="wordmark" href="../">Demystifying AI</a>
+    <div class="site-nav-links">
+      <a href="../learn.html">Learn AI</a>
+      <a href="../toolbox/">AI Toolbox</a>
+      <a href="./" aria-current="page">Activities</a>
+      <a href="../playground/">AI Playground</a>
+      <a href="../spark-intro/">SPARK AI Express</a>
+    </div>
+  </div>
+</nav>
+
+<main class="container" id="top">
+  <div class="hero">
+    <h1>AI Literacy <span class="accent">Self-Assessment</span></h1>
+    <p>Find out where you stand, where you are stronger than you think, and where to start learning.</p>
+  </div>
+
+  <div class="region-toggle" role="group" aria-label="Choose a version">
+    <a href="ai-literacy-self-assessment.html" class="active">United States</a>
+    <a href="ai-literacy-self-assessment-ph.html">Philippines</a>
+  </div>
+
+  <div class="progress" id="progress" role="img" aria-label="Five core questions"><span></span><span></span><span></span><span></span><span></span></div>
+
+  <div class="step active" id="intro">
+    <section class="panel">
+      <h2>A mirror, not a test.</h2>
+      <p>You will read 17 short situations, one for each AI literacy competency named by researchers Duri Long and Brian Magerko. For each one, choose the strongest answer, then say how sure you are.</p>
+      <div class="note"><strong>Expect to miss some:</strong> The answers are written to be close, because real understanding shows up in the close calls. Nobody is expected to get all 17. There is no passing score, and nothing you choose is saved.</div>
+      <p>Why we ask how sure you are: the most useful thing to learn is not your score. It is where you were certain and wrong, and where you were guessing and right.</p>
+      <ul class="checks">
+        <li><b>What is AI?</b>4 situations</li>
+        <li><b>What can AI do?</b>2 situations</li>
+        <li><b>How does AI work?</b>9 situations</li>
+        <li><b>How should AI be used?</b>1 situation</li>
+        <li><b>How do people perceive AI?</b>1 situation</li>
+      </ul>
+      <div class="actions"><button class="btn" type="button" id="startBtn">Start →</button><span class="hint">About 15 minutes.</span></div>
+    </section>
+  </div>
+
+  <div class="step" id="quiz">
+    <section class="panel">
+      <div class="round-head"><h2 style="margin:0;font-size:22px" id="qTitle">Question 1 of 17</h2><span id="qTag"></span></div>
+      <span class="eyebrow" id="qName"></span>
+      <p class="q-s" id="qS"></p>
+      <div class="opts" id="opts" role="group" aria-label="Answers"></div>
+      <div class="sure"><p>How sure are you?</p><div class="chips" id="sureChips" role="group" aria-label="How sure are you?"></div></div>
+      <div id="fb" aria-live="polite" style="display:none"></div>
+      <div class="actions">
+        <button class="btn" type="button" id="lockBtn" aria-disabled="true">Lock it in</button>
+        <button class="btn" type="button" id="nextBtn" style="display:none">Next question →</button>
+        <span class="hint" id="hint" aria-live="polite"></span>
+      </div>
+    </section>
+  </div>
+
+  <div class="step" id="finish">
+    <section class="done">
+      <h2>Here Is Your Mirror</h2>
+      <div class="big" id="finalScore">0 of 17</div>
+      <p>strongest answers chosen</p>
+      <p id="finalMsg" style="margin-top:1rem"></p>
+      <div class="box" style="margin-bottom:0">
+        <h3>By core question</h3>
+        <ul class="rows" id="rows"></ul>
+      </div>
+      <div class="box" style="margin-bottom:0">
+        <h3>Blind spots</h3>
+        <p>You were certain, and the strongest answer was a different one. These are worth the most attention.</p>
+        <ul class="plain" id="blind"></ul>
+      </div>
+      <div class="box" style="margin-bottom:0">
+        <h3>Hidden strengths</h3>
+        <p>You said you were guessing, and you were right. You may know more here than you think.</p>
+        <ul class="plain" id="hidden"></ul>
+      </div>
+      <div class="box" style="margin-bottom:0">
+        <strong>Your turn:</strong> Pick one blind spot, or the core question marked "start here," and read about it in the AI Literacy section. Each of the 17 competencies has a short description there.
+      </div>
+      <div class="actions">
+        <a class="btn" href="../learn.html#ailiteracy">Read about the 17 competencies</a>
+        <button class="btn soft" type="button" id="againBtn">Try again</button>
+        <a class="btn soft" href="./">More activities</a>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <p>Part of <a href="../">Demystifying AI for All</a>. Built by <strong>Jeffery Heil</strong>, educator, ed-tech consultant, and speaker. Lead Expert for <a href="https://globallearningaccess.com/home" target="_blank" rel="noopener">Global Learning Access</a>.</p>
+  <p>An independent, free resource. Some activities were built for GLA certification courses.</p>
+</footer>
+
+<script>
+(function(){
+var ITEMS=[{"q": 0, "name": "Recognizing AI", "s": "Three things happen on your phone this morning. Which one is most likely using AI?", "o": ["A calculator app adds up your grocery bill.", "Your keyboard suggests the next word as you type a message.", "The screen dims when you walk into a dark room."], "a": 1, "why": "The keyboard predicts your next word from patterns it learned in a huge amount of text. The calculator follows fixed arithmetic rules, and the screen responds to one light reading. Neither one learned anything."}, {"q": 0, "name": "Understanding Intelligence", "s": "A chatbot writes a poem about losing a parent, and it moves you to tears. What is the most accurate thing to say?", "o": ["It understands grief. Nothing could write that without feeling it.", "It has no ability at all. It must have copied a poem from somewhere.", "It built the poem from patterns in what people have written about grief. Whether that counts as understanding is debated, and it has never lost anyone."], "a": 2, "why": "Both simple answers miss. The poem is new, not copied, and it was built from patterns in human writing. Whether that is \"understanding\" is an open question that thoughtful people disagree on. What is certain is that it has no life in which to lose someone."}, {"q": 0, "name": "Interdisciplinarity", "s": "A warehouse robot finds the right shelf, picks up a box, and steers around a worker. What is the best description of it?", "o": ["Several kinds of AI working together: vision to see, planning to choose a route, and control to move.", "One AI program, like a chatbot that has been given wheels.", "Not really AI, because real AI is about language."], "a": 0, "why": "AI is a family of approaches, not one thing. This robot combines computer vision, planning, and robotics. Chatbots are only the most visible branch of that family right now."}, {"q": 0, "name": "General vs. Narrow", "s": "An AI system beats every world champion at chess. A colleague says, \"Something that strategic could run our company.\" What is the best reply?", "o": ["True. Chess needs planning, memory, and creativity, and so does running a company.", "It is a narrow system. It is superb at the one task it was built for and cannot carry that skill to unrelated work.", "It could, once it has read the company handbook."], "a": 1, "why": "This is narrow AI: built and trained for one kind of task. Being the best in the world at chess does not transfer to hiring, budgets, or people. AI that could do anything a person can is called general AI, and it remains an idea, not a product."}, {"q": 1, "name": "AI's Strengths & Weaknesses", "s": "You have three jobs to do today. Which one is the best fit to hand to an AI chatbot?", "o": ["Deciding which of two employees should be let go.", "Giving a client the exact current exchange rate for a contract.", "Turning your rough meeting notes into a tidy first draft that you will review."], "a": 2, "why": "Drafting from material you supply, with you reviewing it, plays to AI's strengths. The exchange rate needs current, exact facts, which a chatbot may get wrong or out of date. The layoff is a human judgment with human accountability."}, {"q": 1, "name": "Imagine Future AI", "s": "Your town plans to install AI cameras at intersections to adjust the traffic lights. Which response shows the strongest thinking about the future?", "o": ["Ask what else the cameras could be used for later, who would decide that, and who benefits or carries the risk.", "It will reduce traffic, so there is nothing to discuss.", "Cameras are surveillance, so the plan should be rejected."], "a": 0, "why": "Imagining future AI means thinking past the first use. A system installed for traffic can later be used for other things. Asking who decides, who benefits, and who bears the risk is stronger than a quick yes or a quick no."}, {"q": 2, "name": "Representations", "s": "A maps app guides you across the city. How does the computer hold the city in order to do that?", "o": ["It stores photos of every street and looks through them.", "As a structured model: points joined by roads, each with a distance and a speed.", "It replays a route that another driver took yesterday."], "a": 1, "why": "Computers need the world in a structured form they can calculate with. A maps app holds the city as connected points and roads with numbers attached, which lets it compare routes. Photos and past trips can add information, but they are not the model it reasons over."}, {"q": 2, "name": "Decision-Making", "s": "A bank's AI system declines a loan application in two seconds. What is the most accurate description of how it decided?", "o": ["It weighed the applicant's character, the way an experienced loan officer would.", "It chose at random, within limits the bank set.", "It calculated a score from the data it was given, using patterns or rules set up in advance, and compared the score with a cutoff."], "a": 2, "why": "The system does not judge character and it does not guess. It turns the application into numbers, applies patterns or rules that people set up beforehand, and compares the result with a threshold. That is why the data and the cutoff matter so much."}, {"q": 2, "name": "ML Steps", "s": "A team builds an AI to spot tomato leaf disease from photos. It scores 98% in testing, then does badly on farmers' phones. Which step most likely went wrong?", "o": ["The training and test photos did not look like real photos from the field.", "The AI needed more time to get used to the farmers.", "The farmers' phones were too slow to run it."], "a": 0, "why": "Machine learning has steps: gather data, train, test, then use. If the photos used for training and testing were taken in a lab with one camera, a 98% score says little about muddy leaves photographed in bad light. A good test uses data that looks like real use."}, {"q": 2, "name": "Human Role in AI", "s": "A hiring tool keeps ranking men above equally qualified women. The vendor says, \"The algorithm decided.\" What is the strongest response?", "o": ["Then nobody is at fault. Algorithms are neutral math.", "People chose the data, the goal, and the settings, so people are responsible for the result.", "The AI developed its own preference over time."], "a": 1, "why": "AI systems are built by people at every step: someone chose the training data, defined what a \"good hire\" means, and decided to ship it. \"The algorithm decided\" hides those human choices. It does not remove them."}, {"q": 2, "name": "Data Literacy", "s": "A headline says, \"Students who use AI tutors score 20% higher.\" What is the most useful first question to ask?", "o": ["Which AI tutor did they use?", "Did any students score more than 20% higher?", "How were the students chosen, and who were they compared with?"], "a": 2, "why": "A number means little until you know where it came from. If the students who chose the AI tutor were already more motivated, the 20% may have nothing to do with the tutor. How the data was collected comes before what the data says."}, {"q": 2, "name": "Learning from Data", "s": "You use a free chatbot to draft a letter that includes a client's personal details. What is the most accurate statement?", "o": ["Depending on the tool's settings and terms, what you type may be stored and used to improve the system, so check before sharing personal details.", "Nothing is kept once you close the chat.", "It is safe, because a chatbot is a program and not a person."], "a": 0, "why": "AI systems learn from data, and that can include yours. Many tools store conversations, and some use them for training unless you turn that off. The terms and settings decide, so the habit worth building is to check first and leave personal details out."}, {"q": 2, "name": "Critically Interpreting Data", "s": "A face-unlock feature works well for most staff, but fails more often for employees with darker skin. What is the most likely cause?", "o": ["Cameras cannot capture darker skin as well, so nothing can be done.", "The examples used to train it included far fewer faces like theirs.", "Those employees are holding the phone the wrong way."], "a": 1, "why": "What an AI system learned from shapes what it does well. When the training examples under-represent a group, the system performs worse for that group. That is a choice about data, and it can be corrected. It is not a law of cameras."}, {"q": 2, "name": "Action & Reaction", "s": "A robot vacuum bumps a chair leg, turns, and carries on. A delivery robot works out a route across campus before it sets off. What is the difference?", "o": ["There is none. Both are following a stored map.", "The vacuum is AI and the delivery robot is not.", "The vacuum is reacting to what it meets. The delivery robot is planning ahead, and it also reacts along the way."], "a": 2, "why": "AI systems act on the world in two broad ways: reacting to what is in front of them, and planning before they move. Many robots do both. Knowing which one you are looking at tells you what kinds of mistakes to expect."}, {"q": 2, "name": "Sensors", "s": "A self-driving shuttle performs well on sunny days and poorly in heavy rain. What is the best explanation?", "o": ["Its cameras and other sensors get poorer information in the rain, and it can only reason about what it can sense.", "The AI becomes less intelligent in bad weather.", "Rain slows down the computer inside."], "a": 0, "why": "A machine perceives the world only through its sensors. When rain blurs the cameras, the system is reasoning from worse information. Its \"intelligence\" has not changed. Its view has."}, {"q": 3, "name": "Ethics", "s": "A school is considering an AI tool that flags students \"at risk of dropping out.\" Which response shows the strongest ethical thinking?", "o": ["If the tool is accurate, there is no ethical issue.", "Ask who is helped, who could be harmed by a wrong flag, what data it uses, who can see the result, and who answers for mistakes.", "Predicting anything about students is always wrong."], "a": 1, "why": "Ethical thinking about AI is rarely a simple yes or no. An accurate tool can still harm a student who is wrongly labeled, or expose private data. The strongest response weighs benefit, harm, privacy, and accountability together."}, {"q": 4, "name": "Programmability", "s": "A child says the smart speaker \"likes\" her because it tells her jokes. What would best build her understanding?", "o": ["Agree with her. It is harmless to think of it as a friend.", "Tell her it is a toy that knows nothing.", "Show her that people built it and decided how it responds, and that those choices can be changed."], "a": 2, "why": "The authors place this competency under how people perceive AI. Seeing that a system is programmed, by people who made choices, changes how we relate to it. It replaces both \"it is my friend\" and \"it knows nothing\" with something more accurate."}], QS=["What is AI?", "What can AI do?", "How does AI work?", "How should AI be used?", "How do people perceive AI?"];
+var LVL=["Guessing","Fairly sure","Certain"];
+var cur=0, pick=null, sure=null, log=[], order=[];
+function $(id){return document.getElementById(id);}
+function el(tag,cls,text){var e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e;}
+function show(id){
+  ["intro","quiz","finish"].forEach(function(s){$(s).classList.toggle("active",s===id);});
+  var h=$(id).querySelector("h2"); if(h){h.setAttribute("tabindex","-1"); h.focus({preventScroll:true});}
+  $("top").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function progress(){
+  var bars=$("progress").children, on=$("quiz").classList.contains("active"), q=on?ITEMS[cur].q:($("finish").classList.contains("active")?5:-1);
+  for(var i=0;i<bars.length;i++){bars[i].className=i<q?"past":(i===q?"now":"");}
+}
+function ready(){
+  var ok=pick!==null&&sure!==null; $("lockBtn").setAttribute("aria-disabled",ok?"false":"true");
+  $("hint").textContent=pick===null?"Choose an answer.":sure===null?"Now say how sure you are.":"";
+}
+function render(){
+  var it=ITEMS[cur]; pick=null; sure=null;
+  $("qTitle").textContent="Question "+(cur+1)+" of "+ITEMS.length; $("qTag").textContent=QS[it.q];
+  $("qName").textContent="Competency "+(cur+1)+": "+it.name; $("qS").textContent=it.s;
+  var box=$("opts"); box.textContent="";
+  order=it.o.map(function(_,i){return i;});
+  for(var k=order.length-1;k>0;k--){var j=Math.floor(Math.random()*(k+1)), tmp=order[k]; order[k]=order[j]; order[j]=tmp;}
+  order.forEach(function(src,i){
+    var t=it.o[src];
+    var b=el("button","opt"); b.type="button"; b.setAttribute("aria-pressed","false"); b.dataset.src=src;
+    b.appendChild(el("span","l","ABC"[i])); b.appendChild(el("span",null,t));
+    b.addEventListener("click",function(){ pick=i; Array.prototype.forEach.call(box.children,function(x,j){x.setAttribute("aria-pressed",j===i?"true":"false");}); ready(); });
+    box.appendChild(b);
+  });
+  var sb=$("sureChips"); sb.textContent="";
+  LVL.forEach(function(t,i){
+    var b=el("button","chip",t); b.type="button"; b.setAttribute("aria-pressed","false");
+    b.addEventListener("click",function(){ sure=i; Array.prototype.forEach.call(sb.children,function(x,j){x.setAttribute("aria-pressed",j===i?"true":"false");}); ready(); });
+    sb.appendChild(b);
+  });
+  $("fb").style.display="none"; $("lockBtn").style.display="inline-block"; $("nextBtn").style.display="none"; $("hint").style.display="inline";
+  ready(); progress();
+}
+function lock(){
+  if($("lockBtn").getAttribute("aria-disabled")==="true") return;
+  var it=ITEMS[cur], ai=order.indexOf(it.a), ok=pick===ai; log.push({ok:ok,sure:sure});
+  Array.prototype.forEach.call($("opts").children,function(x,j){ x.disabled=true; x.classList.add(j===ai?"right":(j===pick?"wrong":"other")); });
+  Array.prototype.forEach.call($("sureChips").children,function(x){x.disabled=true;});
+  var fb=$("fb"); fb.className="fbk"+(ok?"":" miss"); fb.textContent="";
+  fb.appendChild(el("b",null,ok?"✓ That is the strongest answer.":"✗ The strongest answer is "+"ABC"[ai]+"."));
+  fb.appendChild(document.createTextNode(it.why));
+  var cal=ok?(sure===0?"You were guessing and you were right. You may know more here than you think.":sure===2?"You were certain and you were right. This one is solid.":"")
+            :(sure===2?"You were certain, and it slipped by. This is a blind spot worth knowing about.":sure===0?"You said you were guessing. Knowing what you do not know yet is a strength.":"");
+  if(cal) fb.appendChild(el("span","cal",cal));
+  fb.style.display="block";
+  $("lockBtn").style.display="none"; $("hint").style.display="none";
+  $("nextBtn").textContent=cur===ITEMS.length-1?"See my results →":"Next question →"; $("nextBtn").style.display="inline-block";
+  fb.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+function names(f){var out=[]; log.forEach(function(r,i){ if(f(r)) out.push(ITEMS[i].name); }); return out;}
+function fill(id,arr,empty){var u=$(id); u.textContent=""; if(!arr.length){u.appendChild(el("li",null,empty)); return;} arr.forEach(function(t){u.appendChild(el("li",null,t));});}
+function finish(){
+  var right=log.filter(function(r){return r.ok;}).length; $("finalScore").textContent=right+" of "+ITEMS.length;
+  var rows=$("rows"); rows.textContent=""; var worst=-1, wr=2;
+  QS.forEach(function(q,qi){
+    var n=0,k=0; ITEMS.forEach(function(it,i){ if(it.q===qi){n++; if(log[i].ok) k++;} });
+    var li=el("li"); li.appendChild(el("b",null,q)); li.appendChild(el("span",null,k+" of "+n)); rows.appendChild(li);
+    if(k<n && k/n<wr){wr=k/n; worst=qi;}
+  });
+  if(worst>=0) rows.children[worst].className="start";
+  fill("blind",names(function(r){return !r.ok&&r.sure===2;}),"None. You were never certain and wrong.");
+  fill("hidden",names(function(r){return r.ok&&r.sure===0;}),"None. You did not guess your way to any right answers.");
+  var miss=ITEMS.length-right;
+  $("finalMsg").textContent=miss===0?"You chose the strongest answer every time. The next step is practice: try the other activities and see how this holds up with real replies.":"Nobody is expected to get all 17. "+(worst>=0?"Your results point to “"+QS[worst]+"” as the best place to start.":"");
+  show("finish"); progress();
+}
+function next(){ cur++; if(cur<ITEMS.length){render(); $("top").scrollIntoView({behavior:"smooth",block:"start"}); var h=$("qTitle"); h.setAttribute("tabindex","-1"); h.focus({preventScroll:true});} else finish(); }
+function start(){cur=0; log=[]; render(); show("quiz"); progress();}
+$("startBtn").addEventListener("click",start); $("againBtn").addEventListener("click",start);
+$("lockBtn").addEventListener("click",lock); $("nextBtn").addEventListener("click",next);
+})();
+</script>
+</body>
+</html>
