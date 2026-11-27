@@ -5,120 +5,182 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Finish the Sentence · AI Playground · Demystifying AI for All</title>
 <meta name="description" content="A free, 5-minute game that shows how AI really works: it predicts the next word. No login, no grades, nothing saved.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔮</text></svg>">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;700&family=Hanken+Grotesk:wght@400;500;700&display=swap">
 <style>
 :root{
-  --pink:#EF3FA9;--purple:#783CBD;--teal:#22D3C5;--navy:#1B3A6B;--blue:#2E75B6;
-  --yellow:#FFD93D;--orange:#FF6B35;--green:#06D6A0;--ink:#1A1A2E;--light:#F7F8FC;
-  --white:#FFFFFF;--border:#E4E9F2;--muted:#5B6478;
+  --cream:#EFE3CC;--cream-light:#F7EEDD;--charcoal:#26262A;--coral:#E8452C;--red-text:#B5321E;--coral-light:#F0705A;
+  --navy:var(--charcoal);--ink:var(--charcoal);--light:var(--cream);--white:var(--cream-light);--border:var(--charcoal);--muted:#4A4842;
+  --purple:var(--charcoal);--blue:var(--charcoal);--green:var(--charcoal);--teal:var(--charcoal);--came:var(--charcoal);
+  --yellow:var(--coral-light);--pink:var(--red-text);--orange:var(--charcoal);--acc:var(--red-text);--accbg:var(--cream);--gray:#B9AE98;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Nunito Sans',sans-serif;background:var(--light);color:var(--ink);line-height:1.55;min-height:100vh}
+body{font-family:'Hanken Grotesk',Arial,sans-serif;background:var(--light);color:var(--ink);line-height:1.55;min-height:100vh}
 a{color:var(--blue)}
 .wrap{max-width:720px;margin:0 auto;padding:0 16px}
 
 /* top bar */
-.topbar{background:var(--navy);color:#fff;padding:14px 0}
+.topbar{background:var(--navy);color:var(--cream-light);padding:14px 0}
 .topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.topbar a{color:rgba(255,255,255,.85);text-decoration:none;font-family:'Nunito',sans-serif;font-weight:700;font-size:14px}
+.topbar a{color:var(--cream-light);text-decoration:none;font-family:'Hanken Grotesk',Arial,sans-serif;font-weight:700;font-size:14px}
 .topbar a:hover{color:var(--yellow)}
-.tag{font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--teal)}
+.tag{font-family:'Hanken Grotesk',Arial,sans-serif;font-weight:800;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--teal)}
 
 /* intro */
-.intro{background:var(--navy);color:#fff;padding:8px 0 40px;position:relative;overflow:hidden}
+.intro{background:var(--navy);color:var(--cream-light);padding:8px 0 40px;position:relative;overflow:hidden}
 .intro::after{content:'';position:absolute;width:220px;height:220px;border-radius:50%;background:var(--pink);opacity:.12;right:-60px;top:-40px}
-.intro h1{font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(2rem,7vw,3rem);line-height:1.1;margin:14px 0 10px}
+.intro h1{font-family:'Hanken Grotesk',Arial,sans-serif;font-weight:900;font-size:clamp(2rem,7vw,3rem);line-height:1.1;margin:14px 0 10px}
 .intro h1 span{color:var(--yellow)}
-.intro p{color:rgba(255,255,255,.75);max-width:560px}
+.intro p{color:var(--cream-light);max-width:560px}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
-.chip{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:40px;padding:5px 14px;font-size:13px;font-weight:600}
+.chip{background:rgba(247,238,221,.12);border:1px solid rgba(247,238,221,.4);border-radius:0;padding:5px 14px;font-size:13px;font-weight:600}
 
 /* card */
-.card{background:var(--white);border:1px solid var(--border);border-radius:20px;box-shadow:0 8px 30px rgba(27,58,107,.08);padding:24px;margin:-24px 0 20px;position:relative;z-index:1}
+.card{background:var(--white);border:1px solid var(--border);border-radius:0;box-shadow:none;padding:24px;margin:-24px 0 20px;position:relative;z-index:1}
 .progress{display:flex;gap:6px;margin-bottom:18px}
-.progress span{flex:1;height:6px;border-radius:6px;background:var(--border);transition:background .3s}
+.progress span{flex:1;height:6px;border-radius:0;background:var(--border);transition:background .3s}
 .progress span.done{background:var(--teal)}
 .progress span.now{background:var(--pink)}
-.round-label{font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--purple)}
-.round-title{font-family:'Nunito',sans-serif;font-weight:800;font-size:1.25rem;margin:4px 0 14px}
-.context{background:#FFF8DB;border:1px dashed #E8C400;border-radius:12px;padding:10px 14px;font-size:14px;margin-bottom:12px}
-.context b{font-family:'Nunito',sans-serif}
-.sentence{font-family:'Nunito',sans-serif;font-weight:800;font-size:clamp(1.3rem,5vw,1.7rem);line-height:1.35;background:var(--light);border-radius:14px;padding:18px;margin-bottom:16px}
+.round-label{font-family:'Hanken Grotesk',Arial,sans-serif;font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--purple)}
+.round-title{font-family:'Hanken Grotesk',Arial,sans-serif;font-weight:800;font-size:1.25rem;margin:4px 0 14px}
+.context{background:var(--cream);border:1px dashed var(--charcoal);border-radius:0;padding:10px 14px;font-size:14px;margin-bottom:12px}
+.context b{font-family:'Hanken Grotesk',Arial,sans-serif}
+.sentence{font-family:'Hanken Grotesk',Arial,sans-serif;font-weight:800;font-size:clamp(1.3rem,5vw,1.7rem);line-height:1.35;background:var(--light);border-radius:0;padding:18px;margin-bottom:16px}
 .blank{display:inline-block;min-width:90px;border-bottom:4px solid var(--pink);color:var(--pink);text-align:center;padding:0 4px}
 .ask{font-weight:700;margin-bottom:10px}
 .options{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
-.opt{font-family:'Nunito',sans-serif;font-weight:800;font-size:16px;padding:14px 10px;border-radius:14px;border:2px solid var(--border);background:#fff;color:var(--ink);cursor:pointer;transition:transform .12s,border-color .12s,background .12s}
+.opt{font-family:'Hanken Grotesk',Arial,sans-serif;font-weight:800;font-size:16px;padding:14px 10px;border-radius:0;border:2px solid var(--border);background:var(--cream-light);color:var(--ink);cursor:pointer;transition:transform .12s,border-color .12s,background .12s}
 .opt:hover{border-color:var(--teal);transform:translateY(-2px)}
 .opt:focus-visible,.btn:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
 .opt[disabled]{cursor:default;transform:none}
-.opt.picked{border-color:var(--pink);background:#FDE7F4}
+.opt.picked{border-color:var(--pink);background:var(--cream)}
 
 /* bars */
 .bars{margin-top:18px;display:none}
 .bars.show{display:block}
-.bars h3{font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;margin-bottom:10px}
+.bars h3{font-family:'Hanken Grotesk',Arial,sans-serif;font-weight:800;font-size:15px;margin-bottom:10px}
 .bar-row{display:grid;grid-template-columns:110px 1fr 46px;align-items:center;gap:10px;margin-bottom:8px}
-.bar-word{font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;overflow-wrap:anywhere}
-.bar-track{display:block;height:22px;background:var(--light);border-radius:8px;overflow:hidden}
-.bar-fill{display:block;height:100%;width:0;border-radius:8px;background:var(--blue);transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.bar-word{font-family:'Hanken Grotesk',Arial,sans-serif;font-weight:800;font-size:15px;overflow-wrap:anywhere}
+.bar-track{display:block;height:22px;background:var(--light);border-radius:0;overflow:hidden}
+.bar-fill{display:block;height:100%;width:0;border-radius:0;background:var(--blue);transition:width .9s cubic-bezier(.2,.8,.2,1)}
 .bar-row.top .bar-fill{background:var(--teal)}
 .bar-row.mine .bar-word::after{content:'← your guess';display:block;color:var(--pink);font-size:12px;font-weight:700}
-.bar-pct{font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;text-align:right;color:var(--muted)}
+.bar-pct{font-family:'Hanken Grotesk',Arial,sans-serif;font-weight:800;font-size:14px;text-align:right;color:var(--muted)}
 .feedback{margin-top:12px;font-weight:700}
-.lesson{margin-top:14px;background:#E8FBF6;border-left:5px solid var(--green);border-radius:12px;padding:14px 16px;display:none}
+.lesson{margin-top:14px;background:var(--cream);border-left:5px solid var(--green);border-radius:0;padding:14px 16px;display:none}
 .lesson.show{display:block}
-.lesson b{font-family:'Nunito',sans-serif}
+.lesson b{font-family:'Hanken Grotesk',Arial,sans-serif}
 
-.btn{font-family:'Nunito',sans-serif;font-weight:800;font-size:16px;border:none;border-radius:40px;padding:13px 26px;cursor:pointer;transition:transform .12s,filter .12s}
+.btn{font-family:'Hanken Grotesk',Arial,sans-serif;font-weight:800;font-size:16px;border:none;border-radius:0;padding:13px 26px;cursor:pointer;transition:transform .12s,filter .12s}
 .btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
-.btn-main{background:var(--pink);color:#fff}
-.btn-alt{background:var(--navy);color:#fff}
+.btn-main{background:var(--pink);color:var(--cream-light)}
+.btn-alt{background:var(--navy);color:var(--cream-light)}
 .btn-soft{background:var(--light);color:var(--ink);border:2px solid var(--border)}
 .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
 .hidden{display:none!important}
 
 /* creative mode */
 .gen-out{margin-top:14px;display:grid;gap:8px}
-.gen-line{background:var(--light);border-radius:12px;padding:12px 14px;font-family:'Nunito',sans-serif;font-weight:700;animation:pop .35s ease}
-.gen-line small{display:block;font-family:'Nunito Sans',sans-serif;font-weight:700;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.gen-line{background:var(--light);border-radius:0;padding:12px 14px;font-family:'Hanken Grotesk',Arial,sans-serif;font-weight:700;animation:pop .35s ease}
+.gen-line small{display:block;font-family:'Hanken Grotesk',Arial,sans-serif;font-weight:700;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 @keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
 /* finale */
 .big-ideas{display:grid;gap:10px;margin:14px 0}
-.idea{display:flex;gap:12px;align-items:flex-start;background:var(--light);border-radius:14px;padding:14px}
+.idea{display:flex;gap:12px;align-items:flex-start;background:var(--light);border-radius:0;padding:14px}
 .idea .ico{font-size:24px;line-height:1}
-.idea b{font-family:'Nunito',sans-serif;display:block}
-.talk{background:#F1EAFB;border-radius:14px;padding:16px;margin-top:6px}
-.talk h3,.cta h3{font-family:'Nunito',sans-serif;font-weight:900;font-size:1.05rem;margin-bottom:6px}
-.cta{background:var(--navy);color:#fff;border-radius:16px;padding:18px;margin-top:16px}
-.cta p{color:rgba(255,255,255,.8);margin-bottom:12px}
+.idea b{font-family:'Hanken Grotesk',Arial,sans-serif;display:block}
+.talk{background:var(--cream);border-radius:0;padding:16px;margin-top:6px}
+.talk h3,.cta h3{font-family:'Hanken Grotesk',Arial,sans-serif;font-weight:900;font-size:1.05rem;margin-bottom:6px}
+.cta{background:var(--navy);color:var(--cream-light);border-radius:0;padding:18px;margin-top:16px}
+.cta p{color:var(--cream-light);margin-bottom:12px}
 .cta a.btn{display:inline-block;text-decoration:none}
 
 .note{font-size:13px;color:var(--muted);margin:6px 0 30px;text-align:center}
-footer{background:var(--navy);color:rgba(255,255,255,.55);text-align:center;padding:24px 16px;font-size:13px}
+footer{background:var(--navy);color:var(--cream);text-align:center;padding:24px 16px;font-size:13px}
 footer a{color:var(--teal);text-decoration:none}
-footer strong{color:rgba(255,255,255,.85);font-family:'Nunito',sans-serif}
+footer strong{color:var(--cream-light);font-family:'Hanken Grotesk',Arial,sans-serif}
 
 @media (max-width:420px){.bar-row{grid-template-columns:88px 1fr 40px}.card{padding:18px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* ---- demystify-site-style ---- */
+body{font-size:17px;line-height:1.55;padding:0 16px;background:var(--cream)}
+h1,h2,h3,.round-title{font-family:'Zilla Slab',Georgia,serif;font-weight:700;text-wrap:balance}
+a{color:var(--charcoal)}
+.wrap{padding:0}
+.intro{background:none;color:var(--charcoal);padding:2rem 0 .5rem;overflow:visible}
+.intro::after{display:none}
+.intro h1{font-family:'Zilla Slab',Georgia,serif;font-weight:700;font-size:clamp(2.25rem,6vw,3.75rem);line-height:1.02;letter-spacing:-.01em;margin:10px 0 12px}
+.intro h1 span{color:var(--coral)}
+.intro p{color:var(--charcoal);font-size:clamp(1.0625rem,2.2vw,1.25rem);max-width:34em}
+.crumb{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:baseline}
+.crumb a{font-weight:700;font-size:16px}
+.tag{font-family:'Hanken Grotesk',Arial,sans-serif;font-weight:700;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--red-text)}
+.chip{background:none;border:2px solid var(--charcoal);color:var(--charcoal);font-size:16px;font-weight:500;padding:5px 12px}
+.card{border:2px solid var(--charcoal);margin:1.5rem 0 20px;background:var(--cream-light)}
+.progress span{height:10px;background:var(--cream-light);border:2px solid var(--charcoal)}
+.progress span.done{background:var(--charcoal)}
+.progress span.now{background:var(--coral);border-color:var(--coral)}
+.round-label{color:var(--red-text);letter-spacing:.2em;font-size:13px;font-weight:700}
+.btn,.btn-main,.btn-pink,.btn-spin,.choice,.opt{font-family:'Hanken Grotesk',Arial,sans-serif;font-weight:700}
+.btn-main,.btn-pink{background:var(--charcoal);color:var(--cream);border:2px solid var(--charcoal)}
+.btn-spin{background:var(--charcoal);color:var(--cream)}
+.btn:hover,.choice:hover,.opt:hover{transform:none;text-decoration:underline}
+.choice,.opt{border:2px solid var(--charcoal);background:var(--cream-light)}
+.choice.picked,.opt.picked{background:var(--charcoal);color:var(--cream);border-color:var(--charcoal)}
+.choice.picked small,.opt.picked small{color:var(--cream)}
+.choice.wrong,.slot.judged .opt.picked.r0{border:3px solid var(--red-text);background:var(--cream);color:var(--charcoal)}
+.choice.right,.slot.judged .opt.picked.r2{background:var(--charcoal);color:var(--cream);border-color:var(--charcoal)}
+.choice:focus-visible,.opt:focus-visible,.btn:focus-visible,.fix:focus-visible,textarea:focus-visible,.sitio:focus-visible,a:focus-visible,button:focus-visible{outline:3px solid var(--charcoal);outline-offset:3px}
+.bar-row.top .bar-fill{background:var(--coral)}
+.note{color:var(--charcoal);font-size:15px}
+textarea,input[type=text]{border:2px solid var(--charcoal);background:var(--cream);color:var(--charcoal);font-family:inherit;font-size:17px}
+footer.site-footer{max-width:720px;background:none;color:var(--charcoal);text-align:left;padding:8px 0 40px;font-size:16px}
+.choice.picked small,.choice.picked span,.choice.picked b,.opt.picked small,.opt.picked span,.choice.right small,.choice.right span{color:var(--cream)}
+footer.site-footer a{color:var(--charcoal);text-decoration:underline}
+footer.site-footer strong{color:var(--charcoal)}
+.round-title,.card h2,.card h3{font-family:'Zilla Slab',Georgia,serif}
+@media (max-width:600px){.intro{padding-top:1.25rem}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.site-nav{padding:28px 40px 0;font-family:'Hanken Grotesk',Arial,sans-serif}
+.site-nav-inner{max-width:1168px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 32px;border-bottom:2px solid var(--charcoal);padding-bottom:12px}
+.wordmark{font-family:'Zilla Slab',Georgia,serif;font-weight:700;font-size:24px;text-decoration:none;padding:10px 0;color:var(--charcoal)}
+.site-nav-links{display:flex;flex-wrap:wrap;gap:0 28px}
+.site-nav-links a{font-weight:500;font-size:16px;text-decoration:none;padding:12px 0;color:var(--charcoal)}
+.site-nav a:hover{text-decoration:underline}
+.site-nav-links a[aria-current="page"]{font-weight:700;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
+.site-footer{max-width:900px;margin:0 auto;padding:8px 0 40px;font-size:16px;line-height:1.5}
+.site-footer::before{content:'';display:block;border-top:2px solid var(--charcoal);margin-bottom:18px}
+.site-footer p{margin:0 0 4px;max-width:75ch}
+.site-footer a{color:var(--charcoal)}
+@media (max-width:600px){.site-nav{padding:16px 4px 0}.site-nav-links{gap:0 20px}}
 </style>
 </head>
 <body>
 
-<div class="topbar"><div class="wrap">
-  <a href="./">← AI Playground</a>
-  <span class="tag">Game 2 of 6 · Module 2</span>
-</div></div>
-
+<nav class="site-nav" aria-label="Site">
+  <div class="site-nav-inner">
+    <a class="wordmark" href="../">Demystifying AI</a>
+    <div class="site-nav-links">
+      <a href="../learn.html">Learn AI</a>
+      <a href="../toolbox/">AI Toolbox</a>
+      <a href="../activities/">Activities</a>
+      <a href="./" aria-current="page">AI Playground</a>
+      <a href="../spark-intro/">SPARK AI Express</a>
+    </div>
+  </div>
+</nav>
 <header class="intro"><div class="wrap">
-  <h1>Finish the <span>Sentence</span> 🔮</h1>
+  <div class="crumb"><a href="./">← AI Playground</a><span class="tag">Game 2 of 6 · Foundations Module 2</span></div>
+  <h1>Finish the <span>Sentence</span></h1>
   <p>AI tools like ChatGPT, Gemini, and Claude seem to "know" things. Here is the secret: they are predicting the next word, one word at a time. Play 5 quick rounds and see it for yourself.</p>
   <div class="chips">
-    <span class="chip">⏱ About 5 minutes</span>
-    <span class="chip">🙈 No login</span>
-    <span class="chip">💾 Nothing is saved</span>
-    <span class="chip">✅ No wrong answers</span>
+    <span class="chip">About 5 minutes</span>
+    <span class="chip">No login</span>
+    <span class="chip">Nothing is saved</span>
+    <span class="chip">No wrong answers</span>
   </div>
 </div></header>
 
@@ -130,7 +192,10 @@ footer strong{color:rgba(255,255,255,.85);font-family:'Nunito',sans-serif}
   <p class="note">The percentages in this game are illustrations, made up to show how prediction works. Real AI tools calculate them from billions of examples of text.</p>
 </main>
 
-<footer>Part of <a href="../">Demystifying AI for All</a> · Built by <strong>Jeffery Heil</strong> · <a href="https://globallearningaccess.com/home" target="_blank" rel="noopener">Global Learning Access</a></footer>
+<footer class="site-footer">
+  <p>Part of <a href="../">Demystifying AI for All</a>. Built by <strong>Jeffery Heil</strong>, educator, ed-tech consultant, and speaker. Lead Expert for <a href="https://globallearningaccess.com/home" target="_blank" rel="noopener">Global Learning Access</a>.</p>
+  <p>An independent, free resource. Some activities were built for GLA certification courses.</p>
+</footer>
 
 <script>
 (function(){
