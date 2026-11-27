@@ -230,6 +230,17 @@ body { font-family: 'Hanken Grotesk', Arial, sans-serif; background: var(--cream
 .competency-card .c-skills, .fw-domains { display:flex; flex-wrap:wrap; gap:6px; }
 .competency-card .c-skills { margin-top:14px; }
 .skill-chip, .fw-domain { font-size:14px; font-weight:500; padding:3px 9px; border:2px solid var(--charcoal); background:var(--cream); }
+.comp-intro { font-family:'Hanken Grotesk',Arial,sans-serif; font-size:16px; color:var(--charcoal); max-width:44em; margin:-6px 0 18px; }
+.comp-intro a { color:var(--charcoal); }
+button.skill-chip { font-family:'Hanken Grotesk',Arial,sans-serif; font-size:15px; color:var(--charcoal); padding:7px 11px; min-height:40px; cursor:pointer; border-radius:0; text-align:left; }
+button.skill-chip .n { font-weight:700; margin-right:7px; }
+button.skill-chip:hover { text-decoration:underline; }
+button.skill-chip:focus-visible { outline:3px solid var(--charcoal); outline-offset:2px; }
+button.skill-chip[aria-expanded="true"] { background:var(--charcoal); color:var(--cream); font-weight:700; }
+.competency-card .c-explain { margin:14px 0 0; padding-top:12px; border-top:2px solid var(--charcoal); font-size:16px; line-height:1.5; }
+.competency-card .c-explain b { display:block; font-family:'Zilla Slab',Georgia,serif; font-size:19px; margin-bottom:2px; }
+#competencies { grid-template-columns:1fr; }
+@media (min-width:700px){ #competencies { grid-template-columns:1fr 1fr; } #competencies .competency-card.wide { grid-column:1 / -1; } }
 
 .frameworks-compare { background:var(--cream-light); border:2px solid var(--charcoal); margin-bottom:48px; }
 .frameworks-compare-header { background:var(--charcoal); color:var(--cream); padding:20px 24px; }
@@ -606,38 +617,44 @@ function renderAILiteracy() {
     <!-- LONG & MAGERKO 5 QUESTIONS -->
     <div class="section-header" style="margin-top:36px">
       <div class="section-icon si-ailiteracy"></div>
-      <span class="section-title">Long & Magerko's 5 Core Questions (17 Competencies)</span>
+      <span class="section-title">Long &amp; Magerko's 5 Core Questions and 17 Competencies</span>
     </div>
-    <div class="competencies-grid">
+    <p class="comp-intro">Tap any competency for a short description. The descriptions are plain-language summaries. For the authors' own wording, see <a href="https://aiunplugged.lmc.gatech.edu/ai-literacy" target="_blank" rel="noopener">their list of competencies</a> or <a href="https://dl.acm.org/doi/10.1145/3313831.3376727" target="_blank" rel="noopener">the 2020 paper</a>.</p>
+    <div class="competencies-grid" id="competencies">
       <div class="competency-card">
         <div class="c-icon"></div>
         <div class="c-question">What IS AI?</div>
         <div class="c-desc">Understanding what AI actually is. It is not science fiction and not magic. The foundation for everything else.</div>
-        <div class="c-skills"><span class="skill-chip">Recognizing AI</span><span class="skill-chip">Understanding intelligence</span><span class="skill-chip">General vs. narrow AI</span></div>
+        <div class="c-skills"><button type="button" class="skill-chip" aria-expanded="false" aria-controls="cx0" data-d="Tell which tools and devices use AI and which do not."><span class="n">1</span>Recognizing AI</button><button type="button" class="skill-chip" aria-expanded="false" aria-controls="cx0" data-d="Think critically about what makes something intelligent, and how human, animal, and machine intelligence differ."><span class="n">2</span>Understanding Intelligence</button><button type="button" class="skill-chip" aria-expanded="false" aria-controls="cx0" data-d="Know that there are many ways to think about and build intelligent machines, from machine learning to robotics."><span class="n">3</span>Interdisciplinarity</button><button type="button" class="skill-chip" aria-expanded="false" aria-controls="cx0" data-d="Tell the difference between AI built for one kind of task (narrow) and the idea of AI that could do anything a person can (general)."><span class="n">4</span>General vs. Narrow</button></div>
+        <p class="c-explain" id="cx0" aria-live="polite" hidden></p>
       </div>
       <div class="competency-card">
         <div class="c-icon"></div>
         <div class="c-question">What CAN AI do?</div>
         <div class="c-desc">Knowing AI's real strengths and limitations, so you can use it well and not over-trust it.</div>
-        <div class="c-skills"><span class="skill-chip">Strengths & weaknesses</span><span class="skill-chip">Imagining future AI</span></div>
+        <div class="c-skills"><button type="button" class="skill-chip" aria-expanded="false" aria-controls="cx1" data-d="Know which problems AI handles well and which it struggles with, so you can decide when to use AI and when to rely on human skills."><span class="n">5</span>AI's Strengths &amp; Weaknesses</button><button type="button" class="skill-chip" aria-expanded="false" aria-controls="cx1" data-d="Picture how AI might be used in the future and what that could mean for the world."><span class="n">6</span>Imagine Future AI</button></div>
+        <p class="c-explain" id="cx1" aria-live="polite" hidden></p>
       </div>
-      <div class="competency-card">
+      <div class="competency-card wide">
         <div class="c-icon"></div>
         <div class="c-question">HOW does AI work?</div>
         <div class="c-desc">A working understanding of data, training, and how AI systems generate outputs, without needing to code.</div>
-        <div class="c-skills"><span class="skill-chip">Data literacy</span><span class="skill-chip">How models learn</span><span class="skill-chip">Outputs & errors</span></div>
+        <div class="c-skills"><button type="button" class="skill-chip" aria-expanded="false" aria-controls="cx2" data-d="Understand that computers store what they know in structured forms, and be able to give an example."><span class="n">7</span>Representations</button><button type="button" class="skill-chip" aria-expanded="false" aria-controls="cx2" data-d="Describe, in general terms, how computers reason and reach decisions."><span class="n">8</span>Decision-Making</button><button type="button" class="skill-chip" aria-expanded="false" aria-controls="cx2" data-d="Know the steps in machine learning, from gathering data to training and testing, and the challenges at each one."><span class="n">9</span>ML Steps</button><button type="button" class="skill-chip" aria-expanded="false" aria-controls="cx2" data-d="Recognize that people build AI. They write the programs, choose the models, and adjust them."><span class="n">10</span>Human Role in AI</button><button type="button" class="skill-chip" aria-expanded="false" aria-controls="cx2" data-d="Understand the basics of data: how it is collected, organized, and read."><span class="n">11</span>Data Literacy</button><button type="button" class="skill-chip" aria-expanded="false" aria-controls="cx2" data-d="Recognize that computers often learn from data, and that this can include your own data."><span class="n">12</span>Learning from Data</button><button type="button" class="skill-chip" aria-expanded="false" aria-controls="cx2" data-d="Understand that data needs interpreting. The examples used in training shape what an AI system produces."><span class="n">13</span>Critically Interpreting Data</button><button type="button" class="skill-chip" aria-expanded="false" aria-controls="cx2" data-d="Understand that some AI systems act on the physical world, either by planning ahead or by reacting to what happens around them."><span class="n">14</span>Action &amp; Reaction</button><button type="button" class="skill-chip" aria-expanded="false" aria-controls="cx2" data-d="Know that computers take in the world through sensors, such as cameras and microphones, and that different sensors allow different kinds of reasoning."><span class="n">15</span>Sensors</button></div>
+        <p class="c-explain" id="cx2" aria-live="polite" hidden></p>
       </div>
       <div class="competency-card">
         <div class="c-icon"></div>
         <div class="c-question">How SHOULD AI be used?</div>
         <div class="c-desc">The ethical dimension: bias, privacy, accountability, and responsible decision-making with AI.</div>
-        <div class="c-skills"><span class="skill-chip">Ethics</span><span class="skill-chip">Bias awareness</span><span class="skill-chip">Responsible use</span></div>
+        <div class="c-skills"><button type="button" class="skill-chip" aria-expanded="false" aria-controls="cx3" data-d="Name and discuss different views on the big ethical questions about AI, such as privacy, jobs, misinformation, bias, and accountability."><span class="n">16</span>Ethics</button></div>
+        <p class="c-explain" id="cx3" aria-live="polite" hidden></p>
       </div>
       <div class="competency-card">
         <div class="c-icon"></div>
         <div class="c-question">How do PEOPLE perceive AI?</div>
         <div class="c-desc">Understanding how context, culture, and experience shape attitudes toward AI, including your own.</div>
-        <div class="c-skills"><span class="skill-chip">Cultural context</span><span class="skill-chip">Self-awareness</span><span class="skill-chip">Trust & skepticism</span></div>
+        <div class="c-skills"><button type="button" class="skill-chip" aria-expanded="false" aria-controls="cx4" data-d="Understand that AI agents can be programmed by people."><span class="n">17</span>Programmability</button></div>
+        <p class="c-explain" id="cx4" aria-live="polite" hidden></p>
       </div>
     </div>
 
@@ -1680,6 +1697,18 @@ document.getElementById('search').addEventListener('input',function(){
 document.querySelectorAll('button[data-cat]').forEach(b=>b.addEventListener('click',function(){
   try{ history.replaceState(null,'','#'+(this.dataset.cat==='all'?'prompts':this.dataset.cat)); }catch(e){}
 }));
+
+// Competency chips: tap to read a short description
+document.addEventListener('click',function(e){
+  var b=e.target.closest&&e.target.closest('#competencies button.skill-chip'); if(!b) return;
+  var card=b.closest('.competency-card'), out=card.querySelector('.c-explain'), chips=card.querySelectorAll('button.skill-chip');
+  var open=b.getAttribute('aria-expanded')==='true';
+  chips.forEach(function(x){x.setAttribute('aria-expanded','false');});
+  if(open){ out.hidden=true; out.textContent=''; return; }
+  b.setAttribute('aria-expanded','true'); out.textContent='';
+  var t=document.createElement('b'); t.textContent='Competency '+b.querySelector('.n').textContent+': '+b.lastChild.textContent; out.appendChild(t);
+  out.appendChild(document.createTextNode(b.dataset.d)); out.hidden=false;
+});
 window.addEventListener('hashchange',openFromHash);
 if(!openFromHash()) openSection('ailiteracy');
 </script>
