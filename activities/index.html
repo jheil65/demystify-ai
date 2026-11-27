@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Interactive Activities · Demystifying AI for All</title>
-<meta name="description" content="Five hands-on activities that teach human-centered AI through real scenarios and decisions. United States and Philippines versions. Free, no login.">
+<meta name="description" content="Six hands-on activities that teach human-centered AI through real scenarios and decisions. United States and Philippines versions. Free, no login.">
 <link rel="icon" type="image/png" href="../favicon.png">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;700&family=Hanken+Grotesk:wght@400;500;700&display=swap">
@@ -41,7 +41,7 @@ a:focus-visible{outline:3px solid var(--charcoal);outline-offset:3px}
 .next{padding:40px 0 48px}
 .next p{max-width:38em;margin-bottom:18px}
 .acts .btn{flex:1 1 auto;text-align:center}
-.start{padding-bottom:24px}.start .desc{max-width:46em}.start .links .btn{flex:0 1 auto}
+.start{padding-bottom:24px}.acts{padding-bottom:24px}.start.last{padding-bottom:16px}.start .desc{max-width:46em}.start .links .btn{flex:0 1 auto}
 @media (max-width:700px){.acts{grid-template-columns:1fr}}
 @media (max-width:600px){.wrap{padding:0 4px}.intro{padding:32px 0 28px}.act{padding:20px}.band ul{grid-template-columns:1fr}.btn{width:100%;text-align:center}}
 .site-nav{padding:28px 40px 0;font-family:'Hanken Grotesk',Arial,sans-serif}
@@ -148,13 +148,19 @@ h1 .accent{color:var(--coral)}
 
   </div>
 
-  <section class="band" aria-labelledby="h-soon"><div class="wrap">
-    <span class="eyebrow">Coming Soon</span>
-    <h2 id="h-soon">More activities in development</h2>
-    <ul>
-      <li>LLM Comparison Lab</li>
-    </ul>
-  </div></section>
+  <div class="wrap start last">
+    <article class="act">
+      <span class="eyebrow">Activity 5</span>
+      <h2>LLM Comparison Lab</h2>
+      <p class="sub">Which AI should I use?</p>
+      <p class="desc">The honest answer is that it depends on the job. Give the same prompt to two or three real AI tools, score the replies on five plain questions, and leave with your own pick for your task.</p>
+      <ul class="facts"><li>10 to 20 minutes</li><li>Your own test, with real tools</li></ul>
+      <div class="links">
+        <a class="btn btn-main" href="llm-comparison-lab.html">United States version</a>
+        <a class="btn btn-soft" href="llm-comparison-lab-ph.html">Philippines version</a>
+      </div>
+    </article>
+  </div>
 
   <section class="next"><div class="wrap">
     <p>Want the ideas behind these activities first? The Human-Centered AI section of Learn AI covers the framework they use.</p>

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LLM Comparison Lab · Demystifying AI for All</title>
+<meta name="description" content="Which AI should I use? Run your own test. Give the same prompt to two or three AI tools, score the replies, and leave with a pick for your task. Free, no login, nothing saved.">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;700&family=Hanken+Grotesk:wght@400;500;700&display=swap">
+<style>
+:root{--cream:#EFE3CC;--cream-light:#F7EEDD;--charcoal:#26262A;--coral:#E8452C;--red-text:#B5321E;--coral-light:#F0705A}
+*{box-sizing:border-box;margin:0}
+body{background:var(--cream);color:var(--charcoal);font-family:'Hanken Grotesk',Arial,sans-serif;font-size:17px;line-height:1.55;padding:0 16px}
+h1,h2,h3{font-family:'Zilla Slab',Georgia,serif;font-weight:700;text-wrap:balance}
+h1{font-size:clamp(2.25rem,6vw,3.75rem);line-height:1.02;letter-spacing:-.01em}
+h2{font-size:clamp(1.5rem,3.6vw,2rem);line-height:1.15;margin-bottom:.75rem}
+h2:focus{outline:none}
+a{color:var(--charcoal)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--charcoal);outline-offset:3px}
+.container{max-width:900px;margin:0 auto;padding-block:2rem}
+.hero{padding:2rem 0 1rem;margin-bottom:1rem}
+.hero p{margin-top:1rem;font-size:clamp(1.0625rem,2.2vw,1.25rem);max-width:34em}
+.eyebrow{display:block;font-size:13px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--red-text);margin-bottom:8px}
+.region-toggle{display:flex;margin-bottom:1.5rem}
+.region-toggle a{font-size:16px;font-weight:700;text-decoration:none;border:2px solid var(--charcoal);background:var(--cream-light);padding:9px 14px}
+.region-toggle a:first-child{border-right-width:1px}.region-toggle a:last-child{border-left-width:1px}
+.region-toggle a.active{background:var(--charcoal);color:var(--cream)}
+.region-toggle a:hover:not(.active){text-decoration:underline}
+.progress{display:flex;gap:.5rem;margin-bottom:1.5rem}
+.progress span{flex:1;height:10px;background:var(--cream-light);border:2px solid var(--charcoal)}
+.progress span.now{background:var(--coral);border-color:var(--coral)}
+.progress span.past{background:var(--charcoal)}
+.panel{background:var(--cream-light);border:2px solid var(--charcoal);padding:2rem}
+.panel>p{max-width:40em}
+.checks{list-style:none;padding:0;margin:1.5rem 0;display:grid;grid-template-columns:1fr 1fr;gap:0 2rem}
+.checks li{border-top:2px solid var(--charcoal);padding:14px 0 18px}
+.checks b{display:block;font-family:'Zilla Slab',Georgia,serif;font-size:22px;line-height:1.2;margin-bottom:4px}
+.note{border:2px dashed var(--charcoal);background:var(--cream);padding:1rem 1.25rem;margin:1.25rem 0;font-size:16px}
+.btn{font-family:inherit;font-size:17px;font-weight:700;padding:12px 22px;border:2px solid var(--charcoal);cursor:pointer;background:var(--charcoal);color:var(--cream);text-decoration:none;display:inline-block}
+.btn.soft{background:var(--cream-light);color:var(--charcoal)}
+.btn:hover{text-decoration:underline}
+.btn[aria-disabled="true"]{background:var(--cream);color:var(--charcoal);border-style:dashed;cursor:default;text-decoration:none}
+.actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:1.5rem}
+.actions .hint{font-size:16px}
+.round-head{background:var(--charcoal);color:var(--cream);padding:1rem 2rem;margin:-2rem -2rem 1.5rem;display:flex;flex-wrap:wrap;gap:4px 16px;align-items:baseline;justify-content:space-between}
+.round-head b{font-family:'Zilla Slab',Georgia,serif;font-size:22px}
+.round-head span{font-size:13px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--coral-light)}
+.asked{background:var(--cream);padding:1rem 1.25rem;margin-bottom:1rem}
+.asked p{font-weight:500}
+.source{border-left:3px solid var(--charcoal);padding-left:1rem;margin:0 0 1.25rem;font-style:italic}
+.source .eyebrow{font-style:normal}
+.line{border:2px solid var(--charcoal);background:var(--cream-light);padding:1rem 1.25rem;margin-top:12px}
+.line>p{font-size:18px;font-weight:500;margin-bottom:12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-family:inherit;font-size:16px;font-weight:500;color:var(--charcoal);background:var(--cream-light);border:2px solid var(--charcoal);padding:8px 12px;cursor:pointer;min-height:44px}
+.chip:hover{text-decoration:underline}
+.chip[aria-pressed="true"]{background:var(--charcoal);color:var(--cream);font-weight:700}
+.chip:disabled{cursor:default;text-decoration:none}
+.chip:disabled:not([aria-pressed="true"]){border-style:dashed;opacity:.75}
+.chip.answer:disabled{border:3px solid var(--charcoal);border-style:solid;opacity:1;font-weight:700}
+.fb{margin-top:12px;padding:12px 14px;font-size:16px;border:2px solid var(--charcoal);background:var(--cream)}
+.fb b{display:block}
+.fb.miss{border:3px solid var(--red-text)}.fb.miss b{color:var(--red-text)}
+.fb.alarm{border-style:dashed}
+.round-sum{margin-top:1.5rem;font-weight:700;font-size:18px}
+.done{background:var(--coral);padding:2.5rem 2rem}
+.done h2{font-size:clamp(2.25rem,7vw,4rem);line-height:1;color:var(--cream);margin-bottom:.5rem}
+.done .big{font-family:'Zilla Slab',Georgia,serif;font-weight:700;color:var(--cream);font-size:clamp(4rem,14vw,7rem);line-height:1}
+.done>p{font-weight:500;max-width:36em}
+.done .box{background:var(--cream-light);border:2px solid var(--charcoal);padding:1.25rem 1.5rem;margin-top:1.5rem}
+.done .box ul{margin:.5rem 0 0;padding-left:1.25rem}
+.done .box li{margin-bottom:.25rem}
+.stats{display:flex;flex-wrap:wrap;gap:8px 2.5rem}
+.stats div b{display:block;font-family:'Zilla Slab',Georgia,serif;font-size:28px;line-height:1.1}
+.stats div span{font-size:13px;text-transform:uppercase;letter-spacing:.14em;font-weight:700}
+.step{display:none}.step.active{display:block}
+@media (max-width:600px){.container{padding-block:1rem}.panel{padding:1.25rem}.round-head{margin:-1.25rem -1.25rem 1.25rem;padding:1rem 1.25rem}.checks{grid-template-columns:1fr}.done{padding:2rem 1.25rem}.chip{flex:1 1 45%}.line{padding:1rem}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+.pathrow{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:1rem 0}
+.pick{font-family:inherit;font-size:17px;text-align:left;color:var(--charcoal);background:var(--cream-light);border:2px solid var(--charcoal);padding:14px 16px;cursor:pointer;line-height:1.4}
+.pick b{display:block;font-family:'Zilla Slab',Georgia,serif;font-size:21px;line-height:1.2;margin-bottom:2px}
+.pick:hover b{text-decoration:underline}
+.pick[aria-pressed="true"]{background:var(--charcoal);color:var(--cream)}
+.tasks{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:1rem 0}
+.toolrow{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:1rem 0}
+h3.stp{font-size:24px;margin:2.25rem 0 .25rem;padding-top:1.25rem;border-top:2px solid var(--charcoal)}
+h3.stp:first-of-type{margin-top:1.5rem}
+.sub{max-width:40em}
+label.lab{display:block;font-weight:700;margin:1rem 0 .4rem}
+input.txt,textarea{width:100%;padding:12px 14px;border:2px solid var(--charcoal);background:var(--cream);color:var(--charcoal);font-family:inherit;font-size:17px;line-height:1.5}
+textarea{min-height:120px;resize:vertical}
+input.txt:focus,textarea:focus{outline:3px solid var(--charcoal);outline-offset:2px}
+.promptbox{background:var(--charcoal);color:var(--cream);padding:1.25rem 1.5rem;margin:1rem 0}
+.promptbox .eyebrow{color:var(--coral-light)}
+.promptbox p{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:16px;line-height:1.55;white-space:pre-wrap}
+.promptbox .btn{background:var(--cream);color:var(--charcoal);border-color:var(--cream);margin-top:1rem}
+.score{border:2px solid var(--charcoal);background:var(--cream-light);padding:1.25rem 1.5rem;margin-top:1rem}
+.score-head{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline;justify-content:space-between;border-bottom:2px solid var(--charcoal);padding-bottom:10px;margin-bottom:6px}
+.score-head h3{font-size:26px}
+.score-head a{font-weight:700}
+.crit{padding:12px 0;border-bottom:1px solid var(--charcoal)}
+.crit b{display:block}
+.crit span.d{display:block;font-size:15px;margin-bottom:8px}
+.rate{display:flex;gap:8px}
+.rate .chip{flex:1;text-align:center}
+.score .tot{font-weight:700;margin-top:12px}
+.done .rows{list-style:none;padding:0;margin:.5rem 0 0}
+.done .box ul.rows{padding-left:0}
+.done .rows li{border-top:2px solid var(--charcoal);padding:10px 0;display:flex;justify-content:space-between;gap:16px;margin:0}
+.done .rows li b{font-family:'Zilla Slab',Georgia,serif;font-size:20px}
+.done .box h3{font-size:22px;margin-bottom:.25rem}
+.done .box ul.plain{margin:.5rem 0 0;padding-left:1.25rem}
+.hintline{font-size:16px;margin-top:.5rem;font-weight:700}
+.needs{margin-top:1.5rem;padding:12px 14px;border:3px solid var(--red-text);background:var(--cream);font-weight:700}
+.needs.ok{border:2px solid var(--charcoal)}
+.needs.shake{outline:3px solid var(--red-text);outline-offset:3px}
+.missing{outline:3px solid var(--red-text);outline-offset:6px}
+@media (max-width:700px){.pathrow,.tasks{grid-template-columns:1fr}.toolrow{grid-template-columns:1fr 1fr}.score{padding:1rem}.promptbox{padding:1rem}}
+.site-nav{padding:28px 40px 0;font-family:'Hanken Grotesk',Arial,sans-serif}
+.site-nav-inner{max-width:1168px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 32px;border-bottom:2px solid var(--charcoal);padding-bottom:12px}
+.wordmark{font-family:'Zilla Slab',Georgia,serif;font-weight:700;font-size:24px;text-decoration:none;padding:10px 0;color:var(--charcoal)}
+.site-nav-links{display:flex;flex-wrap:wrap;gap:0 28px}
+.site-nav-links a{font-weight:500;font-size:16px;text-decoration:none;padding:12px 0;color:var(--charcoal)}
+.site-nav a:hover{text-decoration:underline}
+.site-nav-links a[aria-current="page"]{font-weight:700;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
+.site-footer{max-width:900px;margin:0 auto;padding:8px 0 40px;font-size:16px;line-height:1.5}
+.site-footer::before{content:'';display:block;border-top:2px solid var(--charcoal);margin-bottom:18px}
+.site-footer p{margin:0 0 4px;max-width:75ch}
+.site-footer a{color:var(--charcoal)}
+@media (max-width:600px){.site-nav{padding:16px 4px 0}.site-nav-links{gap:0 20px}}
+h1 .accent{color:var(--coral)}
+</style>
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Site">
+  <div class="site-nav-inner">
+    <a class="wordmark" href="../">Demystifying AI</a>
+    <div class="site-nav-links">
+      <a href="../learn.html">Learn AI</a>
+      <a href="../toolbox/">AI Toolbox</a>
+      <a href="./" aria-current="page">Activities</a>
+      <a href="../playground/">AI Playground</a>
+      <a href="../spark-intro/">SPARK AI Express</a>
+    </div>
+  </div>
+</nav>
+
+<main class="container" id="top">
+  <div class="hero">
+    <h1>LLM <span class="accent">Comparison</span> Lab</h1>
+    <p>"Which AI should I use?" The honest answer is that it depends on the job. This lab helps you find your own answer in about 15 minutes.</p>
+  </div>
+
+  <div class="region-toggle" role="group" aria-label="Choose a version">
+    <a href="llm-comparison-lab.html">United States</a>
+    <a href="llm-comparison-lab-ph.html" class="active">Philippines</a>
+  </div>
+
+  <div class="progress" id="progress" role="img" aria-label="Three steps"><span class="now"></span><span></span><span></span></div>
+
+  <div class="step active" id="setup">
+    <section class="panel">
+      <h2>Run your own test</h2>
+      <p class="sub">No tool is best at everything, and the tools change every few months. So this page will not rank them. You will give the same prompt to more than one tool and judge the replies yourself.</p>
+      <div class="note"><strong>Good to know:</strong> You will open the real tools in new tabs. Some ask you to sign in with a free account. Use the ones you can open. Nothing you type on this page is saved or sent anywhere.</div>
+
+      <h3 class="stp">1. Choose a path</h3>
+      <div class="pathrow" id="paths" role="group" aria-label="Path">
+        <button type="button" class="pick" data-n="2" aria-pressed="false"><b>Quick test</b>Two tools, about 10 minutes. Good on a phone or limited data.</button>
+        <button type="button" class="pick" data-n="3" aria-pressed="false"><b>Full test</b>Three tools, about 20 minutes. A clearer picture.</button>
+      </div>
+
+      <h3 class="stp">2. Choose a task</h3>
+      <p class="sub">Each task tests something different. Your own task is the best test of all.</p>
+      <div class="tasks" id="tasks" role="group" aria-label="Task"></div>
+      <div id="placeWrap" style="display:none"><label class="lab" for="place">Your town or city</label><input class="txt" id="place" type="text" autocomplete="off"></div>
+      <div id="ownWrap" style="display:none">
+        <label class="lab" for="ownPrompt">Your prompt</label>
+        <textarea id="ownPrompt" placeholder="Say who it is for, what it is for, what you already know, and the limits."></textarea>
+        <p class="hintline">Leave out private details such as full names, account numbers, or information about students or clients.</p>
+      </div>
+
+      <h3 class="stp">3. Choose your tools</h3>
+      <p class="sub">Tap a tool to select it. You will get a link to open each one on the next screen. They are listed in no special order. <strong id="toolHint"></strong></p>
+      <div class="toolrow" id="tools" role="group" aria-label="Tools"></div>
+      <div id="otherWrap" style="display:none"><label class="lab" for="otherName">Name of the other tool</label><input class="txt" id="otherName" type="text" autocomplete="off"></div>
+
+      <p class="needs" id="setupHint" role="status"></p>
+      <div class="actions"><button class="btn" type="button" id="goBtn" aria-disabled="true">Start the test →</button></div>
+    </section>
+  </div>
+
+  <div class="step" id="run">
+    <section class="panel">
+      <div class="round-head"><h2 style="margin:0;font-size:22px">Test and score</h2><span>Same prompt, every tool</span></div>
+      <p class="sub">Copy the prompt. Paste the exact same words into each tool, and start a new chat in each one so nothing from earlier affects the reply. Then come back and score what you got.</p>
+      <div class="promptbox"><span class="eyebrow">Your test prompt</span><p id="thePrompt"></p><button class="btn" type="button" id="copyPrompt">Copy the prompt</button> <span id="copyPromptMsg" aria-live="polite" style="margin-left:10px"></span></div>
+      <p class="sub"><strong>How to score:</strong> rate each reply on the same five questions. Judge the reply you got, not the tool's reputation.</p>
+      <div id="cards"></div>
+      <div class="actions">
+        <button class="btn" type="button" id="resultBtn" aria-disabled="true">See my pick →</button>
+        <button class="btn soft" type="button" id="backBtn">Change my setup</button>
+        <span class="hint" id="runHint" aria-live="polite"></span>
+      </div>
+    </section>
+  </div>
+
+  <div class="step" id="finish">
+    <section class="done">
+      <h2 id="pickName">Your Pick</h2>
+      <p id="pickLine" style="font-size:1.25rem"></p>
+      <p id="finalMsg" style="margin-top:1rem"></p>
+      <div class="box" style="margin-bottom:0"><h3>Your scorecard</h3><ul class="rows" id="rows"></ul></div>
+      <div class="box" style="margin-bottom:0">
+        <h3>Does your gut agree?</h3>
+        <p>Look at the replies again. If you would choose a different tool than your scores did, ask which of the five questions mattered most for this job. That question is your real test.</p>
+      </div>
+      <div class="box" style="margin-bottom:0">
+        <h3>Before you settle on a tool</h3>
+        <ul class="plain">
+          <li><strong>Cost:</strong> what does the free version limit, and would you hit that limit?</li>
+          <li><strong>Privacy:</strong> check the settings for whether your chats are stored or used for training.</li>
+          <li><strong>Access:</strong> does it work well on your device and your connection?</li>
+          <li><strong>Language:</strong> does it handle the languages you and your readers use?</li>
+          <li><strong>Test again:</strong> a new kind of task deserves a new test, and so does a few months passing.</li>
+        </ul>
+      </div>
+      <div class="actions">
+        <button class="btn" type="button" id="copyRes">Copy my results</button>
+        <button class="btn soft" type="button" id="againBtn">Test another task</button>
+        <a class="btn soft" href="ai-output-evaluator-ph.html">Practice judging replies</a>
+        <span class="hint" id="copyMsg" aria-live="polite"></span>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <p>Part of <a href="../">Demystifying AI for All</a>. Built by <strong>Jeffery Heil</strong>, educator, ed-tech consultant, and speaker. Lead Expert for <a href="https://globallearningaccess.com/home" target="_blank" rel="noopener">Global Learning Access</a>.</p>
+  <p>An independent, free resource. Some activities were built for GLA certification courses.</p>
+</footer>
+
+<script>
+(function(){
+var TASKS=[{"k": "write", "name": "Write a customer reply", "why": "Tests tone, and whether it can write the way your customers talk.", "p": "I run a small milk tea shop. A regular customer messaged us on Facebook because her order of 6 drinks arrived 40 minutes late and two were the wrong flavor. Write a reply in friendly Taglish. Apologize plainly with no excuses, offer to replace the two drinks for free on her next order, and keep it to 4 or 5 sentences. Sound like a person, not a company."}, {"k": "explain", "name": "Explain something plainly", "why": "Tests whether it can be simple without being wrong.", "p": "Explain what a large language model is to a parent who has never used AI. Use plain words, one everyday comparison, and no more than 120 words. Then tell me one thing about your explanation that is simplified and not fully accurate."}, {"k": "plan", "name": "Plan a short session", "why": "Tests whether it respects your limits.", "p": "Plan a 30-minute session to teach 10 barangay volunteers how to spot a scam text message. Most use Android phones, some have limited data, and there is no projector. I want them practicing with real examples for most of the time, not listening. Give me an agenda with times."}, {"k": "facts", "name": "Check facts about my place", "why": "Tests whether it invents things. You can judge, because you know your own place.", "p": "Give me five facts about {place} that a visitor would find useful. For each fact, tell me where I can check it. If you are not sure about something, say so plainly."}], TOOLS=[["Gemini", "Google", "https://gemini.google.com"], ["ChatGPT", "OpenAI", "https://chatgpt.com"], ["Copilot", "Microsoft", "https://copilot.microsoft.com"], ["Claude", "Anthropic", "https://claude.ai"], ["DeepSeek", "DeepSeek", "https://chat.deepseek.com"]], CRIT=[["fit", "Did it do what I asked?", "It followed my details and limits."], ["true", "Is it correct, as far as I can check?", "Nothing was added, changed, or made up."], ["use", "Could I use it with little fixing?", "It is close to ready for my real purpose."], ["sure", "Was it honest about its limits?", "It showed sources or said what it was unsure about."], ["read", "Is it right for my reader?", "The length, tone, and words fit who it is for."]];
+var RATE=[["No",0],["Partly",1],["Yes",2]];
+var need=0, task=null, chosen=[], scores={}, notes={};
+function $(id){return document.getElementById(id);}
+function el(tag,cls,text){var e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e;}
+function show(id){
+  ["setup","run","finish"].forEach(function(s){$(s).classList.toggle("active",s===id);});
+  var h=$(id).querySelector("h2"); if(h){h.setAttribute("tabindex","-1"); h.focus({preventScroll:true});}
+  $("top").scrollIntoView({behavior:"smooth",block:"start"});
+  var bars=$("progress").children, step=id==="setup"?0:id==="run"?1:2;
+  for(var i=0;i<bars.length;i++){bars[i].className=i<step?"past":(i===step?"now":"");}
+}
+function press(group,btn){Array.prototype.forEach.call(group.children,function(x){x.setAttribute("aria-pressed",x===btn?"true":"false");});}
+function promptText(){
+  if(task===null) return "";
+  if(task==="own") return $("ownPrompt").value.trim();
+  var p=TASKS[task].p; if(p.indexOf("{place}")>=0){ var v=$("place").value.trim(); p=p.replace("{place}",v||"[your town or city]"); }
+  return p;
+}
+function toolNames(){ return chosen.map(function(i){ return i==="other"?($("otherName").value.trim()||"Another tool"):TOOLS[i][0]; }); }
+var missingEl=null;
+function ready(){
+  var msg="", where=null;
+  if(!need){ msg="Still needed: choose a path in step 1."; where=$("paths"); }
+  else if(task===null){ msg="Still needed: choose a task in step 2."; where=$("tasks"); }
+  else if(task==="own"&&!$("ownPrompt").value.trim()){ msg="Still needed: type your own prompt in the box under step 2."; where=$("ownPrompt"); }
+  else if(task!=="own"&&TASKS[task].p.indexOf("{place}")>=0&&!$("place").value.trim()){ msg="Still needed: type your town or city in the box under step 2."; where=$("place"); }
+  else if(chosen.length!==need){ msg="Still needed: choose "+need+" tools in step 3. You have "+chosen.length+"."; where=$("tools"); }
+  else if(chosen.indexOf("other")>=0&&!$("otherName").value.trim()){ msg="Still needed: type the name of the other tool under step 3."; where=$("otherName"); }
+  missingEl=where;
+  Array.prototype.forEach.call(document.querySelectorAll(".missing"),function(x){x.classList.remove("missing");});
+  $("setupHint").className="needs"+(msg?"":" ok"); $("setupHint").textContent=msg||"Ready. Press Start the test.";
+  $("goBtn").setAttribute("aria-disabled",msg?"true":"false");
+  $("toolHint").textContent=need?("Choose "+need+". You have "+chosen.length+"."):"Choose a path first.";
+}
+// build setup controls
+TASKS.forEach(function(t,i){
+  var b=el("button","pick"); b.type="button"; b.setAttribute("aria-pressed","false"); b.appendChild(el("b",null,t.name)); b.appendChild(document.createTextNode(t.why));
+  b.addEventListener("click",function(){task=i; press($("tasks"),b); $("ownWrap").style.display="none"; $("placeWrap").style.display=t.p.indexOf("{place}")>=0?"block":"none"; ready();});
+  $("tasks").appendChild(b);
+});
+(function(){
+  var b=el("button","pick"); b.type="button"; b.setAttribute("aria-pressed","false"); b.appendChild(el("b",null,"My own task")); b.appendChild(document.createTextNode("Best of all. Use something you need this week."));
+  b.addEventListener("click",function(){task="own"; press($("tasks"),b); $("ownWrap").style.display="block"; $("placeWrap").style.display="none"; ready();});
+  $("tasks").appendChild(b);
+})();
+function toolBtn(key,name,maker){
+  var b=el("button","pick"); b.type="button"; b.setAttribute("aria-pressed","false"); b.appendChild(el("b",null,name)); b.appendChild(document.createTextNode(maker));
+  b.addEventListener("click",function(){
+    var at=chosen.indexOf(key);
+    if(at>=0){chosen.splice(at,1); b.setAttribute("aria-pressed","false");}
+    else { if(need&&chosen.length>=need) return ready(); chosen.push(key); b.setAttribute("aria-pressed","true"); }
+    $("otherWrap").style.display=chosen.indexOf("other")>=0?"block":"none"; ready();
+  });
+  $("tools").appendChild(b);
+}
+TOOLS.forEach(function(t,i){toolBtn(i,t[0],"from "+t[1]);}); toolBtn("other","Another tool","Any AI chat tool you use");
+Array.prototype.forEach.call($("paths").children,function(b){ b.addEventListener("click",function(){
+  need=+b.dataset.n; press($("paths"),b);
+  while(chosen.length>need){chosen.pop();}
+  Array.prototype.forEach.call($("tools").children,function(x,i){ var key=i<TOOLS.length?i:"other"; x.setAttribute("aria-pressed",chosen.indexOf(key)>=0?"true":"false"); });
+  $("otherWrap").style.display=chosen.indexOf("other")>=0?"block":"none"; ready();
+}); });
+["ownPrompt","place","otherName"].forEach(function(id){$(id).addEventListener("input",ready);});
+function total(k){ var s=scores[k], t=0, n=0; CRIT.forEach(function(c){ if(s[c[0]]!==undefined){t+=s[c[0]]; n++;} }); return {t:t,n:n}; }
+function runReady(){
+  var left=0; chosen.forEach(function(k){ left+=CRIT.length-total(k).n; });
+  $("runHint").textContent=left?(left+" ratings left."):""; $("resultBtn").setAttribute("aria-disabled",left?"true":"false");
+}
+function go(){
+  if($("goBtn").getAttribute("aria-disabled")==="true"){
+    if(missingEl){ missingEl.classList.add("missing"); missingEl.scrollIntoView({behavior:"smooth",block:"center"}); if(missingEl.focus&&(missingEl.tagName==="INPUT"||missingEl.tagName==="TEXTAREA")) missingEl.focus({preventScroll:true}); }
+    return;
+  }
+  $("thePrompt").textContent=promptText(); scores={}; notes={};
+  var names=toolNames(), box=$("cards"); box.textContent="";
+  chosen.forEach(function(k,ci){
+    scores[k]={};
+    var card=el("div","score"), head=el("div","score-head"); head.appendChild(el("h3",null,names[ci]));
+    if(k!=="other"){ var a=el("a",null,"Open "+names[ci]+" in a new tab ↗"); a.href=TOOLS[k][2]; a.target="_blank"; a.rel="noopener"; head.appendChild(a); }
+    card.appendChild(head);
+    var tot=el("p","tot","Score: 0 of "+(CRIT.length*2));
+    CRIT.forEach(function(c){
+      var row=el("div","crit"); row.appendChild(el("b",null,c[1])); row.appendChild(el("span","d",c[2]));
+      var g=el("div","rate"); g.setAttribute("role","group"); g.setAttribute("aria-label",names[ci]+": "+c[1]);
+      RATE.forEach(function(r){ var b=el("button","chip",r[0]); b.type="button"; b.setAttribute("aria-pressed","false");
+        b.addEventListener("click",function(){ scores[k][c[0]]=r[1]; press(g,b); tot.textContent="Score: "+total(k).t+" of "+(CRIT.length*2); runReady(); }); g.appendChild(b); });
+      row.appendChild(g); card.appendChild(row);
+    });
+    card.appendChild(tot);
+    var lab=el("label","lab","What stood out about "+names[ci]+"? (optional)"); var ta=el("textarea"); ta.id="note"+ci; lab.setAttribute("for",ta.id); ta.style.minHeight="80px"; ta.placeholder="Not saved or sent anywhere.";
+    ta.addEventListener("input",function(){notes[k]=ta.value;}); card.appendChild(lab); card.appendChild(ta);
+    box.appendChild(card);
+  });
+  runReady(); show("run");
+}
+function summary(){
+  var names=toolNames(), rows=chosen.map(function(k,i){return {name:names[i],t:total(k).t,k:k};}).sort(function(a,b){return b.t-a.t;});
+  return rows;
+}
+function results(){
+  if($("resultBtn").getAttribute("aria-disabled")==="true") return;
+  var rows=summary(), max=CRIT.length*2, tie=rows.length>1&&rows[0].t===rows[1].t;
+  $("pickName").textContent=tie?"It is a tie":rows[0].name;
+  $("pickLine").textContent=tie?"Your scorecard could not separate the top tools for this task.":"is your pick for this task.";
+  var ul=$("rows"); ul.textContent=""; rows.forEach(function(r){var li=el("li"); li.appendChild(el("b",null,r.name)); li.appendChild(el("span",null,r.t+" of "+max)); ul.appendChild(li);});
+  $("finalMsg").textContent=tie?"A tie is a real result. It means either tool will do for this job, so choose on cost, privacy, or which one you already have.":"That is your answer for this task, from your own test. A different task may give a different winner, and that is the point.";
+  $("copyMsg").textContent=""; show("finish");
+}
+$("copyPrompt").addEventListener("click",function(){ copy($("thePrompt").textContent,$("copyPromptMsg"),"Copied. Paste it into each tool."); });
+$("copyRes").addEventListener("click",function(){
+  var rows=summary(), max=CRIT.length*2, out="LLM Comparison Lab\n\nPrompt:\n"+$("thePrompt").textContent+"\n\nScores:\n";
+  rows.forEach(function(r){ out+="- "+r.name+": "+r.t+" of "+max+(notes[r.k]?" ("+notes[r.k].trim()+")":"")+"\n"; });
+  copy(out,$("copyMsg"),"Copied. Paste it into your notes.");
+});
+function copy(t,msg,okText){
+  function ok(){msg.textContent=okText;} function fail(){msg.textContent="Could not copy. Select the text and copy it by hand.";}
+  try{ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(ok,fail);} else fail(); }catch(e){fail();}
+}
+$("goBtn").addEventListener("click",go); $("resultBtn").addEventListener("click",results);
+$("backBtn").addEventListener("click",function(){show("setup");});
+$("againBtn").addEventListener("click",function(){show("setup");});
+ready();
+})();
+</script>
+</body>
+</html>
