@@ -177,73 +177,36 @@ body { font-family: 'Nunito Sans', sans-serif; background: var(--cream); color: 
   .tension-examples { grid-template-columns:1fr; }
 }
 
-/* PODCASTS */
-.podcasts-wrap { margin-top: 8px; }
-.podcasts-intro {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
-  border-radius: 20px; padding: 36px; margin-bottom: 32px;
-  color: white; position: relative; overflow: hidden;
-}
-.podcasts-intro::before { content:'🎙️'; position:absolute; font-size:140px; right:-10px; top:-20px; opacity:0.07; }
-.podcasts-intro .pi-badge {
-  display:inline-flex; align-items:center; gap:6px;
-  background:rgba(255,107,53,0.2); border:1px solid rgba(255,107,53,0.4);
-  border-radius:20px; padding:4px 14px; margin-bottom:14px;
-  font-family:'Nunito',sans-serif; font-weight:700; font-size:11px;
-  color:var(--orange); text-transform:uppercase; letter-spacing:0.08em;
-}
-.podcasts-intro h2 { font-family:'Nunito',sans-serif; font-weight:900; font-size:clamp(1.4rem,3vw,2rem); color:white; margin-bottom:10px; }
-.podcasts-intro p { color:rgba(255,255,255,0.7); font-size:14px; line-height:1.7; max-width:600px; }
+/* PODCASTS (demystify-site-style) */
+.podcasts-wrap { margin-top:8px; font-family:'Hanken Grotesk',Arial,sans-serif; color:var(--charcoal); font-size:16px; line-height:1.5; }
+.podcasts-wrap a:focus-visible, .podcasts-wrap button:focus-visible { outline:3px solid var(--charcoal); outline-offset:3px; }
+.podcasts-intro { border-bottom:2px solid var(--charcoal); padding-bottom:20px; margin-bottom:24px; }
+.podcasts-intro .pi-badge { font-weight:700; font-size:14px; text-transform:uppercase; letter-spacing:0.2em; color:var(--red-text); margin-bottom:10px; }
+.podcasts-intro h2 { font-family:'Zilla Slab',Georgia,serif; font-weight:700; font-size:clamp(1.75rem,4.5vw,2.5rem); line-height:1.1; margin-bottom:10px; text-wrap:balance; }
+.podcasts-intro p { font-size:clamp(1.0625rem,2.2vw,1.25rem); max-width:36em; }
 
 .podcast-filter-bar { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:28px; }
-.pod-filter-btn {
-  padding:7px 16px; border-radius:20px; border:2px solid var(--border);
-  background:transparent; font-family:'Nunito',sans-serif; font-weight:700;
-  font-size:12px; cursor:pointer; transition:all 0.18s; color:#888;
-}
-.pod-filter-btn:hover { border-color:var(--orange); color:var(--orange); }
-.pod-filter-btn.active { background:var(--navy); border-color:var(--navy); color:white; }
+.pod-filter-btn { padding:10px 14px; border-radius:0; border:2px solid var(--charcoal); background:var(--cream-light); font-family:'Hanken Grotesk',Arial,sans-serif; font-weight:700; font-size:16px; cursor:pointer; color:var(--charcoal); }
+.pod-filter-btn:hover { text-decoration:underline; }
+.pod-filter-btn.active { background:var(--charcoal); color:var(--cream); }
 
-.podcasts-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:20px; }
-
-.pod-card {
-  background:var(--white); border:2px solid var(--border); border-radius:20px;
-  overflow:hidden; transition:all 0.22s; display:flex; flex-direction:column;
-  opacity:0; transform:translateY(18px); animation:cardIn 0.4s ease forwards;
-}
-.pod-card:hover { transform:translateY(-4px); box-shadow:0 12px 32px rgba(0,0,0,0.12); border-color:#ccd; }
-
-.pod-card-banner {
-  height: 6px;
-}
-.pod-card-body { padding:22px; flex:1; display:flex; flex-direction:column; gap:12px; }
-.pod-card-top { display:flex; align-items:flex-start; gap:14px; }
-.pod-emoji { font-size:36px; flex-shrink:0; line-height:1; }
-.pod-info { flex:1; }
-.pod-title { font-family:'Nunito',sans-serif; font-weight:900; font-size:1rem; color:var(--navy); line-height:1.25; margin-bottom:4px; }
-.pod-host { font-size:12px; color:var(--gray); font-weight:600; margin-bottom:4px; }
-.pod-tags { display:flex; flex-wrap:wrap; gap:5px; }
-.pod-tag {
-  font-family:'Nunito',sans-serif; font-weight:700; font-size:10px;
-  padding:2px 8px; border-radius:10px; text-transform:uppercase; letter-spacing:0.08em;
-}
-.pod-desc { font-size:13px; color:#444; line-height:1.65; flex:1; }
-.pod-why {
-  background:var(--light); border-left:3px solid var(--orange);
-  border-radius:0 8px 8px 0; padding:9px 12px;
-  font-size:12px; color:#555; line-height:1.6;
-}
-.pod-why strong { color:var(--navy); font-family:'Nunito',sans-serif; font-weight:800; font-size:11px; text-transform:uppercase; letter-spacing:0.08em; display:block; margin-bottom:2px; }
-.pod-links { display:flex; gap:8px; flex-wrap:wrap; padding-top:4px; margin-top:auto; border-top:1px solid var(--border); padding:12px 22px 16px; }
-.pod-link-btn {
-  display:inline-flex; align-items:center; gap:5px;
-  padding:6px 14px; border-radius:10px; border:1.5px solid var(--border);
-  font-family:'Nunito',sans-serif; font-weight:700; font-size:11.5px;
-  text-decoration:none; transition:all 0.18s; color:var(--navy); background:var(--light);
-}
-.pod-link-btn:hover { background:var(--navy); color:white; border-color:var(--navy); }
-.pod-link-btn.featured { background:var(--orange); border-color:var(--orange); color:white; }
-.pod-link-btn.featured:hover { background:#e55a25; }
+.podcasts-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:24px; }
+.pod-card { background:var(--cream-light); border:2px solid var(--charcoal); display:flex; flex-direction:column; }
+.pod-card-banner, .pod-emoji { display:none; }
+.pod-card-body { padding:22px; flex:1; display:flex; flex-direction:column; gap:14px; }
+.pod-feat { display:block; font-family:'Hanken Grotesk',Arial,sans-serif; font-weight:700; font-size:13px; text-transform:uppercase; letter-spacing:0.2em; color:var(--red-text); margin-bottom:6px; }
+.pod-title { font-family:'Zilla Slab',Georgia,serif; font-weight:700; font-size:24px; line-height:1.15; margin-bottom:6px; }
+.pod-host { font-weight:500; margin-bottom:8px; }
+.pod-tags { display:flex; flex-wrap:wrap; gap:6px; }
+.pod-tag { font-weight:700; font-size:12px; padding:2px 8px; border:2px solid var(--charcoal); text-transform:uppercase; letter-spacing:0.08em; }
+.pod-tags.aud .pod-tag { border-style:dashed; }
+.pod-desc { flex:1; }
+.pod-why { background:var(--cream); padding:12px 14px; }
+.pod-why strong { font-weight:700; font-size:13px; text-transform:uppercase; letter-spacing:0.2em; color:var(--red-text); display:block; margin-bottom:4px; }
+.pod-links { display:flex; gap:8px; flex-wrap:wrap; margin-top:auto; border-top:2px solid var(--charcoal); padding:14px 22px 18px; }
+.pod-link-btn { display:inline-block; padding:8px 14px; border:2px solid var(--charcoal); font-weight:700; font-size:15px; text-decoration:none; color:var(--charcoal); background:var(--cream-light); }
+.pod-link-btn:hover { text-decoration:underline; }
+.pod-link-btn.featured { background:var(--charcoal); color:var(--cream); }
 
 /* AI LITERACY SECTION (demystify-site-style) */
 .ailiteracy-wrap { margin-top:0; font-family:'Hanken Grotesk',Arial,sans-serif; color:var(--charcoal); font-size:16px; line-height:1.5; }
@@ -1363,16 +1326,16 @@ function renderPodcasts() {
 
   wrap.innerHTML = `
     <div class="podcasts-intro">
-      <div class="pi-badge">🎙️ Curated Listening</div>
+      <div class="pi-badge">Curated Listening</div>
       <h2>AI & Futurism Podcasts & YouTube</h2>
       <p>The best shows and channels for staying informed, thinking critically, and going deeper on AI, curated for educators, trainers, and anyone on a learning journey. Works on any device, any commute, any bandwidth.</p>
     </div>
     <div class="podcast-filter-bar">
-      <button class="pod-filter-btn active" data-audience="all">🎧 All (${PODCASTS.length})</button>
-      <button class="pod-filter-btn" data-audience="new-to-ai">🟢 New to AI (${audienceCounts['new-to-ai']||0})</button>
-      <button class="pod-filter-btn" data-audience="educators">🏫 Educators (${audienceCounts['educators']||0})</button>
-      <button class="pod-filter-btn" data-audience="futurism">🔮 Futurism (${audienceCounts['futurism']||0})</button>
-      <button class="pod-filter-btn" data-audience="professionals">💼 Professionals (${audienceCounts['professionals']||0})</button>
+      <button class="pod-filter-btn active" data-audience="all">All (${PODCASTS.length})</button>
+      <button class="pod-filter-btn" data-audience="new-to-ai">New to AI (${audienceCounts['new-to-ai']||0})</button>
+      <button class="pod-filter-btn" data-audience="educators">Educators (${audienceCounts['educators']||0})</button>
+      <button class="pod-filter-btn" data-audience="futurism">Futurism (${audienceCounts['futurism']||0})</button>
+      <button class="pod-filter-btn" data-audience="professionals">Professionals (${audienceCounts['professionals']||0})</button>
     </div>
     <div class="podcasts-grid" id="podcasts-grid"></div>
   `;
@@ -1390,37 +1353,37 @@ function renderPodcasts() {
     filtered.forEach((p, i) => {
       const card = document.createElement('div');
       card.className = 'pod-card';
-      card.style.animationDelay = `${i * 60}ms`;
+      
 
       const tagsHTML = p.tags.map(t =>
-        `<span class="pod-tag" style="background:${p.tagColor}22;color:${p.tagColor}">${t}</span>`
+        `<span class="pod-tag">${t}</span>`
       ).join('');
 
       const audienceHTML = p.audience.map(a =>
-        `<span class="pod-tag" style="background:${POD_AUDIENCES[a].color}15;color:${POD_AUDIENCES[a].color}">${POD_AUDIENCES[a].label}</span>`
+        `<span class="pod-tag">${POD_AUDIENCES[a].label}</span>`
       ).join('');
 
       card.innerHTML = `
-        <div class="pod-card-banner" style="background:${p.banner}"></div>
+        
         <div class="pod-card-body">
           <div class="pod-card-top">
             <div class="pod-emoji">${p.emoji}</div>
             <div class="pod-info">
-              <div class="pod-title">${p.title}${p.featured ? ' ⭐' : ''}</div>
+              <div class="pod-title">${p.featured ? '<span class="pod-feat">Featured</span>' : ''}${p.title}</div>
               <div class="pod-host">${p.host} · ${p.freq}</div>
               <div class="pod-tags">${tagsHTML}</div>
             </div>
           </div>
           <div class="pod-desc">${p.desc}</div>
-          <div class="pod-why"><strong>🎯 ${p.whyLabel || 'Why you should listen'}</strong>${p.why}</div>
-          <div class="pod-tags" style="margin-top:4px">${audienceHTML}</div>
+          <div class="pod-why"><strong>${p.whyLabel || 'Why you should listen'}</strong>${p.why}</div>
+          <div class="pod-tags aud">${audienceHTML}</div>
         </div>
         <div class="pod-links">
-          ${p.shorts ? `<a class="pod-link-btn" href="${p.shorts}" target="_blank">🎬 Shorts</a>` : ''}
-          ${p.spotify ? `<a class="pod-link-btn${p.featured ? ' featured' : ''}" href="${p.spotify}" target="_blank">🎵 Spotify</a>` : ''}
-          ${p.apple ? `<a class="pod-link-btn" href="${p.apple}" target="_blank">🎵 Apple</a>` : ''}
-          ${p.youtube ? `<a class="pod-link-btn" href="${p.youtube}" target="_blank">▶️ YouTube</a>` : ''}
-          ${p.web ? `<a class="pod-link-btn" href="${p.web}" target="_blank">🌐 Website</a>` : ''}
+          ${p.shorts ? `<a class="pod-link-btn" href="${p.shorts}" target="_blank">Shorts</a>` : ''}
+          ${p.spotify ? `<a class="pod-link-btn${p.featured ? ' featured' : ''}" href="${p.spotify}" target="_blank">Spotify</a>` : ''}
+          ${p.apple ? `<a class="pod-link-btn" href="${p.apple}" target="_blank">Apple</a>` : ''}
+          ${p.youtube ? `<a class="pod-link-btn" href="${p.youtube}" target="_blank">YouTube</a>` : ''}
+          ${p.web ? `<a class="pod-link-btn" href="${p.web}" target="_blank">Website</a>` : ''}
         </div>
       `;
       grid.appendChild(card);
