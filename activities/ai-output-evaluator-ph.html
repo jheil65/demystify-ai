@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Output Evaluator · Demystifying AI for All</title>
+<meta name="description" content="Three realistic AI replies that sound ready to send. Find what needs confirming before you use them. Expect to miss some. Free, no login, nothing saved.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌍</text></svg>">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;700&family=Hanken+Grotesk:wght@400;500;700&display=swap">
+<style>
+:root{--cream:#EFE3CC;--cream-light:#F7EEDD;--charcoal:#26262A;--coral:#E8452C;--red-text:#B5321E;--coral-light:#F0705A}
+*{box-sizing:border-box;margin:0}
+body{background:var(--cream);color:var(--charcoal);font-family:'Hanken Grotesk',Arial,sans-serif;font-size:17px;line-height:1.55;padding:0 16px}
+h1,h2,h3{font-family:'Zilla Slab',Georgia,serif;font-weight:700;text-wrap:balance}
+h1{font-size:clamp(2.25rem,6vw,3.75rem);line-height:1.02;letter-spacing:-.01em}
+h2{font-size:clamp(1.5rem,3.6vw,2rem);line-height:1.15;margin-bottom:.75rem}
+h2:focus{outline:none}
+a{color:var(--charcoal)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--charcoal);outline-offset:3px}
+.container{max-width:900px;margin:0 auto;padding-block:2rem}
+.hero{padding:2rem 0 1rem;margin-bottom:1rem}
+.hero p{margin-top:1rem;font-size:clamp(1.0625rem,2.2vw,1.25rem);max-width:34em}
+.eyebrow{display:block;font-size:13px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--red-text);margin-bottom:8px}
+.region-toggle{display:flex;margin-bottom:1.5rem}
+.region-toggle a{font-size:16px;font-weight:700;text-decoration:none;border:2px solid var(--charcoal);background:var(--cream-light);padding:9px 14px}
+.region-toggle a:first-child{border-right-width:1px}.region-toggle a:last-child{border-left-width:1px}
+.region-toggle a.active{background:var(--charcoal);color:var(--cream)}
+.region-toggle a:hover:not(.active){text-decoration:underline}
+.progress{display:flex;gap:.5rem;margin-bottom:1.5rem}
+.progress span{flex:1;height:10px;background:var(--cream-light);border:2px solid var(--charcoal)}
+.progress span.now{background:var(--coral);border-color:var(--coral)}
+.progress span.past{background:var(--charcoal)}
+.panel{background:var(--cream-light);border:2px solid var(--charcoal);padding:2rem}
+.panel>p{max-width:40em}
+.checks{list-style:none;padding:0;margin:1.5rem 0;display:grid;grid-template-columns:1fr 1fr;gap:0 2rem}
+.checks li{border-top:2px solid var(--charcoal);padding:14px 0 18px}
+.checks b{display:block;font-family:'Zilla Slab',Georgia,serif;font-size:22px;line-height:1.2;margin-bottom:4px}
+.note{border:2px dashed var(--charcoal);background:var(--cream);padding:1rem 1.25rem;margin:1.25rem 0;font-size:16px}
+.btn{font-family:inherit;font-size:17px;font-weight:700;padding:12px 22px;border:2px solid var(--charcoal);cursor:pointer;background:var(--charcoal);color:var(--cream);text-decoration:none;display:inline-block}
+.btn.soft{background:var(--cream-light);color:var(--charcoal)}
+.btn:hover{text-decoration:underline}
+.btn[aria-disabled="true"]{background:var(--cream);color:var(--charcoal);border-style:dashed;cursor:default;text-decoration:none}
+.actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:1.5rem}
+.actions .hint{font-size:16px}
+.round-head{background:var(--charcoal);color:var(--cream);padding:1rem 2rem;margin:-2rem -2rem 1.5rem;display:flex;flex-wrap:wrap;gap:4px 16px;align-items:baseline;justify-content:space-between}
+.round-head b{font-family:'Zilla Slab',Georgia,serif;font-size:22px}
+.round-head span{font-size:13px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--coral-light)}
+.asked{background:var(--cream);padding:1rem 1.25rem;margin-bottom:1rem}
+.asked p{font-weight:500}
+.source{border-left:3px solid var(--charcoal);padding-left:1rem;margin:0 0 1.25rem;font-style:italic}
+.source .eyebrow{font-style:normal}
+.line{border:2px solid var(--charcoal);background:var(--cream-light);padding:1rem 1.25rem;margin-top:12px}
+.line>p{font-size:18px;font-weight:500;margin-bottom:12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-family:inherit;font-size:16px;font-weight:500;color:var(--charcoal);background:var(--cream-light);border:2px solid var(--charcoal);padding:8px 12px;cursor:pointer;min-height:44px}
+.chip:hover{text-decoration:underline}
+.chip[aria-pressed="true"]{background:var(--charcoal);color:var(--cream);font-weight:700}
+.chip:disabled{cursor:default;text-decoration:none}
+.chip:disabled:not([aria-pressed="true"]){border-style:dashed;opacity:.75}
+.chip.answer:disabled{border:3px solid var(--charcoal);border-style:solid;opacity:1;font-weight:700}
+.fb{margin-top:12px;padding:12px 14px;font-size:16px;border:2px solid var(--charcoal);background:var(--cream)}
+.fb b{display:block}
+.fb.miss{border:3px solid var(--red-text)}.fb.miss b{color:var(--red-text)}
+.fb.alarm{border-style:dashed}
+.round-sum{margin-top:1.5rem;font-weight:700;font-size:18px}
+.done{background:var(--coral);padding:2.5rem 2rem}
+.done h2{font-size:clamp(2.25rem,7vw,4rem);line-height:1;color:var(--cream);margin-bottom:.5rem}
+.done .big{font-family:'Zilla Slab',Georgia,serif;font-weight:700;color:var(--cream);font-size:clamp(4rem,14vw,7rem);line-height:1}
+.done>p{font-weight:500;max-width:36em}
+.done .box{background:var(--cream-light);border:2px solid var(--charcoal);padding:1.25rem 1.5rem;margin-top:1.5rem}
+.done .box ul{margin:.5rem 0 0;padding-left:1.25rem}
+.done .box li{margin-bottom:.25rem}
+.stats{display:flex;flex-wrap:wrap;gap:8px 2.5rem}
+.stats div b{display:block;font-family:'Zilla Slab',Georgia,serif;font-size:28px;line-height:1.1}
+.stats div span{font-size:13px;text-transform:uppercase;letter-spacing:.14em;font-weight:700}
+.step{display:none}.step.active{display:block}
+@media (max-width:600px){.container{padding-block:1rem}.panel{padding:1.25rem}.round-head{margin:-1.25rem -1.25rem 1.25rem;padding:1rem 1.25rem}.checks{grid-template-columns:1fr}.done{padding:2rem 1.25rem}.chip{flex:1 1 45%}.line{padding:1rem}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+.prompt{background:var(--cream);padding:1.25rem 1.5rem;margin-bottom:1.5rem}
+.prompt p{margin-top:.6rem;max-width:44em}
+.reply{border:2px solid var(--charcoal);background:var(--cream-light);padding:1.25rem 1.5rem;font-size:18px;line-height:1.9}
+.reply p{margin:0 0 .75rem;max-width:42em}.reply p:last-child{margin-bottom:0}
+.seg{cursor:pointer;padding:3px 2px;border-bottom:2px dotted var(--charcoal);-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.seg:hover{background:var(--cream)}
+.seg:focus-visible{outline:3px solid var(--charcoal);outline-offset:2px}
+.seg[aria-pressed="true"]{background:var(--charcoal);color:var(--cream);border-bottom-color:var(--charcoal)}
+.reply.locked .seg{cursor:default;border-bottom-color:transparent}
+.reply.locked .seg:hover{background:none}
+.reply.locked .seg[aria-pressed="true"]:hover{background:var(--charcoal)}
+.reply.locked .seg.missed{background:none;color:var(--charcoal);border-bottom:4px solid var(--red-text)}
+.reply.locked .seg.extra{background:none;color:var(--charcoal);border-bottom:2px dashed var(--charcoal)}
+.reply.locked .seg.extra:hover{background:none}
+.how{font-size:16px;margin:0 0 .75rem}
+.key{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:15px;margin-top:12px}
+.key span::before{content:'';display:inline-block;width:22px;height:12px;margin-right:8px;vertical-align:-1px}
+.key .k1::before{background:var(--charcoal)}.key .k2::before{border-bottom:4px solid var(--red-text)}.key .k3::before{border-bottom:2px dashed var(--charcoal)}
+.item{border:2px solid var(--charcoal);background:var(--cream-light);padding:1rem 1.25rem;margin-top:12px;font-size:16px}
+.item q{display:block;font-size:17px;font-weight:500;font-style:italic;margin-bottom:8px;quotes:'\201C' '\201D'}
+.item .st{display:block;font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px}
+.item.missed{border:3px solid var(--red-text)}.item.missed .st{color:var(--red-text)}
+.item.ok{border-style:dashed;background:var(--cream)}
+.item .tags{display:block;font-weight:700;margin-top:8px}
+.reveal h3{font-size:22px;margin:2rem 0 .25rem}
+@media (max-width:600px){.reply{padding:1rem;font-size:17px}.prompt{padding:1rem}}
+.site-nav{padding:28px 40px 0;font-family:'Hanken Grotesk',Arial,sans-serif}
+.site-nav-inner{max-width:1168px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 32px;border-bottom:2px solid var(--charcoal);padding-bottom:12px}
+.wordmark{font-family:'Zilla Slab',Georgia,serif;font-weight:700;font-size:24px;text-decoration:none;padding:10px 0;color:var(--charcoal)}
+.site-nav-links{display:flex;flex-wrap:wrap;gap:0 28px}
+.site-nav-links a{font-weight:500;font-size:16px;text-decoration:none;padding:12px 0;color:var(--charcoal)}
+.site-nav a:hover{text-decoration:underline}
+.site-nav-links a[aria-current="page"]{font-weight:700;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
+.site-footer{max-width:900px;margin:0 auto;padding:8px 0 40px;font-size:16px;line-height:1.5}
+.site-footer::before{content:'';display:block;border-top:2px solid var(--charcoal);margin-bottom:18px}
+.site-footer p{margin:0 0 4px;max-width:75ch}
+.site-footer a{color:var(--charcoal)}
+@media (max-width:600px){.site-nav{padding:16px 4px 0}.site-nav-links{gap:0 20px}}
+h1 .accent{color:var(--coral)}
+</style>
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Site">
+  <div class="site-nav-inner">
+    <a class="wordmark" href="../">Demystifying AI</a>
+    <div class="site-nav-links">
+      <a href="../learn.html">Learn AI</a>
+      <a href="../toolbox/">AI Toolbox</a>
+      <a href="./" aria-current="page">Activities</a>
+      <a href="../playground/">AI Playground</a>
+      <a href="../spark-intro/">SPARK AI Express</a>
+    </div>
+  </div>
+</nav>
+
+<main class="container" id="top">
+  <div class="hero">
+    <h1>AI Output <span class="accent">Evaluator</span></h1>
+    <p>AI replies sound finished whether they are right or wrong. Practice finding what needs a second look before you hit send.</p>
+  </div>
+
+  <div class="region-toggle" role="group" aria-label="Choose a version">
+    <a href="ai-output-evaluator.html">United States</a>
+    <a href="ai-output-evaluator-ph.html" class="active">Philippines</a>
+  </div>
+
+  <div class="progress" id="progress" role="img" aria-label="Three rounds"><span></span><span></span><span></span></div>
+
+  <div class="step active" id="intro">
+    <section class="panel">
+      <h2>You will miss some. That is the point.</h2>
+      <p>In each round you will read a detailed request and the reply an AI gave. The reply is well written and mostly right. Each reply is split into underlined segments, and we will tell you how many of them need a second look. Your job is to find which ones.</p>
+      <div class="note"><strong>Expect to struggle:</strong> These replies are written the way real AI mistakes happen: quietly, inside good sentences. Missing things here is expected, and it is how the skill grows. There is no passing score, and nothing you do is saved.</div>
+      <p>Four questions help. Keep them in mind as you read:</p>
+      <ul class="checks">
+        <li><b>Is it true?</b>Did it add, change, or round off something I gave it? Is there a claim with no source?</li>
+        <li><b>Is it fair?</b>Does it assume things about people that I did not say?</li>
+        <li><b>Does it fit what I asked?</b>Did it quietly drop one of my details or limits?</li>
+        <li><b>Is it too sure?</b>Did a maybe become a promise?</li>
+      </ul>
+      <div class="actions"><button class="btn" type="button" id="startBtn">Start round 1 →</button><span class="hint">Three rounds, 15 to 20 minutes.</span></div>
+    </section>
+  </div>
+
+  <div class="step" id="round">
+    <section class="panel">
+      <div class="round-head"><h2 style="margin:0;font-size:22px" id="roundTitle">Round 1 of 3</h2><span id="roundTag"></span></div>
+      <div class="prompt"><span class="eyebrow">You asked</span><div id="prompt"></div></div>
+      <span class="eyebrow">The AI replied</span>
+      <p class="how" id="how"></p>
+      <div class="reply" id="reply"></div>
+      <div class="key" id="key" style="display:none"><span class="k1">You caught it</span><span class="k2">Slipped by</span><span class="k3">Marked, but it holds up</span></div>
+      <div class="reveal" id="reveal" style="display:none" aria-live="polite">
+        <h3 id="revealHead">What needed a second look</h3>
+        <p class="round-sum" id="roundSum" style="margin-top:.25rem"></p>
+        <div id="items"></div>
+        <div class="note"><strong>Before you move on:</strong> <span id="askText"></span></div>
+      </div>
+      <div class="actions">
+        <button class="btn" type="button" id="checkBtn">Show me what I missed</button>
+        <button class="btn" type="button" id="nextBtn" style="display:none">Next round →</button>
+        <span class="hint" id="hint" aria-live="polite"></span>
+      </div>
+    </section>
+  </div>
+
+  <div class="step" id="finish">
+    <section class="done">
+      <h2>Evaluation Complete!</h2>
+      <div class="big" id="finalScore">0 of 0</div>
+      <p>caught before sending</p>
+      <p id="finalMsg" style="margin-top:1rem"></p>
+      <div class="box stats">
+        <div><b id="missCount">0</b><span>Slipped by</span></div>
+        <div><b id="extraCount">0</b><span>Marked, but held up</span></div>
+      </div>
+      <div class="box">
+        <strong>Your turn:</strong> Open the last AI reply you used for something that mattered. Read it again with the request you gave beside it. What would you confirm now that you did not confirm then?
+        <ul><li>Is it true?</li><li>Is it fair?</li><li>Does it fit what I asked?</li><li>Is it too sure?</li></ul>
+      </div>
+      <div class="actions">
+        <button class="btn" type="button" id="againBtn">Try again</button>
+        <a class="btn soft" href="../learn.html#hcai">Read about Human-Centered AI</a>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <p>Part of <a href="../">Demystifying AI for All</a>. Built by <strong>Jeffery Heil</strong>, educator, ed-tech consultant, and speaker. Lead Expert for <a href="https://globallearningaccess.com/home" target="_blank" rel="noopener">Global Learning Access</a>.</p>
+  <p>An independent, free resource. Some activities were built for GLA certification courses.</p>
+</footer>
+
+<script>
+(function(){
+var ROUNDS=[{"tag": "School", "title": "A message to families", "prompt": ["I coordinate our after-school tutoring program. Write a short message to families announcing the next session.", "The facts: it starts March 9, Mondays and Wednesdays from 3:30 to 5:00, free, about 40 spots. Sign up by February 27 at the front office or by text.", "Many of our families are more comfortable in Filipino than in English, and some do not have reliable internet, so keep the language plain and under 120 words.", "Our pilot last term suggested that students who came regularly may have improved in reading, but we only tracked 18 students."], "reply": [{"t": "Dear Parents,", "tags": ["fit"], "why": "You wrote \"families.\" Many children are raised by grandparents, guardians, or older siblings. It is one small word, and the easiest thing in this reply to miss.", "br": true}, {"t": "We are excited to announce our next tutoring session!", "tags": [], "why": "Friendly and accurate.", "br": false}, {"t": "Beginning March 9, students can receive free academic support every Monday and Wednesday from 3:30 to 5:00.", "tags": [], "why": "Every fact here matches what you gave.", "br": false}, {"t": "Our pilot last term proved that students who attend regularly improve their reading scores.", "tags": ["sure"], "why": "You said the pilot \"suggested\" students \"may have improved,\" and that you only tracked 18. The reply turned a careful maybe into proof. Families would be making decisions on a promise you never made.", "br": false}, {"t": "With over 40 spots available, there is room for everyone,", "tags": ["true", "sure"], "why": "\"About 40\" became \"over 40,\" and \"room for everyone\" is a promise you cannot keep if 60 families sign up.", "br": false}, {"t": "but please register by February 27.", "tags": [], "why": "The deadline is right.", "br": false}, {"t": "To enroll, complete the Google Form on our Facebook page or visit the front office.", "tags": ["true", "fit"], "why": "You never mentioned an online form. The reply invented one, and it quietly dropped the text option. For families without reliable internet, that is the difference between enrolling and not.", "br": false}, {"t": "Research shows tutoring is most effective when students attend at least twice a week.", "tags": ["true"], "why": "It sounds reasonable, and it may even be right. But there is no source, and you did not supply this. \"Research shows\" with nothing behind it is a claim to confirm or cut.", "br": false}, {"t": "We look forward to partnering with you to maximize your child's academic outcomes!", "tags": ["fit"], "why": "You asked for plain language for families who are not reading in their first language. \"Maximize your child's academic outcomes\" is not plain.", "br": false}], "ask": "Which of these would have caused the most trouble if the message had gone home as written?"}, {"tag": "Workplace", "title": "An update for the boss", "prompt": ["I'm the office manager at a small dental clinic. Turn my notes from today's staff meeting into a short update for Dr. Reyes, who missed it. She only wants decisions and anything she needs to act on.", "My notes: New scheduling software. Front desk likes it. Hygienists say the reminder texts go out too late. Liza thinks it might be a settings issue and will call the vendor. Not decided whether to keep it after the trial ends on the 30th.", "Supply costs up roughly 8% since June, mostly gloves. Jun suggested getting quotes from two other suppliers, nobody objected.", "Holiday schedule: closed the 24th and 25th. The 26th is still undecided because two people asked for it off. Dr. Reyes needs to decide about the 26th by next Friday."], "reply": [{"t": "Hi Dr. Reyes, here is a summary of today's staff meeting.", "tags": [], "why": "A clear opening.", "br": true}, {"t": "Scheduling software: The team is happy with the new system.", "tags": ["true"], "why": "The front desk likes it. The hygienists raised a problem. The reply blended two groups into one happy team, and the disagreement disappeared.", "br": false}, {"t": "Reminder texts are going out too late because of a settings issue, which Liza will fix with the vendor.", "tags": ["sure"], "why": "Liza \"thinks it might be\" a settings issue and \"will call\" the vendor. The reply turned a guess into a cause and a phone call into a fix.", "br": false}, {"t": "A decision on keeping it will come when the trial ends on the 30th.", "tags": [], "why": "This matches your notes: undecided, trial ends on the 30th.", "br": true}, {"t": "Supplies: Costs have risen 8% since June, driven by gloves.", "tags": [], "why": "\"Roughly\" and \"mostly\" were dropped. That is a small loss for a staff update, so this holds up. If the number were going into a budget, you would put \"roughly\" back.", "br": false}, {"t": "The team agreed to switch to a cheaper supplier.", "tags": ["true"], "why": "Jun suggested getting quotes from two suppliers, and nobody objected. Nobody agreed to switch. If Dr. Reyes reads this, she may think a decision was made without her.", "br": true}, {"t": "Holiday schedule: The clinic will be closed from the 24th through the 26th.", "tags": ["true"], "why": "The 24th and 25th are decided. The 26th is the open question, and the reply closed it for her.", "br": false}, {"t": "No action is needed from you at this time.", "tags": ["fit", "true"], "why": "This is the most costly line in the reply. You asked for \"anything she needs to act on,\" and there is exactly one thing: her decision about the 26th by next Friday. The reply says the opposite, in the calmest sentence on the page.", "br": false}], "ask": "Notice how calm the last line sounds. What made it easy to trust?"}, {"tag": "Personal", "title": "A money decision", "prompt": ["I have ₱30,000 in savings and no other cushion. My motorcycle needs a ₱14,000 repair, and I owe ₱22,000 on a credit card at 3% interest a month.", "I'm paid by the day and my days change week to week, so some months are tight. I need the motorcycle to get to work.", "Should I pay off the card or fix the motorcycle first? Please give me your reasoning, and tell me what you are unsure about."], "reply": [{"t": "This is a common dilemma, and there is a clear answer: pay off the credit card first.", "tags": [], "why": "A direct recommendation is what you asked for. Whether it is the right one depends on what follows.", "br": true}, {"t": "At 3% interest a month, that balance costs you about ₱660 a month,", "tags": [], "why": "The arithmetic is right: 22,000 × 3% = ₱660. Confirming something and finding it correct is part of the skill too.", "br": false, "keep": true}, {"t": "so clearing it is a guaranteed 3% a month, which beats anything else you could do with the money.", "tags": ["sure", "fit"], "why": "\"Beats anything else\" skips the fact you stressed: you need the motorcycle to get to work. The reply compared interest rates. It never weighed the cost of not being able to earn.", "br": false}, {"t": "That leaves you ₱8,000, and most repair shops accept installment payments, so the repair can wait a month or two.", "tags": ["true", "fit"], "why": "The subtraction is right. The rest is a guess about businesses the AI has never contacted, and \"can wait\" assumes the motorcycle will keep running. You are the only one who knows whether it will.", "br": true}, {"t": "With your steady income, you can rebuild your savings quickly.", "tags": ["fit"], "why": "You said the opposite: your pay changes week to week and some months are tight. The reply answered a different, easier person.", "br": false}, {"t": "Many advisers suggest building an emergency fund of three to six months of expenses, so make that your next goal.", "tags": [], "why": "A widely repeated guideline, offered as a goal and not as a promise. It holds up.", "br": true}, {"t": "I'm confident this is the best plan for your situation.", "tags": ["sure", "fit"], "why": "You asked what it was unsure about. It told you it was confident. A reply that names no doubts about a decision this personal has not done what you asked.", "br": false}], "ask": "The arithmetic in this reply was correct. How did that affect how much you trusted the rest?"}];
+var NAME={"true":"Is it true?","fair":"Is it fair?","fit":"Does it fit what I asked?","sure":"Is it too sure?"};
+var cur=0, picks=[], locked=false, tot={problems:0,caught:0,extra:0};
+function $(id){return document.getElementById(id);}
+function el(tag,cls,text){var e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e;}
+function show(id){
+  ["intro","round","finish"].forEach(function(s){$(s).classList.toggle("active",s===id);});
+  var h=$(id).querySelector("h2"); if(h){h.setAttribute("tabindex","-1"); h.focus({preventScroll:true});}
+  $("top").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function progress(){
+  var bars=$("progress").children, on=$("round").classList.contains("active");
+  for(var i=0;i<bars.length;i++){bars[i].className=i<cur?"past":(i===cur&&on?"now":"");}
+}
+function count(){
+  var n=picks.filter(Boolean).length;
+  var np=ROUNDS[cur].reply.filter(function(x){return x.tags.length;}).length;
+  $("hint").textContent=n+" marked. Looking for "+np+".";
+}
+function render(){
+  var r=ROUNDS[cur]; picks=r.reply.map(function(){return false;}); locked=false;
+  $("roundTitle").textContent="Round "+(cur+1)+" of "+ROUNDS.length+": "+r.title; $("roundTag").textContent=r.tag;
+  var pr=$("prompt"); pr.textContent=""; r.prompt.forEach(function(t){pr.appendChild(el("p",null,t));});
+  var box=$("reply"); box.textContent=""; box.className="reply";
+  var p=el("p"); box.appendChild(p);
+  r.reply.forEach(function(sg,i){
+    var s=el("span","seg",sg.t); s.setAttribute("role","button"); s.setAttribute("tabindex","0"); s.setAttribute("aria-pressed","false"); s.id="seg"+i;
+    function tog(){ if(locked) return; picks[i]=!picks[i]; s.setAttribute("aria-pressed",picks[i]?"true":"false"); count(); }
+    s.addEventListener("click",tog);
+    s.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){e.preventDefault(); tog();} });
+    p.appendChild(s); p.appendChild(document.createTextNode(" "));
+    if(sg.br&&i<r.reply.length-1){p=el("p"); box.appendChild(p);}
+  });
+  var np=r.reply.filter(function(x){return x.tags.length;}).length;
+  $("how").textContent="This reply is split into "+r.reply.length+" underlined segments. "+np+" of them have something you should confirm or change before using it. Tap the segments you would flag. Tap again to unmark.";
+  $("reveal").style.display="none"; $("items").textContent=""; $("how").style.display="block"; $("key").style.display="none";
+  $("checkBtn").style.display="inline-block"; $("nextBtn").style.display="none"; $("hint").style.display="inline";
+  count(); progress();
+}
+function check(){
+  var r=ROUNDS[cur], caught=0, probs=0, extra=0; locked=true; $("reply").className="reply locked";
+  var items=$("items"); items.textContent="";
+  r.reply.forEach(function(sg,i){
+    var s=$("seg"+i), isP=sg.tags.length>0, hit=picks[i], cls, st;
+    s.removeAttribute("tabindex"); s.setAttribute("aria-disabled","true");
+    if(isP){ probs++; if(hit){caught++; cls="caught"; st="✓ You caught this";} else {cls="missed"; st="✗ This slipped by"; s.classList.add("missed");} }
+    else { if(hit){extra++; cls="ok"; st="→ You marked this, and it holds up"; s.classList.add("extra");} else {cls="ok"; st="Worth checking, and it checks out"; if(!sg.keep) return;} }
+    var card=el("div","item "+cls); card.appendChild(el("span","st",st)); card.appendChild(el("q",null,sg.t)); card.appendChild(document.createTextNode(sg.why));
+    if(isP){ card.appendChild(el("span","tags","The question to ask: "+sg.tags.map(function(k){return NAME[k];}).join(" ")));} 
+    items.appendChild(card);
+  });
+  tot.problems+=probs; tot.caught+=caught; tot.extra+=extra;
+  $("roundSum").textContent="You caught "+caught+" of "+probs+"."+(caught<probs?" The ones that slipped by are where the learning is.":" That is careful reading.");
+  $("askText").textContent=r.ask;
+  $("reveal").style.display="block"; $("how").style.display="none"; $("key").style.display="flex";
+  $("checkBtn").style.display="none"; $("hint").style.display="none";
+  $("nextBtn").textContent=cur===ROUNDS.length-1?"See my results →":"Next round →"; $("nextBtn").style.display="inline-block";
+  $("reveal").scrollIntoView({behavior:"smooth",block:"start"}); $("revealHead").setAttribute("tabindex","-1"); $("revealHead").focus({preventScroll:true});
+}
+function next(){
+  cur++;
+  if(cur<ROUNDS.length){render(); show("round"); return;}
+  $("finalScore").textContent=tot.caught+" of "+tot.problems;
+  $("missCount").textContent=tot.problems-tot.caught; $("extraCount").textContent=tot.extra;
+  var missed=tot.problems-tot.caught;
+  $("finalMsg").textContent=missed===0?"You caught every one. That is rare. These replies were written to get past a careful reader.":"Every one of the "+missed+" that slipped by was in a reply that sounded finished and ready to send. That is what makes this a skill worth practicing, and you have now practiced it three times.";
+  show("finish"); progress();
+}
+function start(){cur=0; tot={problems:0,caught:0,extra:0}; render(); show("round"); progress();}
+$("startBtn").addEventListener("click",start); $("againBtn").addEventListener("click",start);
+$("checkBtn").addEventListener("click",check); $("nextBtn").addEventListener("click",next);
+})();
+</script>
+</body>
+</html>
