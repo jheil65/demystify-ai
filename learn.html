@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Learn AI | Demystifying AI for All</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌍</text></svg>">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Nunito+Sans:wght@300;400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;700&family=Hanken+Grotesk:wght@400;500;700&display=swap">
 <style>
 :root {
@@ -32,7 +31,7 @@
   --green:  #1B3A6B;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Nunito Sans', sans-serif; background: var(--cream); color: var(--ink); overflow-x: hidden; }
+body { font-family: 'Hanken Grotesk', Arial, sans-serif; background: var(--cream); color: var(--charcoal); font-size:16px; line-height:1.5; overflow-x: hidden; }
 
 /* SITE NAV + HERO + TAB BAR (demystify-site-style) */
 .site-nav, .hero, .cat-strip { font-family:'Hanken Grotesk',Arial,sans-serif; color:var(--charcoal); }
@@ -254,130 +253,55 @@ body { font-family: 'Nunito Sans', sans-serif; background: var(--cream); color: 
 .ailiteracy-badge { background: rgba(27,58,107,0.12); color: var(--navy); }
 .si-ailiteracy    { background: rgba(27,58,107,0.12); }
 
-/* GLOSSARY */
-.glossary-controls {
-  display: flex; gap: 12px; flex-wrap: wrap;
-  margin-bottom: 28px; align-items: center;
-}
-.glossary-search-wrap { position: relative; flex: 1; min-width: 200px; max-width: 360px; }
-.glossary-search-wrap svg { position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#aab;pointer-events:none; }
-#glossary-search {
-  width: 100%; padding: 10px 12px 10px 38px;
-  border: 2px solid var(--border); border-radius: 40px;
-  font-family: 'Nunito Sans', sans-serif; font-size: 14px;
-  outline: none; transition: all 0.2s; background: var(--light);
-}
-#glossary-search:focus { border-color: var(--purple); background: #fff; }
-.tier-btns { display: flex; gap: 8px; }
-.tier-btn {
-  padding: 8px 16px; border-radius: 20px; border: 2px solid var(--border);
-  background: transparent; font-family: 'Nunito', sans-serif; font-weight: 700;
-  font-size: 12px; cursor: pointer; transition: all 0.18s; color: #888;
-}
-.tier-btn:hover { border-color: var(--purple); color: var(--purple); }
-.tier-btn.active { background: var(--navy); border-color: var(--navy); color: white; }
+/* GLOSSARY (demystify-site-style) */
+.provenance-hero, .provenance-prompts, .glossary-controls, .glossary-count, .glossary-grid { font-family:'Hanken Grotesk',Arial,sans-serif; color:var(--charcoal); font-size:16px; line-height:1.5; }
+.provenance-hero { background:var(--charcoal); color:var(--cream); padding:40px; margin-bottom:32px; }
+.provenance-hero .ph-badge { font-weight:700; font-size:13px; text-transform:uppercase; letter-spacing:0.2em; color:var(--coral-light); margin-bottom:12px; }
+.provenance-hero h2 { font-family:'Zilla Slab',Georgia,serif; font-weight:700; font-size:clamp(1.75rem,4.2vw,2.75rem); line-height:1.08; margin-bottom:12px; max-width:20em; text-wrap:balance; }
+.provenance-hero p { font-size:clamp(1.0625rem,2.2vw,1.25rem); max-width:40em; margin-bottom:28px; }
+.provenance-cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:28px 32px; }
+.prov-card { border-top:2px solid var(--cream); padding-top:12px; }
+.prov-card .pc-icon { display:none; }
+.prov-card .pc-label { font-family:'Zilla Slab',Georgia,serif; font-weight:700; font-size:22px; line-height:1.15; margin-bottom:6px; }
 
-.glossary-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 16px;
-}
-.g-card {
-  background: var(--white); border: 2px solid var(--border);
-  border-radius: 16px; padding: 20px;
-  transition: all 0.2s; position: relative; overflow: hidden;
-  opacity: 0; transform: translateY(16px);
-  animation: cardIn 0.35s ease forwards;
-}
-.g-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.09); border-color: #ccd; }
-.g-card-top { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
-.g-icon { font-size: 26px; flex-shrink: 0; }
-.g-term-wrap { flex: 1; }
-.g-term {
-  font-family: 'Nunito', sans-serif; font-weight: 900;
-  font-size: 1rem; color: var(--navy); line-height: 1.2;
-}
-.g-tier {
-  font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 10px;
-  text-transform: uppercase; letter-spacing: 0.1em;
-  padding: 2px 8px; border-radius: 8px; display: inline-block; margin-top: 3px;
-}
-.tier-foundation { background: rgba(91,155,213,0.12); color: var(--powder); }
-.tier-practical   { background: rgba(27,58,107,0.12); color: var(--navy); }
-.tier-critical    { background: rgba(255,217,61,0.2); color: #b8860b; }
+.provenance-prompts { background:var(--cream-light); border:2px solid var(--charcoal); padding:28px; margin:0 0 48px; }
+.provenance-prompts h3 { font-family:'Zilla Slab',Georgia,serif; font-weight:700; font-size:clamp(1.375rem,3vw,1.75rem); line-height:1.15; margin-bottom:6px; }
+.provenance-prompts p { margin-bottom:20px; }
+.prov-prompt-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px; }
+.prov-prompt-card { background:var(--cream); border:2px solid var(--charcoal); padding:16px; display:flex; flex-direction:column; align-items:flex-start; }
+.prov-prompt-card .pp-scenario { font-weight:700; font-size:13px; color:var(--red-text); text-transform:uppercase; letter-spacing:0.2em; margin-bottom:8px; }
+.prov-prompt-card .pp-prompt { margin-bottom:14px; }
+.prov-copy-btn { margin-top:auto; display:inline-flex; align-items:center; gap:6px; padding:9px 14px; border:2px solid var(--charcoal); border-radius:0; font-family:'Hanken Grotesk',Arial,sans-serif; font-weight:700; font-size:15px; cursor:pointer; background:var(--cream-light); color:var(--charcoal); }
+.prov-copy-btn:hover { text-decoration:underline; }
+.prov-copy-btn.copied { background:var(--charcoal); color:var(--cream); }
+.provenance-prompts button:focus-visible, .glossary-controls button:focus-visible, .g-card button:focus-visible, #glossary-search:focus-visible { outline:3px solid var(--charcoal); outline-offset:3px; }
 
-.g-def { font-size: 13px; color: #444; line-height: 1.65; margin-bottom: 10px; }
-.g-context {
-  background: var(--light); border-left: 3px solid var(--powder);
-  border-radius: 0 8px 8px 0; padding: 10px 12px;
-  font-size: 12px; color: #555; line-height: 1.6; font-style: italic;
-  margin-bottom: 10px;
-}
-.g-context strong { font-style: normal; color: var(--navy); font-weight: 700; }
-.g-prompt-tip {
-  background: rgba(27,58,107,0.06); border: 1px solid rgba(27,58,107,0.2);
-  border-radius: 8px; padding: 9px 12px;
-  font-size: 11.5px; color: var(--navy); line-height: 1.55;
-}
-.g-prompt-tip strong { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 3px; color: var(--navy); }
+.glossary-controls { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:20px; align-items:center; }
+.glossary-search-wrap { position:relative; flex:1; min-width:200px; max-width:360px; }
+.glossary-search-wrap svg { position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--charcoal); pointer-events:none; }
+#glossary-search { width:100%; padding:10px 12px 10px 38px; border:2px solid var(--charcoal); border-radius:0; font-family:'Hanken Grotesk',Arial,sans-serif; font-size:16px; background:var(--cream-light); color:var(--charcoal); }
+#glossary-search::placeholder { color:var(--charcoal); opacity:0.7; }
+.tier-btns { display:flex; gap:8px; flex-wrap:wrap; }
+.tier-btn { padding:10px 14px; border-radius:0; border:2px solid var(--charcoal); background:var(--cream-light); font-family:'Hanken Grotesk',Arial,sans-serif; font-weight:700; font-size:16px; cursor:pointer; color:var(--charcoal); }
+.tier-btn:hover { text-decoration:underline; }
+.tier-btn.active { background:var(--charcoal); color:var(--cream); }
+.glossary-count { font-weight:700; margin-bottom:14px; }
 
-.provenance-hero {
-  background: linear-gradient(135deg, #1a0a3a 0%, #3a1a6e 50%, #1B3A6B 100%);
-  border-radius: 20px; padding: 36px; margin-bottom: 32px;
-  color: white; position: relative; overflow: hidden;
-}
-.provenance-hero::before { content:'🔍'; position:absolute; font-size:120px; right:-5px; top:-10px; opacity:0.08; }
-.provenance-hero .ph-badge {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: rgba(255,217,61,0.2); border: 1px solid rgba(255,217,61,0.4);
-  border-radius: 20px; padding: 4px 14px; margin-bottom: 14px;
-  font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 11px;
-  color: var(--yellow); text-transform: uppercase; letter-spacing: 0.08em;
-}
-.provenance-hero h2 { font-family:'Nunito',sans-serif; font-weight:900; font-size:clamp(1.4rem,3vw,2rem); color:white; margin-bottom:10px; }
-.provenance-hero p { color:rgba(255,255,255,0.7); font-size:14px; line-height:1.7; max-width:620px; margin-bottom:24px; }
-.provenance-cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px; }
-.prov-card {
-  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 12px; padding: 16px;
-}
-.prov-card .pc-icon { font-size:22px; margin-bottom:8px; }
-.prov-card .pc-label { font-family:'Nunito',sans-serif; font-weight:800; font-size:13px; color:white; margin-bottom:5px; }
-.prov-card .pc-desc { font-size:12px; color:rgba(255,255,255,0.65); line-height:1.55; }
-
-.provenance-prompts {
-  background: var(--white); border: 2px solid var(--border);
-  border-radius: 20px; padding: 28px; margin-top: 24px;
-}
-.provenance-prompts h3 { font-family:'Nunito',sans-serif; font-weight:900; font-size:1.1rem; color:var(--navy); margin-bottom:6px; }
-.provenance-prompts p { font-size:13px; color:var(--gray); margin-bottom:20px; }
-.prov-prompt-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:14px; }
-.prov-prompt-card {
-  background: var(--light); border: 1.5px solid var(--border);
-  border-radius: 12px; padding: 16px;
-}
-.prov-prompt-card .pp-scenario { font-family:'Nunito',sans-serif; font-weight:800; font-size:12px; color:var(--navy); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; }
-.prov-prompt-card .pp-prompt { font-family:'Nunito Sans',monospace; font-size:12px; color:#333; line-height:1.65; margin-bottom:10px; }
-.prov-copy-btn {
-  display:inline-flex; align-items:center; gap:5px;
-  padding:5px 12px; border-radius:8px; border:none;
-  font-family:'Nunito',sans-serif; font-weight:700; font-size:11px;
-  cursor:pointer; transition:all 0.18s; background:var(--white);
-  color:#666; box-shadow:0 1px 4px rgba(0,0,0,0.1);
-}
-.prov-copy-btn:hover { background:var(--navy); color:white; }
-.prov-copy-btn.copied { background:var(--navy); color:white; }
-
+.glossary-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:24px; }
+.g-card { background:var(--cream-light); border:2px solid var(--charcoal); padding:22px; display:flex; flex-direction:column; gap:12px; }
+.g-icon { display:none; }
+.g-term { font-family:'Zilla Slab',Georgia,serif; font-weight:700; font-size:24px; line-height:1.15; }
+.g-tier { font-weight:700; font-size:12px; text-transform:uppercase; letter-spacing:0.12em; padding:2px 8px; border:2px solid var(--charcoal); display:inline-block; margin-top:8px; }
+.tier-practical { background:var(--charcoal); color:var(--cream); }
+.tier-critical { border-color:var(--coral); }
+.g-context { background:var(--cream); padding:12px 14px; }
+.g-context strong { font-weight:700; }
+.g-prompt-tip { border:2px dashed var(--charcoal); padding:12px 14px; margin-top:auto; }
+.g-prompt-tip strong { font-weight:700; font-size:13px; text-transform:uppercase; letter-spacing:0.12em; color:var(--red-text); }
+.g-tip-head { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px; margin-bottom:8px; }
 .glossary-letter-jump { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:20px; }
-.letter-chip {
-  width:32px; height:32px; border-radius:8px; border:2px solid var(--border);
-  background:transparent; font-family:'Nunito',sans-serif; font-weight:800;
-  font-size:13px; color:#888; cursor:pointer; transition:all 0.15s;
-  display:flex; align-items:center; justify-content:center;
-}
-.letter-chip:hover { background:var(--navy); color:white; border-color:var(--navy); }
-.letter-chip.has-terms { color:var(--navy); border-color:var(--navy); }
-.glossary-count { font-size:13px; color:var(--gray); margin-bottom:12px; font-weight:600; }
+.letter-chip { width:36px; height:36px; border:2px solid var(--charcoal); border-radius:0; background:var(--cream-light); font-weight:700; font-size:15px; color:var(--charcoal); cursor:pointer; display:flex; align-items:center; justify-content:center; }
+@media(max-width:720px){ .provenance-hero { padding:26px 22px; } .provenance-prompts { padding:20px 18px; } }
 
 /* MAIN + CARDS (demystify-site-style) */
 main { max-width:1280px;margin:0 auto;padding:40px 56px 80px; }
@@ -435,19 +359,22 @@ main { max-width:1280px;margin:0 auto;padding:40px 56px 80px; }
 .si-framework { background:rgba(46,117,182,0.12); }
 
 /* MASTER BOX */
-.master-box { background:linear-gradient(135deg,var(--navy) 0%,#2a4a8a 100%);border-radius:20px;padding:32px;margin:40px 0;color:white;position:relative;overflow:hidden; }
-.master-box::before { content:'✨';position:absolute;font-size:120px;right:-10px;top:-20px;opacity:0.08; }
-.master-box h3 { font-family:'Nunito',sans-serif;font-weight:900;font-size:1.3rem;margin-bottom:8px;color:var(--yellow); }
-.master-box p { color:rgba(255,255,255,0.7);font-size:13.5px;margin-bottom:20px;line-height:1.6;font-weight:300;max-width:560px; }
-.master-template { background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:12px;padding:18px 18px 18px 18px;font-family:'Nunito Sans',monospace;font-size:13px;line-height:1.8;color:rgba(255,255,255,0.85);position:relative; }
-.master-copy { position:absolute;top:10px;right:10px;background:rgba(255,255,255,0.15);border:none;color:white;border-radius:8px;padding:5px 12px;font-family:'Nunito',sans-serif;font-weight:700;font-size:11px;cursor:pointer;transition:all 0.18s; }
-.master-copy:hover { background:var(--yellow);color:var(--navy); }
-.master-copy.copied { background:var(--green); }
+.master-box { background:var(--cream-light);border:2px solid var(--charcoal);padding:28px;margin:48px 0;font-family:'Hanken Grotesk',Arial,sans-serif;color:var(--charcoal);font-size:16px;line-height:1.5; }
+.master-box h3 { font-family:'Zilla Slab',Georgia,serif;font-weight:700;font-size:clamp(1.375rem,3vw,1.75rem);line-height:1.15;margin-bottom:8px; }
+.master-box p { margin-bottom:18px;max-width:65ch; }
+.master-box p.master-credit { margin:16px 0 0; }
+.master-box a { color:var(--charcoal);font-weight:700; }
+.master-box a:focus-visible { outline:3px solid var(--charcoal);outline-offset:3px; }
+.master-template { background:var(--charcoal);color:var(--cream);padding:18px 18px 18px 18px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:15px;line-height:1.7;position:relative;white-space:pre-wrap; }
+.master-copy { position:absolute;top:10px;right:10px;background:var(--cream-light);border:2px solid var(--cream);color:var(--charcoal);border-radius:0;padding:8px 14px;font-family:'Hanken Grotesk',Arial,sans-serif;font-weight:700;font-size:15px;cursor:pointer; }
+.master-copy:hover { text-decoration:underline; }
+.master-copy.copied { background:var(--cream); }
+.master-copy:focus-visible { outline:3px solid var(--cream);outline-offset:3px; }
 
 /* RESOURCES */
-.resources-wrap { margin-top:60px; }
-.big-title { font-family:'Nunito',sans-serif;font-weight:900;font-size:1.8rem;color:var(--ink);margin-bottom:6px; }
-.big-sub { color:#888;font-size:14px;margin-bottom:28px; }
+.resources-wrap { margin:0; }
+.big-title { font-family:'Zilla Slab',Georgia,serif;font-weight:700;font-size:clamp(1.75rem,4.5vw,2.5rem);line-height:1.1;margin-bottom:8px; }
+.big-sub { font-size:17px;line-height:1.5;padding-bottom:12px;border-bottom:2px solid var(--charcoal);margin-bottom:26px; }
 .resources-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:24px; }
 .resource-card { background:var(--cream-light);border:2px solid var(--charcoal);padding:22px;display:flex;flex-direction:column;font-family:'Hanken Grotesk',Arial,sans-serif;color:var(--charcoal); }
 .resource-card .r-icon { display:none; }
@@ -455,21 +382,15 @@ main { max-width:1280px;margin:0 auto;padding:40px 56px 80px; }
 .resource-card .r-name { font-family:'Zilla Slab',Georgia,serif;font-weight:700;font-size:22px;line-height:1.15;margin-bottom:8px; }
 .resource-card .r-desc { font-size:16px;line-height:1.5;margin-bottom:14px; }
 .resource-card a { margin-top:auto;align-self:flex-start;font-weight:700;font-size:16px;color:var(--charcoal);padding:6px 0; }
-
-.nl-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-top:20px; }
-.nl-card { background:var(--white);border:2px solid var(--border);border-radius:14px;padding:16px;transition:all 0.18s; }
-.nl-card:hover { transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,0.08); }
-.nl-card .nl-icon { font-size:22px;margin-bottom:8px; }
-.nl-card .nl-name { font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;color:var(--ink);margin-bottom:4px; }
-.nl-card .nl-desc { font-size:12px;color:#888;line-height:1.5; }
-
 .empty-state { grid-column:1/-1;text-align:center;padding:60px 20px; }
-.empty-state .e-icon { font-size:3rem;margin-bottom:12px; }
+.empty-state .e-icon { display:none; }
 .empty-state p { color:var(--charcoal);font-family:'Hanken Grotesk',Arial,sans-serif;font-size:16px; }
 
-footer { background:var(--navy);color:rgba(255,255,255,0.5);text-align:center;padding:32px;font-size:13px; }
-footer strong { color:rgba(255,255,255,0.85);font-weight:700;font-family:'Nunito',sans-serif; }
-footer a { color:var(--teal);text-decoration:none; }
+footer { max-width:1280px;margin:0 auto;padding:0 56px 48px;font-family:'Hanken Grotesk',Arial,sans-serif;font-size:16px;line-height:1.5;color:var(--charcoal); }
+footer::before { content:'';display:block;border-top:2px solid var(--charcoal);margin-bottom:20px; }
+footer strong { font-weight:700; }
+footer p { margin:0 0 4px; max-width:75ch; }
+footer a { color:var(--charcoal); }
 
 @media(max-width:600px){
   .site-nav{padding:16px 20px 0}
@@ -480,6 +401,7 @@ footer a { color:var(--teal);text-decoration:none; }
   .cat-strip-inner{padding:6px 12px}
   .cat-btn,.cat-dropdown-btn{padding:10px 8px}
   main{padding:24px 20px 60px}
+  footer{padding:0 20px 40px}
   .cards-grid{grid-template-columns:1fr}
   .resources-grid{grid-template-columns:1fr}
   .master-box{padding:24px 20px}
@@ -539,7 +461,7 @@ footer a { color:var(--teal);text-decoration:none; }
 
 <main id="main-content">
   <div class="master-box" id="master-box">
-    <h3>🧠 Master Prompt Starter Template</h3>
+    <h3>Master Prompt Starter Template</h3>
     <p>Copy this and customize it at the start of any new AI conversation to set your context for the whole session.</p>
     <div class="master-template" id="master-tpl">You are [role] working with [audience].
 Your goal is [purpose].
@@ -549,40 +471,20 @@ Never: [2–3 things to avoid, e.g. "use jargon", "give more than 3 options at o
 
 When I say [trigger word], do [specific behavior].
 Format responses as: [preferred structure]
-      <button class="master-copy" id="mcopy" onclick="copyMaster()">📋 Copy</button>
+      <button class="master-copy" id="mcopy" onclick="copyMaster()">Copy</button>
     </div>
+      <p class="master-credit">This template draws on two sources: <a href="https://www.danmartell.com/master-prompts-system-prompts-and-custom-gpts/" target="_blank" rel="noopener">Dan Martell's Master Prompt Guide</a> and <a href="https://www.youtube.com/watch?v=_K_F_icxtrI" target="_blank" rel="noopener">Tiago Forte's Master Prompt Method</a>.</p>
+    <p class="master-credit">Many AI tools now let you save directions like these as a skill, so you do not have to paste them each time. Try the <a href="toolbox/skill-builder.html">Skill Builder</a>.</p>
   </div>
 
-  <div class="resources-wrap" id="resources-wrap">
-    <div class="big-title">📚 Go Deeper</div>
-    <div class="big-sub">The best sites, guides, and newsletters, curated for educators and trainers.</div>
-    <div class="resources-grid">
-      <div class="resource-card"><div class="r-icon">🔧</div><div class="r-type">Framework Library</div><div class="r-name">Juuzt AI Prompt Frameworks</div><div class="r-desc">57 frameworks, each with a full guide and copy-ready examples.</div><a href="https://juuzt.ai/knowledge-base/prompt-frameworks/" target="_blank">Visit →</a></div>
-      <div class="resource-card"><div class="r-icon">🤖</div><div class="r-type">Official Docs</div><div class="r-name">Anthropic Prompting Guide</div><div class="r-desc">Authoritative guidance from the creators of Claude.</div><a href="https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/overview" target="_blank">Visit →</a></div>
-      <div class="resource-card"><div class="r-icon">🎓</div><div class="r-type">Academic</div><div class="r-name">MIT Sloan: Effective Prompts</div><div class="r-desc">Reframes prompting as problem formulation, not just word tweaks.</div><a href="https://mitsloanedtech.mit.edu/ai/basics/effective-prompts/" target="_blank">Visit →</a></div>
-      <div class="resource-card"><div class="r-icon">🏫</div><div class="r-type">Educator Community</div><div class="r-name">ISTE AI in Education</div><div class="r-desc">Classroom-ready AI guides from the most trusted name in ed tech.</div><a href="https://www.iste.org" target="_blank">Visit →</a></div>
-      <div class="resource-card"><div class="r-icon">⚖️</div><div class="r-type">Equity-Focused</div><div class="r-name">Common Sense Media AI Literacy</div><div class="r-desc">Free, vetted resources with strong equity alignment.</div><a href="https://www.commonsense.org/education/digital-citizenship/topic/ai-literacy" target="_blank">Visit →</a></div>
-      <div class="resource-card"><div class="r-icon">🌏</div><div class="r-type">International</div><div class="r-name">UNESCO AI Competency Framework</div><div class="r-desc">Global frameworks relevant for Filipino educators and TESDA.</div><a href="https://www.unesco.org/en/digital-education/artificial-intelligence" target="_blank">Visit →</a></div>
-      <div class="resource-card"><div class="r-icon">📋</div><div class="r-type">Master Prompts</div><div class="r-name">Dan Martell: Master Prompt Guide</div><div class="r-desc">Hack 2 (Role Master Prompt) and Hack 3 (Outputs into System Prompts).</div><a href="https://www.danmartell.com/master-prompts-system-prompts-and-custom-gpts/" target="_blank">Visit →</a></div>
-      <div class="resource-card"><div class="r-icon">▶️</div><div class="r-type">Video Series</div><div class="r-name">Tiago Forte: The Master Prompt Method</div><div class="r-desc">3-part YouTube series for building and implementing master prompts.</div><a href="https://www.youtube.com/watch?v=_K_F_icxtrI" target="_blank">Watch →</a></div>
-      <div class="resource-card"><div class="r-icon">🤝</div><div class="r-type">Teaching Coalition</div><div class="r-name">TeachAI</div><div class="r-desc">Khan Academy, ISTE & others. Teaching students about AI, not just with it.</div><a href="https://www.teachai.org" target="_blank">Visit →</a></div>
-      <div class="resource-card"><div class="r-icon">📬</div><div class="r-type">Weekly Newsletter</div><div class="r-name">AI Skill of the Week</div><div class="r-desc">Practical Claude AI skills delivered weekly, with 71,000+ subscribers learning what Claude can really do.</div><a href="https://www.aiskilloftheweek.com/" target="_blank">Visit →</a></div>
-    </div>
-    <div style="margin-top:36px">
-      <div class="big-title" style="font-size:1.3rem">📬 Newsletters Worth Subscribing To</div>
-      <div class="nl-grid">
-        <div class="nl-card"><div class="nl-icon">📊</div><div class="nl-name">The Batch</div><div class="nl-desc">Andrew Ng. Weekly expert AI analysis. Trustworthy and educational.</div></div>
-        <div class="nl-card"><div class="nl-icon">💼</div><div class="nl-name">One Useful Thing</div><div class="nl-desc">Ethan Mollick (Wharton). Most-cited AI source in education.</div></div>
-        <div class="nl-card"><div class="nl-icon">⚡</div><div class="nl-name">Prompt Engineering Daily</div><div class="nl-desc">Practical prompts and tools. Beginner-friendly. Daily.</div></div>
-        <div class="nl-card"><div class="nl-icon">🗞️</div><div class="nl-name">The Rundown AI</div><div class="nl-desc">Why AI matters + how to apply it. 1.75M subscribers. 5 min.</div></div>
-        <div class="nl-card"><div class="nl-icon">🚀</div><div class="nl-name">Superhuman AI</div><div class="nl-desc">Tools, tutorials, news in 3 min. High-quality daily curation.</div></div>
-        <div class="nl-card"><div class="nl-icon">📡</div><div class="nl-name">TLDR AI</div><div class="nl-desc">ML research, launches, industry news. Concise daily briefing.</div></div>
-      </div>
-    </div>
-  </div>
+  <div class="resources-wrap" id="resources-wrap"></div>
 </main>
 
-<footer>Built by <strong>Jeffery Heil</strong>, Lead Expert at <a href="https://globallearningaccess.com/home" target="_blank">Global Learning Access</a> · An independent, free resource, used in GLA trainings · <em>Demystifying AI for All: Human-Centered & Equity-Driven</em> · 2026</footer>
+<footer>
+  <p>Built by <strong>Jeffery Heil</strong>, educator, ed-tech consultant, and speaker. Lead Expert for <a href="https://globallearningaccess.com/home" target="_blank" rel="noopener">Global Learning Access</a>.</p>
+  <p>An independent, free resource. Some activities were built for GLA certification courses.</p>
+  <p><em>Demystifying AI for All: Human-Centered &amp; Equity-Driven</em> · 2026</p>
+</footer>
 
 <script>
 const CARDS = [
@@ -915,10 +817,10 @@ function render(){
 }
 
 function copyMaster(){
-  const text=document.getElementById('master-tpl').innerText.replace('📋 Copy','').trim();
+  const text=document.getElementById('master-tpl').innerText.replace('Copy','').trim();
   navigator.clipboard.writeText(text).then(()=>{
-    const btn=document.getElementById('mcopy');btn.textContent='✅ Copied!';btn.classList.add('copied');
-    setTimeout(()=>{btn.textContent='📋 Copy';btn.classList.remove('copied');},2000);
+    const btn=document.getElementById('mcopy');btn.textContent='Copied!';btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied');},2000);
   });
 }
 
@@ -1001,20 +903,20 @@ function renderGlossary() {
   // Build provenance section
   const provenanceHTML = `
     <div class="provenance-hero">
-      <div class="ph-badge">🔍 Featured Concept</div>
+      <div class="ph-badge">Featured Concept</div>
       <h2>AI Provenance: Where Does This Knowledge Come From?</h2>
       <p>Provenance is the documented history of where AI knowledge comes from: what data it was trained on, who created it, whether they consented, and how it was used. In an era of deepfakes, AI-generated misinformation, and opaque training pipelines, understanding provenance is one of the most important critical thinking tools we have.</p>
       <div class="provenance-cards">
-        <div class="prov-card"><div class="pc-icon">🗄️</div><div class="pc-label">Data Provenance</div><div class="pc-desc">Where did the training data come from? Who wrote it? Were they compensated or credited?</div></div>
-        <div class="prov-card"><div class="pc-icon">🏗️</div><div class="pc-label">Model Provenance</div><div class="pc-desc">Who built this AI? What were their design choices? What values were embedded during training?</div></div>
-        <div class="prov-card"><div class="pc-icon">📄</div><div class="pc-label">Output Provenance</div><div class="pc-desc">Is this content AI-generated? Can we trace it back to its source? Is it watermarked or authenticated?</div></div>
-        <div class="prov-card"><div class="pc-icon">⚖️</div><div class="pc-label">Provenance & Ethics</div><div class="pc-desc">Consent, copyright, attribution, and accountability all flow from provenance. It's the paper trail of responsible AI.</div></div>
+        <div class="prov-card"><div class="pc-icon"></div><div class="pc-label">Data Provenance</div><div class="pc-desc">Where did the training data come from? Who wrote it? Were they compensated or credited?</div></div>
+        <div class="prov-card"><div class="pc-icon"></div><div class="pc-label">Model Provenance</div><div class="pc-desc">Who built this AI? What were their design choices? What values were embedded during training?</div></div>
+        <div class="prov-card"><div class="pc-icon"></div><div class="pc-label">Output Provenance</div><div class="pc-desc">Is this content AI-generated? Can we trace it back to its source? Is it watermarked or authenticated?</div></div>
+        <div class="prov-card"><div class="pc-icon"></div><div class="pc-label">Provenance & Ethics</div><div class="pc-desc">Consent, copyright, attribution, and accountability all flow from provenance. It's the paper trail of responsible AI.</div></div>
       </div>
     </div>
 
     <div class="provenance-prompts">
-      <h3>🛠️ Provenance Prompts: Ask AI About Itself</h3>
-      <p style="color:#888;font-size:13px;margin-bottom:20px">Use these prompts to bring provenance awareness into any AI conversation. Copy and adapt them freely.</p>
+      <h3>Provenance Prompts: Ask AI About Itself</h3>
+      <p>Use these prompts to bring provenance awareness into any AI conversation. Copy and adapt them freely.</p>
       <div class="prov-prompt-grid">
         ${[
           {scenario:"Check the sources", prompt:"What kinds of sources or data most likely inform your answer here? Are there significant perspectives that might be missing based on how you were trained?"},
@@ -1027,7 +929,7 @@ function renderGlossary() {
           <div class="prov-prompt-card">
             <div class="pp-scenario">${p.scenario}</div>
             <div class="pp-prompt">${p.prompt}</div>
-            <button class="prov-copy-btn" data-prompt="${encodeURIComponent(p.prompt)}">📋 Copy</button>
+            <button class="prov-copy-btn" data-prompt="${encodeURIComponent(p.prompt)}">Copy</button>
           </div>
         `).join('')}
       </div>
@@ -1037,7 +939,7 @@ function renderGlossary() {
   // Glossary controls
   const controlsHTML = `
     <div class="section-header" style="margin-top:36px">
-      <div class="section-icon si-ailiteracy">📖</div>
+      <div class="section-icon si-ailiteracy"></div>
       <span class="section-title">AI Glossary</span>
     </div>
     <div class="glossary-controls">
@@ -1047,9 +949,9 @@ function renderGlossary() {
       </div>
       <div class="tier-btns">
         <button class="tier-btn active" data-tier="all">All Tiers</button>
-        <button class="tier-btn" data-tier="foundation">🟢 Foundation</button>
-        <button class="tier-btn" data-tier="practical">🔵 Practical</button>
-        <button class="tier-btn" data-tier="critical">🔴 Critical</button>
+        <button class="tier-btn" data-tier="foundation">Foundation</button>
+        <button class="tier-btn" data-tier="practical">Practical</button>
+        <button class="tier-btn" data-tier="critical">Critical</button>
       </div>
     </div>
     <div class="glossary-count" id="glossary-count">${GLOSSARY.length} terms</div>
@@ -1065,8 +967,8 @@ function renderGlossary() {
     btn.addEventListener('click', function() {
       const text = decodeURIComponent(this.dataset.prompt);
       navigator.clipboard.writeText(text).then(() => {
-        this.textContent = '✅ Copied!'; this.classList.add('copied');
-        setTimeout(() => { this.textContent = '📋 Copy'; this.classList.remove('copied'); }, 2000);
+        this.textContent = 'Copied!'; this.classList.add('copied');
+        setTimeout(() => { this.textContent = 'Copy'; this.classList.remove('copied'); }, 2000);
       });
     });
   });
@@ -1087,15 +989,15 @@ function renderGlossary() {
     grid.innerHTML = '';
 
     if (!filtered.length) {
-      grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="e-icon">🔍</div><p>No terms match. Try a broader search.</p></div>';
+      grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="e-icon"></div><p>No terms match. Try a broader search.</p></div>';
       return;
     }
 
     filtered.forEach((g, i) => {
       const card = document.createElement('div');
       card.className = 'g-card';
-      card.style.animationDelay = `${i * 30}ms`;
-      const tierLabel = g.tier === 'foundation' ? '🟢 Foundation' : g.tier === 'practical' ? '🔵 Practical' : '🔴 Critical';
+      
+      const tierLabel = g.tier === 'foundation' ? 'Foundation' : g.tier === 'practical' ? 'Practical' : 'Critical';
       const tierClass = `tier-${g.tier}`;
       card.innerHTML = `
         <div class="g-card-top">
@@ -1108,9 +1010,9 @@ function renderGlossary() {
         <div class="g-def">${g.def}</div>
         ${g.context ? `<div class="g-context">${g.context}</div>` : ''}
         ${g.prompt ? `<div class="g-prompt-tip">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
-              <strong>💬 Try this prompt</strong>
-              <button class="copy-btn g-copy-btn" data-prompt="${encodeURIComponent(g.prompt)}" style="font-size:10px;padding:3px 10px">
+            <div class="g-tip-head">
+              <strong>Try this prompt</strong>
+              <button class="copy-btn g-copy-btn" data-prompt="${encodeURIComponent(g.prompt)}">
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
                 Copy
               </button>
@@ -1125,7 +1027,7 @@ function renderGlossary() {
         gCopyBtn.addEventListener('click', function() {
           const text = decodeURIComponent(this.dataset.prompt);
           navigator.clipboard.writeText(text).then(() => {
-            this.innerHTML = '✅ Copied!';
+            this.innerHTML = 'Copied!';
             this.classList.add('copied');
             setTimeout(() => {
               this.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy';
