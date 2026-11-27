@@ -1,68 +1,32 @@
-<title>HCAI vs System-Centered AI</title>
-<meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HCAI vs System-Centered AI · Demystifying AI for All</title>
+<meta name="description" content="Learn to tell human-centered AI from system-centered AI with a two-by-two matrix, four case studies, and a short check. Free, no login.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌍</text></svg>">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;700&family=Hanken+Grotesk:wght@400;500;700&display=swap">
 <style>
-:root {
-  --bg: #FAFAFA;
-  --surface: #FFFFFF;
-  --text: #1a1a2e;
-  --text-muted: #64648c;
-  --accent: #2563eb;
-  --accent-light: #dbeafe;
-  --human: #059669;
-  --human-light: #d1fae5;
-  --traditional: #9333ea;
-  --traditional-light: #f3e8ff;
-  --border: #e5e5ed;
-  --radius: 12px;
-  --danger: #ef4444;
-  --danger-light: #fee2e2;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0f0f1a;
-    --surface: #1a1a2e;
-    --text: #f0f0f5;
-    --text-muted: #a0a0b8;
-    --accent: #60a5fa;
-    --accent-light: #1e3a5f;
-    --human: #34d399;
-    --human-light: #064e3b;
-    --traditional: #c084fc;
-    --traditional-light: #3b0764;
-    --border: #2a2a40;
-    --danger: #f87171;
-    --danger-light: #7f1d1d;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #0f0f1a;
-  --surface: #1a1a2e;
-  --text: #f0f0f5;
-  --text-muted: #a0a0b8;
-  --accent: #60a5fa;
-  --accent-light: #1e3a5f;
-  --human: #34d399;
-  --human-light: #064e3b;
-  --traditional: #c084fc;
-  --traditional-light: #3b0764;
-  --border: #2a2a40;
-  --danger: #f87171;
-  --danger-light: #7f1d1d;
-  color-scheme: dark;
+:root{
+  --cream:#EFE3CC;--cream-light:#F7EEDD;--charcoal:#26262A;--coral:#E8452C;--red-text:#B5321E;--coral-light:#F0705A;
+  --bg:var(--cream);--surface:var(--cream-light);--text:var(--charcoal);--text-muted:#4A4842;
+  --accent:var(--charcoal);--accent-light:var(--cream);
+  --human:var(--charcoal);--human-light:var(--cream-light);--traditional:var(--charcoal);--traditional-light:var(--cream);
+  --success:var(--charcoal);--success-light:var(--cream-light);--warning:var(--charcoal);--warning-light:var(--cream-light);
+  --danger:var(--red-text);--danger-light:var(--cream-light);--border:var(--charcoal);--radius:0;
 }
 
 * { box-sizing: border-box; margin: 0; }
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'Hanken Grotesk', Arial, sans-serif;
   line-height: 1.6;
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
 }
-h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; text-wrap: balance; }
+h1, h2, h3 { font-family: 'Zilla Slab', Georgia, serif; text-wrap: balance; }
 h1 { font-size: clamp(1.75rem, 5vw, 2.5rem); font-weight: 700; }
 h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; }
 h3 { font-size: 1.1rem; font-weight: 600; }
@@ -86,7 +50,7 @@ h3 { font-size: 1.1rem; font-weight: 600; }
   flex: 1;
   height: 6px;
   background: var(--border);
-  border-radius: 3px;
+  border-radius: 0;
   transition: background 0.3s;
 }
 .progress-step.active { background: var(--accent); }
@@ -95,7 +59,7 @@ h3 { font-size: 1.1rem; font-weight: 600; }
 .section {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: 0;
   padding: 2rem;
   margin-bottom: 1.5rem;
 }
@@ -108,7 +72,7 @@ h3 { font-size: 1.1rem; font-weight: 600; }
 }
 .concept-card {
   padding: 1.5rem;
-  border-radius: var(--radius);
+  border-radius: 0;
   border: 2px solid;
 }
 .concept-card.human { background: var(--human-light); border-color: var(--human); }
@@ -149,7 +113,7 @@ h3 { font-size: 1.1rem; font-weight: 600; }
   writing-mode: vertical-rl;
   transform: rotate(180deg);
   font-weight: 700;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Zilla Slab', Georgia, serif;
   font-size: 0.7rem;
   letter-spacing: 0.15em;
   color: var(--accent);
@@ -185,7 +149,7 @@ h3 { font-size: 1.1rem; font-weight: 600; }
   gap: 2px;
   background: var(--border);
   border: 2px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: 0;
   overflow: hidden;
 }
 .plane-cell {
@@ -204,7 +168,7 @@ h3 { font-size: 1.1rem; font-weight: 600; }
 }
 .cell-title {
   font-weight: 600;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Zilla Slab', Georgia, serif;
   margin-bottom: 0.25rem;
   font-size: 0.95rem;
 }
@@ -232,7 +196,7 @@ h3 { font-size: 1.1rem; font-weight: 600; }
 }
 .x-axis-label {
   font-weight: 700;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Zilla Slab', Georgia, serif;
   font-size: 0.7rem;
   letter-spacing: 0.15em;
   color: var(--accent);
@@ -252,7 +216,7 @@ h3 { font-size: 1.1rem; font-weight: 600; }
 .case-study {
   background: var(--bg);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: 0;
   margin: 1.5rem 0;
   overflow: hidden;
 }
@@ -268,7 +232,7 @@ h3 { font-size: 1.1rem; font-weight: 600; }
 .case-icon {
   width: 48px;
   height: 48px;
-  border-radius: 50%;
+  border-radius: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -277,13 +241,13 @@ h3 { font-size: 1.1rem; font-weight: 600; }
 }
 .case-header.human .case-icon { background: var(--human); color: white; }
 .case-header.traditional .case-icon { background: var(--traditional); color: white; }
-.case-title { font-weight: 600; font-family: 'Space Grotesk', sans-serif; }
+.case-title { font-weight: 600; font-family: 'Zilla Slab', Georgia, serif; }
 .case-label {
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   padding: 0.25rem 0.5rem;
-  border-radius: 4px;
+  border-radius: 0;
   font-weight: 600;
 }
 .case-header.human .case-label { background: var(--human); color: white; }
@@ -309,7 +273,7 @@ h3 { font-size: 1.1rem; font-weight: 600; }
   margin-top: 1rem;
   padding: 1rem;
   background: var(--surface);
-  border-radius: 8px;
+  border-radius: 0;
   font-size: 0.9rem;
 }
 .case-takeaway strong { color: var(--accent); }
@@ -318,7 +282,7 @@ h3 { font-size: 1.1rem; font-weight: 600; }
 .quiz-question {
   background: var(--bg);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: 0;
   padding: 1.5rem;
   margin-bottom: 1.5rem;
 }
@@ -328,7 +292,7 @@ h3 { font-size: 1.1rem; font-weight: 600; }
   color: white;
   width: 28px;
   height: 28px;
-  border-radius: 50%;
+  border-radius: 0;
   text-align: center;
   line-height: 28px;
   font-weight: 600;
@@ -344,7 +308,7 @@ h3 { font-size: 1.1rem; font-weight: 600; }
   padding: 0.75rem 1rem;
   background: var(--surface);
   border: 2px solid var(--border);
-  border-radius: 8px;
+  border-radius: 0;
   cursor: pointer;
   transition: all 0.2s;
 }
@@ -357,7 +321,7 @@ h3 { font-size: 1.1rem; font-weight: 600; }
   width: 20px;
   height: 20px;
   border: 2px solid var(--border);
-  border-radius: 50%;
+  border-radius: 0;
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -370,7 +334,7 @@ h3 { font-size: 1.1rem; font-weight: 600; }
   content: "";
   width: 8px;
   height: 8px;
-  border-radius: 50%;
+  border-radius: 0;
   background: white;
   display: none;
 }
@@ -380,7 +344,7 @@ h3 { font-size: 1.1rem; font-weight: 600; }
 .quiz-feedback {
   margin-top: 1rem;
   padding: 1rem;
-  border-radius: 8px;
+  border-radius: 0;
   font-size: 0.9rem;
   display: none;
 }
@@ -392,13 +356,13 @@ h3 { font-size: 1.1rem; font-weight: 600; }
   text-align: center;
   padding: 2rem;
   background: var(--bg);
-  border-radius: var(--radius);
+  border-radius: 0;
   margin-top: 1.5rem;
 }
 .quiz-score {
   font-size: 3rem;
   font-weight: 700;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Zilla Slab', Georgia, serif;
   color: var(--human);
 }
 .quiz-score-label { color: var(--text-muted); margin-bottom: 1rem; }
@@ -408,7 +372,7 @@ h3 { font-size: 1.1rem; font-weight: 600; }
   border-left: 4px solid var(--accent);
   padding: 1rem 1.25rem;
   margin: 1rem 0;
-  border-radius: 0 8px 8px 0;
+  border-radius: 0;
 }
 .reflection-prompt p { margin: 0; font-weight: 500; }
 .answer-box {
@@ -416,7 +380,7 @@ h3 { font-size: 1.1rem; font-weight: 600; }
   min-height: 120px;
   padding: 1rem;
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 0;
   font-family: inherit;
   font-size: 1rem;
   background: var(--surface);
@@ -427,7 +391,7 @@ h3 { font-size: 1.1rem; font-weight: 600; }
 .answer-box:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-light);
+  box-shadow: none;
 }
 
 .nav-buttons {
@@ -439,7 +403,7 @@ h3 { font-size: 1.1rem; font-weight: 600; }
 }
 .nav-btn {
   padding: 0.75rem 1.5rem;
-  border-radius: 8px;
+  border-radius: 0;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
@@ -466,7 +430,7 @@ h3 { font-size: 1.1rem; font-weight: 600; }
   background: var(--accent);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 0;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -482,7 +446,7 @@ h3 { font-size: 1.1rem; font-weight: 600; }
 .tip-box {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 0;
   padding: 1rem;
   margin: 1rem 0;
   font-size: 0.9rem;
@@ -512,11 +476,11 @@ h3 { font-size: 1.1rem; font-weight: 600; }
   transition: all 0.2s;
 }
 .region-toggle a:first-child {
-  border-radius: 8px 0 0 8px;
+  border-radius: 0;
   border-right: 1px solid var(--border);
 }
 .region-toggle a:last-child {
-  border-radius: 0 8px 8px 0;
+  border-radius: 0;
   border-left: 1px solid var(--border);
 }
 .region-toggle a.active {
@@ -535,17 +499,146 @@ h3 { font-size: 1.1rem; font-weight: 600; }
   .matrix-cell { padding: 0.75rem; }
   .case-header { flex-direction: column; text-align: center; gap: 0.5rem; }
 }
-</style>
 
-<div class="container">
+/* ---- demystify-site-style ---- */
+body{font-size:17px;line-height:1.55}
+a{color:var(--charcoal)}
+a:focus-visible,button:focus-visible,.quiz-option:focus-visible{outline:3px solid var(--charcoal);outline-offset:3px}
+h1{font-size:clamp(2.25rem,6vw,3.75rem);line-height:1.02;letter-spacing:-.01em}
+h2{font-size:clamp(1.5rem,3.6vw,2rem);line-height:1.15}
+h3{font-size:1.25rem;line-height:1.2;font-weight:700}
+.hero{text-align:left;padding:2rem 0 1rem;margin-bottom:1rem}
+.hero p{margin:1rem 0 0;font-size:clamp(1.0625rem,2.2vw,1.25rem);max-width:34em}
+.emoji,.big-emoji,.case-icon{display:none}
+.region-toggle{justify-content:flex-start;margin-bottom:1.5rem}
+.region-toggle a{font-size:16px;font-weight:700;color:var(--charcoal);border:2px solid var(--charcoal);background:var(--cream-light);padding:9px 14px}
+.region-toggle a:first-child{border-right-width:1px}
+.region-toggle a:last-child{border-left-width:1px}
+.region-toggle a.active{background:var(--charcoal);color:var(--cream)}
+.region-toggle a:hover:not(.active){color:var(--charcoal);text-decoration:underline}
+.section,.intro-card,.scenario-card,.completion,.score-bar,.quiz-question,.case-study,.concept-card,.tip-box{border:2px solid var(--charcoal)}
+.intro-card{text-align:left}
+.progress-step{background:var(--cream-light);border:2px solid var(--charcoal);height:10px}
+.progress-step.active{background:var(--coral);border-color:var(--coral)}
+.progress-step.complete{background:var(--charcoal)}
+.concept-card.human{border-color:var(--red-text)}
+.plane-cell.highlight{border-color:var(--red-text)}
+.quiz-option,.choice-btn{border:2px solid var(--charcoal);font-family:inherit;font-size:17px;color:var(--charcoal);background:var(--cream-light)}
+.quiz-option:hover,.choice-btn:hover{text-decoration:underline}
+.quiz-option.selected,.choice-btn.selected{background:var(--cream);box-shadow:inset 0 0 0 2px var(--charcoal)}
+.quiz-radio{border-color:var(--charcoal)}
+.quiz-option.selected .quiz-radio{background:var(--charcoal);border-color:var(--charcoal)}
+.quiz-option.correct,.choice-btn.correct{background:var(--charcoal);border-color:var(--charcoal);color:var(--cream);box-shadow:none}
+.quiz-option.correct .quiz-radio{background:var(--cream);border-color:var(--cream)}
+.quiz-option.correct .quiz-radio::after{background:var(--charcoal)}
+.choice-btn.correct .choice-letter{background:var(--cream);color:var(--charcoal)}
+.quiz-option.incorrect,.choice-btn.incorrect{background:var(--cream);border:3px solid var(--coral);box-shadow:none}
+.quiz-option.incorrect .quiz-radio{background:var(--coral);border-color:var(--coral)}
+.choice-letter{background:var(--charcoal);color:var(--cream)}
+.choice-btn.incorrect .choice-letter{background:var(--charcoal);color:var(--cream)}
+.quiz-feedback.correct,.feedback-panel.success{background:var(--cream-light);border:2px solid var(--charcoal)}
+.quiz-feedback.incorrect,.feedback-panel.danger{background:var(--cream-light);border:3px solid var(--coral)}
+.feedback-panel.warning{background:var(--cream-light);border:2px dashed var(--charcoal)}
+.feedback-panel.success .feedback-title,.feedback-panel.warning .feedback-title,.feedback-panel.danger .feedback-title{color:var(--charcoal)}
+.reflection-prompt{border:2px dashed var(--charcoal);background:var(--cream)}
+.situation{border:none;background:var(--cream)}
+.situation-label,.case-analysis h4,.y-axis-label,.x-axis-label,.score-label{color:var(--red-text);font-weight:700;letter-spacing:.14em}
+.case-scenario{border-left:3px solid var(--charcoal);color:var(--charcoal)}
+.ai-output{background:var(--cream);border:2px solid var(--charcoal)}
+.nav-btn,.check-btn,.next-btn,.start-btn{font-family:inherit;font-size:17px;font-weight:700;border:2px solid var(--charcoal)}
+.nav-btn.primary,.check-btn,.next-btn,.start-btn{background:var(--charcoal);color:var(--cream)}
+.nav-btn.secondary{background:var(--cream-light);color:var(--charcoal)}
+.nav-btn:hover,.check-btn:hover,.next-btn:hover,.start-btn:hover{text-decoration:underline;box-shadow:none}
+.answer-box{border:2px solid var(--charcoal);background:var(--cream);font-size:17px}
+.answer-box:focus{outline:3px solid var(--charcoal);outline-offset:2px;box-shadow:none}
+.quiz-num,.scenario-num{background:var(--charcoal);color:var(--cream)}
+.score-value.hcai,.breakdown-value.good,.breakdown-value.ok,.final-score,.quiz-score,.completion h2{color:var(--charcoal)}
+.score-value.risk,.breakdown-value.bad{color:var(--red-text)}
+.principles-list li::before{color:var(--charcoal)}
+.cell-desc,.y-label,.x-label,.quiz-score-label,.hero p{color:var(--charcoal)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+.quiz-radio,.quiz-radio::after{border-radius:50%}
+.nav-btn:hover,.check-btn:hover,.next-btn:hover,.start-btn:hover,.choice-btn:hover{transform:none}
+.concept-card.human{background:var(--charcoal);color:var(--cream);border-color:var(--charcoal)}
+.concept-card.human h3{color:var(--cream)}
+.concept-card.traditional{background:var(--cream-light)}
+.plane-cells{border:2px solid var(--charcoal);background:var(--charcoal)}
+.plane-cell.highlight{background:var(--charcoal);border:none;color:var(--cream)}
+.plane-cell.highlight .cell-desc{color:var(--cream)}
+.case-header{border-bottom:2px solid var(--charcoal)}
+.case-header.human{background:var(--charcoal);color:var(--cream)}
+.case-header.human .case-label{background:var(--cream);color:var(--charcoal)}
+.case-header.traditional .case-label{background:var(--charcoal);color:var(--cream)}
+.case-label{letter-spacing:.14em;font-size:13px;font-weight:700}
+.case-takeaway{border:2px dashed var(--charcoal);border-radius:0}
+.scenario-header{background:var(--charcoal);color:var(--cream);border-bottom:none}
+.scenario-num{background:var(--cream);color:var(--charcoal)}
+.quiz-option.incorrect,.choice-btn.incorrect{border:3px solid var(--red-text)}
+.quiz-option.incorrect .quiz-radio{background:var(--red-text);border-color:var(--red-text)}
+.quiz-feedback.incorrect,.feedback-panel.danger{border:3px solid var(--red-text)}
+.feedback-panel.danger .feedback-title{color:var(--red-text)}
+.completion{text-align:left;background:var(--coral);color:var(--charcoal);border:none;padding:2.5rem 2rem}
+.completion h2{font-size:clamp(2.25rem,7vw,4rem);line-height:1;color:var(--cream);margin-bottom:1rem}
+.completion p{font-weight:500}
+.completion .final-score{color:var(--cream);font-size:clamp(4rem,14vw,7rem);line-height:1;margin:.25rem 0}
+.completion .score-breakdown{justify-content:flex-start;background:var(--cream-light);border:2px solid var(--charcoal);padding:1rem 1.5rem}
+.completion .breakdown-item{text-align:left}
+.completion .hcai-principle{background:var(--cream-light);border:2px solid var(--charcoal);margin-left:0!important}
+.completion .nav-btn.secondary{background:var(--cream-light)}
+.score-bar{justify-content:flex-start;gap:2.5rem;padding:1rem 1.5rem}
+.score-item{text-align:left}
+.quiz-results{text-align:left;border:2px solid var(--charcoal)}
+.hcai-principle{border:2px solid var(--charcoal)}
+.ai-output-header{color:var(--red-text);text-transform:uppercase;letter-spacing:.14em;font-size:13px;font-weight:700}
+.breakdown-label,.case-analysis h4,.situation-label,.score-label{font-size:13px;text-transform:uppercase}
+.quiz-feedback,.feedback-panel,.case-takeaway,.tip-box,.case-analysis li,.concept-card ul,.cell-desc{font-size:16px}
+.cell-title{font-size:16px}
+@media (max-width:600px){.container{padding-block:1rem}.score-bar{gap:1.25rem}.completion{padding:2rem 1.25rem}}
+.site-nav{padding:28px 40px 0;font-family:'Hanken Grotesk',Arial,sans-serif}
+.site-nav-inner{max-width:1168px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 32px;border-bottom:2px solid var(--charcoal);padding-bottom:12px}
+.wordmark{font-family:'Zilla Slab',Georgia,serif;font-weight:700;font-size:24px;text-decoration:none;padding:10px 0;color:var(--charcoal)}
+.site-nav-links{display:flex;flex-wrap:wrap;gap:0 28px}
+.site-nav-links a{font-weight:500;font-size:16px;text-decoration:none;padding:12px 0;color:var(--charcoal)}
+.site-nav a:hover{text-decoration:underline}
+.site-nav-links a[aria-current="page"]{font-weight:700;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
+.site-footer{max-width:900px;margin:0 auto;padding:8px 0 40px;font-size:16px;line-height:1.5}
+.site-footer::before{content:'';display:block;border-top:2px solid var(--charcoal);margin-bottom:18px}
+.site-footer p{margin:0 0 4px;max-width:75ch}
+.site-footer a{color:var(--charcoal)}
+@media (max-width:600px){.site-nav{padding:16px 4px 0}.site-nav-links{gap:0 20px}}
+.progress-bar{padding:0}
+.scenario-context{color:var(--cream)}
+.choice-btn:disabled:hover,.quiz-option.disabled:hover{text-decoration:none}
+.completion .next-btn,.completion .check-btn,.completion .start-btn{margin-left:0}
+.completion p{color:var(--charcoal)!important;max-width:38em}
+</style>
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Site">
+  <div class="site-nav-inner">
+    <a class="wordmark" href="../">Demystifying AI</a>
+    <div class="site-nav-links">
+      <a href="../learn.html">Learn AI</a>
+      <a href="../toolbox/">AI Toolbox</a>
+      <a href="./" aria-current="page">Activities</a>
+      <a href="../playground/">AI Playground</a>
+      <a href="../spark-intro/">SPARK AI Express</a>
+    </div>
+  </div>
+</nav>
+
+
+<main class="container">
   <div class="hero">
-    <h1><span class="emoji">🤝</span> HCAI vs System-Centered AI</h1>
+    <h1>HCAI vs System-Centered AI</h1>
     <p>Discover the difference between AI that replaces humans and AI that empowers them</p>
   </div>
 
-  <div class="region-toggle">
-    <a href="hcai-vs-traditional-ai.html" class="active">🇺🇸 US</a>
-    <a href="hcai-vs-traditional-ai-ph.html">🇵🇭 Philippines</a>
+  <div class="region-toggle" role="group" aria-label="Choose a version">
+    <a href="hcai-vs-traditional-ai.html" class="active">United States</a>
+    <a href="hcai-vs-traditional-ai-ph.html">Philippines</a>
   </div>
 
   <div class="progress-bar">
@@ -564,7 +657,7 @@ h3 { font-size: 1.1rem; font-weight: 600; }
 
       <div class="concept-grid">
         <div class="concept-card traditional">
-          <h3><span class="emoji">🤖</span> System-Centered (Traditional) AI</h3>
+          <h3>System-Centered (Traditional) AI</h3>
           <ul>
             <li>AI makes decisions autonomously</li>
             <li>Humans adapt to how AI works</li>
@@ -573,7 +666,7 @@ h3 { font-size: 1.1rem; font-weight: 600; }
           </ul>
         </div>
         <div class="concept-card human">
-          <h3><span class="emoji">🤝</span> Human-Centered AI (HCAI)</h3>
+          <h3>Human-Centered AI (HCAI)</h3>
           <ul>
             <li>AI supports human decision-making</li>
             <li>AI adapts to how humans work</li>
@@ -615,7 +708,7 @@ h3 { font-size: 1.1rem; font-weight: 600; }
                   <p class="cell-desc">Self-driving cars (no human input)</p>
                 </div>
                 <div class="plane-cell highlight">
-                  <div class="cell-title">🎯 HCAI Sweet Spot</div>
+                  <div class="cell-title">HCAI Sweet Spot</div>
                   <p class="cell-desc">Powerful AI + Human oversight</p>
                 </div>
                 <div class="plane-cell">
@@ -640,7 +733,7 @@ h3 { font-size: 1.1rem; font-weight: 600; }
       </div>
 
       <div class="reflection-prompt">
-        <p>🤔 <strong>Quick Check:</strong> Think about an AI tool you use regularly. Where would it fall on this matrix? Consider: Does it give you control over final decisions?</p>
+        <p><strong>Quick Check:</strong> Think about an AI tool you use regularly. Where would it fall on this matrix? Consider: Does it give you control over final decisions?</p>
       </div>
 
       <div class="nav-buttons">
@@ -659,7 +752,6 @@ h3 { font-size: 1.1rem; font-weight: 600; }
       <!-- Case Study 1: System-Centered -->
       <div class="case-study">
         <div class="case-header traditional">
-          <div class="case-icon">🏦</div>
           <div>
             <div class="case-title">Automated Loan Decisions</div>
             <span class="case-label">System-Centered (Traditional) AI</span>
@@ -687,7 +779,6 @@ h3 { font-size: 1.1rem; font-weight: 600; }
       <!-- Case Study 2: System-Centered (Subtle) -->
       <div class="case-study">
         <div class="case-header traditional">
-          <div class="case-icon">📱</div>
           <div>
             <div class="case-title">Social Media "For You" Feed</div>
             <span class="case-label">System-Centered (Traditional) AI</span>
@@ -715,7 +806,6 @@ h3 { font-size: 1.1rem; font-weight: 600; }
       <!-- Case Study 2: HCAI -->
       <div class="case-study">
         <div class="case-header human">
-          <div class="case-icon">✍️</div>
           <div>
             <div class="case-title">AI Writing Assistant</div>
             <span class="case-label">Human-Centered AI</span>
@@ -743,7 +833,6 @@ h3 { font-size: 1.1rem; font-weight: 600; }
       <!-- Case Study 3: HCAI -->
       <div class="case-study">
         <div class="case-header human">
-          <div class="case-icon">🏥</div>
           <div>
             <div class="case-title">Medical Diagnosis Support</div>
             <span class="case-label">Human-Centered AI</span>
@@ -964,7 +1053,6 @@ h3 { font-size: 1.1rem; font-weight: 600; }
   <!-- Completion -->
   <div class="step" id="step-6">
     <section class="section completion">
-      <span class="emoji">🎉</span>
       <h2>Activity Complete!</h2>
       <p>You now understand the key difference between system-centered AI and Human-Centered AI.</p>
       <p style="margin-top: 1rem; color: var(--text-muted);">The HCAI approach keeps humans empowered while leveraging AI's capabilities. As you work with AI tools, ask yourself: "Am I in control of the important decisions?"</p>
@@ -974,7 +1062,12 @@ h3 { font-size: 1.1rem; font-weight: 600; }
       </div>
     </section>
   </div>
-</div>
+</main>
+
+<footer class="site-footer">
+  <p>Part of <a href="../">Demystifying AI for All</a>. Built by <strong>Jeffery Heil</strong>, educator, ed-tech consultant, and speaker. Lead Expert for <a href="https://globallearningaccess.com/home" target="_blank" rel="noopener">Global Learning Access</a>.</p>
+  <p>An independent, free resource. Some activities were built for GLA certification courses.</p>
+</footer>
 
 <script>
 let currentStep = 1;
@@ -1146,3 +1239,5 @@ function checkQuiz() {
   results.scrollIntoView({ behavior: 'smooth' });
 }
 </script>
+</body>
+</html>
