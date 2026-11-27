@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prompt Craft Challenge · Demystifying AI for All</title>
+<meta name="description" content="AI answers the prompt you typed, not the situation in your head. Find what never reached the AI, rewrite the prompt, then write one of your own. Free, no login, nothing saved.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌍</text></svg>">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;700&family=Hanken+Grotesk:wght@400;500;700&display=swap">
+<style>
+:root{--cream:#EFE3CC;--cream-light:#F7EEDD;--charcoal:#26262A;--coral:#E8452C;--red-text:#B5321E;--coral-light:#F0705A}
+*{box-sizing:border-box;margin:0}
+body{background:var(--cream);color:var(--charcoal);font-family:'Hanken Grotesk',Arial,sans-serif;font-size:17px;line-height:1.55;padding:0 16px}
+h1,h2,h3{font-family:'Zilla Slab',Georgia,serif;font-weight:700;text-wrap:balance}
+h1{font-size:clamp(2.25rem,6vw,3.75rem);line-height:1.02;letter-spacing:-.01em}
+h2{font-size:clamp(1.5rem,3.6vw,2rem);line-height:1.15;margin-bottom:.75rem}
+h2:focus{outline:none}
+a{color:var(--charcoal)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--charcoal);outline-offset:3px}
+.container{max-width:900px;margin:0 auto;padding-block:2rem}
+.hero{padding:2rem 0 1rem;margin-bottom:1rem}
+.hero p{margin-top:1rem;font-size:clamp(1.0625rem,2.2vw,1.25rem);max-width:34em}
+.eyebrow{display:block;font-size:13px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--red-text);margin-bottom:8px}
+.region-toggle{display:flex;margin-bottom:1.5rem}
+.region-toggle a{font-size:16px;font-weight:700;text-decoration:none;border:2px solid var(--charcoal);background:var(--cream-light);padding:9px 14px}
+.region-toggle a:first-child{border-right-width:1px}.region-toggle a:last-child{border-left-width:1px}
+.region-toggle a.active{background:var(--charcoal);color:var(--cream)}
+.region-toggle a:hover:not(.active){text-decoration:underline}
+.progress{display:flex;gap:.5rem;margin-bottom:1.5rem}
+.progress span{flex:1;height:10px;background:var(--cream-light);border:2px solid var(--charcoal)}
+.progress span.now{background:var(--coral);border-color:var(--coral)}
+.progress span.past{background:var(--charcoal)}
+.panel{background:var(--cream-light);border:2px solid var(--charcoal);padding:2rem}
+.panel>p{max-width:40em}
+.checks{list-style:none;padding:0;margin:1.5rem 0;display:grid;grid-template-columns:1fr 1fr;gap:0 2rem}
+.checks li{border-top:2px solid var(--charcoal);padding:14px 0 18px}
+.checks b{display:block;font-family:'Zilla Slab',Georgia,serif;font-size:22px;line-height:1.2;margin-bottom:4px}
+.note{border:2px dashed var(--charcoal);background:var(--cream);padding:1rem 1.25rem;margin:1.25rem 0;font-size:16px}
+.btn{font-family:inherit;font-size:17px;font-weight:700;padding:12px 22px;border:2px solid var(--charcoal);cursor:pointer;background:var(--charcoal);color:var(--cream);text-decoration:none;display:inline-block}
+.btn.soft{background:var(--cream-light);color:var(--charcoal)}
+.btn:hover{text-decoration:underline}
+.btn[aria-disabled="true"]{background:var(--cream);color:var(--charcoal);border-style:dashed;cursor:default;text-decoration:none}
+.actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:1.5rem}
+.actions .hint{font-size:16px}
+.round-head{background:var(--charcoal);color:var(--cream);padding:1rem 2rem;margin:-2rem -2rem 1.5rem;display:flex;flex-wrap:wrap;gap:4px 16px;align-items:baseline;justify-content:space-between}
+.round-head b{font-family:'Zilla Slab',Georgia,serif;font-size:22px}
+.round-head span{font-size:13px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--coral-light)}
+.asked{background:var(--cream);padding:1rem 1.25rem;margin-bottom:1rem}
+.asked p{font-weight:500}
+.source{border-left:3px solid var(--charcoal);padding-left:1rem;margin:0 0 1.25rem;font-style:italic}
+.source .eyebrow{font-style:normal}
+.line{border:2px solid var(--charcoal);background:var(--cream-light);padding:1rem 1.25rem;margin-top:12px}
+.line>p{font-size:18px;font-weight:500;margin-bottom:12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-family:inherit;font-size:16px;font-weight:500;color:var(--charcoal);background:var(--cream-light);border:2px solid var(--charcoal);padding:8px 12px;cursor:pointer;min-height:44px}
+.chip:hover{text-decoration:underline}
+.chip[aria-pressed="true"]{background:var(--charcoal);color:var(--cream);font-weight:700}
+.chip:disabled{cursor:default;text-decoration:none}
+.chip:disabled:not([aria-pressed="true"]){border-style:dashed;opacity:.75}
+.chip.answer:disabled{border:3px solid var(--charcoal);border-style:solid;opacity:1;font-weight:700}
+.fb{margin-top:12px;padding:12px 14px;font-size:16px;border:2px solid var(--charcoal);background:var(--cream)}
+.fb b{display:block}
+.fb.miss{border:3px solid var(--red-text)}.fb.miss b{color:var(--red-text)}
+.fb.alarm{border-style:dashed}
+.round-sum{margin-top:1.5rem;font-weight:700;font-size:18px}
+.done{background:var(--coral);padding:2.5rem 2rem}
+.done h2{font-size:clamp(2.25rem,7vw,4rem);line-height:1;color:var(--cream);margin-bottom:.5rem}
+.done .big{font-family:'Zilla Slab',Georgia,serif;font-weight:700;color:var(--cream);font-size:clamp(4rem,14vw,7rem);line-height:1}
+.done>p{font-weight:500;max-width:36em}
+.done .box{background:var(--cream-light);border:2px solid var(--charcoal);padding:1.25rem 1.5rem;margin-top:1.5rem}
+.done .box ul{margin:.5rem 0 0;padding-left:1.25rem}
+.done .box li{margin-bottom:.25rem}
+.stats{display:flex;flex-wrap:wrap;gap:8px 2.5rem}
+.stats div b{display:block;font-family:'Zilla Slab',Georgia,serif;font-size:28px;line-height:1.1}
+.stats div span{font-size:13px;text-transform:uppercase;letter-spacing:.14em;font-weight:700}
+.step{display:none}.step.active{display:block}
+@media (max-width:600px){.container{padding-block:1rem}.panel{padding:1.25rem}.round-head{margin:-1.25rem -1.25rem 1.25rem;padding:1rem 1.25rem}.checks{grid-template-columns:1fr}.done{padding:2rem 1.25rem}.chip{flex:1 1 45%}.line{padding:1rem}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+.prompt{background:var(--cream);padding:1.25rem 1.5rem;margin-bottom:1.5rem}
+.prompt p{margin-top:.6rem;max-width:44em}
+.reply{border:2px solid var(--charcoal);background:var(--cream-light);padding:1.25rem 1.5rem;font-size:18px;line-height:1.9}
+.reply p{margin:0 0 .75rem;max-width:42em}.reply p:last-child{margin-bottom:0}
+.seg{cursor:pointer;padding:3px 2px;border-bottom:2px dotted var(--charcoal);-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.seg:hover{background:var(--cream)}
+.seg:focus-visible{outline:3px solid var(--charcoal);outline-offset:2px}
+.seg[aria-pressed="true"]{background:var(--charcoal);color:var(--cream);border-bottom-color:var(--charcoal)}
+.reply.locked .seg{cursor:default;border-bottom-color:transparent}
+.reply.locked .seg:hover{background:none}
+.reply.locked .seg[aria-pressed="true"]:hover{background:var(--charcoal)}
+.reply.locked .seg.missed{background:none;color:var(--charcoal);border-bottom:4px solid var(--red-text)}
+.reply.locked .seg.extra{background:none;color:var(--charcoal);border-bottom:2px dashed var(--charcoal)}
+.reply.locked .seg.extra:hover{background:none}
+.how{font-size:16px;margin:0 0 .75rem}
+.key{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:15px;margin-top:12px}
+.key span::before{content:'';display:inline-block;width:22px;height:12px;margin-right:8px;vertical-align:-1px}
+.key .k1::before{background:var(--charcoal)}.key .k2::before{border-bottom:4px solid var(--red-text)}.key .k3::before{border-bottom:2px dashed var(--charcoal)}
+.item{border:2px solid var(--charcoal);background:var(--cream-light);padding:1rem 1.25rem;margin-top:12px;font-size:16px}
+.item q{display:block;font-size:17px;font-weight:500;font-style:italic;margin-bottom:8px;quotes:'\201C' '\201D'}
+.item .st{display:block;font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px}
+.item.missed{border:3px solid var(--red-text)}.item.missed .st{color:var(--red-text)}
+.item.ok{border-style:dashed;background:var(--cream)}
+.item .tags{display:block;font-weight:700;margin-top:8px}
+.reveal h3{font-size:22px;margin:2rem 0 .25rem}
+@media (max-width:600px){.reply{padding:1rem;font-size:17px}.prompt{padding:1rem}}
+
+.box{border:2px solid var(--charcoal);background:var(--cream-light);padding:1.25rem 1.5rem;margin-bottom:1.25rem}
+.box.typed{background:var(--charcoal);color:var(--cream);border-color:var(--charcoal)}
+.box.typed .eyebrow{color:var(--coral-light)}
+.box.typed p{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:16px}
+.box p{margin:0 0 .5rem;max-width:44em}.box p:last-child{margin-bottom:0}
+.box.aireply{background:var(--cream)}
+.reply.head{margin-bottom:1.25rem}
+.item .cost{display:block;margin-top:2px}
+.recap{background:var(--cream);margin:1rem 0 0}
+.recap ul{margin:0;padding-left:1.25rem}
+.recap li{margin-bottom:.35rem}
+.recap .recap-key{font-size:15px;margin-top:.5rem}
+.recap .mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:15px}
+textarea{width:100%;min-height:170px;padding:1rem;border:2px solid var(--charcoal);background:var(--cream);color:var(--charcoal);font-family:inherit;font-size:17px;line-height:1.5;resize:vertical}
+textarea:focus{outline:3px solid var(--charcoal);outline-offset:2px}
+.cue{border-left:3px solid var(--charcoal);padding-left:1rem;margin-top:1rem}
+.cue ul{margin:.25rem 0 0;padding-left:1.25rem}
+label.lab,p.lab{display:block;font-weight:700;margin:1.5rem 0 .5rem;font-size:18px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-top:1.25rem}
+.two .box{margin:0}
+.selfcheck{list-style:none;padding:0;margin:1rem 0 0}
+.selfcheck li{border-top:2px solid var(--charcoal);padding:10px 0}
+.selfcheck label{display:flex;gap:12px;align-items:flex-start;cursor:pointer}
+.selfcheck input{width:22px;height:22px;margin-top:3px;accent-color:var(--charcoal);flex:none}
+.selfcheck b{display:block}
+.phase h3{font-size:22px;margin:2rem 0 .5rem}
+@media (max-width:700px){.two{grid-template-columns:1fr}.box{padding:1rem}}
+.site-nav{padding:28px 40px 0;font-family:'Hanken Grotesk',Arial,sans-serif}
+.site-nav-inner{max-width:1168px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 32px;border-bottom:2px solid var(--charcoal);padding-bottom:12px}
+.wordmark{font-family:'Zilla Slab',Georgia,serif;font-weight:700;font-size:24px;text-decoration:none;padding:10px 0;color:var(--charcoal)}
+.site-nav-links{display:flex;flex-wrap:wrap;gap:0 28px}
+.site-nav-links a{font-weight:500;font-size:16px;text-decoration:none;padding:12px 0;color:var(--charcoal)}
+.site-nav a:hover{text-decoration:underline}
+.site-nav-links a[aria-current="page"]{font-weight:700;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
+.site-footer{max-width:900px;margin:0 auto;padding:8px 0 40px;font-size:16px;line-height:1.5}
+.site-footer::before{content:'';display:block;border-top:2px solid var(--charcoal);margin-bottom:18px}
+.site-footer p{margin:0 0 4px;max-width:75ch}
+.site-footer a{color:var(--charcoal)}
+@media (max-width:600px){.site-nav{padding:16px 4px 0}.site-nav-links{gap:0 20px}}
+h1 .accent{color:var(--coral)}
+</style>
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Site">
+  <div class="site-nav-inner">
+    <a class="wordmark" href="../">Demystifying AI</a>
+    <div class="site-nav-links">
+      <a href="../learn.html">Learn AI</a>
+      <a href="../toolbox/">AI Toolbox</a>
+      <a href="./" aria-current="page">Activities</a>
+      <a href="../playground/">AI Playground</a>
+      <a href="../spark-intro/">SPARK AI Express</a>
+    </div>
+  </div>
+</nav>
+
+<main class="container" id="top">
+  <div class="hero">
+    <h1>Prompt <span class="accent">Craft</span> Challenge</h1>
+    <p>AI answers the prompt you typed, not the situation in your head. Practice closing the gap between the two.</p>
+  </div>
+
+  <div class="region-toggle" role="group" aria-label="Choose a version">
+    <a href="prompt-craft-challenge.html">United States</a>
+    <a href="prompt-craft-challenge-ph.html" class="active">Philippines</a>
+  </div>
+
+  <div class="progress" id="progress" role="img" aria-label="Three rounds"><span></span><span></span><span></span></div>
+
+  <div class="step active" id="intro">
+    <section class="panel">
+      <h2>AI cannot read your mind.</h2>
+      <p>When a reply disappoints, the cause is often something you knew and never typed. In two rounds you will see a real situation, the quick prompt someone wrote, and the reply it produced. Your job is to find what never reached the AI, then rewrite the prompt yourself. In round 3 you will write a prompt for something you need this week.</p>
+      <div class="note"><strong>Expect to struggle:</strong> The gaps are hard to see because the first prompt looks fine. Missing some is expected, and it is how the skill grows. There is no passing score, and nothing you write is saved or sent anywhere.</div>
+      <p>Four questions help. Keep them in mind as you read:</p>
+      <ul class="checks">
+        <li><b>Who is it for?</b>The reader or audience, and what I know about them.</li>
+        <li><b>What is it for?</b>Where it will be used, and what should happen because of it.</li>
+        <li><b>What do I already know?</b>The facts, names, and numbers the AI would otherwise guess.</li>
+        <li><b>What are the limits?</b>Length, tone, what to avoid, and what I have to work with.</li>
+      </ul>
+      <div class="actions"><button class="btn" type="button" id="startBtn">Start round 1 →</button><span class="hint">Three rounds, about 20 minutes.</span></div>
+    </section>
+  </div>
+
+  <div class="step" id="round">
+    <section class="panel">
+      <div class="round-head"><h2 style="margin:0;font-size:22px" id="roundTitle">Round 1 of 3</h2><span id="roundTag"></span></div>
+      <span class="eyebrow">What is in your head</span>
+      <p class="how" id="how"></p>
+      <div class="reply head" id="head"></div>
+      <div class="key" id="key" style="display:none;margin:-.5rem 0 1.25rem"><span class="k1">You found the gap</span><span class="k2">Slipped by</span><span class="k3">Marked, but it was in the prompt</span></div>
+      <div class="box typed"><span class="eyebrow">What you typed</span><div id="typed"></div></div>
+      <div class="box aireply"><span class="eyebrow">What the AI replied</span><div id="aireply"></div></div>
+
+      <div class="phase" id="reveal" style="display:none">
+        <h3 id="revealHead">What never reached the AI</h3>
+        <p class="round-sum" id="roundSum" style="margin-top:.25rem"></p>
+        <div id="items"></div>
+      </div>
+
+      <div class="phase" id="write" style="display:none">
+        <h3>Now you write it</h3>
+        <p>Rewrite the prompt so the AI has what it needs. Everything you need is repeated here, so there is no need to scroll back. Write yours before you look at ours, because the comparison means more that way.</p>
+        <div class="box recap">
+          <span class="eyebrow">The situation, again</span>
+          <ul id="recap"></ul>
+          <p class="recap-key"><b>Bold</b> details never reached the AI the first time.</p>
+          <span class="eyebrow" style="margin-top:1rem">The first prompt</span>
+          <p class="mono" id="recapTyped"></p>
+        </div>
+        <label class="lab" for="mine">Your prompt</label>
+        <textarea id="mine" placeholder="Type your version here. It is not saved or sent anywhere."></textarea>
+      </div>
+
+      <div class="phase" id="compare" style="display:none">
+        <h3 id="compareHead">One way to write it</h3>
+        <p>Yours does not need to match. Check yours against the four questions: did you say who it is for, what it is for, what you know, and what the limits are?</p>
+        <div class="two">
+          <div class="box typed"><span class="eyebrow">A fuller prompt</span><div id="model"></div></div>
+          <div class="box aireply"><span class="eyebrow">The reply it gets</span><div id="better"></div></div>
+        </div>
+        <div class="note"><strong>Before you move on:</strong> <span id="askText"></span></div>
+      </div>
+
+      <div class="actions">
+        <button class="btn" type="button" id="checkBtn">Show me what I missed</button>
+        <button class="btn" type="button" id="writeBtn" style="display:none">Now rewrite the prompt →</button>
+        <button class="btn" type="button" id="compareBtn" style="display:none">Compare with one way to write it</button>
+        <button class="btn" type="button" id="nextBtn" style="display:none">Next round →</button>
+        <span class="hint" id="hint" aria-live="polite"></span>
+      </div>
+    </section>
+  </div>
+
+  <div class="step" id="own">
+    <section class="panel">
+      <div class="round-head"><h2 style="margin:0;font-size:22px">Round 3 of 3: Your own prompt</h2><span>Yours</span></div>
+      <p>Think of one real thing you need help with this week: a message, a plan, a summary, a decision. Write the prompt you would give an AI. This time you are the only one who knows what is in your head.</p>
+      <div class="cue"><b>Include the following:</b>
+        <ul><li>Who it is for</li><li>What it is for</li><li>What you already know</li><li>The limits</li></ul>
+      </div>
+      <label class="lab" for="ownText">Your prompt</label>
+      <textarea id="ownText" style="min-height:220px" placeholder="Type your prompt here. It is not saved or sent anywhere."></textarea>
+      <p class="lab" style="margin-bottom:0">Check it before you use it</p>
+      <ul class="selfcheck">
+        <li><label><input type="checkbox"><span><b>Who is it for?</b>I said who will read or use the result, and what I know about them.</span></label></li>
+        <li><label><input type="checkbox"><span><b>What is it for?</b>I said where it will be used and what I want to happen.</span></label></li>
+        <li><label><input type="checkbox"><span><b>What do I already know?</b>I gave the facts, names, and numbers so the AI does not guess.</span></label></li>
+        <li><label><input type="checkbox"><span><b>What are the limits?</b>I gave the length, the tone, and anything to avoid.</span></label></li>
+      </ul>
+      <div class="note"><strong>Keep private things private:</strong> Before you paste a prompt into an AI tool, take out anything you would not want stored, such as full names, account numbers, or details about students or clients.</div>
+      <div class="actions">
+        <button class="btn soft" type="button" id="copyBtn">Copy my prompt</button>
+        <button class="btn" type="button" id="finishBtn">Finish →</button>
+        <span class="hint" id="copyMsg" aria-live="polite"></span>
+      </div>
+    </section>
+  </div>
+
+  <div class="step" id="finish">
+    <section class="done">
+      <h2>Challenge Complete!</h2>
+      <div class="big" id="finalScore">0 of 0</div>
+      <p>gaps found</p>
+      <p id="finalMsg" style="margin-top:1rem"></p>
+      <div class="box stats" style="margin-bottom:0">
+        <div><b id="missCount">0</b><span>Slipped by</span></div>
+        <div><b id="extraCount">0</b><span>Marked, but in the prompt</span></div>
+      </div>
+      <div class="box" style="margin-bottom:0">
+        <strong>Your turn:</strong> Take the prompt you wrote in round 3 to an AI tool and read the reply with care. If something is off, ask yourself first: what did I know that I never typed?
+      </div>
+      <div class="actions">
+        <button class="btn" type="button" id="againBtn">Try again</button>
+        <a class="btn soft" href="ai-output-evaluator-ph.html">Next: AI Output Evaluator</a>
+        <a class="btn soft" href="../learn.html#prompts">See prompt ideas</a>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <p>Part of <a href="../">Demystifying AI for All</a>. Built by <strong>Jeffery Heil</strong>, educator, ed-tech consultant, and speaker. Lead Expert for <a href="https://globallearningaccess.com/home" target="_blank" rel="noopener">Global Learning Access</a>.</p>
+  <p>An independent, free resource. Some activities were built for GLA certification courses.</p>
+</footer>
+
+<script>
+(function(){
+var ROUNDS=[{"tag": "Small business", "title": "A reply to an unhappy customer", "head": [{"t": "A customer left a two-star review last night because her cake arrived a day late.", "tag": null, "note": "This reached the AI. Your prompt said \"a bad review because her cake was a day late.\"", "cost": ""}, {"t": "It was for her daughter's seventh birthday party.", "tag": "know", "note": "", "cost": "The reply apologizes for \"any inconvenience\" with \"your order.\" A missed birthday is not an inconvenience, and the AI had no way to know there was a birthday."}, {"t": "Mrs. Santos has ordered from us for six years.", "tag": "who", "note": "", "cost": "The reply opens \"Dear Valued Customer.\" That is how you greet a stranger. Six years of loyalty never made it into the prompt."}, {"t": "I want to apologize,", "tag": null, "note": "This reached the AI. Your prompt said \"Apologize.\"", "cost": ""}, {"t": "and I do not want to make excuses about the oven breaking.", "tag": "limits", "note": "", "cost": "The reply says \"due to unforeseen circumstances.\" That is an excuse, and a vague one. You knew you did not want excuses. The AI did not."}, {"t": "I can give her a full refund and a free cake for her next family occasion.", "tag": "know", "note": "", "cost": "The reply offers \"10% off your next purchase.\" You never said what you could offer, so the AI made something up, and it is much less than you intended."}, {"t": "I will post my reply publicly under her review, where other customers will read it.", "tag": "for", "note": "", "cost": "The reply ends \"Kindly reply to this email.\" The AI assumed a private email. It did not know that every future customer is also the audience."}, {"t": "It should be short, four or five sentences.", "tag": null, "note": "This reached the AI as \"Keep it short,\" and the reply is short. Notice that \"short\" was vague. It worked this time.", "cost": ""}, {"t": "We are a small family bakery, and I do not want to sound like a big company.", "tag": "limits", "note": "", "cost": "\"We strive for excellence\" and \"Sincerely, The Management\" are exactly the voice you wanted to avoid. Without a tone, AI defaults to corporate."}], "typed": ["Write a reply to a customer who left a bad review because her cake was a day late. Apologize. Keep it short."], "reply": ["Dear Valued Customer,", "Thank you for your feedback. We sincerely apologize for any inconvenience caused by the delay of your order. Due to unforeseen circumstances, we were unable to deliver on time. We strive for excellence and take all concerns seriously. As a gesture of goodwill, please accept 10% off your next purchase. Kindly reply to this email so we may discuss this further.", "Sincerely, The Management"], "model": ["Write a public reply to a two-star review on our bakery's Facebook page. Other customers will read it.", "The customer, Mrs. Santos, has ordered from us for six years. Her daughter's seventh birthday cake arrived a day late.", "Apologize plainly and take responsibility, with no excuses. Offer a full refund and a free cake for her next family occasion.", "We are a small family bakery, so sound like a person, not a company. Four or five sentences."], "better": ["Mrs. Santos, you are right, and I am so sorry. Your daughter's seventh birthday deserved its cake on the day, and we let you both down. After six years of trusting us with your family's celebrations, you should have been able to count on us. I am refunding your order in full today, and the cake for your next family occasion is on us. Thank you for telling us honestly."], "ask": "The first prompt took ten seconds to write. What did those ten seconds cost?"}, {"tag": "Training", "title": "A session plan for new hires", "head": [{"t": "I am running a 45-minute session on Thursday for our new hires.", "tag": null, "note": "This reached the AI. Your prompt said \"a 45-minute training session for new employees.\"", "cost": ""}, {"t": "It is about our customer complaint process.", "tag": null, "note": "This reached the AI, almost word for word.", "cost": ""}, {"t": "Most of them have worked in retail before, so they know the basics of customer service.", "tag": "who", "note": "", "cost": "The plan spends 10 minutes on \"What is customer service?\" That is nearly a quarter of the session on something this group already knows."}, {"t": "A few of them are more comfortable in Filipino than in English.", "tag": "who", "note": "", "cost": "The plan is built on long slide talks and \"individual reading\" of a policy document. Those are the hardest formats for someone working in a second language."}, {"t": "The room has a whiteboard and no projector.", "tag": "limits", "note": "", "cost": "Slides and a video. The plan cannot be run in your room at all, and you would find that out on Thursday."}, {"t": "I want them practicing, not listening to me talk.", "tag": "limits", "note": "", "cost": "Count the minutes: 40 of the 45 are listening, watching, or reading. There is no practice. A lecture is the default when you do not ask for something else."}, {"t": "By the end, each person should be able to handle a refund complaint on their own.", "tag": "for", "note": "", "cost": "The plan's objective is to \"understand the importance of effective complaint handling.\" You wanted people who can do something. The AI gave you people who have heard about it."}, {"t": "I need a plan with timings I can follow.", "tag": null, "note": "This reached the AI. Your prompt said \"Give me an agenda with times,\" and it did.", "cost": ""}], "typed": ["Create a 45-minute training session for new employees on our customer complaint process. Give me an agenda with times."], "reply": ["Customer Complaint Process: 45-Minute Session", "Objective: Participants will understand the importance of effective complaint handling.", "0:00 Welcome and icebreaker (5 min)", "0:05 Slide presentation: What is customer service? (10 min)", "0:15 Slide presentation: Our complaint process, step by step (15 min)", "0:30 Video: examples of good and bad service (5 min)", "0:35 Individual reading: complaint policy document (5 min)", "0:40 Questions and wrap-up (5 min)"], "model": ["Plan a 45-minute session for our new hires on our customer complaint process. By the end, each person should be able to handle a refund complaint on their own.", "Most of them have worked in retail, so skip customer service basics. A few are more comfortable in Filipino than in English, so use plain spoken language and pair work, let pairs practice in the language they prefer, and avoid long reading.", "The room has a whiteboard and no projector. I want them practicing, not listening to me, so make most of the time hands-on practice.", "Give me an agenda with times."], "better": ["Goal: each person can handle a refund complaint on their own.", "0:00 The steps of our process on the whiteboard, in plain words (5 min)", "0:05 I model one refund complaint with a volunteer (5 min)", "0:10 Pairs practice a refund complaint, then swap roles (13 min)", "0:23 Quick debrief: what was hard? Add tips to the whiteboard (4 min)", "0:27 New partner, harder refund complaint (13 min)", "0:40 Each person says their opening sentence to an upset customer (3 min)", "0:43 One thing to remember, and who to ask for help (2 min)"], "ask": "The first plan looked professional. Would you have noticed it could not work in your room before Thursday?"}];
+var NAME={"who":"Who is it for?","for":"What is it for?","know":"What do I already know?","limits":"What are the limits?"};
+var cur=0, picks=[], locked=false, tot={gaps:0,found:0,extra:0};
+function $(id){return document.getElementById(id);}
+function el(tag,cls,text){var e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e;}
+function paras(id,arr){var b=$(id); b.textContent=""; arr.forEach(function(t){b.appendChild(el("p",null,t));});}
+function show(id){
+  ["intro","round","own","finish"].forEach(function(s){$(s).classList.toggle("active",s===id);});
+  var h=$(id).querySelector("h2"); if(h){h.setAttribute("tabindex","-1"); h.focus({preventScroll:true});}
+  $("top").scrollIntoView({behavior:"smooth",block:"start"});
+  var bars=$("progress").children, step=id==="intro"?-1:id==="round"?cur:id==="own"?2:3;
+  for(var i=0;i<bars.length;i++){bars[i].className=i<step?"past":(i===step?"now":"");}
+}
+function gaps(){return ROUNDS[cur].head.filter(function(x){return x.tag;}).length;}
+function count(){ $("hint").textContent=picks.filter(Boolean).length+" marked. Looking for "+gaps()+"."; }
+function render(){
+  var r=ROUNDS[cur]; picks=r.head.map(function(){return false;}); locked=false;
+  $("roundTitle").textContent="Round "+(cur+1)+" of 3: "+r.title; $("roundTag").textContent=r.tag;
+  var box=$("head"); box.textContent=""; box.className="reply head"; var p=el("p"); box.appendChild(p);
+  r.head.forEach(function(d,i){
+    var s=el("span","seg",d.t); s.setAttribute("role","button"); s.setAttribute("tabindex","0"); s.setAttribute("aria-pressed","false"); s.id="seg"+i;
+    function tog(){ if(locked) return; picks[i]=!picks[i]; s.setAttribute("aria-pressed",picks[i]?"true":"false"); count(); }
+    s.addEventListener("click",tog);
+    s.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){e.preventDefault(); tog();} });
+    p.appendChild(s); p.appendChild(document.createTextNode(" "));
+  });
+  paras("typed",r.typed); paras("aireply",r.reply);
+  $("how").textContent="Your situation is split into "+r.head.length+" underlined details. "+gaps()+" of them never reached the AI. Compare the situation with the prompt you typed, then tap the details that are missing from the prompt. Tap again to unmark.";
+  $("how").style.display="block"; $("key").style.display="none";
+  $("reveal").style.display="none"; $("write").style.display="none"; $("compare").style.display="none";
+  $("mine").value="";
+  $("checkBtn").style.display="inline-block"; $("hint").style.display="inline";
+  $("writeBtn").style.display="none"; $("compareBtn").style.display="none"; $("nextBtn").style.display="none";
+  count();
+}
+function check(){
+  var r=ROUNDS[cur], found=0, extra=0; locked=true; $("head").className="reply head locked";
+  var items=$("items"); items.textContent="";
+  r.head.forEach(function(d,i){
+    var s=$("seg"+i), hit=picks[i], cls, st;
+    s.removeAttribute("tabindex"); s.setAttribute("aria-disabled","true");
+    if(d.tag){ if(hit){found++; cls="caught"; st="✓ You found this gap";} else {cls="missed"; st="✗ This gap slipped by"; s.classList.add("missed");} }
+    else { if(!hit) return; extra++; cls="ok"; st="→ You marked this, but it was in the prompt"; s.classList.add("extra"); }
+    var card=el("div","item "+cls); card.appendChild(el("span","st",st)); card.appendChild(el("q",null,d.t));
+    if(d.tag){ card.appendChild(el("span","cost","What it cost: "+d.cost)); card.appendChild(el("span","tags","The question to ask: "+NAME[d.tag])); }
+    else card.appendChild(document.createTextNode(d.note));
+    items.appendChild(card);
+  });
+  tot.gaps+=gaps(); tot.found+=found; tot.extra+=extra;
+  $("roundSum").textContent="You found "+found+" of "+gaps()+" gaps."+(found<gaps()?" Read the ones that slipped by. Each one shows up in the AI's reply.":" That is close reading.");
+  $("reveal").style.display="block"; $("how").style.display="none"; $("key").style.display="flex";
+  $("checkBtn").style.display="none"; $("hint").style.display="none"; $("writeBtn").style.display="inline-block";
+  $("reveal").scrollIntoView({behavior:"smooth",block:"start"}); $("revealHead").setAttribute("tabindex","-1"); $("revealHead").focus({preventScroll:true});
+}
+function write(){
+  var r=ROUNDS[cur], ul=$("recap"); ul.textContent="";
+  r.head.forEach(function(d){ var li=el("li"); if(d.tag){li.appendChild(el("b",null,d.t));} else {li.textContent=d.t;} ul.appendChild(li); });
+  $("recapTyped").textContent=r.typed.join(" ");
+  $("write").style.display="block"; $("writeBtn").style.display="none"; $("compareBtn").style.display="inline-block";
+  $("write").scrollIntoView({behavior:"smooth",block:"start"}); $("mine").focus({preventScroll:true});
+}
+function compare(){
+  var r=ROUNDS[cur]; paras("model",r.model); paras("better",r.better); $("askText").textContent=r.ask;
+  $("compare").style.display="block"; $("compareBtn").style.display="none";
+  $("nextBtn").textContent=cur===ROUNDS.length-1?"Round 3: your own prompt →":"Next round →"; $("nextBtn").style.display="inline-block";
+  $("compare").scrollIntoView({behavior:"smooth",block:"start"}); $("compareHead").setAttribute("tabindex","-1"); $("compareHead").focus({preventScroll:true});
+}
+function next(){ cur++; if(cur<ROUNDS.length){render(); show("round");} else {show("own");} }
+function finish(){
+  $("finalScore").textContent=tot.found+" of "+tot.gaps; $("missCount").textContent=tot.gaps-tot.found; $("extraCount").textContent=tot.extra;
+  var m=tot.gaps-tot.found;
+  $("finalMsg").textContent=m===0?"You found every gap. The harder part is spotting them in your own prompts, before you press send.":"Each of the "+m+" that slipped by was something the writer knew and never typed. That is the whole challenge of prompting: the gaps are invisible to the person who wrote them.";
+  show("finish");
+}
+function start(){cur=0; tot={gaps:0,found:0,extra:0}; $("ownText").value=""; Array.prototype.forEach.call(document.querySelectorAll(".selfcheck input"),function(c){c.checked=false;}); $("copyMsg").textContent=""; render(); show("round");}
+$("copyBtn").addEventListener("click",function(){
+  var t=$("ownText").value.trim(); if(!t){$("copyMsg").textContent="Write your prompt first."; return;}
+  function ok(){$("copyMsg").textContent="Copied. Paste it into any AI tool.";}
+  function fail(){$("ownText").focus(); $("ownText").select(); $("copyMsg").textContent="Select the text and copy it by hand.";}
+  try{ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(ok,fail);} else {$("ownText").select(); document.execCommand("copy")?ok():fail();} }catch(e){fail();}
+});
+$("startBtn").addEventListener("click",start); $("againBtn").addEventListener("click",start);
+$("checkBtn").addEventListener("click",check); $("writeBtn").addEventListener("click",write);
+$("compareBtn").addEventListener("click",compare); $("nextBtn").addEventListener("click",next); $("finishBtn").addEventListener("click",finish);
+})();
+</script>
+</body>
+</html>

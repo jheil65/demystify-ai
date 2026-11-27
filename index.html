@@ -67,6 +67,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--charcoal); outl
 .index-item { display: flex; flex-direction: column; gap: 4px; border-top: 2px solid var(--charcoal); padding-top: 12px; text-decoration: none; }
 .index-item h3 { font-family: var(--display); font-weight: 700; font-size: 24px; line-height: 1.15; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
 .index-item:hover h3 { text-decoration-thickness: 4px; }
+.index-item.plain h3, .index-item.plain:hover h3 { text-decoration: none; }
 
 /* GROUPED PATH: what you'll find here */
 .groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 40px 36px; }
@@ -239,10 +240,10 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--charcoal); outl
         <h3>Digital and AI Readiness Certification</h3>
         <p>GLA Courses with credentials</p>
       </a>
-      <a href="mailto:jheil65@gmail.com" class="index-item">
+      <div class="index-item plain">
         <h3>Training and Keynotes</h3>
-        <p>Consulting and workshops for teams. Presentations and speaking for events. Email jheil65@gmail.com</p>
-      </a>
+        <p>Consulting and workshops for teams. Presentations and speaking for events. Email: jheil65 at gmail dot com</p>
+      </div>
     </div>
   </section>
 
@@ -259,7 +260,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--charcoal); outl
       <p>An independent, free resource. Some activities were built for GLA certification courses.</p>
     </div>
     <div class="footer-qr">
-      <img src="qr-code.png" alt="QR Code to this page" width="100" height="100">
+      <img src="qr-code.png?v=2" alt="QR Code to this page" width="100" height="100">
       <span>Scan to open on your phone</span>
     </div>
   </div>
@@ -279,7 +280,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--charcoal); outl
     </svg>
   </button>
   <div class="qr-popup">
-    <img src="qr-code.png" alt="QR Code">
+    <img src="qr-code.png?v=2" alt="QR Code">
     <p>Scan to open on mobile</p>
   </div>
 </div>

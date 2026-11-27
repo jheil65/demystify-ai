@@ -46,6 +46,14 @@ button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var
 .setnav a[aria-current="page"]{background:var(--charcoal);color:var(--cream)}
 
 /* cards */
+.llm{border:2px dashed var(--charcoal);background:var(--cream);padding:24px 28px;margin:0 0 24px}
+.llm h2{font-family:var(--display);font-weight:700;font-size:clamp(1.5rem,3.4vw,1.875rem);line-height:1.15;margin:0 0 10px}
+.llm p{margin:0 0 10px;max-width:40em}
+.llm ul{list-style:none;padding:0;margin:4px 0 14px;display:flex;flex-wrap:wrap;gap:0 28px}
+.llm li{border-top:2px solid var(--charcoal);padding:8px 0;flex:1 1 150px}
+.llm li b{display:block;font-family:var(--display);font-size:20px}
+.llm .more{margin-bottom:0}
+@media (max-width:600px){.llm{padding:18px}}
 .card{background:var(--cream-light);border:2px solid var(--charcoal);padding:28px;margin:0 0 24px;scroll-margin-top:12px}
 .kicker{display:block;font-weight:700;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--red-text);margin-bottom:8px}
 .card h2{font-family:var(--display);font-weight:700;font-size:clamp(1.75rem,4.5vw,2.25rem);line-height:1.1;margin:0 0 10px;text-wrap:balance}
@@ -213,6 +221,22 @@ footer p{margin:0 0 4px;max-width:75ch}
 </div></header>
 
 <main class="wrap">
+
+  <aside class="llm" aria-labelledby="h-llm">
+    <span class="kicker">Before you start</span>
+    <h2 id="h-llm">What are you chatting with?</h2>
+    <p>When you chat with AI, you are talking to a <strong>large language model</strong>, or <strong>LLM</strong>. It is a computer program that has read an enormous amount of text and learned the patterns in it. When you type, it builds a reply one word at a time by predicting what should come next.</p>
+    <p>That is why it can write so smoothly, and also why it can sound sure and still be wrong. It is not a search engine and it is not a person.</p>
+    <p>You may already know some by name. Each of these is an app built on an LLM:</p>
+    <ul>
+      <li><b>Gemini</b> from Google</li>
+      <li><b>ChatGPT</b> from OpenAI</li>
+      <li><b>Copilot</b> from Microsoft</li>
+      <li><b>Claude</b> from Anthropic</li>
+      <li><b>DeepSeek</b> from DeepSeek</li>
+    </ul>
+    <p class="more">Everything else in this toolbox is something extra these tools have built around that chat. More terms are in the <a href="../learn.html#glossary">Glossary</a>.</p>
+  </aside>
 
   <!-- PART 1 -->
   <section class="card first" id="powers" style="--c:var(--teal)" aria-labelledby="h-powers">
